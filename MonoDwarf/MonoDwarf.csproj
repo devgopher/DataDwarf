@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <ProjectGuid>{F1CC5A6E-2457-4248-9AB7-47A55B1DFAF9}</ProjectGuid>
+    <ProjectTypeGuids>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>MonoDwarf</RootNamespace>
+    <AssemblyName>MonoDwarf</AssemblyName>
+    <MonoTargetFrameworkVersion>v4.0</MonoTargetFrameworkVersion>
+    <NoWin32Manifest>False</NoWin32Manifest>
+    <SignAssembly>False</SignAssembly>
+    <DelaySign>False</DelaySign>
+    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
+    <NoStdLib>True</NoStdLib>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
+    <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>False</RunCodeAnalysis>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <BaseAddress>4194304</BaseAddress>
+    <RegisterForComInterop>False</RegisterForComInterop>
+    <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+    <FileAlignment>4096</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>Full</DebugType>
+    <Optimize>False</Optimize>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <BaseIntermediateOutputPath>obj\</BaseIntermediateOutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <DebugSymbols>False</DebugSymbols>
+    <DebugType>None</DebugType>
+    <Optimize>True</Optimize>
+    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
+    <DefineConstants>TRACE</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>..\..\..\FastXcel\FastZip\bin\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\DwarfDB\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\DwarfDB\DwarfDB\ChunkManager\ChunkException.cs" />
+    <Compile Include="..\DwarfDB\DwarfDB\ChunkManager\ChunkFormat.cs" />
+    <Compile Include="..\DwarfDB\DwarfDB\ChunkManager\ChunkManager.cs" />
+    <Compile Include="..\DwarfDB\DwarfDB\Config\Config.cs" />
+    <Compile Include="..\DwarfDB\DwarfDB\Crypto\Hash.cs" />
+    <Compile Include="..\DwarfDB\DwarfDB\DataStructures\DataBase.cs" />
+    <Compile Include="..\DwarfDB\DwarfDB\DataStructures\DataException.cs" />
+    <Compile Include="..\DwarfDB\DwarfDB\DataStructures\IStructure.cs" />
+    <Compile Include="..\DwarfDB\DwarfDB\DataStructures\Index.cs" />
+    <Compile Include="..\DwarfDB\DwarfDB\DataStructures\Record.cs" />
+    <Compile Include="..\DwarfDB\DwarfDB\DataStructures\DataContainer.cs" />
+    <Compile Include="..\DwarfDB\DwarfDB\DwarfCommand\Command.cs" />
+    <Compile Include="..\DwarfDB\DwarfDB\Errors\ErrorProcessing.cs" />
+    <Compile Include="..\DwarfDB\DwarfDB\Program.cs" />
+    <Compile Include="..\DwarfDB\DwarfDB\Properties\AssemblyInfo.cs" />
+    <Compile Include="..\DwarfDB\DwarfDB\Samples\DataTableTest.cs" />
+    <Compile Include="..\DwarfDB\DwarfDB\Stack\DwarfStack.cs" />
+    <Compile Include="..\DwarfDB\DwarfDB\TransactionJournals\TransactionJournals.cs" />
+    <Compile Include="..\DwarfDB\DwarfDB\Transactions\DwarfTransaction.cs" />
+    <Compile Include="..\DwarfDB\DwarfDB\User\Credentials.cs" />
+    <Compile Include="..\DwarfDB\DwarfDB\User\Permissions.cs" />
+    <Compile Include="..\DwarfDB\DwarfDB\User\User.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="..\DwarfDB\DwarfDB\DataStructures" />
+    <Folder Include="..\DwarfDB\DwarfDB\Connection" />
+    <Folder Include="..\DwarfDB\DwarfDB\DwarfCommand" />
+    <Folder Include="..\DwarfDB\DwarfDB\Config" />
+    <Folder Include="..\DwarfDB\DwarfDB\TransactionJournals" />
+    <Folder Include="..\DwarfDB\DwarfDB\Operations" />
+    <Folder Include="..\DwarfDB\DwarfDB\Transactions" />
+    <Folder Include="..\DwarfDB\DwarfDB\Stack" />
+    <Folder Include="..\DwarfDB\DwarfDB\Utils" />
+    <Folder Include="..\DwarfDB\DwarfDB\Crypto" />
+    <Folder Include="..\DwarfDB\DwarfDB\Errors" />
+    <Folder Include="..\DwarfDB\DwarfDB\ChunkManager" />
+    <Folder Include="..\DwarfDB\DwarfDB\User" />
+    <Folder Include="..\DwarfDB\DwarfDB\Samples" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+  </ItemGroup>
+  <Import Project="$(MonoBuildTasksPath)\Mono.Build.CSharp.targets" />
+</Project>

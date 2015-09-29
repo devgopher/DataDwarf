@@ -1,0 +1,6 @@
+C:\Users\igor.evdokimov\YandexDisk\DataDwarf\MonoDwarf\obj\Debug\MonoDwarf.csprojResolveAssemblyReference.cache
+C:\Users\igor.evdokimov\YandexDisk\DataDwarf\MonoDwarf\bin\Debug\MonoDwarf.exe.config
+C:\Users\igor.evdokimov\YandexDisk\DataDwarf\MonoDwarf\bin\Debug\MonoDwarf.exe
+C:\Users\igor.evdokimov\YandexDisk\DataDwarf\MonoDwarf\bin\Debug\Newtonsoft.Json.dll
+C:\Users\igor.evdokimov\YandexDisk\DataDwarf\MonoDwarf\bin\Debug\Newtonsoft.Json.xml
+C:\Users\igor.evdokimov\YandexDisk\DataDwarf\MonoDwarf\obj\Debug\MonoDwarf.exe

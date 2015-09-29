@@ -1,6 +1,5 @@
-\hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_data_base}{
-\section{DwarfDB.DataStructures.DataBase Class Reference}
-\label{class_dwarf_d_b_1_1_data_structures_1_1_data_base}\index{DwarfDB::DataStructures::DataBase@{DwarfDB::DataStructures::DataBase}}
+\hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_data_base}{\section{Dwarf\+D\+B.\+Data\+Structures.\+Data\+Base Class Reference}
+\label{class_dwarf_d_b_1_1_data_structures_1_1_data_base}\index{Dwarf\+D\+B.\+Data\+Structures.\+Data\+Base@{Dwarf\+D\+B.\+Data\+Structures.\+Data\+Base}}
 }
 
 
@@ -9,8 +8,10 @@ a class for database object
 
 
 
-Collaboration diagram for DwarfDB.DataStructures.DataBase:
-\nopagebreak
+Inheritance diagram for Dwarf\+D\+B.\+Data\+Structures.\+Data\+Base\+:
+
+
+Collaboration diagram for Dwarf\+D\+B.\+Data\+Structures.\+Data\+Base\+:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -20,72 +21,63 @@ Collaboration diagram for DwarfDB.DataStructures.DataBase:
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_data_base_a9748f9609030f61d1cfc28a162a48ad5}{
-{\bfseries DataBase} (SerializationInfo info, StreamingContext ctxt)}
-\label{class_dwarf_d_b_1_1_data_structures_1_1_data_base_a9748f9609030f61d1cfc28a162a48ad5}
+\hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_data_base_a9748f9609030f61d1cfc28a162a48ad5}{{\bfseries Data\+Base} (Serialization\+Info info, Streaming\+Context ctxt)}\label{class_dwarf_d_b_1_1_data_structures_1_1_data_base_a9748f9609030f61d1cfc28a162a48ad5}
 
 \item 
-\hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_data_base_a34980ba6f61e15d6dcbe5af7f596a6fd}{
-void {\bfseries GetObjectData} (SerializationInfo info, StreamingContext ctxt)}
-\label{class_dwarf_d_b_1_1_data_structures_1_1_data_base_a34980ba6f61e15d6dcbe5af7f596a6fd}
+\hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_data_base_a34980ba6f61e15d6dcbe5af7f596a6fd}{void {\bfseries Get\+Object\+Data} (Serialization\+Info info, Streaming\+Context ctxt)}\label{class_dwarf_d_b_1_1_data_structures_1_1_data_base_a34980ba6f61e15d6dcbe5af7f596a6fd}
 
 \item 
-\hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_data_base_aa975c962d73ddc7a6def8bb9d4dba0ad}{
-{\bfseries DataBase} (string db\_\-name, \hyperlink{class_dwarf_d_b_1_1_chunk_manager_1_1_chunk_manager}{ChunkManager.ChunkManager} \_\-cm)}
-\label{class_dwarf_d_b_1_1_data_structures_1_1_data_base_aa975c962d73ddc7a6def8bb9d4dba0ad}
+\hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_data_base_ae169105e97a66c5d621b3d945d11fce4}{void {\bfseries Drop} ()}\label{class_dwarf_d_b_1_1_data_structures_1_1_data_base_ae169105e97a66c5d621b3d945d11fce4}
 
 \item 
-\hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_data_base_ae169105e97a66c5d621b3d945d11fce4}{
-void {\bfseries Drop} ()}
-\label{class_dwarf_d_b_1_1_data_structures_1_1_data_base_ae169105e97a66c5d621b3d945d11fce4}
+bool \hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_data_base_af1cedf55fdab7efe9154ea7570c9abc9}{Clone\+Data\+Container} (\hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_data_base}{Data\+Base} from, String dc\+\_\+name)
+\begin{DoxyCompactList}\small\item\em Cloning D\+C from another D\+B \end{DoxyCompactList}\item 
+\hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_data_base_ae0180400ee59265e19a5d981f59ca440}{void {\bfseries Connect} (\hyperlink{class_dwarf_d_b_1_1_user_1_1_user}{User.\+User} user)}\label{class_dwarf_d_b_1_1_data_structures_1_1_data_base_ae0180400ee59265e19a5d981f59ca440}
 
 \item 
-bool \hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_data_base_af1cedf55fdab7efe9154ea7570c9abc9}{CloneDataContainer} (\hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_data_base}{DataBase} from, String dc\_\-name)
-\begin{DoxyCompactList}\small\item\em Cloning DC from another DB. \item\end{DoxyCompactList}\item 
-\hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_data_base_ae0180400ee59265e19a5d981f59ca440}{
-void {\bfseries Connect} (\hyperlink{class_dwarf_d_b_1_1_user_1_1_user}{User.User} user)}
-\label{class_dwarf_d_b_1_1_data_structures_1_1_data_base_ae0180400ee59265e19a5d981f59ca440}
+\hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_data_base_a251d5fa0ba9b21d911a9a1c5dcf33152}{bool {\bfseries Add\+New\+Data\+Container} (\hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_data_container}{Data\+Container} new\+\_\+dc)}\label{class_dwarf_d_b_1_1_data_structures_1_1_data_base_a251d5fa0ba9b21d911a9a1c5dcf33152}
 
 \item 
-\hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_data_base_a251d5fa0ba9b21d911a9a1c5dcf33152}{
-bool {\bfseries AddNewDataContainer} (\hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_data_container}{DataContainer} new\_\-dc)}
-\label{class_dwarf_d_b_1_1_data_structures_1_1_data_base_a251d5fa0ba9b21d911a9a1c5dcf33152}
-
-\item 
-\hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_data_container}{DataContainer} \hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_data_base_aa554e79937460eb937b90d81093019b5}{GetDataContainer} (string dc\_\-name)
-\begin{DoxyCompactList}\small\item\em Getting \hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_data_container}{DataContainer} by name. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_data_container}{Data\+Container} \hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_data_base_aa554e79937460eb937b90d81093019b5}{Get\+Data\+Container} (string dc\+\_\+name)
+\begin{DoxyCompactList}\small\item\em Getting \hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_data_container}{Data\+Container} by name \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Static Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_data_base_a5075320dc80d4950c8cffc23a9ca44d7}{
-static \hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_data_base}{DataBase} {\bfseries Create} (string db\_\-name, string db\_\-fs\_\-location, \hyperlink{class_dwarf_d_b_1_1_chunk_manager_1_1_chunk_manager}{ChunkManager.ChunkManager} \_\-cm)}
-\label{class_dwarf_d_b_1_1_data_structures_1_1_data_base_a5075320dc80d4950c8cffc23a9ca44d7}
+\hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_data_base_ace80fe82a351705958326c8d2a7f03ff}{static \hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_data_base}{Data\+Base} {\bfseries Create} (string db\+\_\+name, \hyperlink{class_dwarf_d_b_1_1_chunk_manager_1_1_chunk_manager}{Chunk\+Manager.\+Chunk\+Manager} \+\_\+cm)}\label{class_dwarf_d_b_1_1_data_structures_1_1_data_base_ace80fe82a351705958326c8d2a7f03ff}
+
+\item 
+\hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_data_base_af709d60f64dc5065a95dc678ebc03f30}{static \hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_data_base}{Data\+Base} {\bfseries Load\+From} (string db\+\_\+name, \hyperlink{class_dwarf_d_b_1_1_chunk_manager_1_1_chunk_manager}{Chunk\+Manager.\+Chunk\+Manager} \+\_\+cm)}\label{class_dwarf_d_b_1_1_data_structures_1_1_data_base_af709d60f64dc5065a95dc678ebc03f30}
 
 \end{DoxyCompactItemize}
 \subsection*{Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_data_base_a8ccf11a71c383f6f1ac6870022a261c3}{
-\hyperlink{class_dwarf_d_b_1_1_chunk_manager_1_1_chunk_manager}{ChunkManager.ChunkManager} {\bfseries chunk\_\-manager}}
-\label{class_dwarf_d_b_1_1_data_structures_1_1_data_base_a8ccf11a71c383f6f1ac6870022a261c3}
+\hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_data_base_a8ccf11a71c383f6f1ac6870022a261c3}{\hyperlink{class_dwarf_d_b_1_1_chunk_manager_1_1_chunk_manager}{Chunk\+Manager.\+Chunk\+Manager} {\bfseries chunk\+\_\+manager}}\label{class_dwarf_d_b_1_1_data_structures_1_1_data_base_a8ccf11a71c383f6f1ac6870022a261c3}
 
 \end{DoxyCompactItemize}
 \subsection*{Protected Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-bool \hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_data_base_a5eefaebdb94adf4d3b19f29e8f146725}{Transmit} (ref \hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_data_container}{DataContainer} clone\_\-dc, String dn\_\-name)
-\begin{DoxyCompactList}\small\item\em Transmitting a cloned \hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_data_container}{DataContainer} object to Recipient. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_data_base_ab2fe1cc1e8d59bbc68ad1f996507c4ee}{{\bfseries Data\+Base} (string db\+\_\+name, \hyperlink{class_dwarf_d_b_1_1_chunk_manager_1_1_chunk_manager}{Chunk\+Manager.\+Chunk\+Manager} \+\_\+cm, bool is\+\_\+new\+\_\+db)}\label{class_dwarf_d_b_1_1_data_structures_1_1_data_base_ab2fe1cc1e8d59bbc68ad1f996507c4ee}
+
+\item 
+bool \hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_data_base_a5eefaebdb94adf4d3b19f29e8f146725}{Transmit} (ref \hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_data_container}{Data\+Container} clone\+\_\+dc, String dn\+\_\+name)
+\begin{DoxyCompactList}\small\item\em Transmitting a cloned \hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_data_container}{Data\+Container} object to Recipient \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Properties}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_data_base_ab8b85389f822faa790eaf18a7fe35cce}{
-string {\bfseries Name}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}}
-\label{class_dwarf_d_b_1_1_data_structures_1_1_data_base_ab8b85389f822faa790eaf18a7fe35cce}
+\hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_data_base_a6d2cec1036e84cf7bd32e14cb57fb2c9}{string {\bfseries Db\+Path}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}}\label{class_dwarf_d_b_1_1_data_structures_1_1_data_base_a6d2cec1036e84cf7bd32e14cb57fb2c9}
 
 \item 
-\hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_data_base_a2ca4a32633cc1324190d6f37da17cc8b}{
-\hyperlink{class_dwarf_d_b_1_1_stack_1_1_dwarf_stack}{Stack.DwarfStack} {\bfseries Stack}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}}
-\label{class_dwarf_d_b_1_1_data_structures_1_1_data_base_a2ca4a32633cc1324190d6f37da17cc8b}
+\hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_data_base_a17e9d903646d5709103eabea2113c974}{Dictionary$<$ \hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_index}{Index}, \\*
+Key\+Value\+Pair$<$ \hyperlink{interface_dwarf_d_b_1_1_data_structures_1_1_i_structure}{I\+Structure}, \\*
+string $>$ $>$ {\bfseries Indexes}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}}\label{class_dwarf_d_b_1_1_data_structures_1_1_data_base_a17e9d903646d5709103eabea2113c974}
+
+\item 
+\hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_data_base_ab8b85389f822faa790eaf18a7fe35cce}{string {\bfseries Name}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}}\label{class_dwarf_d_b_1_1_data_structures_1_1_data_base_ab8b85389f822faa790eaf18a7fe35cce}
+
+\item 
+\hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_data_base_a2ca4a32633cc1324190d6f37da17cc8b}{\hyperlink{class_dwarf_d_b_1_1_stack_1_1_dwarf_stack}{Stack.\+Dwarf\+Stack} {\bfseries Stack}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}}\label{class_dwarf_d_b_1_1_data_structures_1_1_data_base_a2ca4a32633cc1324190d6f37da17cc8b}
 
 \end{DoxyCompactItemize}
 
@@ -93,71 +85,67 @@ string {\bfseries Name}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}}
 \subsection{Detailed Description}
 a class for database object 
 
+
+
 \subsection{Member Function Documentation}
-\hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_data_base_af1cedf55fdab7efe9154ea7570c9abc9}{
-\index{DwarfDB::DataStructures::DataBase@{DwarfDB::DataStructures::DataBase}!CloneDataContainer@{CloneDataContainer}}
-\index{CloneDataContainer@{CloneDataContainer}!DwarfDB::DataStructures::DataBase@{DwarfDB::DataStructures::DataBase}}
-\subsubsection[{CloneDataContainer}]{\setlength{\rightskip}{0pt plus 5cm}bool DwarfDB.DataStructures.DataBase.CloneDataContainer (
+\hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_data_base_af1cedf55fdab7efe9154ea7570c9abc9}{\index{Dwarf\+D\+B\+::\+Data\+Structures\+::\+Data\+Base@{Dwarf\+D\+B\+::\+Data\+Structures\+::\+Data\+Base}!Clone\+Data\+Container@{Clone\+Data\+Container}}
+\index{Clone\+Data\+Container@{Clone\+Data\+Container}!Dwarf\+D\+B\+::\+Data\+Structures\+::\+Data\+Base@{Dwarf\+D\+B\+::\+Data\+Structures\+::\+Data\+Base}}
+\subsubsection[{Clone\+Data\+Container}]{\setlength{\rightskip}{0pt plus 5cm}bool Dwarf\+D\+B.\+Data\+Structures.\+Data\+Base.\+Clone\+Data\+Container (
 \begin{DoxyParamCaption}
-\item[{{\bf DataBase}}]{ from, }
-\item[{String}]{ dc\_\-name}
+\item[{{\bf Data\+Base}}]{from, }
+\item[{String}]{dc\+\_\+name}
 \end{DoxyParamCaption}
-)}}
-\label{class_dwarf_d_b_1_1_data_structures_1_1_data_base_af1cedf55fdab7efe9154ea7570c9abc9}
+)}}\label{class_dwarf_d_b_1_1_data_structures_1_1_data_base_af1cedf55fdab7efe9154ea7570c9abc9}
 
 
-Cloning DC from another DB. 
+Cloning D\+C from another D\+B 
 
 
 \begin{DoxyParams}{Parameters}
-{\em from} & DB-\/transmitter\\
+{\em from} & D\+B-\/transmitter\\
 \hline
-{\em dc\_\-name} & DC name to clone\\
+{\em dc\+\_\+name} & D\+C name to clone\\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 
 \end{DoxyReturn}
-\hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_data_base_aa554e79937460eb937b90d81093019b5}{
-\index{DwarfDB::DataStructures::DataBase@{DwarfDB::DataStructures::DataBase}!GetDataContainer@{GetDataContainer}}
-\index{GetDataContainer@{GetDataContainer}!DwarfDB::DataStructures::DataBase@{DwarfDB::DataStructures::DataBase}}
-\subsubsection[{GetDataContainer}]{\setlength{\rightskip}{0pt plus 5cm}{\bf DataContainer} DwarfDB.DataStructures.DataBase.GetDataContainer (
+\hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_data_base_aa554e79937460eb937b90d81093019b5}{\index{Dwarf\+D\+B\+::\+Data\+Structures\+::\+Data\+Base@{Dwarf\+D\+B\+::\+Data\+Structures\+::\+Data\+Base}!Get\+Data\+Container@{Get\+Data\+Container}}
+\index{Get\+Data\+Container@{Get\+Data\+Container}!Dwarf\+D\+B\+::\+Data\+Structures\+::\+Data\+Base@{Dwarf\+D\+B\+::\+Data\+Structures\+::\+Data\+Base}}
+\subsubsection[{Get\+Data\+Container}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Data\+Container} Dwarf\+D\+B.\+Data\+Structures.\+Data\+Base.\+Get\+Data\+Container (
 \begin{DoxyParamCaption}
-\item[{string}]{ dc\_\-name}
+\item[{string}]{dc\+\_\+name}
 \end{DoxyParamCaption}
-)}}
-\label{class_dwarf_d_b_1_1_data_structures_1_1_data_base_aa554e79937460eb937b90d81093019b5}
+)}}\label{class_dwarf_d_b_1_1_data_structures_1_1_data_base_aa554e79937460eb937b90d81093019b5}
 
 
-Getting \hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_data_container}{DataContainer} by name. 
+Getting \hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_data_container}{Data\+Container} by name 
 
 
 \begin{DoxyParams}{Parameters}
-{\em dc\_\-name} & DC name\\
+{\em dc\+\_\+name} & D\+C name\\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
 
 \end{DoxyReturn}
-\hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_data_base_a5eefaebdb94adf4d3b19f29e8f146725}{
-\index{DwarfDB::DataStructures::DataBase@{DwarfDB::DataStructures::DataBase}!Transmit@{Transmit}}
-\index{Transmit@{Transmit}!DwarfDB::DataStructures::DataBase@{DwarfDB::DataStructures::DataBase}}
-\subsubsection[{Transmit}]{\setlength{\rightskip}{0pt plus 5cm}bool DwarfDB.DataStructures.DataBase.Transmit (
+\hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_data_base_a5eefaebdb94adf4d3b19f29e8f146725}{\index{Dwarf\+D\+B\+::\+Data\+Structures\+::\+Data\+Base@{Dwarf\+D\+B\+::\+Data\+Structures\+::\+Data\+Base}!Transmit@{Transmit}}
+\index{Transmit@{Transmit}!Dwarf\+D\+B\+::\+Data\+Structures\+::\+Data\+Base@{Dwarf\+D\+B\+::\+Data\+Structures\+::\+Data\+Base}}
+\subsubsection[{Transmit}]{\setlength{\rightskip}{0pt plus 5cm}bool Dwarf\+D\+B.\+Data\+Structures.\+Data\+Base.\+Transmit (
 \begin{DoxyParamCaption}
-\item[{ref {\bf DataContainer}}]{ clone\_\-dc, }
-\item[{String}]{ dn\_\-name}
+\item[{ref {\bf Data\+Container}}]{clone\+\_\+dc, }
+\item[{String}]{dn\+\_\+name}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}protected\mbox{]}}}}
-\label{class_dwarf_d_b_1_1_data_structures_1_1_data_base_a5eefaebdb94adf4d3b19f29e8f146725}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{class_dwarf_d_b_1_1_data_structures_1_1_data_base_a5eefaebdb94adf4d3b19f29e8f146725}
 
 
-Transmitting a cloned \hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_data_container}{DataContainer} object to Recipient. 
+Transmitting a cloned \hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_data_container}{Data\+Container} object to Recipient 
 
 
 \begin{DoxyParams}{Parameters}
-{\em clone\_\-dc} & Where can we put a new cloned DC?\\
+{\em clone\+\_\+dc} & Where can we put a new cloned D\+C?\\
 \hline
-{\em dn\_\-name} & DC name to clone\\
+{\em dn\+\_\+name} & D\+C name to clone\\
 \hline
 \end{DoxyParams}
 \begin{DoxyReturn}{Returns}
@@ -165,6 +153,6 @@ Transmitting a cloned \hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_data_co
 \end{DoxyReturn}
 
 
-The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 
-DataStructures/DataBase.cs\end{DoxyCompactItemize}
+Data\+Structures/Data\+Base.\+cs\end{DoxyCompactItemize}
