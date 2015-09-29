@@ -1,0 +1,6 @@
+digraph "TransactionJournals" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  dir_55cc02b0c181f148b9ee6f8ff689d896 [shape=box, label="TransactionJournals", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_55cc02b0c181f148b9ee6f8ff689d896.html"];
+}

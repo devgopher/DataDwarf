@@ -1,0 +1,6 @@
+digraph "DataStructures" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  dir_40af4d180baacc280484842de2ed7bd7 [shape=box, label="DataStructures", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_40af4d180baacc280484842de2ed7bd7.html"];
+}

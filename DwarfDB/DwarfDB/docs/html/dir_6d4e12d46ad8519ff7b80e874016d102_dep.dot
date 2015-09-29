@@ -1,0 +1,6 @@
+digraph "User" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  dir_6d4e12d46ad8519ff7b80e874016d102 [shape=box, label="User", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_6d4e12d46ad8519ff7b80e874016d102.html"];
+}

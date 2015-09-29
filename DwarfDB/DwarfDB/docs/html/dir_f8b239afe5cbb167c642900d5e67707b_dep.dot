@@ -1,0 +1,6 @@
+digraph "DwarfCommand" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  dir_f8b239afe5cbb167c642900d5e67707b [shape=box, label="DwarfCommand", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_f8b239afe5cbb167c642900d5e67707b.html"];
+}
