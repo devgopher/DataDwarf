@@ -263,6 +263,22 @@ namespace DwarfDB.DataStructures
 			return true;
 		}
 
+		public bool RemoveRecord( Record rem_rec ) {
+			if ( rem_rec == null )
+				return false;
+			
+			// Removing from a chunk
+			owner_db.chunk_manager.RemoveIndex( rem_rec.GetIndex() );
+			
+			// Removing an uneeded index
+			owner_db.chunk_manager.RemoveIndex( rem_rec.GetIndex() );
+			
+			// Destroying index
+			rem_rec.DestroyIndex();
+			
+			return true;
+		}
+		
 		public bool AddRecord( Record new_rec ) {
 
 			if ( new_rec == null )

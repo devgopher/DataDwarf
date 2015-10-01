@@ -94,6 +94,7 @@ namespace DwarfDB
 					indexes.Add(rec2.GetIndex());
 				}
 
+				dc2.RemoveRecord(dc2.GetRecord(12));
 				chunk_manager.CreateChunk( dc2.GetRecords(), chunk_size );
 				chunk_manager.CreateChunk( dc.GetRecords(), chunk_size );
 				chunk_manager.SaveIndexes();

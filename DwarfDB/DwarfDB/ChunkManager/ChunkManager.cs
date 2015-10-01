@@ -352,7 +352,7 @@ namespace DwarfDB.ChunkManager
 			foreach (var convenient_chunk in FindChunkFilesForRecord( hash  )) {
 				var item = ChunkFormat.GetItem( convenient_chunk,  hash  );
 				if ( item != null ) {
-				
+					
 					return (Record)item;
 				}
 			}
@@ -412,18 +412,53 @@ namespace DwarfDB.ChunkManager
 		}
 		
 		/// <summary>
+		/// Removing an index from index.dw and AllIndexes
+		/// </summary>
+		/// <param name="idx">Index</param>
+		public void RemoveIndex( Index idx ) {
+			RemoveIndex( idx.HashCode );
+		}
+		
+		/// <summary>
+		/// Removing an index from index.dw and AllIndexes
+		/// </summary>
+		/// <param name="hashcode">Hash code</param>
+		public void RemoveIndex( string hashcode ) {
+			Index rem_idx = null;
+			
+			foreach ( var chk_idx in AllIndexes.Keys ) {
+				if ( chk_idx.HashCode == hashcode ) {
+					rem_idx = chk_idx;
+					break;
+				}
+			}
+			
+			if ( rem_idx != null ) {
+				AllIndexes.Remove( rem_idx );
+				SaveIndexes();
+			}
+		}
+		
+		/// <summary>
+		/// Removes a record from chunk
+		/// </summary>
+		/// <param name="rec"></param>
+		public void RemoveRecord( Record rec ) {
+			foreach ( var strg in chunks_lst.Values ) {
+				ChunkFormat.RemoveItem( strg, rec.GetIndex() );
+			}
+		}
+		
+		/// <summary>
 		/// Saves all indexes in format Name:Type:IndexHash
 		/// </summary>
 		public void SaveIndexes() {
 			var filepath = CurrentDbPath+@"\indexes.dw";
 			FileStream fs = null;;
-			if ( !File.Exists( filepath ) )
-				fs = File.Create( filepath );
-			else
-				fs = File.Open( filepath, FileMode.Append );
-			
-		//	LoadRecordIndexes();
-			
+			if ( File.Exists( filepath ) )
+				File.Delete(filepath);
+			fs = File.Create( filepath );
+
 			using ( var sw = new StreamWriter( fs ) ) {
 				foreach ( var idx in AllIndexes ) {
 					if ( idx.Value.Key is Record ) {

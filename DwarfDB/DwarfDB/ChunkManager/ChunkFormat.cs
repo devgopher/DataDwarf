@@ -258,7 +258,7 @@ namespace DwarfDB.ChunkManager
 		/// Removing an item to a chunk file in multithread mode
 		/// </summary>
 		/// <param name="filepath">path to file</param>
-		/// <param name="ds">datastructure</param>
+		/// <param name="idx">datastructure index</param>
 		public static void RemoveItem( string filepath, Index idx ) {
 			byte[] buffer = new byte[MaxChunkSize];
 			int offset = 0;
