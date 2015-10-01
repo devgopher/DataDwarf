@@ -26,7 +26,7 @@ namespace DwarfDB.DataStructures
 			get;set;
 		}
 		
-	//	private DataType dtype = DataType.UNDEF;
+		//	private DataType dtype = DataType.UNDEF;
 		
 		public String Name {
 			get {
@@ -126,6 +126,15 @@ namespace DwarfDB.DataStructures
 		/// </summary>
 		public void BuildIndex() {
 			current_index = new Index( this );
+		}
+		
+		/// <summary>
+		/// Destroying an index for element ( for deletion )
+		/// </summary>
+		public void DestroyIndex() {
+			if ( current_index != null ) {
+				current_index = null;
+			}
 		}
 		
 		/// <summary>
