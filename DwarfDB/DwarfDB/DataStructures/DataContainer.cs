@@ -196,7 +196,7 @@ namespace DwarfDB.DataStructures
 		}
 		
 		/// <summary>
-		/// Adding a next couple of records to stack 
+		/// Adding a next couple of records to stack
 		/// </summary>
 		/// <param name="number"></param>
 		/// <returns></returns>
@@ -220,7 +220,7 @@ namespace DwarfDB.DataStructures
 			
 			return has_new_recs;
 		}
-				
+		
 		/// <summary>
 		/// Create new DataContainer
 		/// </summary>
@@ -264,19 +264,27 @@ namespace DwarfDB.DataStructures
 		}
 
 		public bool AddRecord( Record new_rec ) {
+
 			if ( new_rec == null )
 				return false;
-			foreach ( var rec in Records ) {
-				if ( rec.Id == new_rec.Id ) {
-					new_rec = null; // to avoid another operations with this record
-					return false;
+			var tmp_recs = GetRecords();
+			
+			foreach ( var rec in tmp_recs ) {
+				try {
+					if ( rec.Id == new_rec.Id ) {
+						new_rec = null; // to avoid another operations with this record
+						return false;
+					}
+				} catch ( Exception ex ) {
+					Errors.ErrorProcessing.Display("Error in adding a record to stack: "+ex.Message,
+					                               "", "", DateTime.Now);
 				}
 			}
 			new_rec.BuildIndex();
 			new_rec.OwnerDC = this;
 			// TODO: Add data to DataStack and file chunks
 			owner_db.Stack.Push( new_rec );
-			
+
 			return true;
 		}
 		
@@ -385,7 +393,7 @@ namespace DwarfDB.DataStructures
 		/// </summary>
 		/// <returns></returns>
 		public List<Record> GetRecords() {
-			return this.Records;
+			return this.Records.ToList();
 		}
 		
 		/// <summary>
@@ -394,16 +402,19 @@ namespace DwarfDB.DataStructures
 		/// </summary>
 		public int AllRecordsCount {
 			get {
-				var db = this.GetOwnerDB();
-				var indexes = db.Indexes;
+				if ( all_rec_count == -1 ) {
+					var db = this.GetOwnerDB();
+					var indexes = db.Indexes;
 
-				int cntr = indexes.Where( ( idxs ) => {
-				                         	return idxs.Value.Value == GetIndex().HashCode;
-				                         } ).Count();
-				
-				return cntr;
+					all_rec_count = indexes.Where( ( idxs ) => {
+					                         	return idxs.Value.Value == GetIndex().HashCode;
+					                         } ).Count();
+				}
+				return all_rec_count;
 			}
 		}
+		
+		int all_rec_count = -1;
 		
 		public bool  GetRecordsFromChunk( int chunk_number = 0 ) {
 			var couple = owner_db.chunk_manager.LoadChunk( chunk_number,  this.GetIndex().HashCode );
@@ -411,6 +422,20 @@ namespace DwarfDB.DataStructures
 				AddRecord( rec );
 			
 			return couple.Any();
+		}
+		
+		/// <summary>
+		/// Method for loading all DC content into the stack
+		/// </summary>
+		public void PreLoad() {
+			int pos = 0;
+			int all_rec_cnt = this.AllRecordsCount;
+			if ( all_rec_count > 0 )
+			GetRecord(0);
+			while ( Records.Count < all_rec_count ) {
+				GetRecordsFromChunk( pos );
+				++pos;
+			}
 		}
 		
 		#region IEnumerable
@@ -423,8 +448,7 @@ namespace DwarfDB.DataStructures
 						GetRecordsFromChunk( pos );
 					}
 				}
-				
-				//throw new DataException<DataContainer>(this, "Index is out of bounds!");
+
 				return this.Records[pos];
 			}
 			set {
@@ -438,7 +462,7 @@ namespace DwarfDB.DataStructures
 		
 		IEnumerator<Record> IEnumerable<Record>.GetEnumerator() {
 			return (IEnumerator<Record>)GetEnumerator();
-		}		
+		}
 		
 		IEnumerator IEnumerable.GetEnumerator() {
 			return (IEnumerator)GetEnumerator();

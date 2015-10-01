@@ -107,11 +107,18 @@ namespace DwarfDB
 				dc2.AssignOwnerDB(db2);
 				dc.AssignOwnerDB(db2);
 				
+				Console.WriteLine("Preloading DC1...");
+				dc.PreLoad();
+				Console.WriteLine("Preloading DC2...");
+				dc2.PreLoad();				
+				
 				// Getting a record
 				Record rc = null;
 				Record rc1 = null;
 				Record rc2 = null;
-
+				Record rc3 = null;
+				Record rc4 = null;				
+				
 				var get_time = Checks.ExecutionTimeCheck.DoCheck(() => {
 				                                                 	rc = dc2.GetRecord(2030);
 				                                                 });
@@ -122,10 +129,10 @@ namespace DwarfDB
 				                                                  	rc = dc2.GetRecord(30);
 				                                                  });
 				var get_time4 = Checks.ExecutionTimeCheck.DoCheck(() => {
-				                                                  	rc2 = dc2.GetRecord(20);
+				                                                  	rc3 = dc2.GetRecord(20);
 				                                                  });
 				var get_time2s = Checks.ExecutionTimeCheck.DoCheck(() => {
-				                                                   	rc2 = dc.GetRecord(2230);
+				                                                   	rc4 = dc.GetRecord(7900);
 				                                                   });
 				Console.WriteLine("Getting value time1, ms: "+get_time.ToString());
 
@@ -137,7 +144,11 @@ namespace DwarfDB
 					Console.WriteLine("Val: "+rc1.Fields[0].Value.ToString());
 				if ( rc2 != null && !(rc2 is DummyRecord) )
 					Console.WriteLine("Val: "+rc2.Fields[0].Value.ToString());
-				
+				if ( rc3 != null &&  !(rc3 is DummyRecord))
+					Console.WriteLine("Val: "+rc3.Fields[0].Value.ToString());
+				if ( rc4 != null && !(rc4 is DummyRecord) )
+					Console.WriteLine("Val: "+rc4.Fields[0].Value.ToString());
+								
 				Console.WriteLine("Trying LINQ #1...");
 				var query = from x in dc
 					where x.Fields[0].Value.ToString().Contains("итру")
@@ -151,12 +162,26 @@ namespace DwarfDB
 				Console.WriteLine("Trying LINQ #2...");
 				var aa1 = dc.Select((x,y)=>x).Where( (x) => {
 				                                    	return x.Fields[1].Type == DataType.INT &&
-				                                    		(int.Parse(x.Fields[1].Value.ToString()) % 5 == 0);
+				                                    		(int.Parse(x.Fields[1].Value.ToString()) % 3 == 0);
 				                                    }).ToList();
 				
 				foreach ( var rec in aa1) {
 					Console.WriteLine("Rec:"+rec.Fields[0].Type+"  :  "+rec.Fields[0].Value+" $$"+aa1.Count+
 					                  ":"+rec.Fields[1].Type+"  :  "+rec.Fields[1].Value+" $$"+aa1.Count);
+				}
+				
+				
+				Console.WriteLine("Trying LINQ #3...");
+				var aa2 = from rec in dc
+					join recb in dc2 on
+					rec.Fields[1].Value.ToString() equals recb.Fields[1].Value.ToString()
+					where rec.Fields[1].Type == DataType.INT && recb.Fields[1].Type == DataType.INT
+					select rec;
+				
+
+				foreach ( var rec in aa2) {
+					Console.WriteLine("Rec:"+rec.Fields[0].Type+"  :  "+rec.Fields[0].Value+" $$"+aa2.Count()+
+					                  ":"+rec.Fields[1].Type+"  :  "+rec.Fields[1].Value+" $$"+aa2.Count());
 				}
 			}
 		}

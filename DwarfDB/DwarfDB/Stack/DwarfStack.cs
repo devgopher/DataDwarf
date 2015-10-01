@@ -110,25 +110,23 @@ namespace DwarfDB.Stack
 				IStructure tmp = null;
 				
 				// Перебираем элементы основного стека
-				int element_count = this.Count;
+				int element_count = this.Count;				
 				
-				// PARALLEL!!!				
-				Parallel.For( 0, element_count, (int cntr) => {
-				             	if ( (this.TryPop( out tmp )) == true) {
-				             		// Нашли сообщение?
-				             		// Возвращаем перебранные элементы в основной
-				             		// стек и возвращаем найденное
-				             		if ( tmp is Record ) {
-				             			if ( (tmp as Record).OwnerDC == dc ){
-				             				//PushFromStack( tmp_stack );
-				             				ret.Add( (tmp as Record) );
-				             			}
-				             		}
-				             		
-				             		// Не нашли? Кладем во временный стек и идем дальше
-				             		tmp_stack.Push(tmp);
-				             	}
-				             });
+				for ( int cntr = 0; cntr <= element_count; ++cntr) {
+					if ( (this.TryPop( out tmp )) == true) {
+						// Нашли сообщение?
+						// Возвращаем перебранные элементы в основной
+						// стек и возвращаем найденное
+						if ( tmp is Record ) {
+							if ( (tmp as Record).OwnerDC == dc ){
+								ret.Add( tmp as Record );
+							}
+						}
+						
+						// Не нашли? Кладем во временный стек и идем дальше
+						tmp_stack.Push(tmp);
+					}
+				}
 				PushFromStack( tmp_stack );
 			} catch ( Exception ex ) {
 				Errors.ErrorProcessing.Display( "FAILED TO GET STRUCTURE: "+ex.Message+":"+ex.StackTrace,
