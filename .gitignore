@@ -14,16 +14,8 @@ $RECYCLE.BIN/
 *.msm
 *.msp
 
-# Executables and debug files
-*.exe
-*.pdb
-*.obj
-
 # Windows shortcuts
 *.lnk
-
-# others
-*.cache
 
 # =========================
 # Operating System Files
