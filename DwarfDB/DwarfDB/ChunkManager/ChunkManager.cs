@@ -360,6 +360,24 @@ namespace DwarfDB.ChunkManager
 			return null;
 		}
 		
+		/// <summary>
+		/// Save changes in an existant record
+		/// </summary>
+		/// <param name="rec">Record</param>
+		/// <returns>bool</returns>
+		public bool SaveRecord( Record rec ) {
+			// Let's find our record in chunk files...
+			foreach (var convenient_chunk in FindChunkFilesForRecord( hash  )) {
+				var item = ChunkFormat.GetItem( convenient_chunk,  hash  );
+				if ( item != null ) {
+					// saving changes...
+					ChunkFormat.SaveItemContents( convenient_chunk, rec );
+					return true;
+				}
+			}			
+			return false;
+		}
+		
 		public Dictionary<Index, KeyValuePair<IStructure,string>> AllIndexes {
 			get {
 				return all_indexes;

@@ -29,6 +29,12 @@ namespace DwarfDB.DataStructures
 		{
 		}
 		
+		public Column( DataType dt, String _name )
+		{
+			this.Name = _name;
+			this.Type = dt;
+		}
+		
 		#region ISerializable
 		public Column( SerializationInfo info, StreamingContext ctxt )
 		{
@@ -48,7 +54,7 @@ namespace DwarfDB.DataStructures
 				return name;
 			}
 			set {
-				if ( value.Length < 32 ) {
+				if ( value.Length < 256 ) {
 					name = value;
 				}
 			}
@@ -180,6 +186,7 @@ namespace DwarfDB.DataStructures
 				return false;
 			
 			var new_dc = new DataContainer( _owner_db, _name );
+					
 			return ( _owner_db.AddNewDataContainer( new_dc ) );
 		}
 
@@ -280,7 +287,6 @@ namespace DwarfDB.DataStructures
 		}
 		
 		public bool AddRecord( Record new_rec ) {
-
 			if ( new_rec == null )
 				return false;
 			var tmp_recs = GetRecords();

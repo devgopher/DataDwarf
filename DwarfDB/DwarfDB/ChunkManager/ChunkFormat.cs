@@ -94,6 +94,11 @@ namespace DwarfDB.ChunkManager
 			return false;
 		}
 		
+		/// <summary>
+		/// Adding a new item to a chunk
+		/// </summary>
+		/// <param name="filepath">Path to a chunk file</param>
+		/// <param name="db">Database</param>
 		public static void AddItem( string filepath, DataBase db ) {
 			if ( db != null ) {
 				var elem= new InnerChunkElement();
@@ -112,9 +117,45 @@ namespace DwarfDB.ChunkManager
 		}
 		
 		/// <summary>
+		/// Saving an existant item to a chunk file in multithread mode
+		/// </summary>
+		/// <param name="filepath">path to a file</param>
+		/// <param name="ds">datastructure</param>
+		public static void SaveItemContents( string filepath, IStructure ds ) {
+			var elem= new InnerChunkElement();
+			if ( ds != null ) {
+				var sw_read = new StreamReader( File.Open( filepath, FileMode.Open ) );
+				InnerChunkElement icm = null;
+				
+				using ( var json_reader = new JsonTextReader(sw_read) ) {
+					icm = FindItem( json_reader, ds.GetIndex().HashCode );
+				}
+				
+				if ( icm == null )
+				{
+					Errors.ErrorProcessing.Display("Can't find such item!", "Saving an item", "", DateTime.Now);
+					return;
+				}
+				
+				var sw_write = new StreamWriter( File.Open( filepath, FileMode.Append ) );
+				using (var json_writer = new JsonTextWriter(sw_write)) {
+					if ( ds is Record ) {
+						icm.Contents = JsonConvert.SerializeObject(ds, Formatting.Indented );
+					} else if ( ds is DataContainer ) {
+						icm.Contents = JsonConvert.SerializeObject(ds as DataContainer, Formatting.Indented);
+					}
+					elem.ElementHash = ds.GetIndex().HashCode;
+					sw_write.Write(JsonConvert.SerializeObject(elem, Formatting.Indented));
+				}
+			} else {
+				Errors.ErrorProcessing.Display( "DataStructure object is null!", "", "", DateTime.Now);
+			}
+		}
+		
+		/// <summary>
 		/// Adding a new item to a chunk file in multithread mode
 		/// </summary>
-		/// <param name="filepath">path to file</param>
+		/// <param name="filepath">path to a file</param>
 		/// <param name="ds">datastructure</param>
 		public static void AddItem( string filepath, IStructure ds ) {
 			if ( ds != null ) {
@@ -134,7 +175,7 @@ namespace DwarfDB.ChunkManager
 						elem.ElementName = ((DataContainer)ds).Name;
 						var ds_sec = (DataContainer)ds;
 						elem.Contents = JsonConvert.SerializeObject(ds_sec, Formatting.Indented);
-					}					
+					}
 					elem.ElementHash = ds.GetIndex().HashCode;
 					sw.Write(JsonConvert.SerializeObject(elem, Formatting.Indented));
 				}
@@ -146,7 +187,7 @@ namespace DwarfDB.ChunkManager
 		/// <summary>
 		/// Getting an item from a chunk file in multithread mode
 		/// </summary>
-		/// <param name="filepath">path to file</param>
+		/// <param name="filepath">path to a chunk file</param>
 		/// <param name="idx">item index</param>
 		public static IStructure GetItem( string filepath, Index idx ) {
 			return GetItem( filepath, idx.HashCode );
@@ -165,9 +206,9 @@ namespace DwarfDB.ChunkManager
 		}
 		
 		/// <summary>
-		/// Getting an item from a chunk file in multithread mode
+		/// Getting an item from a chunk file in a multithread mode
 		/// </summary>
-		/// <param name="filepath">path to file</param>
+		/// <param name="filepath">path to a file</param>
 		/// <param name="idx">item index</param>
 		private static IStructure GetItemInfile( JsonTextReader json_reader, Index idx ) {
 			InnerChunkElement inner = FindItem( json_reader, idx );
@@ -212,7 +253,7 @@ namespace DwarfDB.ChunkManager
 		/// <summary>
 		/// Getting an item from a chunk file in multithread mode
 		/// </summary>
-		/// <param name="filepath">path to file</param>
+		/// <param name="json_reader">JSON reader</param>
 		/// <param name="hash">item index</param>
 		private static IStructure GetItemInfile( JsonTextReader json_reader, string hash ) {
 			InnerChunkElement inner = FindItem( json_reader, hash );

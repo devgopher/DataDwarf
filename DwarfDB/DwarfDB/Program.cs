@@ -14,8 +14,9 @@ namespace DwarfDB
 		{
 			Console.WriteLine("Hello World!");
 			
-			DataTableChunkCreation();
+			//DataTableChunkCreation();
 			//DataBaseChunkCreation();
+			Employees();
 			Console.Write("Press any key to continue . . . ");
 			Console.ReadKey(true);
 		}

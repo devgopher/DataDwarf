@@ -45,7 +45,7 @@ namespace DwarfDB.DataStructures
 			return new_field;
 		}
 		
-		private Column own_column = null;
+		private readonly Column own_column = null;
 	}
 	
 	/// <summary>
@@ -263,6 +263,5 @@ namespace DwarfDB.DataStructures
 		
 		protected Index current_index;
 		protected int position = -1;
-
 	}
 }

@@ -52,6 +52,16 @@ namespace DwarfDB.DataStructures
 			get; private set;
 		}
 		
+		public static bool Exists( string db_name ) {
+			var cpath = Config.Config.Instance.DataDirectory+db_name+@"\";
+			if ( Directory.Exists( cpath ) ) {
+				if ( File.Exists( cpath+"index.dw" ) && (Directory.GetFiles("*.dwarf").Count() > 0) )
+					return true;
+			}
+			
+			return false;
+		}
+			
 		public static DataBase Create( string db_name, ChunkManager.ChunkManager _cm ) {
 			var cpath = Config.Config.Instance.DataDirectory+db_name;
 			
@@ -59,7 +69,8 @@ namespace DwarfDB.DataStructures
 				Directory.CreateDirectory(cpath);
 			
 			var new_db = new DataBase( db_name, _cm, true );
-			// TODO!!
+			
+			_cm.CreateChunk( new_db );
 			
 			
 			return new_db;
@@ -161,6 +172,7 @@ namespace DwarfDB.DataStructures
 			return false;
 		}
 		
+		
 		/// <summary>
 		/// Getting DataContainer by name
 		/// </summary>
@@ -174,6 +186,11 @@ namespace DwarfDB.DataStructures
 							return k.Value;
 				}
 				
+				var chk_dc = chunk_manager.GetDataContainer( dc_name );
+				if ( chk_dc != null ) {
+					chk_dc.AssignOwnerDB(this);					
+					return chk_dc;
+				}
 				// If we hadn't found DC with such name, we should write
 				// an error
 				
