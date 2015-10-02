@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using DwarfDB.DataStructures;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace DwarfDB.Stack
 {
@@ -58,8 +59,10 @@ namespace DwarfDB.Stack
 	{
 		public DwarfStack( DataBase _db )
 		{
+			Modified = true;
 			if ( _db != null )
 				db = _db;
+			parallel_opts.MaxDegreeOfParallelism = Environment.ProcessorCount*4;
 		}
 		
 		// Максимальное кол-во элементов в стеке
@@ -80,6 +83,13 @@ namespace DwarfDB.Stack
 				if ( !idx_hashes.Contains( new_index_hash ) )
 					idx_hashes.Add( new_index_hash );
 				
+				if ( dta_struct is Record ) {
+					//if ( !records_list..Contains(dta_struct as Record) ) {
+					records_list.Add( dta_struct as Record );
+					Modified = true;
+					//}
+				}
+				
 				base.Push(dta_struct);
 			}
 		}
@@ -90,6 +100,7 @@ namespace DwarfDB.Stack
 			if ( ret ) {
 				data.Save(); // Сохраняем в файле
 				idx_hashes.Remove(data.GetIndex().HashCode);
+				Modified = true;
 			}
 			return ret;
 		}
@@ -104,35 +115,46 @@ namespace DwarfDB.Stack
 		/// <param name="ind"></param>
 		/// <returns></returns>
 		public List<Record> GetRecords( DataStructures.DataContainer dc ) {
-			var ret = new List<Record>();
+			var ret = new ConcurrentBag<Record>();
 			try {
-				var tmp_stack = new ConcurrentStack<IStructure>(); // временный стек для перебора элементов в основном стеке
-				IStructure tmp = null;
-				
-				// Перебираем элементы основного стека
-				int element_count = this.Count;				
-				
-				for ( int cntr = 0; cntr <= element_count; ++cntr) {
-					if ( (this.TryPop( out tmp )) == true) {
-						// Нашли сообщение?
-						// Возвращаем перебранные элементы в основной
-						// стек и возвращаем найденное
-						if ( tmp is Record ) {
-							if ( (tmp as Record).OwnerDC == dc ){
-								ret.Add( tmp as Record );
+				if ( this.Modified ) {
+					var tmp_stack = new ConcurrentStack<IStructure>(); // временный стек для перебора элементов в основном стеке
+					IStructure tmp = null;
+					
+					// Перебираем элементы основного стека
+					int element_count = this.Count;
+					
+					for ( int cntr = 0; cntr <= element_count; ++cntr) {
+						if ( (this.TryPop( out tmp )) == true) {
+							// Нашли сообщение?
+							// Возвращаем перебранные элементы в основной
+							// стек и возвращаем найденное
+							if ( tmp is Record ) {
+								if ( (tmp as Record).OwnerDC == dc ) {
+									ret.Add( tmp as Record );
+								}
 							}
+							
+							// Не нашли? Кладем во временный стек и идем дальше
+							tmp_stack.Push( tmp );
 						}
-						
-						// Не нашли? Кладем во временный стек и идем дальше
-						tmp_stack.Push(tmp);
 					}
+					PushFromStack( tmp_stack );
+					
+					// Putting down a flag for next GetRecords operations
+					Modified = false;
+				} else {
+					if ( records_list.Count > 0 )
+						Parallel.ForEach( records_list, parallel_opts, ( rec ) => {
+						                 	if ( rec.OwnerDC == dc )
+						                 		ret.Add(rec);
+						                 });
 				}
-				PushFromStack( tmp_stack );
 			} catch ( Exception ex ) {
 				Errors.ErrorProcessing.Display( "FAILED TO GET STRUCTURE: "+ex.Message+":"+ex.StackTrace,
 				                               "", "", DateTime.Now );
 			}
-			return ret;
+			return ret.ToList();
 		}
 		
 		/// <summary>
@@ -178,7 +200,16 @@ namespace DwarfDB.Stack
 			}
 		}
 		
+		/// <summary>
+		/// Is stack elements array modified?
+		/// </summary>
+		public bool Modified {
+			get; private set;
+		}
+		
+		ParallelOptions parallel_opts = new ParallelOptions();
 		DataBase db;
+		ConcurrentBag<Record> records_list = new ConcurrentBag<Record>();
 		List<string> idx_hashes = new List<string>();
 	}
 }

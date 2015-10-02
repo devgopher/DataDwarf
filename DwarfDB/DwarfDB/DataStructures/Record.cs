@@ -247,7 +247,7 @@ namespace DwarfDB.DataStructures
 		public IStructure Clone() {
 			var ret_rec = new Record( OwnerDC );
 			ret_rec.position = -1;
-			
+
 			foreach ( var field in Fields ) {
 				var new_field = field.Clone();
 				ret_rec.Fields.Add( field );

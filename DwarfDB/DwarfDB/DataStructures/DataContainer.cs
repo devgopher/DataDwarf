@@ -267,11 +267,11 @@ namespace DwarfDB.DataStructures
 			if ( rem_rec == null )
 				return false;
 			
-			// Removing from a chunk
-			owner_db.chunk_manager.RemoveIndex( rem_rec.GetIndex() );
-			
 			// Removing an uneeded index
 			owner_db.chunk_manager.RemoveIndex( rem_rec.GetIndex() );
+			
+			// Removing from a chunk
+			owner_db.chunk_manager.RemoveRecord( rem_rec );
 			
 			// Destroying index
 			rem_rec.DestroyIndex();
@@ -353,7 +353,7 @@ namespace DwarfDB.DataStructures
 		/// <summary>
 		/// Load DataContainer from file chunk directory
 		/// </summary>
-		/// <param name="filepath"></param>
+		/// <param name="dirpath"></param>
 		/// <param name="index"></param>
 		public void LoadFromChunkDir( string dirpath, Index index ) {
 			// TODO
@@ -423,8 +423,8 @@ namespace DwarfDB.DataStructures
 					var indexes = db.Indexes;
 
 					all_rec_count = indexes.Where( ( idxs ) => {
-					                         	return idxs.Value.Value == GetIndex().HashCode;
-					                         } ).Count();
+					                              	return idxs.Value.Value == GetIndex().HashCode;
+					                              } ).Count();
 				}
 				return all_rec_count;
 			}
@@ -447,7 +447,7 @@ namespace DwarfDB.DataStructures
 			int pos = 0;
 			int all_rec_cnt = this.AllRecordsCount;
 			if ( all_rec_count > 0 )
-			GetRecord(0);
+				GetRecord(0);
 			while ( Records.Count < all_rec_count ) {
 				GetRecordsFromChunk( pos );
 				++pos;

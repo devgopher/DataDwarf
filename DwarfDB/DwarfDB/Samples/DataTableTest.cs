@@ -6,8 +6,8 @@
 using System;
 using System.Linq;
 using DwarfDB.DataStructures;
-using System.Collections.Generic;
 using DwarfDB.ChunkManager;
+using System.Collections.Generic;
 
 namespace DwarfDB
 {
@@ -84,7 +84,7 @@ namespace DwarfDB
 							rec2[col.Name].Value = "Цитрус "+col.Name+" "+k.ToString()+":::"+db.Name;
 							rec2[col.Name].Type = DataType.STRING;
 						} else {
-							rec2[col.Name].Value = k*5555;
+							rec2[col.Name].Value = k*555;
 							rec2[col.Name].Type = DataType.INT;
 						}
 					}
@@ -94,7 +94,6 @@ namespace DwarfDB
 					indexes.Add(rec2.GetIndex());
 				}
 
-				dc2.RemoveRecord(dc2.GetRecord(12));
 				chunk_manager.CreateChunk( dc2.GetRecords(), chunk_size );
 				chunk_manager.CreateChunk( dc.GetRecords(), chunk_size );
 				chunk_manager.SaveIndexes();
@@ -170,15 +169,13 @@ namespace DwarfDB
 					Console.WriteLine("Rec:"+rec.Fields[0].Type+"  :  "+rec.Fields[0].Value+" $$"+aa1.Count+
 					                  ":"+rec.Fields[1].Type+"  :  "+rec.Fields[1].Value+" $$"+aa1.Count);
 				}
-				
-				
+								
 				Console.WriteLine("Trying LINQ #3...");
 				var aa2 = from rec in dc
 					join recb in dc2 on
 					rec.Fields[1].Value.ToString() equals recb.Fields[1].Value.ToString()
 					where rec.Fields[1].Type == DataType.INT && recb.Fields[1].Type == DataType.INT
 					select rec;
-				
 
 				foreach ( var rec in aa2) {
 					Console.WriteLine("Rec:"+rec.Fields[0].Type+"  :  "+rec.Fields[0].Value+" $$"+aa2.Count()+
