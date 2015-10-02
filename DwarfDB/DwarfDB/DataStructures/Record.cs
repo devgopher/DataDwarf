@@ -89,11 +89,13 @@ namespace DwarfDB.DataStructures
 		#endregion
 		
 		/// <summary>
-		/// Save to file chunk
+		/// Save changes to file chunk
 		/// </summary>
-		/// <param name="filepath"></param>
 		public void Save() {
-			// TODO
+			var cm = OwnerDC.GetOwnerDB().chunk_manager;
+			if ( cm != null ) {
+				cm.SaveRecord(this);
+			}			
 		}
 		
 		/// <summary>
