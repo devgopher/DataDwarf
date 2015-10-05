@@ -16,18 +16,19 @@ namespace DwarfDB
 	/// </summary>
 	partial class Program
 	{
-		
 		public static void Employees() {
 			string db_name= "employees";
 			DataBase db = null;
 			DataContainer dc_employee = null;
 			DataContainer dc_positions = null;
 			DataContainer dc_divisions = null;
-			
+			var db_dir = Config.Config.Instance.DataDirectory+db_name;
 			var cm = new ChunkManager.ChunkManager();
 			
+			
+			// Creating DB structure
 			if (DataBase.Exists(db_name)) {
-				db = DataBase.LoadFrom( db_name, cm );				
+				db = DataBase.LoadFrom( db_name, cm );
 			} else {
 				db = DataBase.Create( db_name, cm );
 				DataContainer.Create( db, "employee" );
@@ -50,14 +51,27 @@ namespace DwarfDB
 				dc_divisions.AddColumn( new Column( DataType.INT, "DivId" ) );
 				dc_divisions.AddColumn( new Column( DataType.STRING, "Name" ) );
 				
-				
 				cm.CreateChunk( dc_employee );
 				cm.CreateChunk( dc_positions );
 				cm.CreateChunk( dc_divisions );
+				cm.SaveIndexes();
 			}
+
+			// Filling DB structure
+			Console.WriteLine("Filling our db...");
+			Console.WriteLine("Loading db \""+db_name+"\"");
+						Console.WriteLine("Loading container \"employee\"");
+			DataContainer dc_employee_load = db.GetDataContainer( "employee" );
+			Console.WriteLine("Adding records into \"employee\"");
 			
+			Record tmp = new Record( dc_employee_load );
+					
+			dc_employee_load.PreLoad();
 			
+			dc_employee_load.AddRecord(tmp);
+			dc_employee_load.Save();
 			
+			cm.SaveIndexes();
 		}
 	}
 }

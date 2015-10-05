@@ -1,6 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
+# SharpDevelop 5.1
 VisualStudioVersion = 12.0.20827.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DwarfDB", "DwarfDB.csproj", "{D4E12558-0D40-48D4-899D-0A098F986CB2}"
@@ -10,13 +11,16 @@ Global
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 		Debug2|Any CPU = Debug2|Any CPU
+		Debug3|Any CPU = Debug3|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{D4E12558-0D40-48D4-899D-0A098F986CB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D4E12558-0D40-48D4-899D-0A098F986CB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D4E12558-0D40-48D4-899D-0A098F986CB2}.Debug2|Any CPU.ActiveCfg = Debug2|Any CPU
-		{D4E12558-0D40-48D4-899D-0A098F986CB2}.Debug2|Any CPU.Build.0 = Debug2|Any CPU
 		{D4E12558-0D40-48D4-899D-0A098F986CB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D4E12558-0D40-48D4-899D-0A098F986CB2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4E12558-0D40-48D4-899D-0A098F986CB2}.Debug2|Any CPU.ActiveCfg = Debug2|Any CPU
+		{D4E12558-0D40-48D4-899D-0A098F986CB2}.Debug2|Any CPU.Build.0 = Debug2|Any CPU
+		{D4E12558-0D40-48D4-899D-0A098F986CB2}.Debug3|Any CPU.ActiveCfg = Debug3|Any CPU
+		{D4E12558-0D40-48D4-899D-0A098F986CB2}.Debug3|Any CPU.Build.0 = Debug3|Any CPU
 	EndGlobalSection
 EndGlobal

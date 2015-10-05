@@ -251,6 +251,30 @@ namespace DwarfDB.ChunkManager
 		}
 		
 		/// <summary>
+		/// Getting a DataContainer from the chunk
+		/// </summary>
+		/// <param name="filepath">path to file</param>
+		/// <param name="dc_name">DC name</param>
+		public static DataContainer GetDCInFile( string filepath, string dc_name ) {
+			using (var json_reader = new JsonTextReader(new StreamReader(File.Open( filepath, FileMode.Open )))) {
+				json_reader.SupportMultipleContent = true;
+				var item = new InnerChunkElement();
+				while ( json_reader.Read() ) {
+					item = json_serializer.Deserialize<InnerChunkElement>( json_reader );
+					if ( item.ElemType == InnerChunkElement.DataType.DATACONTAINER ) {
+						if ( item.ElementName == dc_name ) {
+							var ret_dc = JsonConvert.DeserializeObject<DataContainer>( item.Contents );
+							ret_dc.Name = dc_name;
+							ret_dc.BuildIndex();
+							return ret_dc;
+						}
+					}
+				}
+			}
+			return null;
+		}
+		
+		/// <summary>
 		/// Getting an item from a chunk file in multithread mode
 		/// </summary>
 		/// <param name="json_reader">JSON reader</param>

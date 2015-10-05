@@ -55,13 +55,13 @@ namespace DwarfDB.DataStructures
 		public static bool Exists( string db_name ) {
 			var cpath = Config.Config.Instance.DataDirectory+db_name+@"\";
 			if ( Directory.Exists( cpath ) ) {
-				if ( File.Exists( cpath+"index.dw" ) && (Directory.GetFiles("*.dwarf").Count() > 0) )
+				if ( File.Exists( cpath+"indexes.dw" ) && (Directory.GetFiles(cpath, "*.dwarf").Count() > 0) )
 					return true;
 			}
 			
 			return false;
 		}
-			
+		
 		public static DataBase Create( string db_name, ChunkManager.ChunkManager _cm ) {
 			var cpath = Config.Config.Instance.DataDirectory+db_name;
 			
@@ -81,6 +81,7 @@ namespace DwarfDB.DataStructures
 			if ( Directory.Exists(cpath) ) {
 				var db =  new DataBase( db_name, _cm, false );
 				db.DbPath = cpath;
+				db.UpdateDataContainers();
 				return db;
 			} else {
 				Errors.ErrorProcessing.Display( "Can't find a directory: "+cpath, "DB loading", "Check DB name or path existance", DateTime.Now );
@@ -152,7 +153,17 @@ namespace DwarfDB.DataStructures
 		/// Loading and updating data containers list for DB
 		/// </summary>
 		private void UpdateDataContainers() {
-			// TODO: loading data containers from chunks
+			chunk_manager.LoadDCIndexes();
+			chunk_manager.LoadRecordIndexes();
+			var indexes = chunk_manager.AllIndexes;
+			if ( inner_dc_dict.Count > 0 )
+				inner_dc_dict.Clear();
+			
+			foreach ( var item in indexes ) {
+				if ( item.Value.Key is DataContainer )
+					inner_dc_dict.Add( item.Value.Value, (DataContainer)(item.Value.Key) );
+			}
+			
 		}
 		
 		public bool AddNewDataContainer( DataContainer new_dc ) {
@@ -160,7 +171,7 @@ namespace DwarfDB.DataStructures
 				// TODO: loading data new container into stack and file chunks
 				inner_dc_dict.Add( new_dc.Name, new_dc );
 				Stack.Push( new_dc );
-				
+				new_dc.AssignOwnerDB(this);
 				return true;
 			} else {
 				Errors.ErrorProcessing.Display(
@@ -180,15 +191,21 @@ namespace DwarfDB.DataStructures
 		/// <returns></returns>
 		public DataContainer GetDataContainer( string dc_name ) {
 			if ( dc_name != String.Empty ) {
-				foreach ( var k in inner_dc_dict ) {
-					if ( k.Key == dc_name )
-						if ( k.Value != null )
+				/*foreach ( var k in inner_dc_dict ) {
+					if ( k.Key == dc_name ) {
+						if ( k.Value != null ) {
+							k.Value.AssignOwnerDB(this);
+							k.Value.BuildIndex();
+						//	k.Value.LoadRecords();
 							return k.Value;
-				}
+						}
+					}
+				}*/
 				
 				var chk_dc = chunk_manager.GetDataContainer( dc_name );
 				if ( chk_dc != null ) {
-					chk_dc.AssignOwnerDB(this);					
+					chk_dc.AssignOwnerDB(this);
+					chk_dc.LoadRecords();
 					return chk_dc;
 				}
 				// If we hadn't found DC with such name, we should write

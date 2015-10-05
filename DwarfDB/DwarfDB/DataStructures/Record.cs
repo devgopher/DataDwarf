@@ -17,9 +17,10 @@ namespace DwarfDB.DataStructures
 	[JsonObject][Serializable]
 	public class Field {
 		[JsonConstructor]
-		public Field( Column _own_column, Object _value ) {
-			own_column = _own_column;
+		public Field( String _name, DataType _type, Object _value ) {
 			Value = _value;
+			Type = _type;
+			//Name = _name;
 		}
 		
 		public DataType Type {
@@ -29,19 +30,22 @@ namespace DwarfDB.DataStructures
 		//	private DataType dtype = DataType.UNDEF;
 		
 		public String Name {
-			get {
-				return own_column.Name;
-			} private set {
-				own_column.Name = value;
-			}
+			get; set;
 		}
 		
 		public Object Value {
-			get; set;
+			get {
+				return _inner_value;
+			}
+			set {
+				_inner_value = value;
+			}
 		}
 
+		private Object _inner_value;
+		
 		public Field Clone() {
-			var new_field = new Field( own_column, Value );
+			var new_field = new Field( Name, Type , Value );
 			return new_field;
 		}
 		
@@ -69,7 +73,7 @@ namespace DwarfDB.DataStructures
 		private void FillFields() {
 			if ( OwnerDC != null ) {
 				foreach ( var col in OwnerDC.Columns ) {
-					Fields.Add( new Field( col, null ));
+					Fields.Add( new Field( col.Name, col.Type, null ));
 				}
 			}
 		}
@@ -93,9 +97,10 @@ namespace DwarfDB.DataStructures
 		/// </summary>
 		public void Save() {
 			var cm = OwnerDC.GetOwnerDB().chunk_manager;
+			this.BuildIndex();
 			if ( cm != null ) {
 				cm.SaveRecord(this);
-			}			
+			}
 		}
 		
 		/// <summary>

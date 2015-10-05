@@ -89,6 +89,7 @@ namespace DwarfDB.DataStructures
 			owner_db = _owner_db;
 			BuildIndex();
 		}
+		
 		#region ISerializable
 		public DataContainer( SerializationInfo info, StreamingContext ctxt )
 		{
@@ -170,9 +171,19 @@ namespace DwarfDB.DataStructures
 		
 		#endregion
 		
+		private string inner_name = null;
 		
 		public String Name {
-			get; private set;
+			get {
+				return inner_name;
+			}
+			set {
+				if ( inner_name == null ) {
+					inner_name = value;
+				} else {
+					Errors.ErrorProcessing.Display("DC renaming is not allowed!", "", "", DateTime.Now);
+				}
+			}
 		}
 		
 		/// <summary>
@@ -186,7 +197,7 @@ namespace DwarfDB.DataStructures
 				return false;
 			
 			var new_dc = new DataContainer( _owner_db, _name );
-					
+			
 			return ( _owner_db.AddNewDataContainer( new_dc ) );
 		}
 
@@ -251,7 +262,7 @@ namespace DwarfDB.DataStructures
 				}
 			}
 			
-			// Save to file chunk
+			// Save to a file chunk
 			this.Save();
 			return true;
 		}
@@ -289,12 +300,12 @@ namespace DwarfDB.DataStructures
 		public bool AddRecord( Record new_rec ) {
 			if ( new_rec == null )
 				return false;
+			
 			var tmp_recs = GetRecords();
 			
 			foreach ( var rec in tmp_recs ) {
 				try {
 					if ( rec.Id == new_rec.Id ) {
-						new_rec = null; // to avoid another operations with this record
 						return false;
 					}
 				} catch ( Exception ex ) {
@@ -334,9 +345,13 @@ namespace DwarfDB.DataStructures
 		/// <summary>
 		/// Save to file chunk
 		/// </summary>
-		/// <param name="filepath"></param>
 		public void Save( ) {
-			// TODO!!
+			// Let's create a chunk if we need it
+			GetOwnerDB().chunk_manager.CreateChunk( this );
+			
+			// Save records from DC
+			var recs = GetRecords();
+			GetOwnerDB().chunk_manager.CreateChunk(recs, 50);
 		}
 		
 		/// <summary>
@@ -386,7 +401,7 @@ namespace DwarfDB.DataStructures
 		}
 		
 		/// <summary>
-		/// Incapsulating this.Records[i]
+		/// Incapsulating this.Records[i].get
 		/// for making some additional operations safely
 		/// </summary>
 		/// <param name="i">index</param>
@@ -415,7 +430,7 @@ namespace DwarfDB.DataStructures
 		/// </summary>
 		/// <returns></returns>
 		public List<Record> GetRecords() {
-			return this.Records.ToList();
+			return Records.ToList();
 		}
 		
 		/// <summary>
@@ -454,7 +469,7 @@ namespace DwarfDB.DataStructures
 			int all_rec_cnt = this.AllRecordsCount;
 			if ( all_rec_count > 0 )
 				GetRecord(0);
-			while ( Records.Count < all_rec_count ) {
+			while ( pos < all_rec_count ) {
 				GetRecordsFromChunk( pos );
 				++pos;
 			}
@@ -504,8 +519,7 @@ namespace DwarfDB.DataStructures
 			// TODO!!
 			var ret_dc = new DataContainer( GetOwnerDB(), this.Name );
 			ret_dc.Create( this.Name, this.Columns.ToArray() );
-			ret_dc.Name = this.Name;
-			
+			ret_dc.Name = this.Name;			
 			
 			foreach ( var rec in Records ) {
 				var tmp_rec = (Record)rec.Clone();
