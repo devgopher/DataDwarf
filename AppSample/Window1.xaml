@@ -10,9 +10,17 @@
 			Text="input..."
 			Grid.Column="0"
 			Grid.Row="0"
-			Height="30"
 			HorizontalAlignment="Stretch"
 			VerticalAlignment="Stretch"
-			Margin="0,8,0,356" />
+			Margin="8,8,8,346" />
+		<DataGrid
+			Width="438"
+			Height="330"
+			Grid.Column="0"
+			Grid.Row="0"
+			HorizontalAlignment="Left"
+			VerticalAlignment="Bottom"
+			Margin="8,0,0,8"
+			x:Name="EmployeeGrid" />
 	</Grid>
 </Window>

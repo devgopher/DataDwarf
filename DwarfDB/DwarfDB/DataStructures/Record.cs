@@ -26,9 +26,7 @@ namespace DwarfDB.DataStructures
 		public DataType Type {
 			get;set;
 		}
-		
-		//	private DataType dtype = DataType.UNDEF;
-		
+
 		public String Name {
 			get; set;
 		}

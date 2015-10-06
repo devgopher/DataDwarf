@@ -79,17 +79,15 @@ namespace DwarfDB
 			UInt64 rec_id = 110+(UInt64)DateTime.Now.Ticks % 2000;
 			
 			do  {
-				Record tmp = new Record( dc_employee_load );
+				var tmp = new Record( dc_employee_load );
 				Console.WriteLine("Enter a new employee name: ");
 				var name = Console.ReadLine();
 				Console.WriteLine("surname: ");
 				var surname = Console.ReadLine();
 				
 				tmp["Name"].Value = name;
-				tmp["Surname"].Value = surname;
-				
+				tmp["Surname"].Value = surname;				
 				tmp.Id = ++rec_id;
-				
 				
 				if (!dc_employee_load.AddRecord(tmp)) {
 					Console.WriteLine("Failed! Press \"Y\" - to enter an another employee");
