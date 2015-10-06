@@ -1,0 +1,8 @@
+C:\Users\igor.evdokimov\Documents\Github\DataDwarf\DwarfDB\DwarfDB\bin\Debug2\DwarfDB.exe.config
+C:\Users\igor.evdokimov\Documents\Github\DataDwarf\DwarfDB\DwarfDB\bin\Debug2\DwarfDB.exe
+C:\Users\igor.evdokimov\Documents\Github\DataDwarf\DwarfDB\DwarfDB\bin\Debug2\DwarfDB.pdb
+C:\Users\igor.evdokimov\Documents\Github\DataDwarf\DwarfDB\DwarfDB\bin\Debug2\Newtonsoft.Json.dll
+C:\Users\igor.evdokimov\Documents\Github\DataDwarf\DwarfDB\DwarfDB\bin\Debug2\Newtonsoft.Json.xml
+C:\Users\igor.evdokimov\Documents\Github\DataDwarf\DwarfDB\DwarfDB\obj\Debug2\DwarfDB.exe
+C:\Users\igor.evdokimov\Documents\Github\DataDwarf\DwarfDB\DwarfDB\obj\Debug2\DwarfDB.pdb
+C:\Users\igor.evdokimov\Documents\Github\DataDwarf\DwarfDB\DwarfDB\obj\Debug2\DwarfDB.csprojResolveAssemblyReference.cache
