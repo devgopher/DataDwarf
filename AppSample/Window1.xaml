@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Window
+	x:Class="AppSample.Window1" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	Title="DwarfDB App Sample"
+	Height="416"
+	Width="464">
+	<Grid>
+		<TextBox
+			Name="tb1"
+			Text="input..."
+			Grid.Column="0"
+			Grid.Row="0"
+			Height="30"
+			HorizontalAlignment="Stretch"
+			VerticalAlignment="Stretch"
+			Margin="0,8,0,356" />
+	</Grid>
+</Window>
