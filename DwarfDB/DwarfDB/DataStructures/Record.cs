@@ -20,7 +20,7 @@ namespace DwarfDB.DataStructures
 		public Field( String _name, DataType _type, Object _value ) {
 			Value = _value;
 			Type = _type;
-			//Name = _name;
+			Name = _name;
 		}
 		
 		public DataType Type {

@@ -345,7 +345,7 @@ namespace DwarfDB.DataStructures
 		/// <summary>
 		/// Save to file chunk
 		/// </summary>
-		public void Save( ) {
+		public void Save() {
 			// Let's create a chunk if we need it
 			GetOwnerDB().chunk_manager.CreateChunk( this );
 			

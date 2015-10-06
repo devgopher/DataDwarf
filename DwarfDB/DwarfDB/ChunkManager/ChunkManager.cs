@@ -285,9 +285,9 @@ namespace DwarfDB.ChunkManager
 					"_" + records.First().GetIndex().HashCode + ".dwarf";
 				var new_chunk = ChunkFormat.CreateNewFile( filepath );
 				records.ForEach( (rec) => {
-				                	if ( !all_indexes.Keys.Contains(rec.GetIndex()) ) {
+				                	if ( !all_hashes.Contains(rec.GetIndex().HashCode) ) {
 				                		ChunkFormat.AddItem( filepath, rec);
-				                		all_indexes.Add(rec.GetIndex(), new KeyValuePair<IStructure, string>(rec, rec.OwnerDC.GetIndex().HashCode));
+				                		AllIndexes.Add(rec.GetIndex(), new KeyValuePair<IStructure, string>(rec, rec.OwnerDC.GetIndex().HashCode));
 				                	}
 				                } );
 				
@@ -387,6 +387,11 @@ namespace DwarfDB.ChunkManager
 		
 		public Dictionary<Index, KeyValuePair<IStructure,string>> AllIndexes {
 			get {
+				if ( all_indexes.Count != all_hashes.Count ) {
+					foreach ( var idx in all_indexes ) {
+						all_hashes.Add(idx.Key.HashCode);
+					}
+				}
 				return all_indexes;
 			}
 		}
@@ -543,6 +548,8 @@ namespace DwarfDB.ChunkManager
 				}
 			}
 		}
+		
+		private List<string> all_hashes = new List<string>();
 		
 		public static ChunkManager inner_object = null;
 		

@@ -60,17 +60,48 @@ namespace DwarfDB
 			// Filling DB structure
 			Console.WriteLine("Filling our db...");
 			Console.WriteLine("Loading db \""+db_name+"\"");
-						Console.WriteLine("Loading container \"employee\"");
+			Console.WriteLine("Loading container \"employee\"");
 			DataContainer dc_employee_load = db.GetDataContainer( "employee" );
 			Console.WriteLine("Adding records into \"employee\"");
 			
-			Record tmp = new Record( dc_employee_load );
-					
 			dc_employee_load.PreLoad();
 			
-			dc_employee_load.AddRecord(tmp);
-			dc_employee_load.Save();
+			// viewing existing records
+			Console.WriteLine("Now, let's see our employees list: ");
+			foreach ( var rec in dc_employee_load.GetRecords() ) {
+				Console.WriteLine( String.Format("Name: {0}, Surname: {1}",
+				                                 rec["Name"].Value.ToString(),
+				                                 rec["Surname"].Value.ToString())  );
+			}
 			
+			
+			
+			UInt64 rec_id = 110+(UInt64)DateTime.Now.Ticks % 2000;
+			
+			do  {
+				Record tmp = new Record( dc_employee_load );
+				Console.WriteLine("Enter a new employee name: ");
+				var name = Console.ReadLine();
+				Console.WriteLine("surname: ");
+				var surname = Console.ReadLine();
+				
+				tmp["Name"].Value = name;
+				tmp["Surname"].Value = surname;
+				
+				tmp.Id = ++rec_id;
+				
+				
+				if (!dc_employee_load.AddRecord(tmp)) {
+					Console.WriteLine("Failed! Press \"Y\" - to enter an another employee");
+					if (  Console.ReadKey().Key != ConsoleKey.N )
+						continue;
+					else
+						break;
+				}
+				
+				Console.WriteLine("Added successfully! Press \"Y\" - to enter an another employee");
+			} while ( Console.ReadKey().Key != ConsoleKey.N );
+			dc_employee_load.Save();
 			cm.SaveIndexes();
 		}
 	}
