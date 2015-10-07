@@ -61,7 +61,8 @@ namespace DwarfDB.ChunkManager
 					var min_hash = mtc.Groups[2].Value;
 					var max_hash = mtc.Groups[3].Value;
 					var ipk = new IndexPair() { hash_min = min_hash, hash_max = max_hash };
-					chunks_lst[ ipk ] = db_name;
+					//chunks_lst[ ipk ] = db_name;
+					chunks_lst[ ipk ] = filepath;
 				}
 			}
 			
@@ -253,19 +254,22 @@ namespace DwarfDB.ChunkManager
 		/// <param name="max_idx_count"></param>
 		public void CreateChunk( List<Record> records, int max_elem_count = 100 ) {
 			try {
-				records.Sort( (e1, e2) => {
+				
+				var no_null_records = records.Where((rec) =>{ return rec.GetIndex() != null;}).ToList();
+				
+				no_null_records.Sort( (e1, e2) => {
 				             	var index1 = e1.GetIndex();
 				             	var index2 = e2.GetIndex();
 				             	return index1.HashCode.CompareTo(index2.HashCode);
 				             } );
-				if ( records.Count > max_elem_count ) {
+				if ( no_null_records.Count > max_elem_count ) {
 					var sub_range = new List<Record>();
-					for ( int i = 0; i < records.Count; i += max_elem_count ) {
+					for ( int i = 0; i < no_null_records.Count; i += max_elem_count ) {
 
-						if ( i + max_elem_count < records.Count )
-							sub_range = records.GetRange( i, max_elem_count );
+						if ( i + max_elem_count < no_null_records.Count )
+							sub_range = no_null_records.GetRange( i, max_elem_count );
 						else
-							sub_range = records.GetRange( i, records.Count - i );
+							sub_range = no_null_records.GetRange( i, no_null_records.Count - i );
 						
 						CreateChunk( sub_range, max_elem_count );
 					}
@@ -273,21 +277,20 @@ namespace DwarfDB.ChunkManager
 					return;
 				}
 				
-				var add_records = new List<Record>();
+				var add_no_null_records = new List<Record>();
 				
 				
-				if ( records.Count > 0  ) {
-					
+				if ( no_null_records.Count > 0  ) {					
 					// 1. Let's sort our hashes
-					records.Sort(IndexComparer);
+					no_null_records.Sort(IndexComparer);
 
 					// 2. for each hash we looking for it's existance in
 					//    already created chunks and an ability to place in existing chunks
 					var filepath = CurrentDbPath + "/"+
-						"rec_"+records.First().GetIndex().HashCode +
-						"_" + records.First().GetIndex().HashCode + ".dwarf";
+						"rec_"+no_null_records.First().GetIndex().HashCode +
+						"_" + no_null_records.First().GetIndex().HashCode + ".dwarf";
 					var new_chunk = ChunkFormat.CreateNewFile( filepath );
-					records.ForEach( (rec) => {
+					no_null_records.ForEach( (rec) => {
 					                	if ( !all_hashes.Contains(rec.GetIndex().HashCode) ) {
 					                		ChunkFormat.AddItem( filepath, rec);
 					                		AllIndexes.Add(rec.GetIndex(), new KeyValuePair<IStructure, string>(rec, rec.OwnerDC.GetIndex().HashCode));
@@ -297,8 +300,8 @@ namespace DwarfDB.ChunkManager
 					// adding to chunk list
 					try {
 						chunks_lst.Add( new IndexPair() {
-						               	hash_min = records.First().GetIndex().HashCode,
-						               	hash_max =  records.First().GetIndex().HashCode
+						               	hash_min = no_null_records.First().GetIndex().HashCode,
+						               	hash_max =  no_null_records.First().GetIndex().HashCode
 						               }, "none" );
 					} catch ( Exception ex ) {
 						// XXX: doing nothing...

@@ -281,6 +281,14 @@ namespace DwarfDB.DataStructures
 			return true;
 		}
 
+		public void RemoveAllRecords() {
+			foreach ( var rec in GetRecords() ) {
+				this.RemoveRecord( rec );
+			}
+			
+			this.Save();
+		}
+		
 		public bool RemoveRecord( Record rem_rec ) {
 			if ( rem_rec == null )
 				return false;
@@ -346,15 +354,16 @@ namespace DwarfDB.DataStructures
 		/// Save to file chunk
 		/// </summary>
 		public void Save() {
+			BuildIndex();
+			
 			// Let's create a chunk if we need it
 			GetOwnerDB().chunk_manager.CreateChunk( this );
-			
-			GetOwnerDB().chunk_manager.SaveIndexes();
 			
 			// Save records from DC
 			var recs = GetRecords();
 			
 			GetOwnerDB().chunk_manager.CreateChunk(recs, 50);
+			GetOwnerDB().chunk_manager.SaveIndexes();
 		}
 		
 		/// <summary>

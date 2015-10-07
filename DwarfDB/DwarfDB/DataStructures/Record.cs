@@ -134,7 +134,7 @@ namespace DwarfDB.DataStructures
 		}
 		
 		/// <summary>
-		/// Destroying an index for element ( for deletion )
+		/// Destroying an index for an element ( for deletion )
 		/// </summary>
 		public void DestroyIndex() {
 			if ( current_index != null ) {

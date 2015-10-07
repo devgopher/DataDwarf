@@ -333,7 +333,8 @@ namespace DwarfDB.ChunkManager
 			using ( var fs = File.Open( filepath, FileMode.Open )) {
 				if ( fs.Read( buffer, offset, MaxChunkSize  ) > 0 ) {
 					string buf = System.Text.Encoding.UTF8.GetString(buffer);
-					int str_pos = buf.IndexOf("\"ElementHash\":\""+idx.HashCode+"\"");
+					string tmp  ="\"ElementHash\": \""+idx.HashCode+"\"";
+					int str_pos = buf.IndexOf(tmp);
 					if ( str_pos > -1 )
 						needed_idx_pos = str_pos+15;
 				}
@@ -343,10 +344,10 @@ namespace DwarfDB.ChunkManager
 			if ( needed_idx_pos > -1 ) {
 				using ( var fs = File.Open( filepath, FileMode.Open )) {
 					//var hash_bytes = System.Text.Encoding.UTF8.GetBytes(idx.HashCode);
-					byte[] replacement = new byte[32];
+					byte[] replacement = new byte[34];
 					//fs.Seek( needed_idx_pos
 					fs.Position = needed_idx_pos;
-					fs.Write( replacement, 0, 32);
+					fs.Write( replacement, 0, 34);
 				}
 			}
 		}

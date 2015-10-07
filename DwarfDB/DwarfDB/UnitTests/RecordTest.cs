@@ -13,11 +13,15 @@ namespace DwarfDB.UnitTests
 	[TestFixture]
 	public class RecordTest
 	{
-		[TestCase("nunit_db", "nunit_container1")]
-		public void CreateRecord( string db_name, string container_name ) {
+		[TestCase(@"nunit_db", "nunit_container1")]
+		public static void CreateRecord( string db_name, string container_name ) {
 			var cm = new ChunkManager.ChunkManager();
 			var db = DataBase.LoadFrom( db_name, cm );
 			var dc = db.GetDataContainer( container_name );
+			
+			dc.RemoveAllRecords();
+
+			Assert.AreEqual( 0, dc.GetRecords().Count );
 			
 			// Creating a new record 
 			var rec = new Record(dc);
@@ -27,6 +31,8 @@ namespace DwarfDB.UnitTests
 			dc.AddRecord(rec);
 			
 			dc.Save();
+			
+			
 			
 			
 		}
