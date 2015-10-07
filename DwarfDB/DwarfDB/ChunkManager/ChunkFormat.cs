@@ -208,7 +208,7 @@ namespace DwarfDB.ChunkManager
 		/// <summary>
 		/// Getting an item from a chunk file in a multithread mode
 		/// </summary>
-		/// <param name="filepath">path to a file</param>
+		/// <param name="json_reader">JSON text reader/param>
 		/// <param name="idx">item index</param>
 		private static IStructure GetItemInfile( JsonTextReader json_reader, Index idx ) {
 			InnerChunkElement inner = FindItem( json_reader, idx );
@@ -232,6 +232,7 @@ namespace DwarfDB.ChunkManager
 		/// Getting all records from the chunk
 		/// </summary>
 		/// <param name="filepath">path to file</param>
+		/// <param name="dc_hash">DataContainer hash</param>
 		public static List<Record> GetRecordsInFile( string filepath, string dc_hash ) {
 			var ret = new List<Record>();
 			using (var json_reader = new JsonTextReader(new StreamReader(File.Open( filepath, FileMode.Open )))) {
@@ -301,7 +302,7 @@ namespace DwarfDB.ChunkManager
 		/// Getting several elements from a chunk file in multithread mode
 		/// </summary>
 		/// <param name="filepath">path to file</param>
-		/// <param name="idx">item index</param>
+		/// <param name="idx_arr">indexes array</param>
 		public static IStructure[] GetItemRange( string filepath, Index[] idx_arr ) {
 			var ret_arr = new IStructure[0];
 
@@ -325,7 +326,7 @@ namespace DwarfDB.ChunkManager
 		/// <param name="filepath">path to file</param>
 		/// <param name="idx">datastructure index</param>
 		public static void RemoveItem( string filepath, Index idx ) {
-			byte[] buffer = new byte[MaxChunkSize];
+			var buffer = new byte[MaxChunkSize];
 			int offset = 0;
 			int needed_idx_pos = -1;
 
@@ -334,7 +335,7 @@ namespace DwarfDB.ChunkManager
 				if ( fs.Read( buffer, offset, MaxChunkSize  ) > 0 ) {
 					string buf = System.Text.Encoding.UTF8.GetString(buffer);
 					string tmp  ="\"ElementHash\": \""+idx.HashCode+"\"";
-					int str_pos = buf.IndexOf(tmp);
+					int str_pos = buf.IndexOf(tmp, StringComparison.InvariantCultureIgnoreCase);
 					if ( str_pos > -1 )
 						needed_idx_pos = str_pos+15;
 				}
