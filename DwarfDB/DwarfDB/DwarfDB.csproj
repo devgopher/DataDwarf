@@ -69,6 +69,9 @@
       <HintPath>..\..\..\FastXcel\FastZip\bin\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="nunit.framework">
+      <HintPath>packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
@@ -99,12 +102,14 @@
     <Compile Include="Extensions\DwarfLinq.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Samples\DataBaseTest.cs" />
-    <Compile Include="Samples\DataTableTest.cs" />
+    <Compile Include="Samples\DataBaseSample.cs" />
+    <Compile Include="Samples\DataTableSamplecs" />
     <Compile Include="Samples\Employees.cs" />
     <Compile Include="Stack\DwarfStack.cs" />
     <Compile Include="TransactionJournals\TransactionJournals.cs" />
     <Compile Include="Transactions\DwarfTransaction.cs" />
+    <Compile Include="UnitTests\DataBaseTest.cs" />
+    <Compile Include="UnitTests\RecordTest.cs" />
     <Compile Include="User\Credentials.cs" />
     <Compile Include="User\Permissions.cs" />
     <Compile Include="User\User.cs" />
@@ -112,6 +117,9 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="UnitTests" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
