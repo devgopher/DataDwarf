@@ -348,6 +348,8 @@ namespace DwarfDB.ChunkManager
 					//fs.Seek( needed_idx_pos
 					fs.Position = needed_idx_pos;
 					fs.Write( replacement, 0, 34);
+					fs.Position -= 34;
+					fs.Write( System.Text.Encoding.UTF8.GetBytes( "null" ), 0, 4);
 				}
 			}
 		}

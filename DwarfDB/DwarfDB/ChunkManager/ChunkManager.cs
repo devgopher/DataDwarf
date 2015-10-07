@@ -258,10 +258,10 @@ namespace DwarfDB.ChunkManager
 				var no_null_records = records.Where((rec) =>{ return rec.GetIndex() != null;}).ToList();
 				
 				no_null_records.Sort( (e1, e2) => {
-				             	var index1 = e1.GetIndex();
-				             	var index2 = e2.GetIndex();
-				             	return index1.HashCode.CompareTo(index2.HashCode);
-				             } );
+				                     	var index1 = e1.GetIndex();
+				                     	var index2 = e2.GetIndex();
+				                     	return index1.HashCode.CompareTo(index2.HashCode);
+				                     } );
 				if ( no_null_records.Count > max_elem_count ) {
 					var sub_range = new List<Record>();
 					for ( int i = 0; i < no_null_records.Count; i += max_elem_count ) {
@@ -280,7 +280,7 @@ namespace DwarfDB.ChunkManager
 				var add_no_null_records = new List<Record>();
 				
 				
-				if ( no_null_records.Count > 0  ) {					
+				if ( no_null_records.Count > 0  ) {
 					// 1. Let's sort our hashes
 					no_null_records.Sort(IndexComparer);
 
@@ -291,11 +291,11 @@ namespace DwarfDB.ChunkManager
 						"_" + no_null_records.First().GetIndex().HashCode + ".dwarf";
 					var new_chunk = ChunkFormat.CreateNewFile( filepath );
 					no_null_records.ForEach( (rec) => {
-					                	if ( !all_hashes.Contains(rec.GetIndex().HashCode) ) {
-					                		ChunkFormat.AddItem( filepath, rec);
-					                		AllIndexes.Add(rec.GetIndex(), new KeyValuePair<IStructure, string>(rec, rec.OwnerDC.GetIndex().HashCode));
-					                	}
-					                } );
+					                        	if ( !all_hashes.Contains(rec.GetIndex().HashCode) ) {
+					                        		ChunkFormat.AddItem( filepath, rec);
+					                        		AllIndexes.Add(rec.GetIndex(), new KeyValuePair<IStructure, string>(rec, rec.OwnerDC.GetIndex().HashCode));
+					                        	}
+					                        } );
 					
 					// adding to chunk list
 					try {
@@ -512,18 +512,33 @@ namespace DwarfDB.ChunkManager
 		/// </summary>
 		/// <param name="rec"></param>
 		public void RemoveRecord( Record rec ) {
+			var ind_hash = rec.GetIndex().HashCode;
 			foreach ( var strg in chunks_lst.Values ) {
 				ChunkFormat.RemoveItem( strg, rec.GetIndex() );
 			}
+			
+			ClearIndexesDw();
+			SaveIndexes();
 		}
 		
 		/// <summary>
-		/// Saves all indexes in format Name:Type:IndexHash
+		/// Clearing an index file
 		/// </summary>
-		public void SaveIndexes() {
+		/// <returns></returns>
+		private void ClearIndexesDw() {
+			
+			// TODO : making a backup of indexes.dw!
+			
+			FileStream fs = null;
 			var filepath = CurrentDbPath+@"\indexes.dw";
+			fs = File.Create( filepath );
+			fs.Close();
+		}
+		
+		private string ReadIndexesDw() {
 			FileStream fs = null;
 			string contents = "";
+			var filepath = CurrentDbPath+@"\indexes.dw";
 			
 			if ( !File.Exists( filepath ) )
 				fs = File.Create( filepath );
@@ -534,10 +549,20 @@ namespace DwarfDB.ChunkManager
 				using ( var sr = new StreamReader( fs_read ) ) {
 					contents = sr.ReadToEnd();
 				}
-				
-				fs = File.Open( filepath, FileMode.Append );
+
 			}
 			
+			return contents;
+		}
+		
+		/// <summary>
+		/// Saves all indexes in format Name:Type:IndexHash
+		/// </summary>
+		public void SaveIndexes() {
+			var filepath = CurrentDbPath+@"\indexes.dw";
+			string contents = ReadIndexesDw();
+			
+			var fs = File.Open( filepath, FileMode.Append );
 			// let's add new records
 			using ( var sw = new StreamWriter( fs ) ) {
 				foreach ( var idx in AllIndexes ) {
