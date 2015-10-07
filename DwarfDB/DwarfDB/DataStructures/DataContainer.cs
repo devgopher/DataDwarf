@@ -349,8 +349,11 @@ namespace DwarfDB.DataStructures
 			// Let's create a chunk if we need it
 			GetOwnerDB().chunk_manager.CreateChunk( this );
 			
+			GetOwnerDB().chunk_manager.SaveIndexes();
+			
 			// Save records from DC
 			var recs = GetRecords();
+			
 			GetOwnerDB().chunk_manager.CreateChunk(recs, 50);
 		}
 		
@@ -519,7 +522,7 @@ namespace DwarfDB.DataStructures
 			// TODO!!
 			var ret_dc = new DataContainer( GetOwnerDB(), this.Name );
 			ret_dc.Create( this.Name, this.Columns.ToArray() );
-			ret_dc.Name = this.Name;			
+			ret_dc.Name = this.Name;
 			
 			foreach ( var rec in Records ) {
 				var tmp_rec = (Record)rec.Clone();

@@ -55,11 +55,16 @@ namespace DwarfDB.DataStructures
 		public static bool Exists( string db_name ) {
 			var cpath = Config.Config.Instance.DataDirectory+db_name+@"\";
 			if ( Directory.Exists( cpath ) ) {
-				if ( File.Exists( cpath+"indexes.dw" ) && (Directory.GetFiles(cpath, "*.dwarf").Count() > 0) )
+				if ( File.Exists(cpath+"db_"+db_name+".dwarf"))
 					return true;
 			}
 			
 			return false;
+		}
+		
+		private static void CreateIndexesDw( string db_name ) {
+			var stream = File.Create( Config.Config.Instance.DataDirectory+db_name+@"\indexes.dw" );
+			stream.Close();
 		}
 		
 		public static DataBase Create( string db_name, ChunkManager.ChunkManager _cm ) {
@@ -70,8 +75,8 @@ namespace DwarfDB.DataStructures
 			
 			var new_db = new DataBase( db_name, _cm, true );
 			
+			CreateIndexesDw( db_name );			
 			_cm.CreateChunk( new_db );
-			
 			
 			return new_db;
 		}
@@ -172,6 +177,8 @@ namespace DwarfDB.DataStructures
 				inner_dc_dict.Add( new_dc.Name, new_dc );
 				Stack.Push( new_dc );
 				new_dc.AssignOwnerDB(this);
+				
+				new_dc.Save();
 				return true;
 			} else {
 				Errors.ErrorProcessing.Display(

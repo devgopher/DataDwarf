@@ -275,30 +275,34 @@ namespace DwarfDB.ChunkManager
 				
 				var add_records = new List<Record>();
 				
-				// 1. Let's sort our hashes
-				records.Sort(IndexComparer);
-
-				// 2. for each hash we looking for it's existance in
-				//    already created chunks and an ability to place in existing chunks
-				var filepath = CurrentDbPath + "/"+
-					"rec_"+records.First().GetIndex().HashCode +
-					"_" + records.First().GetIndex().HashCode + ".dwarf";
-				var new_chunk = ChunkFormat.CreateNewFile( filepath );
-				records.ForEach( (rec) => {
-				                	if ( !all_hashes.Contains(rec.GetIndex().HashCode) ) {
-				                		ChunkFormat.AddItem( filepath, rec);
-				                		AllIndexes.Add(rec.GetIndex(), new KeyValuePair<IStructure, string>(rec, rec.OwnerDC.GetIndex().HashCode));
-				                	}
-				                } );
 				
-				// adding to chunk list
-				try {
-					chunks_lst.Add( new IndexPair() {
-					               	hash_min = records.First().GetIndex().HashCode,
-					               	hash_max =  records.First().GetIndex().HashCode
-					               }, "none" );
-				} catch ( Exception ex ) {
-					// XXX: doing nothing...
+				if ( records.Count > 0  ) {
+					
+					// 1. Let's sort our hashes
+					records.Sort(IndexComparer);
+
+					// 2. for each hash we looking for it's existance in
+					//    already created chunks and an ability to place in existing chunks
+					var filepath = CurrentDbPath + "/"+
+						"rec_"+records.First().GetIndex().HashCode +
+						"_" + records.First().GetIndex().HashCode + ".dwarf";
+					var new_chunk = ChunkFormat.CreateNewFile( filepath );
+					records.ForEach( (rec) => {
+					                	if ( !all_hashes.Contains(rec.GetIndex().HashCode) ) {
+					                		ChunkFormat.AddItem( filepath, rec);
+					                		AllIndexes.Add(rec.GetIndex(), new KeyValuePair<IStructure, string>(rec, rec.OwnerDC.GetIndex().HashCode));
+					                	}
+					                } );
+					
+					// adding to chunk list
+					try {
+						chunks_lst.Add( new IndexPair() {
+						               	hash_min = records.First().GetIndex().HashCode,
+						               	hash_max =  records.First().GetIndex().HashCode
+						               }, "none" );
+					} catch ( Exception ex ) {
+						// XXX: doing nothing...
+					}
 				}
 			} catch ( Exception ex ) {
 				throw new ChunkException( "Error writing a new chunk!", ex );
