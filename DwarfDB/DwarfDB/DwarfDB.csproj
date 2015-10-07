@@ -103,7 +103,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Samples\DataBaseSample.cs" />
-    <Compile Include="Samples\DataTableSamplecs" />
+    <Compile Include="Samples\DataTableSample.cs" />
     <Compile Include="Samples\Employees.cs" />
     <Compile Include="Stack\DwarfStack.cs" />
     <Compile Include="TransactionJournals\TransactionJournals.cs" />
