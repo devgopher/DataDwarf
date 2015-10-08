@@ -1,23 +1,26 @@
-\hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_record}{\section{Dwarf\+D\+B.\+Data\+Structures.\+Record Class Reference}
-\label{class_dwarf_d_b_1_1_data_structures_1_1_record}\index{Dwarf\+D\+B.\+Data\+Structures.\+Record@{Dwarf\+D\+B.\+Data\+Structures.\+Record}}
+\hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_record}{
+\section{DwarfDB.DataStructures.Record Class Reference}
+\label{class_dwarf_d_b_1_1_data_structures_1_1_record}\index{DwarfDB::DataStructures::Record@{DwarfDB::DataStructures::Record}}
 }
 
 
-\hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_record}{Record} is the element of \hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_data_container}{Data\+Container}  
+\hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_record}{Record} is the element of \hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_data_container}{DataContainer}.  
 
 
 
 
-Inheritance diagram for Dwarf\+D\+B.\+Data\+Structures.\+Record\+:\nopagebreak
+Inheritance diagram for DwarfDB.DataStructures.Record:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=236pt]{class_dwarf_d_b_1_1_data_structures_1_1_record__inherit__graph}
+\includegraphics[width=400pt]{class_dwarf_d_b_1_1_data_structures_1_1_record__inherit__graph}
 \end{center}
 \end{figure}
 
 
-Collaboration diagram for Dwarf\+D\+B.\+Data\+Structures.\+Record\+:\nopagebreak
+Collaboration diagram for DwarfDB.DataStructures.Record:
+\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -27,136 +30,172 @@ Collaboration diagram for Dwarf\+D\+B.\+Data\+Structures.\+Record\+:\nopagebreak
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_record_ac6bae5700b3a08e9903a5c592d810de0}{{\bfseries Record} (\hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_data_container}{Data\+Container} \+\_\+owner\+\_\+dc)}\label{class_dwarf_d_b_1_1_data_structures_1_1_record_ac6bae5700b3a08e9903a5c592d810de0}
+\hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_record_ac6bae5700b3a08e9903a5c592d810de0}{
+{\bfseries Record} (\hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_data_container}{DataContainer} \_\-owner\_\-dc)}
+\label{class_dwarf_d_b_1_1_data_structures_1_1_record_ac6bae5700b3a08e9903a5c592d810de0}
 
 \item 
-\hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_record_a184d66ff6a8abfd88fc08aec61635295}{{\bfseries Record} (Serialization\+Info info, Streaming\+Context ctxt)}\label{class_dwarf_d_b_1_1_data_structures_1_1_record_a184d66ff6a8abfd88fc08aec61635295}
+\hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_record_a184d66ff6a8abfd88fc08aec61635295}{
+{\bfseries Record} (SerializationInfo info, StreamingContext ctxt)}
+\label{class_dwarf_d_b_1_1_data_structures_1_1_record_a184d66ff6a8abfd88fc08aec61635295}
 
 \item 
-\hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_record_ac10ee5af7dc2c00f831de89d0ac6592e}{void {\bfseries Get\+Object\+Data} (Serialization\+Info info, Streaming\+Context ctxt)}\label{class_dwarf_d_b_1_1_data_structures_1_1_record_ac10ee5af7dc2c00f831de89d0ac6592e}
+\hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_record_ac10ee5af7dc2c00f831de89d0ac6592e}{
+void {\bfseries GetObjectData} (SerializationInfo info, StreamingContext ctxt)}
+\label{class_dwarf_d_b_1_1_data_structures_1_1_record_ac10ee5af7dc2c00f831de89d0ac6592e}
 
 \item 
 void \hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_record_a01889e57146fd3882228b09d2d54d51c}{Save} ()
-\begin{DoxyCompactList}\small\item\em Save to file chunk \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Save changes to file chunk. \item\end{DoxyCompactList}\item 
 void \hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_record_aba01a54cf8111326625980fd9b1d4d92}{Load} (\hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_index}{Index} index)
-\begin{DoxyCompactList}\small\item\em Load Element from file chunk \end{DoxyCompactList}\item 
-void \hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_record_a4997c638afaaa5b8f281a492b639dfca}{Set\+Transaction} (\hyperlink{class_dwarf_d_b_1_1_transactions_1_1_dwarf_transaction}{Dwarf\+D\+B.\+Transactions.\+Dwarf\+Transaction} In\+Transaction)
-\begin{DoxyCompactList}\small\item\em Setting up a transaction for this element \end{DoxyCompactList}\item 
-\hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_index}{Index} \hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_record_abf7b1ed28e2f443a17f7658222b59c8f}{Get\+Index} ()
-\begin{DoxyCompactList}\small\item\em Getting an index for element \end{DoxyCompactList}\item 
-void \hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_record_ab4ae005ad5474eb98a8aa45d7f8dd195}{Build\+Index} ()
-\begin{DoxyCompactList}\small\item\em Building an index for element \end{DoxyCompactList}\item 
-void \hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_record_a81ac5ba44d5682bfba61592af0195cd0}{Load\+From\+Chunk\+Dir} (string dirpath, \hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_index}{Index} index)
-\begin{DoxyCompactList}\small\item\em Load \hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_record}{Record} from file chunk directory \end{DoxyCompactList}\item 
-\hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_record_aefa85cab909d8d9b60aeabbb23bbc5c7}{void {\bfseries Reset} ()}\label{class_dwarf_d_b_1_1_data_structures_1_1_record_aefa85cab909d8d9b60aeabbb23bbc5c7}
+\begin{DoxyCompactList}\small\item\em Load Element from file chunk. \item\end{DoxyCompactList}\item 
+void \hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_record_a4997c638afaaa5b8f281a492b639dfca}{SetTransaction} (\hyperlink{class_dwarf_d_b_1_1_transactions_1_1_dwarf_transaction}{DwarfDB.Transactions.DwarfTransaction} InTransaction)
+\begin{DoxyCompactList}\small\item\em Setting up a transaction for this element. \item\end{DoxyCompactList}\item 
+\hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_index}{Index} \hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_record_abf7b1ed28e2f443a17f7658222b59c8f}{GetIndex} ()
+\begin{DoxyCompactList}\small\item\em Getting an index for element. \item\end{DoxyCompactList}\item 
+void \hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_record_ab4ae005ad5474eb98a8aa45d7f8dd195}{BuildIndex} ()
+\begin{DoxyCompactList}\small\item\em Building an index for element. \item\end{DoxyCompactList}\item 
+void \hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_record_a6548196371053293f6333d4c29fd5f0d}{DestroyIndex} ()
+\begin{DoxyCompactList}\small\item\em Destroying an index for an element ( for deletion ) \item\end{DoxyCompactList}\item 
+void \hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_record_a81ac5ba44d5682bfba61592af0195cd0}{LoadFromChunkDir} (string dirpath, \hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_index}{Index} index)
+\begin{DoxyCompactList}\small\item\em Load \hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_record}{Record} from file chunk directory. \item\end{DoxyCompactList}\item 
+\hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_record_aefa85cab909d8d9b60aeabbb23bbc5c7}{
+void {\bfseries Reset} ()}
+\label{class_dwarf_d_b_1_1_data_structures_1_1_record_aefa85cab909d8d9b60aeabbb23bbc5c7}
 
 \item 
-\hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_record_ad86f08f6a15fc5bef549031789a01ff8}{bool {\bfseries Move\+Next} ()}\label{class_dwarf_d_b_1_1_data_structures_1_1_record_ad86f08f6a15fc5bef549031789a01ff8}
+\hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_record_ad86f08f6a15fc5bef549031789a01ff8}{
+bool {\bfseries MoveNext} ()}
+\label{class_dwarf_d_b_1_1_data_structures_1_1_record_ad86f08f6a15fc5bef549031789a01ff8}
 
 \item 
-\hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_record_a17055913d08d7d28c235547f248d4540}{void {\bfseries Dispose} ()}\label{class_dwarf_d_b_1_1_data_structures_1_1_record_a17055913d08d7d28c235547f248d4540}
+\hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_record_a17055913d08d7d28c235547f248d4540}{
+void {\bfseries Dispose} ()}
+\label{class_dwarf_d_b_1_1_data_structures_1_1_record_a17055913d08d7d28c235547f248d4540}
 
 \item 
-\hyperlink{interface_dwarf_d_b_1_1_data_structures_1_1_i_structure}{I\+Structure} \hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_record_a25e43ac7cdffc69c75cc466c859ce0ad}{Clone} ()
-\begin{DoxyCompactList}\small\item\em Cloning procedure for Data\+Structure with reassigning a new owner object( for D\+C! ) \end{DoxyCompactList}\item 
-\hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_record_afccd7c4257b4a7953265490700ca5d84}{void {\bfseries Assign\+Owner\+D\+C} (\hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_data_container}{Data\+Container} \+\_\+owner\+\_\+dc)}\label{class_dwarf_d_b_1_1_data_structures_1_1_record_afccd7c4257b4a7953265490700ca5d84}
+\hyperlink{interface_dwarf_d_b_1_1_data_structures_1_1_i_structure}{IStructure} \hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_record_a25e43ac7cdffc69c75cc466c859ce0ad}{Clone} ()
+\begin{DoxyCompactList}\small\item\em Cloning procedure for DataStructure with reassigning a new owner object( for DC! ) \item\end{DoxyCompactList}\item 
+\hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_record_afccd7c4257b4a7953265490700ca5d84}{
+void {\bfseries AssignOwnerDC} (\hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_data_container}{DataContainer} \_\-owner\_\-dc)}
+\label{class_dwarf_d_b_1_1_data_structures_1_1_record_afccd7c4257b4a7953265490700ca5d84}
 
 \end{DoxyCompactItemize}
 \subsection*{Protected Attributes}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_record_a4db0f67a22a56cb80011e181956ac11e}{\hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_index}{Index} {\bfseries current\+\_\+index}}\label{class_dwarf_d_b_1_1_data_structures_1_1_record_a4db0f67a22a56cb80011e181956ac11e}
+\hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_record_a4db0f67a22a56cb80011e181956ac11e}{
+\hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_index}{Index} {\bfseries current\_\-index}}
+\label{class_dwarf_d_b_1_1_data_structures_1_1_record_a4db0f67a22a56cb80011e181956ac11e}
 
 \item 
-\hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_record_af547c3e838f95ede8120ec33ea410be2}{int {\bfseries position} = -\/1}\label{class_dwarf_d_b_1_1_data_structures_1_1_record_af547c3e838f95ede8120ec33ea410be2}
+\hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_record_af547c3e838f95ede8120ec33ea410be2}{
+int {\bfseries position} = -\/1}
+\label{class_dwarf_d_b_1_1_data_structures_1_1_record_af547c3e838f95ede8120ec33ea410be2}
 
 \end{DoxyCompactItemize}
 \subsection*{Properties}
 \begin{DoxyCompactItemize}
 \item 
-U\+Int64 \hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_record_a6b33388f9fa7edcea1e29890da207be4}{Id}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
-\begin{DoxyCompactList}\small\item\em Element id \end{DoxyCompactList}\item 
-List$<$ \hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_field}{Field} $>$ \hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_record_ae901326df950b811aa2cbb5f632a21c3}{Fields}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
-\begin{DoxyCompactList}\small\item\em List of fields \end{DoxyCompactList}\item 
-\hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_field}{Field} \hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_record_a303a0895fdeb635fa47469b2ac46c4a3}{this\mbox{[}string field\+\_\+name\mbox{]}}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
-\begin{DoxyCompactList}\small\item\em Getting fields and their values \end{DoxyCompactList}\item 
-\hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_record_adc6c66e17187956974f6102e89054528}{\hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_data_container}{Data\+Container} {\bfseries Owner\+D\+C}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}}\label{class_dwarf_d_b_1_1_data_structures_1_1_record_adc6c66e17187956974f6102e89054528}
+UInt64 \hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_record_a6b33388f9fa7edcea1e29890da207be4}{Id}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Element id. \item\end{DoxyCompactList}\item 
+List$<$ \hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_field}{Field} $>$ \hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_record_ae901326df950b811aa2cbb5f632a21c3}{Fields}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em List of fields. \item\end{DoxyCompactList}\item 
+\hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_field}{Field} \hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_record_a303a0895fdeb635fa47469b2ac46c4a3}{this} \mbox{[}string field\_\-name\mbox{]}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Getting fields and their values. \item\end{DoxyCompactList}\item 
+\hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_record_adc6c66e17187956974f6102e89054528}{
+\hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_data_container}{DataContainer} {\bfseries OwnerDC}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}}
+\label{class_dwarf_d_b_1_1_data_structures_1_1_record_adc6c66e17187956974f6102e89054528}
 
 \end{DoxyCompactItemize}
 
 
 \subsection{Detailed Description}
-\hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_record}{Record} is the element of \hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_data_container}{Data\+Container} 
-
-
+\hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_record}{Record} is the element of \hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_data_container}{DataContainer}. 
 
 \subsection{Member Function Documentation}
-\hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_record_ab4ae005ad5474eb98a8aa45d7f8dd195}{\index{Dwarf\+D\+B\+::\+Data\+Structures\+::\+Record@{Dwarf\+D\+B\+::\+Data\+Structures\+::\+Record}!Build\+Index@{Build\+Index}}
-\index{Build\+Index@{Build\+Index}!Dwarf\+D\+B\+::\+Data\+Structures\+::\+Record@{Dwarf\+D\+B\+::\+Data\+Structures\+::\+Record}}
-\subsubsection[{Build\+Index}]{\setlength{\rightskip}{0pt plus 5cm}void Dwarf\+D\+B.\+Data\+Structures.\+Record.\+Build\+Index (
+\hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_record_ab4ae005ad5474eb98a8aa45d7f8dd195}{
+\index{DwarfDB::DataStructures::Record@{DwarfDB::DataStructures::Record}!BuildIndex@{BuildIndex}}
+\index{BuildIndex@{BuildIndex}!DwarfDB::DataStructures::Record@{DwarfDB::DataStructures::Record}}
+\subsubsection[{BuildIndex}]{\setlength{\rightskip}{0pt plus 5cm}void DwarfDB.DataStructures.Record.BuildIndex (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}}\label{class_dwarf_d_b_1_1_data_structures_1_1_record_ab4ae005ad5474eb98a8aa45d7f8dd195}
+)}}
+\label{class_dwarf_d_b_1_1_data_structures_1_1_record_ab4ae005ad5474eb98a8aa45d7f8dd195}
 
 
-Building an index for element 
+Building an index for element. 
 
 
 
-Implements \hyperlink{interface_dwarf_d_b_1_1_data_structures_1_1_i_structure_ae172c3eadf80027006666105c16b11ab}{Dwarf\+D\+B.\+Data\+Structures.\+I\+Structure}.
+Implements \hyperlink{interface_dwarf_d_b_1_1_data_structures_1_1_i_structure_ae172c3eadf80027006666105c16b11ab}{DwarfDB.DataStructures.IStructure}.
 
-\hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_record_a25e43ac7cdffc69c75cc466c859ce0ad}{\index{Dwarf\+D\+B\+::\+Data\+Structures\+::\+Record@{Dwarf\+D\+B\+::\+Data\+Structures\+::\+Record}!Clone@{Clone}}
-\index{Clone@{Clone}!Dwarf\+D\+B\+::\+Data\+Structures\+::\+Record@{Dwarf\+D\+B\+::\+Data\+Structures\+::\+Record}}
-\subsubsection[{Clone}]{\setlength{\rightskip}{0pt plus 5cm}{\bf I\+Structure} Dwarf\+D\+B.\+Data\+Structures.\+Record.\+Clone (
+\hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_record_a25e43ac7cdffc69c75cc466c859ce0ad}{
+\index{DwarfDB::DataStructures::Record@{DwarfDB::DataStructures::Record}!Clone@{Clone}}
+\index{Clone@{Clone}!DwarfDB::DataStructures::Record@{DwarfDB::DataStructures::Record}}
+\subsubsection[{Clone}]{\setlength{\rightskip}{0pt plus 5cm}{\bf IStructure} DwarfDB.DataStructures.Record.Clone (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}}\label{class_dwarf_d_b_1_1_data_structures_1_1_record_a25e43ac7cdffc69c75cc466c859ce0ad}
+)}}
+\label{class_dwarf_d_b_1_1_data_structures_1_1_record_a25e43ac7cdffc69c75cc466c859ce0ad}
 
 
-Cloning procedure for Data\+Structure with reassigning a new owner object( for D\+C! ) 
+Cloning procedure for DataStructure with reassigning a new owner object( for DC! ) 
 
 \begin{DoxyReturn}{Returns}
 
 \end{DoxyReturn}
 
 
-Implements \hyperlink{interface_dwarf_d_b_1_1_data_structures_1_1_i_structure_a583485e1d898015ac75b952b057fb0e0}{Dwarf\+D\+B.\+Data\+Structures.\+I\+Structure}.
+Implements \hyperlink{interface_dwarf_d_b_1_1_data_structures_1_1_i_structure_a583485e1d898015ac75b952b057fb0e0}{DwarfDB.DataStructures.IStructure}.
 
-\hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_record_abf7b1ed28e2f443a17f7658222b59c8f}{\index{Dwarf\+D\+B\+::\+Data\+Structures\+::\+Record@{Dwarf\+D\+B\+::\+Data\+Structures\+::\+Record}!Get\+Index@{Get\+Index}}
-\index{Get\+Index@{Get\+Index}!Dwarf\+D\+B\+::\+Data\+Structures\+::\+Record@{Dwarf\+D\+B\+::\+Data\+Structures\+::\+Record}}
-\subsubsection[{Get\+Index}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Index} Dwarf\+D\+B.\+Data\+Structures.\+Record.\+Get\+Index (
+\hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_record_a6548196371053293f6333d4c29fd5f0d}{
+\index{DwarfDB::DataStructures::Record@{DwarfDB::DataStructures::Record}!DestroyIndex@{DestroyIndex}}
+\index{DestroyIndex@{DestroyIndex}!DwarfDB::DataStructures::Record@{DwarfDB::DataStructures::Record}}
+\subsubsection[{DestroyIndex}]{\setlength{\rightskip}{0pt plus 5cm}void DwarfDB.DataStructures.Record.DestroyIndex (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}}\label{class_dwarf_d_b_1_1_data_structures_1_1_record_abf7b1ed28e2f443a17f7658222b59c8f}
+)}}
+\label{class_dwarf_d_b_1_1_data_structures_1_1_record_a6548196371053293f6333d4c29fd5f0d}
 
 
-Getting an index for element 
+Destroying an index for an element ( for deletion ) 
+
+\hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_record_abf7b1ed28e2f443a17f7658222b59c8f}{
+\index{DwarfDB::DataStructures::Record@{DwarfDB::DataStructures::Record}!GetIndex@{GetIndex}}
+\index{GetIndex@{GetIndex}!DwarfDB::DataStructures::Record@{DwarfDB::DataStructures::Record}}
+\subsubsection[{GetIndex}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Index} DwarfDB.DataStructures.Record.GetIndex (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{class_dwarf_d_b_1_1_data_structures_1_1_record_abf7b1ed28e2f443a17f7658222b59c8f}
+
+
+Getting an index for element. 
 
 \begin{DoxyReturn}{Returns}
 
 \end{DoxyReturn}
 
 
-Implements \hyperlink{interface_dwarf_d_b_1_1_data_structures_1_1_i_structure_a6fb14f0bf9df3268084bcc31dfd9c56f}{Dwarf\+D\+B.\+Data\+Structures.\+I\+Structure}.
+Implements \hyperlink{interface_dwarf_d_b_1_1_data_structures_1_1_i_structure_a6fb14f0bf9df3268084bcc31dfd9c56f}{DwarfDB.DataStructures.IStructure}.
 
-
-
-Here is the caller graph for this function\+:
-
-
-\hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_record_aba01a54cf8111326625980fd9b1d4d92}{\index{Dwarf\+D\+B\+::\+Data\+Structures\+::\+Record@{Dwarf\+D\+B\+::\+Data\+Structures\+::\+Record}!Load@{Load}}
-\index{Load@{Load}!Dwarf\+D\+B\+::\+Data\+Structures\+::\+Record@{Dwarf\+D\+B\+::\+Data\+Structures\+::\+Record}}
-\subsubsection[{Load}]{\setlength{\rightskip}{0pt plus 5cm}void Dwarf\+D\+B.\+Data\+Structures.\+Record.\+Load (
+\hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_record_aba01a54cf8111326625980fd9b1d4d92}{
+\index{DwarfDB::DataStructures::Record@{DwarfDB::DataStructures::Record}!Load@{Load}}
+\index{Load@{Load}!DwarfDB::DataStructures::Record@{DwarfDB::DataStructures::Record}}
+\subsubsection[{Load}]{\setlength{\rightskip}{0pt plus 5cm}void DwarfDB.DataStructures.Record.Load (
 \begin{DoxyParamCaption}
-\item[{{\bf Index}}]{index}
+\item[{{\bf Index}}]{ index}
 \end{DoxyParamCaption}
-)}}\label{class_dwarf_d_b_1_1_data_structures_1_1_record_aba01a54cf8111326625980fd9b1d4d92}
+)}}
+\label{class_dwarf_d_b_1_1_data_structures_1_1_record_aba01a54cf8111326625980fd9b1d4d92}
 
 
-Load Element from file chunk 
+Load Element from file chunk. 
 
 
 \begin{DoxyParams}{Parameters}
@@ -167,19 +206,21 @@ Load Element from file chunk
 \end{DoxyParams}
 
 
-Implements \hyperlink{interface_dwarf_d_b_1_1_data_structures_1_1_i_structure_acc1c091913384168ec50edad8b94b94b}{Dwarf\+D\+B.\+Data\+Structures.\+I\+Structure}.
+Implements \hyperlink{interface_dwarf_d_b_1_1_data_structures_1_1_i_structure_acc1c091913384168ec50edad8b94b94b}{DwarfDB.DataStructures.IStructure}.
 
-\hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_record_a81ac5ba44d5682bfba61592af0195cd0}{\index{Dwarf\+D\+B\+::\+Data\+Structures\+::\+Record@{Dwarf\+D\+B\+::\+Data\+Structures\+::\+Record}!Load\+From\+Chunk\+Dir@{Load\+From\+Chunk\+Dir}}
-\index{Load\+From\+Chunk\+Dir@{Load\+From\+Chunk\+Dir}!Dwarf\+D\+B\+::\+Data\+Structures\+::\+Record@{Dwarf\+D\+B\+::\+Data\+Structures\+::\+Record}}
-\subsubsection[{Load\+From\+Chunk\+Dir}]{\setlength{\rightskip}{0pt plus 5cm}void Dwarf\+D\+B.\+Data\+Structures.\+Record.\+Load\+From\+Chunk\+Dir (
+\hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_record_a81ac5ba44d5682bfba61592af0195cd0}{
+\index{DwarfDB::DataStructures::Record@{DwarfDB::DataStructures::Record}!LoadFromChunkDir@{LoadFromChunkDir}}
+\index{LoadFromChunkDir@{LoadFromChunkDir}!DwarfDB::DataStructures::Record@{DwarfDB::DataStructures::Record}}
+\subsubsection[{LoadFromChunkDir}]{\setlength{\rightskip}{0pt plus 5cm}void DwarfDB.DataStructures.Record.LoadFromChunkDir (
 \begin{DoxyParamCaption}
-\item[{string}]{dirpath, }
-\item[{{\bf Index}}]{index}
+\item[{string}]{ dirpath, }
+\item[{{\bf Index}}]{ index}
 \end{DoxyParamCaption}
-)}}\label{class_dwarf_d_b_1_1_data_structures_1_1_record_a81ac5ba44d5682bfba61592af0195cd0}
+)}}
+\label{class_dwarf_d_b_1_1_data_structures_1_1_record_a81ac5ba44d5682bfba61592af0195cd0}
 
 
-Load \hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_record}{Record} from file chunk directory 
+Load \hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_record}{Record} from file chunk directory. 
 
 
 \begin{DoxyParams}{Parameters}
@@ -190,74 +231,83 @@ Load \hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_record}{Record} from fil
 \end{DoxyParams}
 
 
-Implements \hyperlink{interface_dwarf_d_b_1_1_data_structures_1_1_i_structure_a2e187a88a03b9e81e6e602be9329a395}{Dwarf\+D\+B.\+Data\+Structures.\+I\+Structure}.
+Implements \hyperlink{interface_dwarf_d_b_1_1_data_structures_1_1_i_structure_a2e187a88a03b9e81e6e602be9329a395}{DwarfDB.DataStructures.IStructure}.
 
-\hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_record_a01889e57146fd3882228b09d2d54d51c}{\index{Dwarf\+D\+B\+::\+Data\+Structures\+::\+Record@{Dwarf\+D\+B\+::\+Data\+Structures\+::\+Record}!Save@{Save}}
-\index{Save@{Save}!Dwarf\+D\+B\+::\+Data\+Structures\+::\+Record@{Dwarf\+D\+B\+::\+Data\+Structures\+::\+Record}}
-\subsubsection[{Save}]{\setlength{\rightskip}{0pt plus 5cm}void Dwarf\+D\+B.\+Data\+Structures.\+Record.\+Save (
+\hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_record_a01889e57146fd3882228b09d2d54d51c}{
+\index{DwarfDB::DataStructures::Record@{DwarfDB::DataStructures::Record}!Save@{Save}}
+\index{Save@{Save}!DwarfDB::DataStructures::Record@{DwarfDB::DataStructures::Record}}
+\subsubsection[{Save}]{\setlength{\rightskip}{0pt plus 5cm}void DwarfDB.DataStructures.Record.Save (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}}\label{class_dwarf_d_b_1_1_data_structures_1_1_record_a01889e57146fd3882228b09d2d54d51c}
+)}}
+\label{class_dwarf_d_b_1_1_data_structures_1_1_record_a01889e57146fd3882228b09d2d54d51c}
 
 
-Save to file chunk 
+Save changes to file chunk. 
 
 
-\begin{DoxyParams}{Parameters}
-{\em filepath} & \\
-\hline
-\end{DoxyParams}
 
+Implements \hyperlink{interface_dwarf_d_b_1_1_data_structures_1_1_i_structure_aa97bbd5250cf7456849fa6ca6ffcc0b4}{DwarfDB.DataStructures.IStructure}.
 
-Implements \hyperlink{interface_dwarf_d_b_1_1_data_structures_1_1_i_structure_aa97bbd5250cf7456849fa6ca6ffcc0b4}{Dwarf\+D\+B.\+Data\+Structures.\+I\+Structure}.
-
-\hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_record_a4997c638afaaa5b8f281a492b639dfca}{\index{Dwarf\+D\+B\+::\+Data\+Structures\+::\+Record@{Dwarf\+D\+B\+::\+Data\+Structures\+::\+Record}!Set\+Transaction@{Set\+Transaction}}
-\index{Set\+Transaction@{Set\+Transaction}!Dwarf\+D\+B\+::\+Data\+Structures\+::\+Record@{Dwarf\+D\+B\+::\+Data\+Structures\+::\+Record}}
-\subsubsection[{Set\+Transaction}]{\setlength{\rightskip}{0pt plus 5cm}void Dwarf\+D\+B.\+Data\+Structures.\+Record.\+Set\+Transaction (
+\hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_record_a4997c638afaaa5b8f281a492b639dfca}{
+\index{DwarfDB::DataStructures::Record@{DwarfDB::DataStructures::Record}!SetTransaction@{SetTransaction}}
+\index{SetTransaction@{SetTransaction}!DwarfDB::DataStructures::Record@{DwarfDB::DataStructures::Record}}
+\subsubsection[{SetTransaction}]{\setlength{\rightskip}{0pt plus 5cm}void DwarfDB.DataStructures.Record.SetTransaction (
 \begin{DoxyParamCaption}
-\item[{{\bf Dwarf\+D\+B.\+Transactions.\+Dwarf\+Transaction}}]{In\+Transaction}
+\item[{{\bf DwarfDB.Transactions.DwarfTransaction}}]{ InTransaction}
 \end{DoxyParamCaption}
-)}}\label{class_dwarf_d_b_1_1_data_structures_1_1_record_a4997c638afaaa5b8f281a492b639dfca}
+)}}
+\label{class_dwarf_d_b_1_1_data_structures_1_1_record_a4997c638afaaa5b8f281a492b639dfca}
 
 
-Setting up a transaction for this element 
+Setting up a transaction for this element. 
 
 
 \begin{DoxyParams}{Parameters}
-{\em In\+Transaction} & \\
+{\em InTransaction} & \\
 \hline
 \end{DoxyParams}
 
 
-Implements \hyperlink{interface_dwarf_d_b_1_1_data_structures_1_1_i_structure_aa89d0ecc5915538b89865bc3086d8b0a}{Dwarf\+D\+B.\+Data\+Structures.\+I\+Structure}.
+Implements \hyperlink{interface_dwarf_d_b_1_1_data_structures_1_1_i_structure_aa89d0ecc5915538b89865bc3086d8b0a}{DwarfDB.DataStructures.IStructure}.
 
 
 
 \subsection{Property Documentation}
-\hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_record_ae901326df950b811aa2cbb5f632a21c3}{\index{Dwarf\+D\+B\+::\+Data\+Structures\+::\+Record@{Dwarf\+D\+B\+::\+Data\+Structures\+::\+Record}!Fields@{Fields}}
-\index{Fields@{Fields}!Dwarf\+D\+B\+::\+Data\+Structures\+::\+Record@{Dwarf\+D\+B\+::\+Data\+Structures\+::\+Record}}
-\subsubsection[{Fields}]{\setlength{\rightskip}{0pt plus 5cm}List$<$ {\bf Field} $>$ Dwarf\+D\+B.\+Data\+Structures.\+Record.\+Fields\hspace{0.3cm}{\ttfamily [get]}}}\label{class_dwarf_d_b_1_1_data_structures_1_1_record_ae901326df950b811aa2cbb5f632a21c3}
+\hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_record_ae901326df950b811aa2cbb5f632a21c3}{
+\index{DwarfDB::DataStructures::Record@{DwarfDB::DataStructures::Record}!Fields@{Fields}}
+\index{Fields@{Fields}!DwarfDB::DataStructures::Record@{DwarfDB::DataStructures::Record}}
+\subsubsection[{Fields}]{\setlength{\rightskip}{0pt plus 5cm}List$<$ {\bf Field} $>$ DwarfDB.DataStructures.Record.Fields\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}}}
+\label{class_dwarf_d_b_1_1_data_structures_1_1_record_ae901326df950b811aa2cbb5f632a21c3}
 
 
-List of fields 
+List of fields. 
 
-\hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_record_a6b33388f9fa7edcea1e29890da207be4}{\index{Dwarf\+D\+B\+::\+Data\+Structures\+::\+Record@{Dwarf\+D\+B\+::\+Data\+Structures\+::\+Record}!Id@{Id}}
-\index{Id@{Id}!Dwarf\+D\+B\+::\+Data\+Structures\+::\+Record@{Dwarf\+D\+B\+::\+Data\+Structures\+::\+Record}}
-\subsubsection[{Id}]{\setlength{\rightskip}{0pt plus 5cm}U\+Int64 Dwarf\+D\+B.\+Data\+Structures.\+Record.\+Id\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}}\label{class_dwarf_d_b_1_1_data_structures_1_1_record_a6b33388f9fa7edcea1e29890da207be4}
-
-
-Element id 
-
-\hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_record_a303a0895fdeb635fa47469b2ac46c4a3}{\index{Dwarf\+D\+B\+::\+Data\+Structures\+::\+Record@{Dwarf\+D\+B\+::\+Data\+Structures\+::\+Record}!this\mbox{[}string field\+\_\+name\mbox{]}@{this[string field\+\_\+name]}}
-\index{this\mbox{[}string field\+\_\+name\mbox{]}@{this[string field\+\_\+name]}!Dwarf\+D\+B\+::\+Data\+Structures\+::\+Record@{Dwarf\+D\+B\+::\+Data\+Structures\+::\+Record}}
-\subsubsection[{this[string field\+\_\+name]}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Field} Dwarf\+D\+B.\+Data\+Structures.\+Record.\+this\mbox{[}string field\+\_\+name\mbox{]}\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}}\label{class_dwarf_d_b_1_1_data_structures_1_1_record_a303a0895fdeb635fa47469b2ac46c4a3}
+\hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_record_a6b33388f9fa7edcea1e29890da207be4}{
+\index{DwarfDB::DataStructures::Record@{DwarfDB::DataStructures::Record}!Id@{Id}}
+\index{Id@{Id}!DwarfDB::DataStructures::Record@{DwarfDB::DataStructures::Record}}
+\subsubsection[{Id}]{\setlength{\rightskip}{0pt plus 5cm}UInt64 DwarfDB.DataStructures.Record.Id\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}}}
+\label{class_dwarf_d_b_1_1_data_structures_1_1_record_a6b33388f9fa7edcea1e29890da207be4}
 
 
-Getting fields and their values 
+Element id. 
 
 
 
-The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+Implements \hyperlink{interface_dwarf_d_b_1_1_data_structures_1_1_i_structure_a9fab102fba11f70ab46272b53201784d}{DwarfDB.DataStructures.IStructure}.
+
+\hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_record_a303a0895fdeb635fa47469b2ac46c4a3}{
+\index{DwarfDB::DataStructures::Record@{DwarfDB::DataStructures::Record}!this@{this}}
+\index{this@{this}!DwarfDB::DataStructures::Record@{DwarfDB::DataStructures::Record}}
+\subsubsection[{this}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Field} DwarfDB.DataStructures.Record.this\mbox{[}string field\_\-name\mbox{]}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}}}
+\label{class_dwarf_d_b_1_1_data_structures_1_1_record_a303a0895fdeb635fa47469b2ac46c4a3}
+
+
+Getting fields and their values. 
+
+
+
+The documentation for this class was generated from the following file:\begin{DoxyCompactItemize}
 \item 
-Data\+Structures/Record.\+cs\end{DoxyCompactItemize}
+DataStructures/Record.cs\end{DoxyCompactItemize}
