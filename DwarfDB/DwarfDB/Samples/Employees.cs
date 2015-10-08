@@ -17,7 +17,7 @@ namespace DwarfDB
 	partial class Program
 	{
 		public static void Employees() {
-			string db_name= "employees";
+			const string db_name= "employees";
 			DataBase db = null;
 			DataContainer dc_employee = null;
 			DataContainer dc_positions = null;

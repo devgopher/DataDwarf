@@ -13,6 +13,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Linq;
+using DwarfDB.DataStructures;
 using DwarfDB;
 
 namespace AppSample
@@ -20,23 +21,52 @@ namespace AppSample
 	/// <summary>
 	/// Interaction logic for Window1.xaml
 	/// </summary>
-	public partial class Window1 : Window
+	public partial class AppSampleWindow : Window
 	{
-		public Window1()
+		
+		private int id_cntr = 140;
+		
+		private DwarfDB.ChunkManager.ChunkManager cm = null;
+		private DataBase db = null;
+		private DataContainer dc_employee_load = null;
+		
+		public AppSampleWindow()
 		{
 			InitializeComponent();
 			Load();
 		}
 		
 		private void Load() {
-			var cm = new DwarfDB.ChunkManager.ChunkManager();
-			var db = DwarfDB.DataStructures.DataBase.LoadFrom( "employees", cm );
-			DwarfDB.DataStructures.DataContainer dc_employee_load = db.GetDataContainer( "employee" );
-			
+			cm = new DwarfDB.ChunkManager.ChunkManager();
+			db = DwarfDB.DataStructures.DataBase.LoadFrom( "employees", cm );
+			dc_employee_load = db.GetDataContainer( "employee" );
+			GridLoad();
+		}
+		
+		private void GridLoad() {
 			var items_query = from x in dc_employee_load.GetRecords()
 				select x["Surname"];
 			
 			EmployeeGrid.ItemsSource = items_query.ToList();
-		}		
+		}
+		
+		void GoOn_Click(object sender, RoutedEventArgs e)
+		{
+			String _name = name.Text.Trim();
+			String _surname = surname.Text.Trim();
+			
+			Record new_rec = new Record( dc_employee_load );
+			
+			new_rec.Id = (UInt64)id_cntr;
+			new_rec["Name"].Value = _name;
+			new_rec["Surname"].Value = _surname;
+			
+			dc_employee_load.AddRecord(new_rec);
+			dc_employee_load.Save();
+			
+			GridLoad();
+			
+			++id_cntr;
+		}
 	}
 }

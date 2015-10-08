@@ -32,9 +32,7 @@ namespace DwarfDB.UnitTests
 			
 			dc.Save();
 			
-			
-			
-			
+			Assert.AreEqual( 1, dc.GetRecords().Count );	
 		}
 	}
 }
