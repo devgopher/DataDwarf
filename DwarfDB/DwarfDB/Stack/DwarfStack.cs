@@ -94,7 +94,7 @@ namespace DwarfDB.Stack
 			}
 		}
 		
-		new public bool TryPop( out IStructure data ) {
+		new public bool TryPop( IStructure data ) {
 			var ret = base.TryPop( out data );
 			// удаляем освобожденный Index
 			if ( ret ) {
@@ -142,7 +142,7 @@ namespace DwarfDB.Stack
 					PushFromStack( tmp_stack );
 					
 					// Putting down a flag for next GetRecords operations
-					Modified = false;
+					//Modified = false;
 				} else {
 					if ( records_list.Count > 0 )
 						Parallel.ForEach( records_list, parallel_opts, ( rec ) => {

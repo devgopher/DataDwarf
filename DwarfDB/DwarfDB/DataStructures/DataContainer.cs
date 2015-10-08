@@ -282,11 +282,12 @@ namespace DwarfDB.DataStructures
 		}
 
 		public void RemoveAllRecords() {
-			foreach ( var rec in GetRecords() ) {
+			var records = GetRecords();
+			foreach ( var rec in records ) {
 				this.RemoveRecord( rec );
 			}
 			
-			this.Save();
+			//this.Save();
 		}
 		
 		public bool RemoveRecord( Record rem_rec ) {
@@ -301,6 +302,12 @@ namespace DwarfDB.DataStructures
 			
 			// Destroying index
 			rem_rec.DestroyIndex();
+			
+			// Removing from stack
+			if (owner_db.Stack.TryPop( rem_rec ) == null)
+				return false;
+			
+			inner_records.Remove( rem_rec );
 			
 			return true;
 		}

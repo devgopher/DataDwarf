@@ -158,7 +158,7 @@ namespace DwarfDB.DataStructures
 		/// Loading and updating data containers list for DB
 		/// </summary>
 		private void UpdateDataContainers() {
-			chunk_manager.LoadDCIndexes();
+			chunk_manager.LoadDCIndexes(this);
 			chunk_manager.LoadRecordIndexes();
 			var indexes = chunk_manager.AllIndexes;
 			if ( inner_dc_dict.Count > 0 )

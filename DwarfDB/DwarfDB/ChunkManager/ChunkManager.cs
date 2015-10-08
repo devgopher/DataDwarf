@@ -418,7 +418,7 @@ namespace DwarfDB.ChunkManager
 			return ret;
 		}
 		
-		public void LoadDCIndexes() {
+		public void LoadDCIndexes( DataBase db ) {
 			var filepath = CurrentDbPath+@"\indexes.dw";
 			var rgx = new Regex(@"(.*):DataContainer:(.*):(.*)");
 			
@@ -435,7 +435,7 @@ namespace DwarfDB.ChunkManager
 									var dc_hash = mtc[0].Groups[3].Value;
 									var idx = Index.CreateFromHashCode( dc_hash );
 									var new_dc = GetDataContainer(dc_name);
-									
+									new_dc.AssignOwnerDB(db);
 									if ( !all_indexes.ContainsKey( idx ) ) {
 										all_indexes.Add( idx, new KeyValuePair<IStructure, string>(new_dc, dc_name));
 									}
@@ -567,14 +567,19 @@ namespace DwarfDB.ChunkManager
 			using ( var sw = new StreamWriter( fs ) ) {
 				foreach ( var idx in AllIndexes ) {
 					if ( !contents.Contains(idx.Key.HashCode) ) {
-						if ( idx.Value.Key is Record ) {
-							sw.WriteLine( "Record:Record:"+idx.Key.HashCode+":"+(idx.Value.Key as Record).OwnerDC.GetIndex().HashCode);
+						if ( idx.Value.Key is Record && !( idx.Value.Key is DummyRecord ) ) {
+							Record rec =  idx.Value.Key as Record;
+							DataContainer owner_dc = rec.OwnerDC;
+							string hash_code = idx.Key.HashCode;
+							sw.WriteLine( "Record:Record:"+hash_code+":"+owner_dc.GetIndex().HashCode);
 						} else if ( idx.Value.Key is DataContainer  ) {
-							if ( !contents.Contains(idx.Key.HashCode) )
-								sw.WriteLine( ((DataContainer)idx.Value.Key).Name+
+							if ( !contents.Contains(idx.Key.HashCode) ) {
+								var dc = (DataContainer)idx.Value.Key;
+								sw.WriteLine( dc.Name+
 								             ":DataContainer:"+
-								             ((DataContainer)idx.Value.Key).GetOwnerDB().Name+":"+
+								             dc.GetOwnerDB().Name+":"+
 								             idx.Key.HashCode );
+							}
 						}
 					}
 				}
