@@ -25,7 +25,6 @@ namespace DwarfDB
 			var db_dir = Config.Config.Instance.DataDirectory+db_name;
 			var cm = new ChunkManager.ChunkManager();
 			
-			
 			// Creating DB structure
 			if (DataBase.Exists(db_name)) {
 				db = DataBase.LoadFrom( db_name, cm );
@@ -74,9 +73,7 @@ namespace DwarfDB
 				Console.WriteLine( String.Format("Name: {0}, Surname: {1}",
 				                                 rec["Name"].Value.ToString(),
 				                                 rec["Surname"].Value.ToString())  );
-			}
-			
-			
+			}			
 			
 			UInt64 rec_id = 110+(UInt64)DateTime.Now.Ticks % 2000;
 			

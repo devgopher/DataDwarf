@@ -45,7 +45,8 @@ namespace AppSample
 		
 		private void GridLoad() {
 			var items_query = from x in dc_employee_load.GetRecords()
-				select x["Surname"];
+				orderby x.Id ascending
+				select new  {id = x.Id, surname=x["Surname"].Value, name=x["Name"].Value};
 			
 			EmployeeGrid.ItemsSource = items_query.ToList();
 		}
