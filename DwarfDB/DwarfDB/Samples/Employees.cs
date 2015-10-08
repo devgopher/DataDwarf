@@ -51,9 +51,11 @@ namespace DwarfDB
 				dc_divisions.AddColumn( new Column( DataType.INT, "DivId" ) );
 				dc_divisions.AddColumn( new Column( DataType.STRING, "Name" ) );
 				
-				cm.CreateChunk( dc_employee );
-				cm.CreateChunk( dc_positions );
-				cm.CreateChunk( dc_divisions );
+				
+				dc_employee.Save();
+				dc_divisions.Save();
+				dc_positions.Save();
+
 				cm.SaveIndexes();
 			}
 

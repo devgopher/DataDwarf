@@ -16,8 +16,8 @@ namespace DwarfDB
 			
 			//DataTableChunkCreation();
 			//DataBaseChunkCreation();
-			//Employees();
-			UnitTests.RecordTest.CreateRecord("nunit_db", "nunit_container1");
+			Employees();
+			//UnitTests.RecordTest.CreateRecord("nunit_db", "nunit_container1");
 			
 			Console.Write("Press any key to continue . . . ");
 			Console.ReadKey(true);

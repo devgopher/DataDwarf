@@ -75,7 +75,7 @@ namespace DwarfDB.DataStructures
 			
 			var new_db = new DataBase( db_name, _cm, true );
 			
-			CreateIndexesDw( db_name );			
+			CreateIndexesDw( db_name );
 			_cm.CreateChunk( new_db );
 			
 			return new_db;
@@ -177,8 +177,7 @@ namespace DwarfDB.DataStructures
 				inner_dc_dict.Add( new_dc.Name, new_dc );
 				Stack.Push( new_dc );
 				new_dc.AssignOwnerDB(this);
-				
-				new_dc.Save();
+				// Don't try to save new_dc in this method!
 				return true;
 			} else {
 				Errors.ErrorProcessing.Display(
@@ -198,16 +197,16 @@ namespace DwarfDB.DataStructures
 		/// <returns></returns>
 		public DataContainer GetDataContainer( string dc_name ) {
 			if ( dc_name != String.Empty ) {
-				/*foreach ( var k in inner_dc_dict ) {
+				foreach ( var k in inner_dc_dict ) {
 					if ( k.Key == dc_name ) {
 						if ( k.Value != null ) {
 							k.Value.AssignOwnerDB(this);
 							k.Value.BuildIndex();
-						//	k.Value.LoadRecords();
+							k.Value.LoadRecords();
 							return k.Value;
 						}
 					}
-				}*/
+				}
 				
 				var chk_dc = chunk_manager.GetDataContainer( dc_name );
 				if ( chk_dc != null ) {
