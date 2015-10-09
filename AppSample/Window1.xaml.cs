@@ -54,8 +54,7 @@ namespace AppSample
 		void GoOn_Click(object sender, RoutedEventArgs e)
 		{
 			String _name = name.Text.Trim();
-			String _surname = surname.Text.Trim();
-			
+			String _surname = surname.Text.Trim();			
 			Record new_rec = new Record( dc_employee_load );
 			
 			new_rec.Id = (UInt64)id_cntr;
