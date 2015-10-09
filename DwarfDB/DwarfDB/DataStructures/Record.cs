@@ -179,15 +179,26 @@ namespace DwarfDB.DataStructures
 		/// </summary>
 		public Field this[string field_name] {
 			get {
-				var ff = FindField( field_name );
-				if ( ff == null )
+				var f_field = FindField( field_name );
+				if ( f_field == null ) {
 					Errors.ErrorProcessing.Display(
 						"There're no field \""+field_name+"\" in your record! ",
 						"Fetching the record",
 						"Please, specify the field name",
 						DateTime.Now
 					);
-				return ff;
+				}/* else {
+					if ( f_field.Value == null ) {
+						Errors.ErrorProcessing.Display(
+							"There're no value for field \""+field_name+"\" in your record! ",
+							"Fetching the record",
+							"",
+							DateTime.Now
+						);
+						return DummyField.Create( f_field );
+					}
+				}*/
+				return f_field;
 			}
 			
 			set {

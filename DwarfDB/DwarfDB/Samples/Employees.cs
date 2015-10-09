@@ -22,7 +22,6 @@ namespace DwarfDB
 			DataContainer dc_employee = null;
 			DataContainer dc_positions = null;
 			DataContainer dc_divisions = null;
-			var db_dir = Config.Config.Instance.DataDirectory+db_name;
 			var cm = new ChunkManager.ChunkManager();
 			
 			// Creating DB structure
