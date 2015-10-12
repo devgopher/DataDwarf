@@ -108,7 +108,7 @@ namespace DwarfDB.ChunkManager
 		/// <param name="idx_pair">Index min-max pair</param>
 		/// <returns></returns>
 		private string GetChunkFilePath( IndexPair idx_pair ) {
-			return CurrentDbPath+@"\"+"rec_"+idx_pair.hash_min+"_"+idx_pair.hash_max+".dwarf";
+			return CurrentDbPath+@"/rec_"+idx_pair.hash_min+"_"+idx_pair.hash_max+".dwarf";
 		}
 		
 		/// <summary>
@@ -197,8 +197,7 @@ namespace DwarfDB.ChunkManager
 				Directory.CreateDirectory(CurrentDbPath);
 				
 				if ( !File.Exists(db_filename) ) {
-					var filepath = CurrentDbPath + @"\"+
-						"db_"+ db.Name + ".dwarf";
+					var filepath = CurrentDbPath + @"/db_"+ db.Name + ".dwarf";
 					
 					var new_chunk = ChunkFormat.CreateNewFile( filepath );
 					ChunkFormat.AddItem( filepath, db);
@@ -222,7 +221,7 @@ namespace DwarfDB.ChunkManager
 				var add_records = new List<Record>();
 
 				if ( !all_indexes.Keys.Contains(dc.GetIndex()) ) {
-					var filepath = CurrentDbPath +@"\dc_"+ dc.Name + ".dwarf";
+					var filepath = CurrentDbPath +@"/dc_"+ dc.Name + ".dwarf";
 					if ( !File.Exists( filepath ) ) {
 						var new_chunk = ChunkFormat.CreateNewFile( filepath );
 						ChunkFormat.AddItem( filepath, dc);
@@ -286,8 +285,7 @@ namespace DwarfDB.ChunkManager
 
 					// 2. for each hash we looking for it's existance in
 					//    already created chunks and an ability to place in existing chunks
-					var filepath = CurrentDbPath + "/"+
-						"rec_"+no_null_records.First().GetIndex().HashCode +
+					var filepath = CurrentDbPath + "/rec_"+no_null_records.First().GetIndex().HashCode +
 						"_" + no_null_records.First().GetIndex().HashCode + ".dwarf";
 					var new_chunk = ChunkFormat.CreateNewFile( filepath );
 					no_null_records.ForEach( (rec) => {
@@ -419,7 +417,7 @@ namespace DwarfDB.ChunkManager
 		}
 		
 		public void LoadDCIndexes( DataBase db ) {
-			var filepath = CurrentDbPath+@"\indexes.dw";
+			var filepath = CurrentDbPath+@"/indexes.dw";
 			var rgx = new Regex(@"(.*):DataContainer:(.*):(.*)");
 			
 			if ( File.Exists(filepath) ) {
@@ -450,7 +448,7 @@ namespace DwarfDB.ChunkManager
 		}
 		
 		public void LoadRecordIndexes() {
-			var filepath = CurrentDbPath+@"\indexes.dw";
+			var filepath = CurrentDbPath+@"/indexes.dw";
 			var rgx = new Regex(@"Record:Record:(.*):(.*)");
 			
 			if ( File.Exists(filepath) ) {
@@ -530,7 +528,7 @@ namespace DwarfDB.ChunkManager
 			// TODO : making a backup of indexes.dw!
 			
 			FileStream fs = null;
-			var filepath = CurrentDbPath+@"\indexes.dw";
+			var filepath = CurrentDbPath+@"/indexes.dw";
 			fs = File.Create( filepath );
 			fs.Close();
 		}
@@ -538,7 +536,7 @@ namespace DwarfDB.ChunkManager
 		private string ReadIndexesDw() {
 			FileStream fs = null;
 			string contents = "";
-			var filepath = CurrentDbPath+@"\indexes.dw";
+			var filepath = CurrentDbPath+@"/indexes.dw";
 			
 			if ( !File.Exists( filepath ) )
 				fs = File.Create( filepath );
@@ -559,7 +557,7 @@ namespace DwarfDB.ChunkManager
 		/// Saves all indexes in format Name:Type:IndexHash
 		/// </summary>
 		public void SaveIndexes() {
-			var filepath = CurrentDbPath+@"\indexes.dw";
+			var filepath = CurrentDbPath+@"/indexes.dw";
 			string contents = ReadIndexesDw();
 			
 			var fs = File.Open( filepath, FileMode.Append );

@@ -14,7 +14,7 @@ namespace DwarfDB.Config
 	{
 		//#if DEBUG
 		Config() {
-			DataDirectory = @"C:\TestBed\";
+			DataDirectory = HomePath+"/DataDwarf/";
 		}
 		//#endif
 		
@@ -23,6 +23,14 @@ namespace DwarfDB.Config
 		}
 		
 		private static Config instance = new Config();
+		
+		public string HomePath {
+			get {
+				return (Environment.OSVersion.Platform == PlatformID.Unix)
+					? Environment.GetEnvironmentVariable("HOME")
+					: Environment.ExpandEnvironmentVariables("%HOMEDRIVE%%HOMEPATH%");
+			}
+		}
 		
 		public static Config Instance {
 			get {

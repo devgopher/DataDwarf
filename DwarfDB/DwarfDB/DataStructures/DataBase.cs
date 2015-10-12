@@ -53,7 +53,7 @@ namespace DwarfDB.DataStructures
 		}
 		
 		public static bool Exists( string db_name ) {
-			var cpath = Config.Config.Instance.DataDirectory+db_name+@"\";
+			var cpath = Config.Config.Instance.DataDirectory+db_name+@"/";
 			if ( Directory.Exists( cpath ) ) {
 				if ( File.Exists(cpath+"db_"+db_name+".dwarf"))
 					return true;
@@ -63,7 +63,7 @@ namespace DwarfDB.DataStructures
 		}
 		
 		private static void CreateIndexesDw( string db_name ) {
-			var stream = File.Create( Config.Config.Instance.DataDirectory+db_name+@"\indexes.dw" );
+			var stream = File.Create( Config.Config.Instance.DataDirectory+db_name+@"/indexes.dw" );
 			stream.Close();
 		}
 		
