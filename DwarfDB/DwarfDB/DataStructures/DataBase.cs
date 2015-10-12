@@ -94,14 +94,6 @@ namespace DwarfDB.DataStructures
 			}
 		}
 		
-		public Dictionary<Index, KeyValuePair<IStructure,string>> Indexes {
-			get {
-				if ( chunk_manager != null )
-					return chunk_manager.AllIndexes;
-				return null;
-			}
-		}
-		
 		public void Drop() {
 			// TODO!!
 		}
@@ -232,9 +224,6 @@ namespace DwarfDB.DataStructures
 		/// <param name="dc_name"></param>
 		/// <returns></returns>
 		private bool CheckDCNameUnique( String dc_name ) {
-			// TODO: in this function we should check, that
-			// a name of new DC, that we introduced as an argument to this func,
-			// is not in inner_dc_list.
 			return !inner_dc_dict.ContainsKey( dc_name ) ;
 		}
 		
@@ -242,6 +231,16 @@ namespace DwarfDB.DataStructures
 			get; private set;
 		}
 		
+		[JsonIgnore]
+		public Dictionary<Index, KeyValuePair<IStructure,string>> Indexes {
+			get {
+				if ( chunk_manager != null )
+					return chunk_manager.AllIndexes;
+				return null;
+			}
+		}
+		
+		[JsonIgnore]
 		public Stack.DwarfStack Stack {
 			get {
 				return dbstack;

@@ -210,6 +210,6 @@ namespace DwarfDB.Stack
 		ParallelOptions parallel_opts = new ParallelOptions();
 		DataBase db;
 		ConcurrentBag<Record> records_list = new ConcurrentBag<Record>();
-		List<string> idx_hashes = new List<string>();
+		HashSet<string> idx_hashes = new HashSet<string>();
 	}
 }

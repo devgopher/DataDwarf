@@ -107,9 +107,9 @@ namespace DwarfDB
 				dc2.AssignOwnerDB(db2);
 				dc.AssignOwnerDB(db2);
 				
-				Console.WriteLine("Preloading DC1...");
+				//Console.WriteLine("Preloading DC1...");
 				dc.PreLoad();
-				Console.WriteLine("Preloading DC2...");
+				//Console.WriteLine("Preloading DC2...");
 				dc2.PreLoad();				
 				
 				// Getting a record

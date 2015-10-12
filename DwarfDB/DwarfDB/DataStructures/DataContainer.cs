@@ -116,30 +116,21 @@ namespace DwarfDB.DataStructures
 			if ( tmp.Name == this.Name &&
 			    tmp.GetOwnerDB().Name == this.GetOwnerDB().Name )
 				return true;
-			if ( tmp.GetHashCode() == this.GetHashCode() )
-				return true;
-			return false;
+			return tmp.GetHashCode() == this.GetHashCode();
 		}
 		
 		public static bool operator ==(DataContainer a, DataContainer b)
 		{
 			// If both are null, or both are same instance, return true.
 			if (System.Object.ReferenceEquals(a, b))
-			{
 				return true;
-			}
 
 			// If one is null, but not both, return false.
 			if (((object)a == null) || ((object)b == null))
-			{
 				return false;
-			}
 			
-			if ( a.Name == b.Name /*& a.GetOwnerDB().Name == b.GetOwnerDB().Name*/  )
-				return true;
-
 			// Return true if the fields matches:
-			return false;
+			return ( a.Name == b.Name /*& a.GetOwnerDB().Name == b.GetOwnerDB().Name*/  );
 		}
 		
 		public static bool operator !=(DataContainer a, DataContainer b)
@@ -247,8 +238,6 @@ namespace DwarfDB.DataStructures
 		/// <returns>true or false</returns>
 		public bool Create( String new_name, Column[] _columns ) {
 			Name = new_name;
-			
-			// TODO : Check for existance!
 			
 			foreach ( var clmn in _columns ) {
 				if ( clmn.Type != DataType.UNDEF ) {
@@ -425,7 +414,7 @@ namespace DwarfDB.DataStructures
 		/// </summary>
 		/// <param name="i">index</param>
 		/// <returns></returns>
-		public Record GetRecord( int i ) {
+		 public Record GetRecord( int i ) {
 			if ( i >= AllRecordsCount ) {
 				Errors.ErrorProcessing.Display("Argument "+i.ToString()+" is out of range! ", "Getting  record", "", DateTime.Now);
 				return new DummyRecord( this );
@@ -462,9 +451,9 @@ namespace DwarfDB.DataStructures
 					var db = this.GetOwnerDB();
 					var indexes = db.Indexes;
 
-					all_rec_count = indexes.Where( ( idxs ) => {
-					                              	return idxs.Value.Value == GetIndex().HashCode;
-					                              } ).Count();
+					all_rec_count = (indexes.Where( ( idxs ) => {
+					                              	return idxs.Value.Value == this.GetIndex().HashCode;
+					                               } )).Count();
 				}
 				return all_rec_count;
 			}
