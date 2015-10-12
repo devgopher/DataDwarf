@@ -286,7 +286,7 @@ namespace DwarfDB.ChunkManager
 					// 2. for each hash we looking for it's existance in
 					//    already created chunks and an ability to place in existing chunks
 					var filepath = CurrentDbPath + "/rec_"+no_null_records.First().GetIndex().HashCode +
-						"_" + no_null_records.First().GetIndex().HashCode + ".dwarf";
+						"_" + no_null_records.Last().GetIndex().HashCode + ".dwarf";
 					var new_chunk = ChunkFormat.CreateNewFile( filepath );
 					no_null_records.ForEach( (rec) => {
 					                        	if ( !all_hashes.Contains(rec.GetIndex().HashCode) ) {
@@ -299,7 +299,7 @@ namespace DwarfDB.ChunkManager
 					try {
 						chunks_lst.Add( new IndexPair() {
 						               	hash_min = no_null_records.First().GetIndex().HashCode,
-						               	hash_max =  no_null_records.First().GetIndex().HashCode
+						               	hash_max =  no_null_records.Last().GetIndex().HashCode
 						               }, "none" );
 					} catch ( Exception ex ) {
 						// XXX: doing nothing...
@@ -394,7 +394,8 @@ namespace DwarfDB.ChunkManager
 			get {
 				if ( all_indexes.Count != all_hashes.Count ) {
 					foreach ( var idx in all_indexes ) {
-						all_hashes.Add(idx.Key.HashCode);
+						if ( !all_hashes.Contains(idx.Key.HashCode) )
+							all_hashes.Add(idx.Key.HashCode);
 					}
 				}
 				return all_indexes;
@@ -452,6 +453,7 @@ namespace DwarfDB.ChunkManager
 			var rgx = new Regex(@"Record:Record:(.*):(.*)");
 			
 			if ( File.Exists(filepath) ) {
+				all_indexes.Clear();
 				using ( var fs = File.OpenRead( filepath )) {
 					var sr = new StreamReader( fs );
 					string line = sr.ReadLine();
@@ -584,7 +586,7 @@ namespace DwarfDB.ChunkManager
 			}
 		}
 		
-		private List<string> all_hashes = new List<string>();
+		private HashSet<string> all_hashes = new HashSet<string>();
 		
 		public static ChunkManager inner_object = null;
 		
