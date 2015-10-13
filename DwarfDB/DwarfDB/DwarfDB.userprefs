@@ -1,22 +1,17 @@
 ﻿<Properties StartupItem="DwarfDB.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Samples\DataTableSample.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Crypto\GenKeyException.cs">
     <Files>
-      <File FileName="Program.cs" Line="17" Column="22" />
-      <File FileName="Samples\DataTableSample.cs" Line="110" Column="5" />
+      <File FileName="Program.cs" Line="20" Column="8" />
+      <File FileName="Samples\DataTableSample.cs" Line="101" Column="53" />
+      <File FileName="DataStructures\Record.cs" Line="234" Column="30" />
+      <File FileName="Stack\DwarfStack.cs" Line="157" Column="1" />
+      <File FileName="Samples\Employees.cs" Line="15" Column="31" />
+      <File FileName="Crypto\Hash.cs" Line="10" Column="13" />
+      <File FileName="Crypto\GenKey.cs" Line="17" Column="14" />
+      <File FileName="DataStructures\DataException.cs" Line="64" Column="3" />
+      <File FileName="Crypto\GenKeyException.cs" Line="2" Column="36" />
     </Files>
-    <Pads>
-      <Pad Id="ProjectPad">
-        <State name="__root__">
-          <Node name="DwarfDB" expanded="True">
-            <Node name="DwarfDB" expanded="True" selected="True">
-              <Node name="Checks" expanded="True" />
-              <Node name="Samples" expanded="True" />
-            </Node>
-          </Node>
-        </State>
-      </Pad>
-    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
@@ -31,6 +26,8 @@
       <Breakpoint file="C:\Users\igor.evdokimov\Documents\Github\Newtonsoft.Json\Src\Newtonsoft.Json\Linq\JValue.cs" line="157" column="1" />
       <Breakpoint file="C:\Users\igor.evdokimov\Documents\Github\Newtonsoft.Json\Src\Newtonsoft.Json\Linq\JValue.cs" line="46" column="1" />
       <Breakpoint file="C:\Users\igor.evdokimov\Documents\Github\Newtonsoft.Json\Src\Newtonsoft.Json\Linq\JValue.cs" line="44" column="1" />
+      <Breakpoint file="C:\Users\igor.evdokimov\Documents\Github\DataDwarf\DwarfDB\DwarfDB\Samples\DataTableSample.cs" line="163" column="44" />
+      <Breakpoint file="C:\Users\igor.evdokimov\Documents\Github\DataDwarf\DwarfDB\DwarfDB\Samples\DataTableSample.cs" line="175" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />

@@ -118,11 +118,14 @@
     <Compile Include="Stack\DwarfStack.cs" />
     <Compile Include="TransactionJournals\TransactionJournals.cs" />
     <Compile Include="Transactions\DwarfTransaction.cs" />
+    <Compile Include="UnitTests\GenKeyTest.cs" />
     <Compile Include="UnitTests\DataBaseTest.cs" />
     <Compile Include="UnitTests\RecordTest.cs" />
     <Compile Include="User\Credentials.cs" />
     <Compile Include="User\Permissions.cs" />
     <Compile Include="User\User.cs" />
+    <Compile Include="Crypto\GenKey.cs" />
+    <Compile Include="Crypto\GenKeyException.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

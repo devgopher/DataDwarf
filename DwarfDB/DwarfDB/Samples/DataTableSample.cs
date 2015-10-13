@@ -107,10 +107,10 @@ namespace DwarfDB
 				dc2.AssignOwnerDB(db2);
 				dc.AssignOwnerDB(db2);
 				
-				Console.WriteLine("Preloading DC1...");
-				dc.PreLoad();
-				Console.WriteLine("Preloading DC2...");
-				dc2.PreLoad();				
+				//Console.WriteLine("Preloading DC1...");
+				//dc.PreLoad();
+				//Console.WriteLine("Preloading DC2...");
+				//dc2.PreLoad();				
 
 				// Getting a record
 				Record rc = null;
@@ -136,10 +136,11 @@ namespace DwarfDB
 				                                                   });
 				Console.WriteLine("Getting value time1, ms: "+get_time.ToString());
 
-				Console.WriteLine("Getting value time2 (in stack), ms: "+get_time2.ToString());
-				Console.WriteLine("Getting value time3 (not in stack, probably), ms: "+get_time3.ToString());
-				Console.WriteLine("Getting value time4 (in stack after time3), ms: "+get_time4.ToString());
-				Console.WriteLine("Getting value time2s (in stack), ms: "+get_time2s.ToString());
+				Console.WriteLine("Getting value time2, ms: "+get_time2.ToString());
+				Console.WriteLine("Getting value time3, ms: "+get_time3.ToString());
+				Console.WriteLine("Getting value time4, ms: "+get_time4.ToString());
+				Console.WriteLine("Getting value time2s, ms: "+get_time2s.ToString());
+
 				if ( rc1 != null &&  !(rc is DummyRecord))
 					Console.WriteLine("Val: "+rc1.Fields[0].Value.ToString());
 				if ( rc2 != null && !(rc2 is DummyRecord) )

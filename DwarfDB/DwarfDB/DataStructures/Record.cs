@@ -187,17 +187,7 @@ namespace DwarfDB.DataStructures
 						"Please, specify the field name",
 						DateTime.Now
 					);
-				}/* else {
-					if ( f_field.Value == null ) {
-						Errors.ErrorProcessing.Display(
-							"There're no value for field \""+field_name+"\" in your record! ",
-							"Fetching the record",
-							"",
-							DateTime.Now
-						);
-						return DummyField.Create( f_field );
-					}
-				}*/
+				}
 				return f_field;
 			}
 			
@@ -265,7 +255,6 @@ namespace DwarfDB.DataStructures
 			ret_rec.position = -1;
 
 			foreach ( var field in Fields ) {
-				var new_field = field.Clone();
 				ret_rec.Fields.Add( field );
 			}
 			
