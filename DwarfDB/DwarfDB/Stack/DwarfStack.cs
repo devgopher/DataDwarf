@@ -115,7 +115,7 @@ namespace DwarfDB.Stack
 		/// <param name="ind"></param>
 		/// <returns></returns>
 		public List<Record> GetRecords( DataStructures.DataContainer dc ) {
-			var ret = new ConcurrentBag<Record>();
+			var ret = new HashSet<Record>();
 			try {
 				if ( this.Modified ) {
 					var tmp_stack = new ConcurrentStack<IStructure>(); // временный стек для перебора элементов в основном стеке
@@ -140,7 +140,6 @@ namespace DwarfDB.Stack
 						}
 					}
 					PushFromStack( tmp_stack );
-					
 					// Putting down a flag for next GetRecords operations
 					//Modified = false;
 				} else {
@@ -154,7 +153,8 @@ namespace DwarfDB.Stack
 				Errors.ErrorProcessing.Display( "FAILED TO GET STRUCTURE: "+ex.Message+":"+ex.StackTrace,
 				                               "", "", DateTime.Now );
 			}
-			return ret.ToList();
+
+			return ret.ToList ();
 		}
 		
 		/// <summary>

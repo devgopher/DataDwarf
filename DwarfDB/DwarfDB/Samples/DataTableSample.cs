@@ -164,12 +164,13 @@ namespace DwarfDB
 				                                    	return x.Fields[1].Type == DataType.INT &&
 				                                    		(int.Parse(x.Fields[1].Value.ToString()) % 3 == 0);
 				                                    }).ToList();
-				
+
 				foreach ( var rec in aa1) {
 					Console.WriteLine("Rec:"+rec.Fields[0].Type+"  :  "+rec.Fields[0].Value+" $$"+aa1.Count+
 					                  ":"+rec.Fields[1].Type+"  :  "+rec.Fields[1].Value+" $$"+aa1.Count);
 				}
-								
+
+
 				Console.WriteLine("Trying LINQ #3...");
 				var aa2 = from rec in dc
 					join recb in dc2 on
