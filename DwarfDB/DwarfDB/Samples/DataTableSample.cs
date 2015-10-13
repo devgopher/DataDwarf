@@ -179,7 +179,7 @@ namespace DwarfDB
 					where rec.Fields[1].Type == DataType.INT && recb.Fields[1].Type == DataType.INT
 					select rec;
 
-				foreach ( var rec in aa2) {
+				foreach ( var rec in aa2 ) {
 					Console.WriteLine("Rec:"+rec.Fields[0].Type+"  :  "+rec.Fields[0].Value+" $$"+aa2.Count()+
 					                  ":"+rec.Fields[1].Type+"  :  "+rec.Fields[1].Value+" $$"+aa2.Count());
 				}

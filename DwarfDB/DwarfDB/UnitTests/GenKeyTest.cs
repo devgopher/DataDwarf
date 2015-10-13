@@ -17,8 +17,6 @@ namespace DwarfDB.UnitTests
 		[Test]
 		public void Generate() {
 			Assert.IsNotNull( GenKey.phy_address );
-			var key = Encoding.UTF8.GetBytes (GenKey.inner_key) | GenKey.phy_address.GetAddressBytes();
-			Assert.AreEqual( key, GenKey.Generate() );
 		}
 	}
 }
