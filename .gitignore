@@ -42,5 +42,12 @@ Network Trash Folder
 Temporary Items
 .apdisk
 *.pdb
-DwarfDB/DwarfDB/bin/Debug/DwarfDB.exe
 *.exe
+*.dll
+
+#txt files
+*.txt
+
+#Temporary
+*Temporary*
+*ResolveAssembly*
