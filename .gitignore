@@ -12,6 +12,7 @@ $RECYCLE.BIN
 [Bb]in/
 [Dd]ebug*/
 obj/
+packages/
 
 # Windows Installer files
 *.cab
