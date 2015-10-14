@@ -118,6 +118,7 @@
     <Compile Include="Stack\DwarfStack.cs" />
     <Compile Include="TransactionJournals\TransactionJournals.cs" />
     <Compile Include="Transactions\DwarfTransaction.cs" />
+    <Compile Include="UnitTests\DataContainerTest.cs" />
     <Compile Include="UnitTests\GenKeyTest.cs" />
     <Compile Include="UnitTests\DataBaseTest.cs" />
     <Compile Include="UnitTests\RecordTest.cs" />

@@ -19,13 +19,12 @@ namespace DwarfDB
 	public static class GenKey
 	{
 		public const string inner_key = "1020200102903d31DFWWEF#E$$Ev12FH";
-		static NetworkInterface ni = null;
 		public static PhysicalAddress phy_address = null;
 
 		static GenKey() {
-			foreach (var item in NetworkInterface.GetAllNetworkInterfaces()) {
-				if (ni.OperationalStatus == OperationalStatus.Up) {
-					phy_address = ni.GetPhysicalAddress ();
+			foreach (var ni_item in NetworkInterface.GetAllNetworkInterfaces()) {
+				if (ni_item.OperationalStatus == OperationalStatus.Up) {
+					phy_address = ni_item.GetPhysicalAddress ();
 					break;
 				}
 			}
