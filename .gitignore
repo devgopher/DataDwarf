@@ -6,7 +6,12 @@ ehthumbs.db
 Desktop.ini
 
 # Recycle Bin used on file shares
-$RECYCLE.BIN/
+$RECYCLE.BIN
+
+# obj/bin/debug folders
+[Bb]in/
+[Dd]ebug*/
+obj/
 
 # Windows Installer files
 *.cab
