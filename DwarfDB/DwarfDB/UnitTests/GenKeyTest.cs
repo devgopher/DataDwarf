@@ -4,10 +4,7 @@
  * Время: 12:16
  */
 using System;
-using System.Text;
 using NUnit.Framework;
-using DwarfDB.ChunkManager;
-using DwarfDB.DataStructures;
 
 namespace DwarfDB.UnitTests
 {
