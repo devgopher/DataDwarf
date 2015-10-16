@@ -17,35 +17,37 @@ namespace DwarfDB.DataStructures
 	[JsonObject][Serializable]
 	public class Field {
 		[JsonConstructor]
-		public Field( Column _own_column, Object _value ) {
-			own_column = _own_column;
+		public Field( String _name, DataType _type, Object _value ) {
 			Value = _value;
+			Type = _type;
+			Name = _name;
 		}
 		
 		public DataType Type {
 			get;set;
 		}
-		
-	//	private DataType dtype = DataType.UNDEF;
-		
+
 		public String Name {
-			get {
-				return own_column.Name;
-			} private set {
-				own_column.Name = value;
-			}
+			get; set;
 		}
 		
 		public Object Value {
-			get; set;
+			get {
+				return _inner_value;
+			}
+			set {
+				_inner_value = value;
+			}
 		}
 
+		private Object _inner_value;
+		
 		public Field Clone() {
-			var new_field = new Field( own_column, Value );
+			var new_field = new Field( Name, Type , Value );
 			return new_field;
 		}
 		
-		private Column own_column = null;
+		private readonly Column own_column = null;
 	}
 	
 	/// <summary>
@@ -69,7 +71,7 @@ namespace DwarfDB.DataStructures
 		private void FillFields() {
 			if ( OwnerDC != null ) {
 				foreach ( var col in OwnerDC.Columns ) {
-					Fields.Add( new Field( col, null ));
+					Fields.Add( new Field( col.Name, col.Type, null ));
 				}
 			}
 		}
@@ -89,11 +91,14 @@ namespace DwarfDB.DataStructures
 		#endregion
 		
 		/// <summary>
-		/// Save to file chunk
+		/// Save changes to file chunk
 		/// </summary>
-		/// <param name="filepath"></param>
 		public void Save() {
-			// TODO
+			var cm = OwnerDC.GetOwnerDB().chunk_manager;
+			this.BuildIndex();
+			if ( cm != null ) {
+				cm.SaveRecord(this);
+			}
 		}
 		
 		/// <summary>
@@ -126,6 +131,15 @@ namespace DwarfDB.DataStructures
 		/// </summary>
 		public void BuildIndex() {
 			current_index = new Index( this );
+		}
+		
+		/// <summary>
+		/// Destroying an index for an element ( for deletion )
+		/// </summary>
+		public void DestroyIndex() {
+			if ( current_index != null ) {
+				current_index = null;
+			}
 		}
 		
 		/// <summary>
@@ -165,15 +179,16 @@ namespace DwarfDB.DataStructures
 		/// </summary>
 		public Field this[string field_name] {
 			get {
-				var ff = FindField( field_name );
-				if ( ff == null )
+				var f_field = FindField( field_name );
+				if ( f_field == null ) {
 					Errors.ErrorProcessing.Display(
 						"There're no field \""+field_name+"\" in your record! ",
 						"Fetching the record",
 						"Please, specify the field name",
 						DateTime.Now
 					);
-				return ff;
+				}
+				return f_field;
 			}
 			
 			set {
@@ -238,9 +253,8 @@ namespace DwarfDB.DataStructures
 		public IStructure Clone() {
 			var ret_rec = new Record( OwnerDC );
 			ret_rec.position = -1;
-			
+
 			foreach ( var field in Fields ) {
-				var new_field = field.Clone();
 				ret_rec.Fields.Add( field );
 			}
 			
@@ -254,6 +268,5 @@ namespace DwarfDB.DataStructures
 		
 		protected Index current_index;
 		protected int position = -1;
-
 	}
 }

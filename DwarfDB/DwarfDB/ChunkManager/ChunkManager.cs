@@ -61,7 +61,8 @@ namespace DwarfDB.ChunkManager
 					var min_hash = mtc.Groups[2].Value;
 					var max_hash = mtc.Groups[3].Value;
 					var ipk = new IndexPair() { hash_min = min_hash, hash_max = max_hash };
-					chunks_lst[ ipk ] = db_name;
+					//chunks_lst[ ipk ] = db_name;
+					chunks_lst[ ipk ] = filepath;
 				}
 			}
 			
@@ -107,7 +108,7 @@ namespace DwarfDB.ChunkManager
 		/// <param name="idx_pair">Index min-max pair</param>
 		/// <returns></returns>
 		private string GetChunkFilePath( IndexPair idx_pair ) {
-			return CurrentDbPath+@"\"+"rec_"+idx_pair.hash_min+"_"+idx_pair.hash_max+".dwarf";
+			return CurrentDbPath+@"/rec_"+idx_pair.hash_min+"_"+idx_pair.hash_max+".dwarf";
 		}
 		
 		/// <summary>
@@ -190,14 +191,13 @@ namespace DwarfDB.ChunkManager
 		public void CreateChunk( DataBase db ) {
 			try {
 				var add_records = new List<Record>();
-				var db_filename = CurrentDbPath  + "/"+db.Name+"/"+
-					"db_"+ db.Name + ".dwarf";
+				var db_filename = CurrentDbPath+
+					@"\db_"+ db.Name + ".dwarf";
 				
-				Directory.CreateDirectory(CurrentDbPath  + "/"+db.Name+"/");
+				Directory.CreateDirectory(CurrentDbPath);
 				
 				if ( !File.Exists(db_filename) ) {
-					var filepath = CurrentDbPath + "/"+
-						"db_"+ db.Name + ".dwarf";
+					var filepath = CurrentDbPath + @"/db_"+ db.Name + ".dwarf";
 					
 					var new_chunk = ChunkFormat.CreateNewFile( filepath );
 					ChunkFormat.AddItem( filepath, db);
@@ -221,15 +221,16 @@ namespace DwarfDB.ChunkManager
 				var add_records = new List<Record>();
 
 				if ( !all_indexes.Keys.Contains(dc.GetIndex()) ) {
-					var filepath = CurrentDbPath +@"\dc_"+ dc.Name + ".dwarf";
-					
-					var new_chunk = ChunkFormat.CreateNewFile( filepath );
-					ChunkFormat.AddItem( filepath, dc);
-					var index = dc.GetIndex();
-					all_indexes.Add(index, new KeyValuePair<IStructure, string>(dc, dc.GetIndex().HashCode));
-					chunks_lst.Add( new IndexPair() {
-					               	hash_min =  index.HashCode, hash_max =  index.HashCode
-					               }, dc.Name );
+					var filepath = CurrentDbPath +@"/dc_"+ dc.Name + ".dwarf";
+					if ( !File.Exists( filepath ) ) {
+						var new_chunk = ChunkFormat.CreateNewFile( filepath );
+						ChunkFormat.AddItem( filepath, dc);
+						var index = dc.GetIndex();
+						all_indexes.Add(index, new KeyValuePair<IStructure, string>(dc, dc.GetIndex().HashCode));
+						chunks_lst.Add( new IndexPair() {
+						               	hash_min =  index.HashCode, hash_max =  index.HashCode
+						               }, dc.Name );
+					}
 				}
 			} catch ( IOException ex ) {
 				throw new ChunkException( "Error writing a new chunk!", ex );
@@ -252,19 +253,22 @@ namespace DwarfDB.ChunkManager
 		/// <param name="max_idx_count"></param>
 		public void CreateChunk( List<Record> records, int max_elem_count = 100 ) {
 			try {
-				records.Sort( (e1, e2) => {
-				             	var index1 = e1.GetIndex();
-				             	var index2 = e2.GetIndex();
-				             	return index1.HashCode.CompareTo(index2.HashCode);
-				             } );
-				if ( records.Count > max_elem_count ) {
+				
+				var no_null_records = records.Where((rec) =>{ return rec.GetIndex() != null;}).ToList();
+				
+				no_null_records.Sort( (e1, e2) => {
+				                     	var index1 = e1.GetIndex();
+				                     	var index2 = e2.GetIndex();
+				                     	return index1.HashCode.CompareTo(index2.HashCode);
+				                     } );
+				if ( no_null_records.Count > max_elem_count ) {
 					var sub_range = new List<Record>();
-					for ( int i = 0; i < records.Count; i += max_elem_count ) {
+					for ( int i = 0; i < no_null_records.Count; i += max_elem_count ) {
 
-						if ( i + max_elem_count < records.Count )
-							sub_range = records.GetRange( i, max_elem_count );
+						if ( i + max_elem_count < no_null_records.Count )
+							sub_range = no_null_records.GetRange( i, max_elem_count );
 						else
-							sub_range = records.GetRange( i, records.Count - i );
+							sub_range = no_null_records.GetRange( i, no_null_records.Count - i );
 						
 						CreateChunk( sub_range, max_elem_count );
 					}
@@ -272,30 +276,36 @@ namespace DwarfDB.ChunkManager
 					return;
 				}
 				
-				var add_records = new List<Record>();
+				var add_no_null_records = new List<Record>();
 				
-				// 1. Let's sort our hashes
-				records.Sort(IndexComparer);
+				
+				if ( no_null_records.Count > 0  ) {
+					// 1. Let's sort our hashes
+					no_null_records.Sort(IndexComparer);
 
-				// 2. for each hash we looking for it's existance in
-				//    already created chunks and an ability to place in existing chunks
-				var filepath = CurrentDbPath + "/"+
-					"rec_"+records.First().GetIndex().HashCode +
-					"_" + records.First().GetIndex().HashCode + ".dwarf";
-				var new_chunk = ChunkFormat.CreateNewFile( filepath );
-				records.ForEach( (rec) => {
-				                	if ( !all_indexes.Keys.Contains(rec.GetIndex()) ) {
-				                		ChunkFormat.AddItem( filepath, rec);
-				                		all_indexes.Add(rec.GetIndex(), new KeyValuePair<IStructure, string>(rec, rec.OwnerDC.GetIndex().HashCode));
-				                	}
-				                } );
-				
-				// adding to chunk list
-				chunks_lst.Add( new IndexPair() {
-				               	hash_min = records.First().GetIndex().HashCode,
-				               	hash_max =  records.First().GetIndex().HashCode
-				               }, "none" );
-			} catch ( IOException ex ) {
+					// 2. for each hash we looking for it's existance in
+					//    already created chunks and an ability to place in existing chunks
+					var filepath = CurrentDbPath + "/rec_"+no_null_records.First().GetIndex().HashCode +
+						"_" + no_null_records.Last().GetIndex().HashCode + ".dwarf";
+					var new_chunk = ChunkFormat.CreateNewFile( filepath );
+					no_null_records.ForEach( (rec) => {
+					                        	if ( !all_hashes.Contains(rec.GetIndex().HashCode) ) {
+					                        		ChunkFormat.AddItem( filepath, rec);
+					                        		AllIndexes.Add(rec.GetIndex(), new KeyValuePair<IStructure, string>(rec, rec.OwnerDC.GetIndex().HashCode));
+					                        	}
+					                        } );
+					
+					// adding to chunk list
+					try {
+						chunks_lst.Add( new IndexPair() {
+						               	hash_min = no_null_records.First().GetIndex().HashCode,
+						               	hash_max =  no_null_records.Last().GetIndex().HashCode
+						               }, "none" );
+					} catch ( Exception ) {
+						// doing nothing...
+					}
+				}
+			} catch ( Exception ex ) {
 				throw new ChunkException( "Error writing a new chunk!", ex );
 			}
 		}
@@ -309,7 +319,8 @@ namespace DwarfDB.ChunkManager
 			var chunk = FindChunkFileForDataContainer( dc_name );
 			
 			if ( chunk != null ) {
-				var new_dc = new DataContainer( null, dc_name );
+				var new_dc =  ChunkFormat.GetDCInFile( chunk, dc_name ); //new DataContainer( null, dc_name );
+				new_dc.BuildIndex();
 				return new_dc;
 			}
 
@@ -352,7 +363,7 @@ namespace DwarfDB.ChunkManager
 			foreach (var convenient_chunk in FindChunkFilesForRecord( hash  )) {
 				var item = ChunkFormat.GetItem( convenient_chunk,  hash  );
 				if ( item != null ) {
-				
+					
 					return (Record)item;
 				}
 			}
@@ -360,8 +371,33 @@ namespace DwarfDB.ChunkManager
 			return null;
 		}
 		
+		/// <summary>
+		/// Save changes in an existant record
+		/// </summary>
+		/// <param name="rec">Record</param>
+		/// <returns>bool</returns>
+		public bool SaveRecord( Record rec ) {
+			// Let's find our record in chunk files...
+			/*foreach (var convenient_chunk in FindChunkFilesForRecord( rec.GetIndex().HashCode  )) {
+				var item = ChunkFormat.GetItem( convenient_chunk,  rec.GetIndex().HashCode );
+				if ( item != null ) {
+					// saving changes...
+					ChunkFormat.SaveItemContents( convenient_chunk, rec );
+					return true;
+				}
+			}*/
+
+			return false;
+		}
+		
 		public Dictionary<Index, KeyValuePair<IStructure,string>> AllIndexes {
 			get {
+				if ( all_indexes.Count != all_hashes.Count ) {
+					foreach ( var idx in all_indexes ) {
+						if ( !all_hashes.Contains(idx.Key.HashCode) )
+							all_hashes.Add(idx.Key.HashCode);
+					}
+				}
 				return all_indexes;
 			}
 		}
@@ -381,11 +417,43 @@ namespace DwarfDB.ChunkManager
 			return ret;
 		}
 		
+		public void LoadDCIndexes( DataBase db ) {
+			var filepath = CurrentDbPath+@"/indexes.dw";
+			var rgx = new Regex(@"(.*):DataContainer:(.*):(.*)");
+			
+			if ( File.Exists(filepath) ) {
+				using ( var fs = File.OpenRead( filepath )) {
+					var sr = new StreamReader( fs );
+					string line = sr.ReadLine();
+					while ( line != null ) {
+						if ( line.IndexOf(":DataContainer:", 0) > 0 ) {
+							if ( rgx.IsMatch( line ) ) {
+								var mtc = rgx.Matches( line );
+								if ( mtc[0].Groups.Count > 0 ) {
+									var dc_name = mtc[0].Groups[1].Value;
+									var dc_hash = mtc[0].Groups[3].Value;
+									var idx = Index.CreateFromHashCode( dc_hash );
+									var new_dc = GetDataContainer(dc_name);
+									new_dc.AssignOwnerDB(db);
+									if ( !all_indexes.ContainsKey( idx ) ) {
+										all_indexes.Add( idx, new KeyValuePair<IStructure, string>(new_dc, dc_name));
+									}
+								}
+							}
+						}
+						line = sr.ReadLine();
+					}
+				}
+			} else
+				throw new ChunkException( "Indexes.dw is absent! " );
+		}
+		
 		public void LoadRecordIndexes() {
-			var filepath = CurrentDbPath+@"\indexes.dw";
+			var filepath = CurrentDbPath+@"/indexes.dw";
 			var rgx = new Regex(@"Record:Record:(.*):(.*)");
 			
 			if ( File.Exists(filepath) ) {
+				all_indexes.Clear();
 				using ( var fs = File.OpenRead( filepath )) {
 					var sr = new StreamReader( fs );
 					string line = sr.ReadLine();
@@ -412,31 +480,113 @@ namespace DwarfDB.ChunkManager
 		}
 		
 		/// <summary>
+		/// Removing an index from index.dw and AllIndexes
+		/// </summary>
+		/// <param name="idx">Index</param>
+		public void RemoveIndex( Index idx ) {
+			RemoveIndex( idx.HashCode );
+		}
+		
+		/// <summary>
+		/// Removing an index from index.dw and AllIndexes
+		/// </summary>
+		/// <param name="hashcode">Hash code</param>
+		public void RemoveIndex( string hashcode ) {
+			Index rem_idx = null;
+			
+			foreach ( var chk_idx in AllIndexes.Keys ) {
+				if ( chk_idx.HashCode == hashcode ) {
+					rem_idx = chk_idx;
+					break;
+				}
+			}
+			
+			if ( rem_idx != null ) {
+				AllIndexes.Remove( rem_idx );
+				SaveIndexes();
+			}
+		}
+		
+		/// <summary>
+		/// Removes a record from chunk
+		/// </summary>
+		/// <param name="rec"></param>
+		public void RemoveRecord( Record rec ) {
+			var ind_hash = rec.GetIndex().HashCode;
+			foreach ( var strg in chunks_lst.Values ) {
+				ChunkFormat.RemoveItem( strg, rec.GetIndex() );
+			}
+			
+			ClearIndexesDw();
+			SaveIndexes();
+		}
+		
+		/// <summary>
+		/// Clearing an index file
+		/// </summary>
+		/// <returns></returns>
+		private void ClearIndexesDw() {
+			
+			// TODO : making a backup of indexes.dw!
+			
+			FileStream fs = null;
+			var filepath = CurrentDbPath+@"/indexes.dw";
+			fs = File.Create( filepath );
+			fs.Close();
+		}
+		
+		private string ReadIndexesDw() {
+			FileStream fs = null;
+			string contents = "";
+			var filepath = CurrentDbPath+@"/indexes.dw";
+			
+			if ( !File.Exists( filepath ) )
+				fs = File.Create( filepath );
+			else {
+				// First of all, let's read existing contents
+				var fs_read = File.OpenRead( filepath );
+				
+				using ( var sr = new StreamReader( fs_read ) ) {
+					contents = sr.ReadToEnd();
+				}
+
+			}
+			
+			return contents;
+		}
+		
+		/// <summary>
 		/// Saves all indexes in format Name:Type:IndexHash
 		/// </summary>
 		public void SaveIndexes() {
-			var filepath = CurrentDbPath+@"\indexes.dw";
-			FileStream fs = null;;
-			if ( !File.Exists( filepath ) )
-				fs = File.Create( filepath );
-			else
-				fs = File.Open( filepath, FileMode.Append );
+			var filepath = CurrentDbPath+@"/indexes.dw";
+			string contents = ReadIndexesDw();
 			
-		//	LoadRecordIndexes();
-			
+			var fs = File.Open( filepath, FileMode.Append );
+			// let's add new records
 			using ( var sw = new StreamWriter( fs ) ) {
 				foreach ( var idx in AllIndexes ) {
-					if ( idx.Value.Key is Record ) {
-						sw.WriteLine( "Record:Record:"+idx.Key.HashCode+":"+(idx.Value.Key as Record).OwnerDC.GetIndex().HashCode);
-					} else if ( idx.Value.Key is DataContainer  ) {
-						sw.WriteLine( ((DataContainer)idx.Value.Key).Name+
-						             ":DataContainer:"+
-						             ((DataContainer)idx.Value.Key).GetOwnerDB().Name+":"+
-						             idx.Key.HashCode );
+					if ( !contents.Contains(idx.Key.HashCode) ) {
+						if ( idx.Value.Key is Record && !( idx.Value.Key is DummyRecord ) ) {
+							Record rec =  idx.Value.Key as Record;
+							DataContainer owner_dc = rec.OwnerDC;
+							string hash_code = idx.Key.HashCode;
+							sw.WriteLine( "Record:Record:"+hash_code+":"+owner_dc.GetIndex().HashCode);
+						} else if ( idx.Value.Key is DataContainer  ) {
+							if ( !contents.Contains(idx.Key.HashCode) ) {
+								var dc = (DataContainer)idx.Value.Key;
+								sw.WriteLine( dc.Name+
+								             ":DataContainer:"+
+								             dc.GetOwnerDB().Name+":"+
+								             idx.Key.HashCode );
+							}
+						}
 					}
 				}
 			}
 		}
+		
+		private HashSet<string> all_hashes = new HashSet<string>();
 		
 		public static ChunkManager inner_object = null;
 		

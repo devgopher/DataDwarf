@@ -94,6 +94,11 @@ namespace DwarfDB.ChunkManager
 			return false;
 		}
 		
+		/// <summary>
+		/// Adding a new item to a chunk
+		/// </summary>
+		/// <param name="filepath">Path to a chunk file</param>
+		/// <param name="db">Database</param>
 		public static void AddItem( string filepath, DataBase db ) {
 			if ( db != null ) {
 				var elem= new InnerChunkElement();
@@ -112,9 +117,45 @@ namespace DwarfDB.ChunkManager
 		}
 		
 		/// <summary>
+		/// Saving an existant item to a chunk file in multithread mode
+		/// </summary>
+		/// <param name="filepath">path to a file</param>
+		/// <param name="ds">datastructure</param>
+		public static void SaveItemContents( string filepath, IStructure ds ) {
+			var elem= new InnerChunkElement();
+			if ( ds != null ) {
+				var sw_read = new StreamReader( File.Open( filepath, FileMode.Open ) );
+				InnerChunkElement icm = null;
+				
+				using ( var json_reader = new JsonTextReader(sw_read) ) {
+					icm = FindItem( json_reader, ds.GetIndex().HashCode );
+				}
+				
+				if ( icm == null )
+				{
+					Errors.ErrorProcessing.Display("Can't find such item!", "Saving an item", "", DateTime.Now);
+					return;
+				}
+				
+				var sw_write = new StreamWriter( File.Open( filepath, FileMode.Append ) );
+				using (var json_writer = new JsonTextWriter(sw_write)) {
+					if ( ds is Record ) {
+						icm.Contents = JsonConvert.SerializeObject(ds, Formatting.Indented );
+					} else if ( ds is DataContainer ) {
+						icm.Contents = JsonConvert.SerializeObject(ds as DataContainer, Formatting.Indented);
+					}
+					elem.ElementHash = ds.GetIndex().HashCode;
+					sw_write.Write(JsonConvert.SerializeObject(elem, Formatting.Indented));
+				}
+			} else {
+				Errors.ErrorProcessing.Display( "DataStructure object is null!", "", "", DateTime.Now);
+			}
+		}
+		
+		/// <summary>
 		/// Adding a new item to a chunk file in multithread mode
 		/// </summary>
-		/// <param name="filepath">path to file</param>
+		/// <param name="filepath">path to a file</param>
 		/// <param name="ds">datastructure</param>
 		public static void AddItem( string filepath, IStructure ds ) {
 			if ( ds != null ) {
@@ -134,7 +175,7 @@ namespace DwarfDB.ChunkManager
 						elem.ElementName = ((DataContainer)ds).Name;
 						var ds_sec = (DataContainer)ds;
 						elem.Contents = JsonConvert.SerializeObject(ds_sec, Formatting.Indented);
-					}					
+					}
 					elem.ElementHash = ds.GetIndex().HashCode;
 					sw.Write(JsonConvert.SerializeObject(elem, Formatting.Indented));
 				}
@@ -146,7 +187,7 @@ namespace DwarfDB.ChunkManager
 		/// <summary>
 		/// Getting an item from a chunk file in multithread mode
 		/// </summary>
-		/// <param name="filepath">path to file</param>
+		/// <param name="filepath">path to a chunk file</param>
 		/// <param name="idx">item index</param>
 		public static IStructure GetItem( string filepath, Index idx ) {
 			return GetItem( filepath, idx.HashCode );
@@ -165,9 +206,9 @@ namespace DwarfDB.ChunkManager
 		}
 		
 		/// <summary>
-		/// Getting an item from a chunk file in multithread mode
+		/// Getting an item from a chunk file in a multithread mode
 		/// </summary>
-		/// <param name="filepath">path to file</param>
+		/// <param name="json_reader">JSON text reader/param>
 		/// <param name="idx">item index</param>
 		private static IStructure GetItemInfile( JsonTextReader json_reader, Index idx ) {
 			InnerChunkElement inner = FindItem( json_reader, idx );
@@ -191,6 +232,7 @@ namespace DwarfDB.ChunkManager
 		/// Getting all records from the chunk
 		/// </summary>
 		/// <param name="filepath">path to file</param>
+		/// <param name="dc_hash">DataContainer hash</param>
 		public static List<Record> GetRecordsInFile( string filepath, string dc_hash ) {
 			var ret = new List<Record>();
 			using (var json_reader = new JsonTextReader(new StreamReader(File.Open( filepath, FileMode.Open )))) {
@@ -210,9 +252,33 @@ namespace DwarfDB.ChunkManager
 		}
 		
 		/// <summary>
-		/// Getting an item from a chunk file in multithread mode
+		/// Getting a DataContainer from the chunk
 		/// </summary>
 		/// <param name="filepath">path to file</param>
+		/// <param name="dc_name">DC name</param>
+		public static DataContainer GetDCInFile( string filepath, string dc_name ) {
+			using (var json_reader = new JsonTextReader(new StreamReader(File.Open( filepath, FileMode.Open )))) {
+				json_reader.SupportMultipleContent = true;
+				var item = new InnerChunkElement();
+				while ( json_reader.Read() ) {
+					item = json_serializer.Deserialize<InnerChunkElement>( json_reader );
+					if ( item.ElemType == InnerChunkElement.DataType.DATACONTAINER ) {
+						if ( item.ElementName == dc_name ) {
+							var ret_dc = JsonConvert.DeserializeObject<DataContainer>( item.Contents );
+							ret_dc.Name = dc_name;
+							ret_dc.BuildIndex();
+							return ret_dc;
+						}
+					}
+				}
+			}
+			return null;
+		}
+		
+		/// <summary>
+		/// Getting an item from a chunk file in multithread mode
+		/// </summary>
+		/// <param name="json_reader">JSON reader</param>
 		/// <param name="hash">item index</param>
 		private static IStructure GetItemInfile( JsonTextReader json_reader, string hash ) {
 			InnerChunkElement inner = FindItem( json_reader, hash );
@@ -236,7 +302,7 @@ namespace DwarfDB.ChunkManager
 		/// Getting several elements from a chunk file in multithread mode
 		/// </summary>
 		/// <param name="filepath">path to file</param>
-		/// <param name="idx">item index</param>
+		/// <param name="idx_arr">indexes array</param>
 		public static IStructure[] GetItemRange( string filepath, Index[] idx_arr ) {
 			var ret_arr = new IStructure[0];
 
@@ -258,9 +324,9 @@ namespace DwarfDB.ChunkManager
 		/// Removing an item to a chunk file in multithread mode
 		/// </summary>
 		/// <param name="filepath">path to file</param>
-		/// <param name="ds">datastructure</param>
+		/// <param name="idx">datastructure index</param>
 		public static void RemoveItem( string filepath, Index idx ) {
-			byte[] buffer = new byte[MaxChunkSize];
+			var buffer = new byte[MaxChunkSize];
 			int offset = 0;
 			int needed_idx_pos = -1;
 
@@ -268,7 +334,8 @@ namespace DwarfDB.ChunkManager
 			using ( var fs = File.Open( filepath, FileMode.Open )) {
 				if ( fs.Read( buffer, offset, MaxChunkSize  ) > 0 ) {
 					string buf = System.Text.Encoding.UTF8.GetString(buffer);
-					int str_pos = buf.IndexOf("\"ElementHash\":\""+idx.HashCode+"\"");
+					string tmp  ="\"ElementHash\": \""+idx.HashCode+"\"";
+					int str_pos = buf.IndexOf(tmp, StringComparison.InvariantCultureIgnoreCase);
 					if ( str_pos > -1 )
 						needed_idx_pos = str_pos+15;
 				}
@@ -278,10 +345,12 @@ namespace DwarfDB.ChunkManager
 			if ( needed_idx_pos > -1 ) {
 				using ( var fs = File.Open( filepath, FileMode.Open )) {
 					//var hash_bytes = System.Text.Encoding.UTF8.GetBytes(idx.HashCode);
-					byte[] replacement = new byte[32];
+					byte[] replacement = new byte[34];
 					//fs.Seek( needed_idx_pos
 					fs.Position = needed_idx_pos;
-					fs.Write( replacement, 0, 32);
+					fs.Write( replacement, 0, 34);
+					fs.Position -= 34;
+					fs.Write( System.Text.Encoding.UTF8.GetBytes( "null" ), 0, 4);
 				}
 			}
 		}

@@ -29,6 +29,12 @@ namespace DwarfDB.DataStructures
 		{
 		}
 		
+		public Column( DataType dt, String _name )
+		{
+			this.Name = _name;
+			this.Type = dt;
+		}
+		
 		#region ISerializable
 		public Column( SerializationInfo info, StreamingContext ctxt )
 		{
@@ -48,7 +54,7 @@ namespace DwarfDB.DataStructures
 				return name;
 			}
 			set {
-				if ( value.Length < 32 ) {
+				if ( value.Length < 256 ) {
 					name = value;
 				}
 			}
@@ -83,6 +89,7 @@ namespace DwarfDB.DataStructures
 			owner_db = _owner_db;
 			BuildIndex();
 		}
+		
 		#region ISerializable
 		public DataContainer( SerializationInfo info, StreamingContext ctxt )
 		{
@@ -109,30 +116,21 @@ namespace DwarfDB.DataStructures
 			if ( tmp.Name == this.Name &&
 			    tmp.GetOwnerDB().Name == this.GetOwnerDB().Name )
 				return true;
-			if ( tmp.GetHashCode() == this.GetHashCode() )
-				return true;
-			return false;
+			return tmp.GetHashCode() == this.GetHashCode();
 		}
 		
 		public static bool operator ==(DataContainer a, DataContainer b)
 		{
 			// If both are null, or both are same instance, return true.
 			if (System.Object.ReferenceEquals(a, b))
-			{
 				return true;
-			}
 
 			// If one is null, but not both, return false.
 			if (((object)a == null) || ((object)b == null))
-			{
 				return false;
-			}
 			
-			if ( a.Name == b.Name /*& a.GetOwnerDB().Name == b.GetOwnerDB().Name*/  )
-				return true;
-
 			// Return true if the fields matches:
-			return false;
+			return ( a.Name == b.Name /*& a.GetOwnerDB().Name == b.GetOwnerDB().Name*/  );
 		}
 		
 		public static bool operator !=(DataContainer a, DataContainer b)
@@ -164,9 +162,19 @@ namespace DwarfDB.DataStructures
 		
 		#endregion
 		
+		private string inner_name = null;
 		
 		public String Name {
-			get; private set;
+			get {
+				return inner_name;
+			}
+			set {
+				if ( inner_name == null ) {
+					inner_name = value;
+				} else {
+					Errors.ErrorProcessing.Display("DC renaming is not allowed!", "", "", DateTime.Now);
+				}
+			}
 		}
 		
 		/// <summary>
@@ -180,6 +188,7 @@ namespace DwarfDB.DataStructures
 				return false;
 			
 			var new_dc = new DataContainer( _owner_db, _name );
+			
 			return ( _owner_db.AddNewDataContainer( new_dc ) );
 		}
 
@@ -196,7 +205,7 @@ namespace DwarfDB.DataStructures
 		}
 		
 		/// <summary>
-		/// Adding a next couple of records to stack 
+		/// Adding a next couple of records to stack
 		/// </summary>
 		/// <param name="number"></param>
 		/// <returns></returns>
@@ -220,7 +229,7 @@ namespace DwarfDB.DataStructures
 			
 			return has_new_recs;
 		}
-				
+		
 		/// <summary>
 		/// Create new DataContainer
 		/// </summary>
@@ -229,8 +238,6 @@ namespace DwarfDB.DataStructures
 		/// <returns>true or false</returns>
 		public bool Create( String new_name, Column[] _columns ) {
 			Name = new_name;
-			
-			// TODO : Check for existance!
 			
 			foreach ( var clmn in _columns ) {
 				if ( clmn.Type != DataType.UNDEF ) {
@@ -244,7 +251,7 @@ namespace DwarfDB.DataStructures
 				}
 			}
 			
-			// Save to file chunk
+			// Save to a file chunk
 			this.Save();
 			return true;
 		}
@@ -263,20 +270,59 @@ namespace DwarfDB.DataStructures
 			return true;
 		}
 
+		public void RemoveAllRecords() {
+			var records = GetRecords();
+			foreach ( var rec in records ) {
+				this.RemoveRecord( rec );
+			}
+			
+			//this.Save();
+		}
+		
+		public bool RemoveRecord( Record rem_rec ) {
+			if ( rem_rec == null )
+				return false;
+			
+			// Removing an uneeded index
+			owner_db.chunk_manager.RemoveIndex( rem_rec.GetIndex() );
+			
+			// Removing from a chunk
+			owner_db.chunk_manager.RemoveRecord( rem_rec );
+			
+			// Destroying index
+			rem_rec.DestroyIndex();
+			
+			// Removing from stack
+			if (owner_db.Stack.TryPop( rem_rec ) == null)
+				return false;
+			
+			inner_records.Remove( rem_rec );
+			
+			return true;
+		}
+		
 		public bool AddRecord( Record new_rec ) {
 			if ( new_rec == null )
 				return false;
-			foreach ( var rec in Records ) {
-				if ( rec.Id == new_rec.Id ) {
-					new_rec = null; // to avoid another operations with this record
-					return false;
+			
+			var tmp_recs = GetRecords();
+			
+			foreach ( var rec in tmp_recs ) {
+				try {
+					if ( rec.Id == new_rec.Id ) {
+						return false;
+					}
+				} catch ( Exception ex ) {
+					Errors.ErrorProcessing.Display("Error in adding a record to stack: "+ex.Message,
+					                               "", "", DateTime.Now);
 				}
 			}
+					
 			new_rec.BuildIndex();
 			new_rec.OwnerDC = this;
 			// TODO: Add data to DataStack and file chunks
 			owner_db.Stack.Push( new_rec );
-			
+
 			return true;
 		}
 		
@@ -304,9 +350,17 @@ namespace DwarfDB.DataStructures
 		/// <summary>
 		/// Save to file chunk
 		/// </summary>
-		/// <param name="filepath"></param>
-		public void Save( ) {
-			// TODO!!
+		public void Save() {
+			BuildIndex();
+			
+			// Let's create a chunk if we need it
+			GetOwnerDB().chunk_manager.CreateChunk( this );
+			
+			// Save records from DC
+			var recs = GetRecords();
+			
+			GetOwnerDB().chunk_manager.CreateChunk(recs, 50);
+			GetOwnerDB().chunk_manager.SaveIndexes();
 		}
 		
 		/// <summary>
@@ -329,7 +383,7 @@ namespace DwarfDB.DataStructures
 		/// <summary>
 		/// Load DataContainer from file chunk directory
 		/// </summary>
-		/// <param name="filepath"></param>
+		/// <param name="dirpath"></param>
 		/// <param name="index"></param>
 		public void LoadFromChunkDir( string dirpath, Index index ) {
 			// TODO
@@ -356,7 +410,7 @@ namespace DwarfDB.DataStructures
 		}
 		
 		/// <summary>
-		/// Incapsulating this.Records[i]
+		/// Incapsulating this.Records[i].get
 		/// for making some additional operations safely
 		/// </summary>
 		/// <param name="i">index</param>
@@ -385,7 +439,7 @@ namespace DwarfDB.DataStructures
 		/// </summary>
 		/// <returns></returns>
 		public List<Record> GetRecords() {
-			return this.Records;
+			return Records.ToList();
 		}
 		
 		/// <summary>
@@ -394,16 +448,19 @@ namespace DwarfDB.DataStructures
 		/// </summary>
 		public int AllRecordsCount {
 			get {
-				var db = this.GetOwnerDB();
-				var indexes = db.Indexes;
+				if ( all_rec_count == -1 ) {
+					var db = this.GetOwnerDB();
+					var indexes = db.Indexes;
 
-				int cntr = indexes.Where( ( idxs ) => {
-				                         	return idxs.Value.Value == GetIndex().HashCode;
-				                         } ).Count();
-				
-				return cntr;
+					all_rec_count = (indexes.Where( ( idxs ) => {
+					                               	return idxs.Value.Value == this.GetIndex().HashCode;
+					                               } )).Count();
+				}
+				return all_rec_count;
 			}
 		}
+		
+		int all_rec_count = -1;
 		
 		public bool  GetRecordsFromChunk( int chunk_number = 0 ) {
 			var couple = owner_db.chunk_manager.LoadChunk( chunk_number,  this.GetIndex().HashCode );
@@ -411,6 +468,20 @@ namespace DwarfDB.DataStructures
 				AddRecord( rec );
 			
 			return couple.Any();
+		}
+		
+		/// <summary>
+		/// Method for loading all DC content into the stack
+		/// </summary>
+		public void PreLoad() {
+			int pos = 0;
+			int all_rec_cnt = this.AllRecordsCount;
+			if ( all_rec_count > 0 )
+				GetRecord(0);
+			while ( pos < all_rec_count ) {
+				GetRecordsFromChunk( pos );
+				++pos;
+			}
 		}
 		
 		#region IEnumerable
@@ -423,8 +494,7 @@ namespace DwarfDB.DataStructures
 						GetRecordsFromChunk( pos );
 					}
 				}
-				
-				//throw new DataException<DataContainer>(this, "Index is out of bounds!");
+
 				return this.Records[pos];
 			}
 			set {
@@ -438,7 +508,7 @@ namespace DwarfDB.DataStructures
 		
 		IEnumerator<Record> IEnumerable<Record>.GetEnumerator() {
 			return (IEnumerator<Record>)GetEnumerator();
-		}		
+		}
 		
 		IEnumerator IEnumerable.GetEnumerator() {
 			return (IEnumerator)GetEnumerator();
@@ -459,7 +529,6 @@ namespace DwarfDB.DataStructures
 			var ret_dc = new DataContainer( GetOwnerDB(), this.Name );
 			ret_dc.Create( this.Name, this.Columns.ToArray() );
 			ret_dc.Name = this.Name;
-			
 			
 			foreach ( var rec in Records ) {
 				var tmp_rec = (Record)rec.Clone();
@@ -504,7 +573,27 @@ namespace DwarfDB.DataStructures
 			private set {
 			}
 		}
-
+		
+		/// <summary>
+		/// Next ID
+		/// </summary>
+		/// <returns></returns>
+		public UInt64 NextId() {
+			UInt64 next_id = 1;
+			var tmp_recs = new HashSet<Record>(Records);
+		
+			checked {
+				foreach ( var rec in tmp_recs ) {
+					if ( rec.Id > next_id )
+						next_id = rec.Id;
+				}
+				
+				++next_id;
+			}
+			
+			return next_id;
+		}
+		
 		private List<Record> inner_records = new List<Record>();
 		protected Record enum_rec = null;
 		protected int position = 0;

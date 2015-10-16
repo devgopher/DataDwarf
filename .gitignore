@@ -6,7 +6,13 @@ ehthumbs.db
 Desktop.ini
 
 # Recycle Bin used on file shares
-$RECYCLE.BIN/
+$RECYCLE.BIN
+
+# obj/bin/debug folders
+[Bb]in/
+[Dd]ebug*/
+obj/
+packages/
 
 # Windows Installer files
 *.cab
@@ -41,3 +47,17 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+*.pdb
+*.exe
+*.dll
+
+#txt files
+*.txt
+
+#Temporary
+*Temporary*
+*ResolveAssembly*
+DwarfDB/DwarfDB/obj/Debug/DwarfDB.csproj.FileListAbsolute.txt
+*.pdb
+*.cache
+DwarfDB/DwarfDB/obj/Debug/DwarfDB.csproj.FileListAbsolute.txt

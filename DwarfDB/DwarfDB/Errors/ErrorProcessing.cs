@@ -19,24 +19,36 @@ namespace DwarfDB.Errors
 		}
 		
 		public static void Display( String _error_text,
-		                             String _where,
-		                             String _advices,
-		                             DateTime date_time ) {
+		                           String _where,
+		                           String _advices,
+		                           DateTime date_time ) {
 			System.Console.WriteLine( String.Format( "Error: {0} in: {1}. When: {2}. To Fix: {3}",
-			                                _error_text, _where, date_time.ToLocalTime().ToString(), _advices ));
+			                                        _error_text, _where, date_time.ToLocalTime().ToString(), _advices ));
+		}
+		
+		public static ConsoleColor GetConsoleFontColor() {
+			return Console.ForegroundColor;
+		}
+		public static void SetConsoleFontColor( ConsoleColor cc ) {
+			Console.ForegroundColor = cc;
 		}
 		
 		public static void Display( Stream out_str,
-		                             String _error_text,
-		                             String _where,
-		                             String _advices,
-		                             DateTime date_time ) {
+		                           String _error_text,
+		                           String _where,
+		                           String _advices,
+		                           DateTime date_time ) {
 			var out_sw = new StreamWriter( out_str );
+			
+			var old_color = GetConsoleFontColor();
+			
+			SetConsoleFontColor( ConsoleColor.Red );
 			
 			out_sw.WriteLine( String.Format( "Error: {0} in: {1}. When: {2}. To Fix: {3}",
 			                                _error_text, _where, date_time.ToLocalTime().ToString(), _advices ));
 			
 			out_sw.Close();
+			SetConsoleFontColor( old_color );
 		}
 	}
 }

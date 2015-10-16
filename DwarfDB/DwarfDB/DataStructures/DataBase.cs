@@ -52,6 +52,21 @@ namespace DwarfDB.DataStructures
 			get; private set;
 		}
 		
+		public static bool Exists( string db_name ) {
+			var cpath = Config.Config.Instance.DataDirectory+db_name+@"/";
+			if ( Directory.Exists( cpath ) ) {
+				if ( File.Exists(cpath+"db_"+db_name+".dwarf"))
+					return true;
+			}
+			
+			return false;
+		}
+		
+		private static void CreateIndexesDw( string db_name ) {
+			var stream = File.Create( Config.Config.Instance.DataDirectory+db_name+@"/indexes.dw" );
+			stream.Close();
+		}
+		
 		public static DataBase Create( string db_name, ChunkManager.ChunkManager _cm ) {
 			var cpath = Config.Config.Instance.DataDirectory+db_name;
 			
@@ -59,8 +74,9 @@ namespace DwarfDB.DataStructures
 				Directory.CreateDirectory(cpath);
 			
 			var new_db = new DataBase( db_name, _cm, true );
-			// TODO!!
 			
+			CreateIndexesDw( db_name );
+			_cm.CreateChunk( new_db );
 			
 			return new_db;
 		}
@@ -70,17 +86,10 @@ namespace DwarfDB.DataStructures
 			if ( Directory.Exists(cpath) ) {
 				var db =  new DataBase( db_name, _cm, false );
 				db.DbPath = cpath;
+				db.UpdateDataContainers();
 				return db;
 			} else {
 				Errors.ErrorProcessing.Display( "Can't find a directory: "+cpath, "DB loading", "Check DB name or path existance", DateTime.Now );
-				return null;
-			}
-		}
-		
-		public Dictionary<Index, KeyValuePair<IStructure,string>> Indexes {
-			get {
-				if ( chunk_manager != null )
-					return chunk_manager.AllIndexes;
 				return null;
 			}
 		}
@@ -141,7 +150,17 @@ namespace DwarfDB.DataStructures
 		/// Loading and updating data containers list for DB
 		/// </summary>
 		private void UpdateDataContainers() {
-			// TODO: loading data containers from chunks
+			chunk_manager.LoadDCIndexes(this);
+			chunk_manager.LoadRecordIndexes();
+			var indexes = chunk_manager.AllIndexes;
+			if ( inner_dc_dict.Count > 0 )
+				inner_dc_dict.Clear();
+			
+			foreach ( var item in indexes ) {
+				if ( item.Value.Key is DataContainer )
+					inner_dc_dict.Add( item.Value.Value, (DataContainer)(item.Value.Key) );
+			}
+			
 		}
 		
 		public bool AddNewDataContainer( DataContainer new_dc ) {
@@ -149,7 +168,8 @@ namespace DwarfDB.DataStructures
 				// TODO: loading data new container into stack and file chunks
 				inner_dc_dict.Add( new_dc.Name, new_dc );
 				Stack.Push( new_dc );
-				
+				new_dc.AssignOwnerDB(this);
+				// Don't try to save new_dc in this method!
 				return true;
 			} else {
 				Errors.ErrorProcessing.Display(
@@ -161,6 +181,7 @@ namespace DwarfDB.DataStructures
 			return false;
 		}
 		
+		
 		/// <summary>
 		/// Getting DataContainer by name
 		/// </summary>
@@ -169,11 +190,22 @@ namespace DwarfDB.DataStructures
 		public DataContainer GetDataContainer( string dc_name ) {
 			if ( dc_name != String.Empty ) {
 				foreach ( var k in inner_dc_dict ) {
-					if ( k.Key == dc_name )
-						if ( k.Value != null )
+					if ( k.Key == dc_name ) {
+						if ( k.Value != null ) {
+							k.Value.AssignOwnerDB(this);
+							k.Value.BuildIndex();
+							k.Value.LoadRecords();
 							return k.Value;
+						}
+					}
 				}
 				
+				var chk_dc = chunk_manager.GetDataContainer( dc_name );
+				if ( chk_dc != null ) {
+					chk_dc.AssignOwnerDB(this);
+					chk_dc.LoadRecords();
+					return chk_dc;
+				}
 				// If we hadn't found DC with such name, we should write
 				// an error
 				
@@ -192,9 +224,6 @@ namespace DwarfDB.DataStructures
 		/// <param name="dc_name"></param>
 		/// <returns></returns>
 		private bool CheckDCNameUnique( String dc_name ) {
-			// TODO: in this function we should check, that
-			// a name of new DC, that we introduced as an argument to this func,
-			// is not in inner_dc_list.
 			return !inner_dc_dict.ContainsKey( dc_name ) ;
 		}
 		
@@ -202,6 +231,16 @@ namespace DwarfDB.DataStructures
 			get; private set;
 		}
 		
+		[JsonIgnore]
+		public Dictionary<Index, KeyValuePair<IStructure,string>> Indexes {
+			get {
+				if ( chunk_manager != null )
+					return chunk_manager.AllIndexes;
+				return null;
+			}
+		}
+		
+		[JsonIgnore]
 		public Stack.DwarfStack Stack {
 			get {
 				return dbstack;
