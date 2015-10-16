@@ -317,6 +317,7 @@ namespace DwarfDB.DataStructures
 					                               "", "", DateTime.Now);
 				}
 			}
+					
 			new_rec.BuildIndex();
 			new_rec.OwnerDC = this;
 			// TODO: Add data to DataStack and file chunks
@@ -414,7 +415,7 @@ namespace DwarfDB.DataStructures
 		/// </summary>
 		/// <param name="i">index</param>
 		/// <returns></returns>
-		 public Record GetRecord( int i ) {
+		public Record GetRecord( int i ) {
 			if ( i >= AllRecordsCount ) {
 				Errors.ErrorProcessing.Display("Argument "+i.ToString()+" is out of range! ", "Getting  record", "", DateTime.Now);
 				return new DummyRecord( this );
@@ -452,7 +453,7 @@ namespace DwarfDB.DataStructures
 					var indexes = db.Indexes;
 
 					all_rec_count = (indexes.Where( ( idxs ) => {
-					                              	return idxs.Value.Value == this.GetIndex().HashCode;
+					                               	return idxs.Value.Value == this.GetIndex().HashCode;
 					                               } )).Count();
 				}
 				return all_rec_count;
@@ -572,7 +573,27 @@ namespace DwarfDB.DataStructures
 			private set {
 			}
 		}
-
+		
+		/// <summary>
+		/// Next ID
+		/// </summary>
+		/// <returns></returns>
+		public UInt64 NextId() {
+			UInt64 next_id = 1;
+			var tmp_recs = new HashSet<Record>(Records);
+		
+			checked {
+				foreach ( var rec in tmp_recs ) {
+					if ( rec.Id > next_id )
+						next_id = rec.Id;
+				}
+				
+				++next_id;
+			}
+			
+			return next_id;
+		}
+		
 		private List<Record> inner_records = new List<Record>();
 		protected Record enum_rec = null;
 		protected int position = 0;
