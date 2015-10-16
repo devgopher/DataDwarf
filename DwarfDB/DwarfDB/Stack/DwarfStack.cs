@@ -70,28 +70,22 @@ namespace DwarfDB.Stack
 		}
 		
 		public new void Push( IStructure dta_struct ) {
-			if ( this.Count < ID_DIM ) {
-				// пополняем список использованных id
-				string new_index_hash = dta_struct.GetIndex().HashCode;
-				if ( !idx_hashes.Contains( new_index_hash ) )
-					idx_hashes.Add( new_index_hash );
-				
-				if ( dta_struct is Record ) {
-					//if ( !records_list..Contains(dta_struct as Record) ) {
-					records_list.Add( dta_struct as Record );
-					Modified = true;
-					//}
-				}
-				
-				base.Push(dta_struct);
+			string new_index_hash = dta_struct.GetIndex().HashCode;
+			if ( !idx_hashes.Contains( new_index_hash ) )
+				idx_hashes.Add( new_index_hash );
+			
+			if ( dta_struct is Record ) {
+				records_list.Add( dta_struct as Record );
+				Modified = true;
 			}
+			
+			base.Push(dta_struct);
 		}
 		
 		new public bool TryPop( IStructure data ) {
 			var ret = base.TryPop( out data );
-			// удаляем освобожденный Index
 			if ( ret ) {
-				data.Save(); // Сохраняем в файле
+				data.Save();
 				idx_hashes.Remove(data.GetIndex().HashCode);
 				Modified = true;
 			}
