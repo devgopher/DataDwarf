@@ -5,16 +5,9 @@
  */
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Linq;
 using DwarfDB.DataStructures;
-using DwarfDB;
 
 namespace AppSample
 {
@@ -57,10 +50,10 @@ namespace AppSample
 			String _surname = surname.Text.Trim();			
 			Record new_rec = new Record( dc_employee_load );
 			
-			new_rec.Id = (UInt64)id_cntr;
+			//new_rec.Id = ;
 			new_rec["Name"].Value = _name;
 			new_rec["Surname"].Value = _surname;
-			
+			new_rec.Id = dc_employee_load.NextId();
 			dc_employee_load.AddRecord(new_rec);
 			dc_employee_load.Save();
 			
