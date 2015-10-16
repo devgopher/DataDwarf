@@ -149,7 +149,7 @@ namespace DwarfDB.Stack
 		}
 		
 		/// <summary>
-		/// Получаем сообщение с заданным index
+		/// Receiving records a record with given index
 		/// </summary>
 		/// <param name="ind"></param>
 		/// <returns></returns>
