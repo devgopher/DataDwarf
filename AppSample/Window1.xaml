@@ -29,7 +29,7 @@
 			Grid.Row="0"
 			HorizontalAlignment="Stretch"
 			VerticalAlignment="Stretch"
-			Margin="151,46,8,308" />
+			Margin="151.2,46.2,7.99999999999994,307.4" />
 		<Label
 			Width="130"
 			Height="30"
@@ -54,12 +54,23 @@
 			Content="Add"
 			Width="75"
 			Height="23"
+			x:Name="GoOn"
+			Click="GoOn_Click"
 			Grid.Column="0"
 			Grid.Row="0"
 			HorizontalAlignment="Right"
 			VerticalAlignment="Top"
-			Margin="0,76,8,0"
-			x:Name="GoOn"
-			Click="GoOn_Click" />
+			Margin="0,76.6,8.19999999999982,0" />
+		<Button
+			Width="75"
+			Height="23"
+			x:Name="Delete"
+			Content="Delete"
+			Grid.Column="0"
+			Grid.Row="0"
+			HorizontalAlignment="Right"
+			VerticalAlignment="Top"
+			Margin="0,76.8,106.4,0"
+			Click="Delete_Click" />
 	</Grid>
 </Window>

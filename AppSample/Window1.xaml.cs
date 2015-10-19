@@ -60,5 +60,19 @@ namespace AppSample
 			
 			GridLoad();
 		}
+		
+		void Delete_Click(object sender, RoutedEventArgs e)
+		{
+			var query = from x in dc_employee_load.GetRecords()
+				where x.Id == 140
+				select x;
+			
+			var tt = query.ToArray();
+			if ( tt.Any() ) {
+				var rec = tt[0];
+				dc_employee_load.RemoveRecord(rec);
+				dc_employee_load.Save();
+			}
+		}
 	}
 }
