@@ -57,12 +57,7 @@ namespace DwarfDB.DataStructures
 
 		public static bool operator !=(Index lhs, Index rhs) {
 			return !(lhs == rhs);
-		}
-
-		/*override public int GetHashCode() {
-			return base.GetHashCode();
-		}*/
-		
+		}		
 		#endregion()
 		
 		static public Index CreateNew( IStructure _index_object ) {
