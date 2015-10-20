@@ -5,16 +5,9 @@
  */
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Linq;
 using DwarfDB.DataStructures;
-using DwarfDB;
 
 namespace AppSample
 {
@@ -23,9 +16,6 @@ namespace AppSample
 	/// </summary>
 	public partial class AppSampleWindow : Window
 	{
-		
-		private int id_cntr = 140;
-		
 		private DwarfDB.ChunkManager.ChunkManager cm = null;
 		private DataBase db = null;
 		private DataContainer dc_employee_load = null;
@@ -38,15 +28,20 @@ namespace AppSample
 		
 		private void Load() {
 			cm = new DwarfDB.ChunkManager.ChunkManager();
-			db = DwarfDB.DataStructures.DataBase.LoadFrom( "employees", cm );
-			dc_employee_load = db.GetDataContainer( "employee" );
+			db = DataBase.LoadFrom("employees", cm);
+			dc_employee_load = db.GetDataContainer("employee");
 			GridLoad();
 		}
 		
 		private void GridLoad() {
 			var items_query = from x in dc_employee_load.GetRecords()
 				orderby x.Id ascending
-				select new  {id = x.Id, surname=x["Surname"].Value, name=x["Name"].Value};
+				select new  {
+				id = x.Id,
+				surname=x["Surname"].Value,
+				name=x["Name"].Value,
+				pos_id = x["PosId"].Value
+			};
 			
 			EmployeeGrid.ItemsSource = items_query.ToList();
 		}
@@ -54,19 +49,30 @@ namespace AppSample
 		void GoOn_Click(object sender, RoutedEventArgs e)
 		{
 			String _name = name.Text.Trim();
-			String _surname = surname.Text.Trim();			
-			Record new_rec = new Record( dc_employee_load );
+			String _surname = surname.Text.Trim();
+			var new_rec = new Record( dc_employee_load );
 			
-			new_rec.Id = (UInt64)id_cntr;
 			new_rec["Name"].Value = _name;
 			new_rec["Surname"].Value = _surname;
-			
+			new_rec.Id = dc_employee_load.NextId();
 			dc_employee_load.AddRecord(new_rec);
 			dc_employee_load.Save();
 			
 			GridLoad();
+		}
+		
+		void Delete_Click(object sender, RoutedEventArgs e)
+		{
+			var query = from x in dc_employee_load.GetRecords()
+				where x.Id == 140
+				select x;
 			
-			++id_cntr;
+			var tt = query.ToArray();
+			if ( tt.Any() ) {
+				var rec = tt[0];
+				dc_employee_load.RemoveRecord(rec);
+				dc_employee_load.Save();
+			}
 		}
 	}
 }

@@ -53,7 +53,7 @@ namespace DwarfDB.Stack
 	}
 	
 	/// <summary>
-	/// Стек для сообщений, хранимых в памяти сервера
+	/// A stack for improving an access to dwarf records
 	/// </summary>
 	public class DwarfStack : ConcurrentStack<IStructure>
 	{
@@ -65,40 +65,27 @@ namespace DwarfDB.Stack
 			parallel_opts.MaxDegreeOfParallelism = Environment.ProcessorCount*4;
 		}
 		
-		// Максимальное кол-во элементов в стеке
-		#if DEBUG
-		const int ID_DIM = 200000;
-		#else
-		const int ID_DIM = 200000;
-		#endif
-		
 		private bool IsCapable( IStructure dta_struct ) {
 			return true;
 		}
 		
 		public new void Push( IStructure dta_struct ) {
-			if ( this.Count < ID_DIM ) {
-				// пополняем список использованных id
-				string new_index_hash = dta_struct.GetIndex().HashCode;
-				if ( !idx_hashes.Contains( new_index_hash ) )
-					idx_hashes.Add( new_index_hash );
-				
-				if ( dta_struct is Record ) {
-					//if ( !records_list..Contains(dta_struct as Record) ) {
-					records_list.Add( dta_struct as Record );
-					Modified = true;
-					//}
-				}
-				
-				base.Push(dta_struct);
+			string new_index_hash = dta_struct.GetIndex().HashCode;
+			if ( !idx_hashes.Contains( new_index_hash ) )
+				idx_hashes.Add( new_index_hash );
+			
+			if ( dta_struct is Record ) {
+				records_list.Add( dta_struct as Record );
+				Modified = true;
 			}
+			
+			base.Push(dta_struct);
 		}
 		
 		new public bool TryPop( IStructure data ) {
 			var ret = base.TryPop( out data );
-			// удаляем освобожденный Index
 			if ( ret ) {
-				data.Save(); // Сохраняем в файле
+				data.Save();
 				idx_hashes.Remove(data.GetIndex().HashCode);
 				Modified = true;
 			}
@@ -110,32 +97,30 @@ namespace DwarfDB.Stack
 		}
 		
 		/// <summary>
-		/// Получаем сообщение с заданным index
+		/// Receiving records for concrete DataContainer
 		/// </summary>
-		/// <param name="ind"></param>
+		/// <param name="dc">A data container</param>
 		/// <returns></returns>
 		public List<Record> GetRecords( DataStructures.DataContainer dc ) {
 			var ret = new HashSet<Record>();
 			try {
 				if ( this.Modified ) {
-					var tmp_stack = new ConcurrentStack<IStructure>(); // временный стек для перебора элементов в основном стеке
+					var tmp_stack = new ConcurrentStack<IStructure>(); // A temporary stack
 					IStructure tmp = null;
 					
-					// Перебираем элементы основного стека
 					int element_count = this.Count;
 					
 					for ( int cntr = 0; cntr <= element_count; ++cntr) {
 						if ( (this.TryPop( out tmp )) == true) {
-							// Нашли сообщение?
-							// Возвращаем перебранные элементы в основной
-							// стек и возвращаем найденное
+							// Looking for needed records
 							if ( tmp is Record ) {
 								if ( (tmp as Record).OwnerDC == dc ) {
 									ret.Add( tmp as Record );
 								}
 							}
 							
-							// Не нашли? Кладем во временный стек и идем дальше
+							// If this record is not what we need - let's put it back
+							// in the temporary stack
 							tmp_stack.Push( tmp );
 						}
 					}
@@ -158,32 +143,32 @@ namespace DwarfDB.Stack
 		}
 		
 		/// <summary>
-		/// Получаем сообщение с заданным index
+		/// Receiving records a record with given index
 		/// </summary>
 		/// <param name="ind"></param>
 		/// <returns></returns>
 		public IStructure GetStructure( Index ind ) {
 			try {
-				var tmp_stack = new ConcurrentStack<IStructure>(); // временный стек для перебора элементов в основном стеке
+				var tmp_stack = new ConcurrentStack<IStructure>(); // A temporary stack
 				IStructure tmp = null;
 				
 				Console.WriteLine("TRYING TO GET STRUCTURE #"+ind.HashCode);
 				
-				// Перебираем элементы основного стека
 				int element_count = this.Count;
 				for ( int cntr = 0; cntr < element_count; ++cntr ) {
 					if ( (this.TryPop( out tmp )) == false)
 						continue;
 					
-					// Нашли сообщение?
-					// Возвращаем перебранные элементы в основной
-					// стек и возвращаем найденное
+					// If we've found what we need -
+					// let's push it from our temporary stack
+					// and return it!
 					if ( tmp.GetIndex() == ind ) {
 						PushFromStack( tmp_stack );
 						return tmp;
 					}
 					
-					// Не нашли? Кладем во временный стек и идем дальше
+					// If this record is not what we need - let's put it back
+					// in the temporary stack
 					tmp_stack.Push(tmp);
 				}
 				PushFromStack( tmp_stack );

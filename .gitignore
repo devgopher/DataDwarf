@@ -58,8 +58,13 @@ Temporary Items
 *Temporary*
 *ResolveAssembly*
 DwarfDB/DwarfDB/obj/Debug/DwarfDB.csproj.FileListAbsolute.txt
+<<<<<<< HEAD
 *.cache
 *.sdps
 *.cache
 DwarfDB/DwarfDB/obj/Debug/DwarfDB.csproj.FileListAbsolute.txt
+=======
+*.pdb
+*.cache
+>>>>>>> origin/master
 DwarfDB/DwarfDB/obj/Debug/DwarfDB.csproj.FileListAbsolute.txt
