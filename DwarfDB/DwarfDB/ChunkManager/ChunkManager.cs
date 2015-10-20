@@ -484,7 +484,8 @@ namespace DwarfDB.ChunkManager
 		/// </summary>
 		/// <param name="idx">Index</param>
 		public void RemoveIndex( Index idx ) {
-			RemoveIndex( idx.HashCode );
+			if ( idx != null )
+				RemoveIndex( idx.HashCode );
 		}
 		
 		/// <summary>
@@ -512,13 +513,16 @@ namespace DwarfDB.ChunkManager
 		/// </summary>
 		/// <param name="rec"></param>
 		public void RemoveRecord( Record rec ) {
-			var ind_hash = rec.GetIndex().HashCode;
-			foreach ( var strg in chunks_lst.Values ) {
-				ChunkFormat.RemoveItem( strg, rec.GetIndex() );
+			var idx =  rec.GetIndex();
+			if ( idx != null ) {
+				var ind_hash = idx.HashCode;
+				foreach ( var strg in chunks_lst.Values ) {
+					ChunkFormat.RemoveItem( strg, idx );
+				}
+				
+				ClearIndexesDw();
+				SaveIndexes();
 			}
-			
-			ClearIndexesDw();
-			SaveIndexes();
 		}
 		
 		/// <summary>
