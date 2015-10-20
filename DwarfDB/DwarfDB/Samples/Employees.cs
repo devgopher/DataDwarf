@@ -74,7 +74,7 @@ namespace DwarfDB
 				                                 rec["Surname"].Value.ToString())  );
 			}			
 			
-			UInt64 rec_id = 110+(UInt64)DateTime.Now.Ticks % 2000;
+			Int64 rec_id = 110+(Int64)DateTime.Now.Ticks % 2000;
 			
 			do  {
 				var tmp = new Record( dc_employee_load );

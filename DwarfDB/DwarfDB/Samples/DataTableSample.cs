@@ -68,8 +68,8 @@ namespace DwarfDB
 				for ( int k =0; k< rows_count; ++k ) {
 					var rec1 = new Record( dc );
 					var rec2 = new Record( dc2 );
-					rec1.Id = (UInt64)k;
-					rec2.Id = (UInt64)k+3;
+					rec1.Id = (Int64)k;
+					rec2.Id = (Int64)k+3;
 					
 					foreach ( var col in dc.Columns) {
 						if ( k % 2 == 0 ) {

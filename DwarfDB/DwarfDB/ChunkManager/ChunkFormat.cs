@@ -21,10 +21,11 @@ namespace DwarfDB.ChunkManager
 			NeedToRemove = 0;
 		}
 		
-		public enum DataType {
-			RECORD,
-			DATACONTAINER,
-			DB
+		public enum ElemType {
+			RECORD = 0,
+			DATACONTAINER = 1,
+			DB = 2,
+			REMOVED = 3 
 		}
 		
 		public string ElemDB {
@@ -39,7 +40,7 @@ namespace DwarfDB.ChunkManager
 			get; set;
 		}
 		
-		public DataType ElemType {
+		public ElemType ElementType {
 			get; set;
 		}
 		
@@ -104,7 +105,7 @@ namespace DwarfDB.ChunkManager
 				var elem= new InnerChunkElement();
 				var sw = new StreamWriter( File.Open( filepath, FileMode.Append ) );
 				using (var json_writer = new JsonTextWriter(sw)) {
-					elem.ElemType = InnerChunkElement.DataType.DB;
+					elem.ElementType = InnerChunkElement.ElemType.DB;
 					elem.ElemDB = null;
 					elem.ElemParentName = null;
 					elem.ElemParentHash = null;
@@ -163,12 +164,12 @@ namespace DwarfDB.ChunkManager
 				using (var json_writer = new JsonTextWriter(sw)) {
 					var elem= new InnerChunkElement();
 					if ( ds is Record ) {
-						elem.ElemType = InnerChunkElement.DataType.RECORD;
+						elem.ElementType = InnerChunkElement.ElemType.RECORD;
 						elem.ElemParentName = ((Record)ds).OwnerDC.Name;
 						elem.ElemParentHash = ((Record)ds).OwnerDC.GetIndex().HashCode;
 						elem.Contents = JsonConvert.SerializeObject(ds, Formatting.Indented );
 					} else if ( ds is DataContainer ) {
-						elem.ElemType = InnerChunkElement.DataType.DATACONTAINER;
+						elem.ElementType = InnerChunkElement.ElemType.DATACONTAINER;
 						elem.ElemDB = ((DataContainer)ds).GetOwnerDB().Name;
 						elem.ElemParentName = null;
 						elem.ElemParentHash = null;
@@ -215,7 +216,7 @@ namespace DwarfDB.ChunkManager
 			if ( inner != null ) {
 				if ( inner.NeedToRemove == 0 ) { // If we neeed not remove this element
 					var obj_json = inner.Contents;
-					if ( inner.ElemType == InnerChunkElement.DataType.DATACONTAINER ) {
+					if ( inner.ElementType == InnerChunkElement.ElemType.DATACONTAINER ) {
 						var ret_dc = JsonConvert.DeserializeObject<DataContainer>( obj_json );
 						return ret_dc;
 					} else {
@@ -240,7 +241,7 @@ namespace DwarfDB.ChunkManager
 				var item = new InnerChunkElement();
 				while ( json_reader.Read() ) {
 					item = json_serializer.Deserialize<InnerChunkElement>( json_reader );
-					if ( item.ElemType == InnerChunkElement.DataType.RECORD ) {
+					if ( item.ElementType == InnerChunkElement.ElemType.RECORD ) {
 						if ( item.ElemParentHash == dc_hash ) {
 							var ret_rec = JsonConvert.DeserializeObject<Record>( item.Contents );
 							ret.Add(ret_rec);
@@ -262,7 +263,7 @@ namespace DwarfDB.ChunkManager
 				var item = new InnerChunkElement();
 				while ( json_reader.Read() ) {
 					item = json_serializer.Deserialize<InnerChunkElement>( json_reader );
-					if ( item.ElemType == InnerChunkElement.DataType.DATACONTAINER ) {
+					if ( item.ElementType == InnerChunkElement.ElemType.DATACONTAINER ) {
 						if ( item.ElementName == dc_name ) {
 							var ret_dc = JsonConvert.DeserializeObject<DataContainer>( item.Contents );
 							ret_dc.Name = dc_name;
@@ -285,7 +286,7 @@ namespace DwarfDB.ChunkManager
 			if ( inner != null ) {
 				if ( inner.NeedToRemove == 0 ) { // If we neeed not remove this element
 					var obj_json = inner.Contents;
-					if ( inner.ElemType == InnerChunkElement.DataType.DATACONTAINER ) {
+					if ( inner.ElementType == InnerChunkElement.ElemType.DATACONTAINER ) {
 						var ret_dc = JsonConvert.DeserializeObject<DataContainer>( obj_json );
 						return ret_dc;
 					} else {
@@ -317,8 +318,7 @@ namespace DwarfDB.ChunkManager
 				}
 			}
 			return ret_arr;
-		}
-		
+		}		
 		
 		/// <summary>
 		/// Removing an item to a chunk file in multithread mode
@@ -329,15 +329,21 @@ namespace DwarfDB.ChunkManager
 			var buffer = new byte[MaxChunkSize];
 			int offset = 0;
 			int needed_idx_pos = -1;
-
+			int needed_elem_type_pos = -1;
+			
 			// let's use a direct method to find our element by hash index
 			using ( var fs = File.Open( filepath, FileMode.Open )) {
 				if ( fs.Read( buffer, offset, MaxChunkSize  ) > 0 ) {
 					string buf = System.Text.Encoding.UTF8.GetString(buffer);
-					string tmp  ="\"ElementHash\": \""+idx.HashCode+"\"";
-					int str_pos = buf.IndexOf(tmp, StringComparison.InvariantCultureIgnoreCase);
-					if ( str_pos > -1 )
-						needed_idx_pos = str_pos+15;
+					const string tmp_el_type  ="\"ElementType\":";
+					string tmp_el_hash  ="\"ElementHash\": \""+idx.HashCode+"\"";
+
+					int str_elem_type_pos = buf.IndexOf(tmp_el_type, StringComparison.InvariantCultureIgnoreCase);
+					int str_hash_pos = buf.IndexOf(tmp_el_hash, StringComparison.InvariantCultureIgnoreCase);
+					if ( str_hash_pos > -1 )
+						needed_idx_pos = str_hash_pos+15;
+					if ( str_elem_type_pos > -1 ) 
+						needed_elem_type_pos = str_elem_type_pos + 15;
 				}
 			}
 			
@@ -347,6 +353,9 @@ namespace DwarfDB.ChunkManager
 					//var hash_bytes = System.Text.Encoding.UTF8.GetBytes(idx.HashCode);
 					byte[] replacement = new byte[34];
 					//fs.Seek( needed_idx_pos
+					fs.Position = needed_elem_type_pos;
+					fs.Write( System.Text.Encoding.UTF8.GetBytes( 3.ToString() /* REMOVED */ ), 0, 1);
+					
 					fs.Position = needed_idx_pos;
 					fs.Write( replacement, 0, 34);
 					fs.Position -= 34;

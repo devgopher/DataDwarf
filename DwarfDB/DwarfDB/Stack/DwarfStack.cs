@@ -114,7 +114,7 @@ namespace DwarfDB.Stack
 						if ( (this.TryPop( out tmp )) == true) {
 							// Looking for needed records
 							if ( tmp is Record ) {
-								if ( (tmp as Record).OwnerDC == dc ) {
+								if ( (tmp as Record).OwnerDC == dc &&  (tmp as Record).Id >= 0 ) {
 									ret.Add( tmp as Record );
 								}
 							}

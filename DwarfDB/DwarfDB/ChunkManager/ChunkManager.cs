@@ -520,7 +520,7 @@ namespace DwarfDB.ChunkManager
 					ChunkFormat.RemoveItem( strg, idx );
 				}
 				
-				ClearIndexesDw();
+				//ClearIndexesDw();
 				SaveIndexes();
 			}
 		}

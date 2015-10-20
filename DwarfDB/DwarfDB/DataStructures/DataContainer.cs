@@ -553,7 +553,7 @@ namespace DwarfDB.DataStructures
 		/// <summary>
 		/// Element id
 		/// </summary>
-		public UInt64 Id { get; set; }
+		public Int64 Id { get; set; }
 		
 		public List<Column> Columns {
 			get; private set;
@@ -578,8 +578,8 @@ namespace DwarfDB.DataStructures
 		/// Next ID
 		/// </summary>
 		/// <returns></returns>
-		public UInt64 NextId() {
-			UInt64 next_id = 1;
+		public Int64 NextId() {
+			Int64 next_id = 1;
 			var tmp_recs = new HashSet<Record>(Records);
 		
 			checked {

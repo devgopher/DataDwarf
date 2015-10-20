@@ -154,7 +154,7 @@ namespace DwarfDB.DataStructures
 		/// <summary>
 		/// Element id
 		/// </summary>
-		public UInt64 Id { get; set; }
+		public Int64 Id { get; set; }
 		
 		/// <summary>
 		/// List of fields

@@ -60,6 +60,6 @@ namespace DwarfDB.DataStructures
 		/// <summary>
 		/// Unique element id
 		/// </summary>
-		UInt64 Id { get; set; }
+		Int64 Id { get; set; }
 	}
 }
