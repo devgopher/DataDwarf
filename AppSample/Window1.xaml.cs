@@ -64,7 +64,7 @@ namespace AppSample
 		void Delete_Click(object sender, RoutedEventArgs e)
 		{
 			var query = from x in dc_employee_load.GetRecords()
-				where x.Id == 140
+				where x.Id == 498
 				select x;
 			
 			var tt = query.ToArray();
@@ -73,6 +73,8 @@ namespace AppSample
 				dc_employee_load.RemoveRecord(rec);
 				dc_employee_load.Save();
 			}
+			
+			GridLoad();
 		}
 	}
 }
