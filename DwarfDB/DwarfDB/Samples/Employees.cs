@@ -72,7 +72,7 @@ namespace DwarfDB
 				Console.WriteLine( String.Format("Name: {0}, Surname: {1}",
 				                                 rec["Name"].Value.ToString(),
 				                                 rec["Surname"].Value.ToString())  );
-			}			
+			}
 			
 			Int64 rec_id = 110+(Int64)DateTime.Now.Ticks % 2000;
 			
@@ -84,15 +84,14 @@ namespace DwarfDB
 				var surname = Console.ReadLine();
 				
 				tmp["Name"].Value = name;
-				tmp["Surname"].Value = surname;				
+				tmp["Surname"].Value = surname;
 				tmp.Id = ++rec_id;
 				
 				if (!dc_employee_load.AddRecord(tmp)) {
 					Console.WriteLine("Failed! Press \"Y\" - to enter an another employee");
 					if (  Console.ReadKey().Key != ConsoleKey.N )
 						continue;
-					else
-						break;
+					break;
 				}
 				
 				Console.WriteLine("Added successfully! Press \"Y\" - to enter an another employee");
