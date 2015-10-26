@@ -249,8 +249,9 @@ namespace DwarfDB.ChunkManager
 		/// <summary>
 		/// Creates a new chunk for records
 		/// </summary>
-		/// <param name="last_new_elems_count">A count of new elements to put in new chunk( if needed! )</param>
-		/// <param name="max_idx_count"></param>
+		/// <param name="records">A list of records</param>
+		/// <param name="max_elem_count">Maximum amount of elements in a chunk</param>
+
 		public void CreateChunk( List<Record> records, int max_elem_count = 100 ) {
 			try {
 				
@@ -291,7 +292,7 @@ namespace DwarfDB.ChunkManager
 					no_null_records.ForEach( (rec) => {
 					                        	if ( !all_hashes.Contains(rec.GetIndex().HashCode) ) {
 					                        		ChunkFormat.AddItem( filepath, rec);
-					                        		AllIndexes.Add(rec.GetIndex(), new KeyValuePair<IStructure, string>(rec, rec.OwnerDC.GetIndex().HashCode));
+					                        		AllIndexes[rec.GetIndex()] = new KeyValuePair<IStructure, string>(rec, rec.OwnerDC.GetIndex().HashCode);
 					                        	}
 					                        } );
 					

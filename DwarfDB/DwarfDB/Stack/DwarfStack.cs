@@ -62,7 +62,7 @@ namespace DwarfDB.Stack
 			Modified = true;
 			if ( _db != null )
 				db = _db;
-			parallel_opts.MaxDegreeOfParallelism = Environment.ProcessorCount*4;
+			parallel_opts.MaxDegreeOfParallelism = Environment.ProcessorCount;
 		}
 		
 		private bool IsCapable( IStructure dta_struct ) {
@@ -71,22 +71,29 @@ namespace DwarfDB.Stack
 		
 		public new void Push( IStructure dta_struct ) {
 			string new_index_hash = dta_struct.GetIndex().HashCode;
-			if ( !idx_hashes.Contains( new_index_hash ) )
-				idx_hashes.Add( new_index_hash );
-			
-			if ( dta_struct is Record ) {
-				records_list.Add( dta_struct as Record );
-				Modified = true;
+			lock ( idx_hashes ) {
+				if ( !idx_hashes.Contains( new_index_hash ) )
+					idx_hashes.Add( new_index_hash );
 			}
 			
+			lock ( records_list ) {
+				if ( dta_struct is Record ) {
+					records_list.Add( dta_struct as Record );
+					Modified = true;
+				}
+			}
 			base.Push(dta_struct);
 		}
 		
 		new public bool TryPop( IStructure data ) {
 			var ret = base.TryPop( out data );
 			if ( ret ) {
-				data.Save();
-				idx_hashes.Remove(data.GetIndex().HashCode);
+				lock (data) {
+					lock (idx_hashes) {
+						data.Save();
+						idx_hashes.Remove(data.GetIndex().HashCode);
+					}
+				}
 				Modified = true;
 			}
 			return ret;
@@ -102,44 +109,51 @@ namespace DwarfDB.Stack
 		/// <param name="dc">A data container</param>
 		/// <returns></returns>
 		public List<Record> GetRecords( DataStructures.DataContainer dc ) {
-			var ret = new HashSet<Record>();
 			try {
 				if ( this.Modified ) {
+					var ret = new ConcurrentBag<Record>();
 					var tmp_stack = new ConcurrentStack<IStructure>(); // A temporary stack
 					IStructure tmp = null;
 					
 					int element_count = this.Count;
 					
-					for ( int cntr = 0; cntr <= element_count; ++cntr) {
-						if ( (this.TryPop( out tmp )) == true) {
-							// Looking for needed records
-							if ( tmp is Record ) {
-								if ( (tmp as Record).OwnerDC == dc &&  (tmp as Record).Id >= 0 ) {
-									ret.Add( tmp as Record );
-								}
-							}
-							
-							// If this record is not what we need - let's put it back
-							// in the temporary stack
-							tmp_stack.Push( tmp );
-						}
-					}
+					Parallel.For( 0, element_count, parallel_opts, ( int cntr ) => {
+					             	//for ( int cntr = 0; cntr <= element_count; ++cntr) {
+					             	if ( (this.TryPop( out tmp )) == true) {
+					             		// Looking for needed records
+					             		if ( tmp is Record ) {
+					             			if ( (tmp as Record).OwnerDC == dc &&  (tmp as Record).Id >= 0 ) {
+					             				ret.Add( tmp as Record );
+					             			}
+					             		}
+					             		
+					             		// If this record is not what we need - let's put it back
+					             		// in the temporary stack
+					             		tmp_stack.Push( tmp );
+					             	}
+					             });
+					
 					PushFromStack( tmp_stack );
 					// Putting down a flag for next GetRecords operations
 					//Modified = false;
+					
+					return ret.ToList();
 				} else {
+					var ret = new HashSet<Record>();
 					if ( records_list.Count > 0 )
-						Parallel.ForEach( records_list, parallel_opts, ( rec ) => {
+						Parallel.ForEach( records_list, parallel_opts,
+						                 ( rec ) => {
 						                 	if ( rec.OwnerDC == dc )
 						                 		ret.Add(rec);
 						                 });
+					
+					return ret.ToList();
 				}
 			} catch ( Exception ex ) {
 				Errors.ErrorProcessing.Display( "FAILED TO GET STRUCTURE: "+ex.Message+":"+ex.StackTrace,
 				                               "", "", DateTime.Now );
 			}
-
-			return ret.ToList ();
+			return null;
 		}
 		
 		/// <summary>
@@ -195,6 +209,6 @@ namespace DwarfDB.Stack
 		ParallelOptions parallel_opts = new ParallelOptions();
 		DataBase db;
 		ConcurrentBag<Record> records_list = new ConcurrentBag<Record>();
-		HashSet<string> idx_hashes = new HashSet<string>();
+		volatile HashSet<string> idx_hashes = new HashSet<string>();
 	}
 }

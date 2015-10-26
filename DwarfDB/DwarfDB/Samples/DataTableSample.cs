@@ -62,14 +62,14 @@ namespace DwarfDB
 					dc2.AddColumn( column );
 				}
 				
-				chunk_manager.CreateChunk( dc );
-				chunk_manager.CreateChunk( dc2 );
+		//		chunk_manager.CreateChunk( dc );
+		//		chunk_manager.CreateChunk( dc2 );
 				
 				for ( int k =0; k< rows_count; ++k ) {
 					var rec1 = new Record( dc );
 					var rec2 = new Record( dc2 );
-					rec1.Id = (Int64)k;
-					rec2.Id = (Int64)k+3;
+					rec1.Id = dc.NextId();
+					rec2.Id = dc2.NextId();
 					
 					foreach ( var col in dc.Columns) {
 						if ( k % 2 == 0 ) {
@@ -87,6 +87,9 @@ namespace DwarfDB
 							rec2[col.Name].Value = k*555;
 							rec2[col.Name].Type = DataType.INT;
 						}
+						
+						rec1.BuildIndex();
+						rec2.BuildIndex();
 					}
 					dc.AddRecord( rec1 );
 					indexes.Add(rec1.GetIndex());
@@ -94,9 +97,13 @@ namespace DwarfDB
 					indexes.Add(rec2.GetIndex());
 				}
 
-				chunk_manager.CreateChunk( dc2.GetRecords(), chunk_size );
-				chunk_manager.CreateChunk( dc.GetRecords(), chunk_size );
-				chunk_manager.SaveIndexes();
+				//chunk_manager.CreateChunk( dc2.GetRecords(), chunk_size );
+				//chunk_manager.CreateChunk( dc.GetRecords(), chunk_size );
+				//chunk_manager.SaveIndexes();
+				
+				dc.Save();
+				dc2.Save();
+				
 			} else {
 				Console.WriteLine("Trying to get data from db \""+db_name+"\"");
 				
@@ -108,9 +115,9 @@ namespace DwarfDB
 				dc.AssignOwnerDB(db2);
 				
 				//Console.WriteLine("Preloading DC1...");
-				//dc.PreLoad();
+				dc.PreLoad();
 				//Console.WriteLine("Preloading DC2...");
-				//dc2.PreLoad();				
+				dc2.PreLoad();				
 
 				// Getting a record
 				Record rc = null;
