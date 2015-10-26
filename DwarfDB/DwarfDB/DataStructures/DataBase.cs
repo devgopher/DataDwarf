@@ -16,7 +16,7 @@ namespace DwarfDB.DataStructures
 	/// a class for database object
 	/// </summary>
 	[Serializable][JsonObject]
-	public class DataBase : ISerializable
+	public class DataBase : ISerializable, IDisposable
 	{
 		#region ISerializable
 		public DataBase( SerializationInfo info, StreamingContext ctxt )
@@ -94,8 +94,23 @@ namespace DwarfDB.DataStructures
 			}
 		}
 		
+		/// <summary>
+		/// Dropping this DB
+		/// </summary>
 		public void Drop() {
-			// TODO!!
+			// Cleaning memory
+			this.Stack.Clear();
+			
+			// Cleaning files
+			var cpath = Config.Config.Instance.DataDirectory+this.Name;
+			if ( Directory.Exists(cpath) ) {
+				foreach ( var file in Directory.GetFiles(cpath, "*.dwarf") )
+					File.Delete( file );
+				Directory.Delete(cpath);
+			}
+			
+			// Destroying this object
+			this.Dispose();				
 		}
 		
 		#region DC cloning
@@ -163,6 +178,11 @@ namespace DwarfDB.DataStructures
 			
 		}
 		
+		/// <summary>
+		/// Adding a new data container to a database
+		/// </summary>
+		/// <param name="new_dc">DataContainer</param>
+		/// <returns></returns>
 		public bool AddNewDataContainer( DataContainer new_dc ) {
 			if ( CheckDCNameUnique( new_dc.Name )) {
 				// TODO: loading data new container into stack and file chunks
@@ -247,6 +267,15 @@ namespace DwarfDB.DataStructures
 			} private set {
 				dbstack = value;
 			}
+		}
+		
+		/// <summary>
+		/// Disposing
+		/// </summary>
+		public void Dispose() {
+			dbstack.Clear();
+			user_list.Clear();
+			inner_dc_dict.Clear();
 		}
 		
 		DwarfDB.Stack.DwarfStack dbstack;
