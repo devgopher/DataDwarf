@@ -60,6 +60,11 @@ namespace DwarfDB.DataStructures
 		}		
 		#endregion()
 		
+		/// <summary>
+		/// Computing a new index
+		/// </summary>
+		/// <param name="_index_object">Object for indexing</param>
+		/// <returns></returns>
 		static public Index CreateNew( IStructure _index_object ) {
 			if ( _index_object == null )
 				throw new IndexException( "object for indexing is NULL" );

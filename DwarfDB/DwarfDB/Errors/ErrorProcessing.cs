@@ -10,7 +10,7 @@ using System.Text;
 namespace DwarfDB.Errors
 {
 	/// <summary>
-	/// Description of ErrorProcessing.
+	/// A class for displaying errors
 	/// </summary>
 	public class ErrorProcessing
 	{

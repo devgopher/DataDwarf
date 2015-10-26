@@ -11,6 +11,11 @@ namespace DwarfDB.Crypto
 	/// </summary>
 	static class ComputeHash
 	{
+		/// <summary>
+		/// Getting a MD hash sequence for datastructure
+		/// </summary>
+		/// <param name="dta_struct">Data Structure</param>
+		/// <returns></returns>
 		static public string MD5Hash( IStructure dta_struct )
 		{
 			var str_hash = new StringBuilder( 32 );
@@ -42,6 +47,11 @@ namespace DwarfDB.Crypto
 			return str_hash.ToString();
 		}
 		
+		/// <summary>
+		/// Getting a MD hash sequence
+		/// </summary>
+		/// <param name="input"></param>
+		/// <returns></returns>
 		static public string MD5Hash( string input )
 		{
 			var str_hash = new StringBuilder( 32 );
@@ -53,14 +63,14 @@ namespace DwarfDB.Crypto
 					str_hash.Append(b.ToString("X2"));
 				}
 			} else
-				throw new IOException( "Error in generating hash code: input string is null" );
+				throw new IOException( "Error in generating a hash code: input string is null" );
 			return str_hash.ToString();
 		}
 
 		static public bool MD5Compare( String cmp, String orig )
 		{
 			return MD5Hash(cmp).Trim() == MD5Hash(orig).Trim();
-		}		
+		}
 		
 		static public bool MD5Compare( IStructure cmp_struct, IStructure orig_struct )
 		{
