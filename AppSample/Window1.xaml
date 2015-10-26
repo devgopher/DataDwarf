@@ -4,15 +4,17 @@
 	Title="DwarfDB App Sample"
 	Height="416"
 	Width="464">
-	<Grid>
+	<Grid
+		Height="381"
+		Width="456">
 		<TextBox
 			Text="input..."
-			Grid.Column="0"
+			x:Name="name"
+			Grid.Column="1"
 			Grid.Row="0"
 			HorizontalAlignment="Stretch"
 			VerticalAlignment="Stretch"
-			Margin="151,8,8,346"
-			x:Name="name" />
+			Margin="27.6,7.39999999999998,34,346.2" />
 		<DataGrid
 			x:Name="EmployeeGrid"
 			Width="438"
@@ -21,15 +23,16 @@
 			Grid.Row="0"
 			HorizontalAlignment="Left"
 			VerticalAlignment="Bottom"
-			Margin="8,0,0,8" />
+			Margin="8,0,0,8"
+			Grid.ColumnSpan="2" />
 		<TextBox
 			Text="input..."
 			x:Name="surname"
-			Grid.Column="0"
+			Grid.Column="1"
 			Grid.Row="0"
 			HorizontalAlignment="Stretch"
 			VerticalAlignment="Stretch"
-			Margin="151.2,46.2,7.99999999999994,307.4" />
+			Margin="28,45.8,33.6,307.8" />
 		<Label
 			Width="130"
 			Height="30"
@@ -43,34 +46,44 @@
 		<Label
 			Height="30"
 			x:Name="label2"
-			Grid.Column="0"
-			Grid.Row="0"
-			VerticalAlignment="Top"
 			Content="Surname:"
 			Width="130"
+			Grid.Column="0"
+			Grid.ColumnSpan="2"
+			Grid.Row="0"
 			HorizontalAlignment="Left"
-			Margin="13,46,0,0" />
+			VerticalAlignment="Top"
+			Margin="15.8,8,0,0" />
 		<Button
 			Content="Add"
-			Width="75"
-			Height="23"
 			x:Name="GoOn"
 			Click="GoOn_Click"
+			Height="23"
+			Width="81.200000000000045"
 			Grid.Column="0"
 			Grid.Row="0"
 			HorizontalAlignment="Right"
 			VerticalAlignment="Top"
-			Margin="0,76.6,8.19999999999982,0" />
+			Margin="0,77,8.59999999999999,0"
+			FontWeight="Bold" />
 		<Button
 			Width="75"
 			Height="23"
 			x:Name="Delete"
 			Content="Delete"
+			Click="Delete_Click"
 			Grid.Column="0"
 			Grid.Row="0"
 			HorizontalAlignment="Right"
 			VerticalAlignment="Top"
-			Margin="0,76.8,106.4,0"
-			Click="Delete_Click" />
+			Margin="0,47.7,11.5,0" />
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition
+				Width="0.214788732394367*" />
+			<ColumnDefinition
+				Width="0.781891135395885*" />
+			<ColumnDefinition
+				Width="0.00332013220974892*" />
+		</Grid.ColumnDefinitions>
 	</Grid>
 </Window>

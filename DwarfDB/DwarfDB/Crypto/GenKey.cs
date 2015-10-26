@@ -32,18 +32,18 @@ namespace DwarfDB
 
 		public static byte[] Generate() {
 			// TODO: use AES
-			byte[] ret = new byte[32];
+			var ret = new byte[32];
 			if ( phy_address == null )
 				throw new GenKeyException("I can't get your MAC-address!");
 
 			byte k1 = 1;
 			
-			foreach ( byte bk in  phy_address.GetAddressBytes()) {
+			foreach ( byte bk in phy_address.GetAddressBytes()) {
 				k1  &= bk ;
 			}
 						
 			int i = 0;
-			foreach ( byte bt1 in  Encoding.UTF8.GetBytes (inner_key)) {
+			foreach ( byte bt1 in Encoding.UTF8.GetBytes (inner_key)) {
 				ret[i] = bt1;
 				ret[i] += k1;
 				++i;

@@ -63,8 +63,11 @@ namespace AppSample
 		
 		void Delete_Click(object sender, RoutedEventArgs e)
 		{
+			var cellInfo=EmployeeGrid.SelectedCells[0];
+			var cls = cellInfo.Column.GetCellContent(cellInfo.Item);
+			
 			var query = from x in dc_employee_load.GetRecords()
-				where x.Id == 498
+				where x.Id == Int64.Parse((cls as System.Windows.Controls.TextBlock).Text)
 				select x;
 			
 			var tt = query.ToArray();
