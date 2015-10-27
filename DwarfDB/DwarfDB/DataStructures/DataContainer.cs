@@ -320,9 +320,7 @@ namespace DwarfDB.DataStructures
 					
 			new_rec.BuildIndex();
 			new_rec.OwnerDC = this;
-			// TODO: Add data to DataStack and file chunks
 			owner_db.Stack.Push( new_rec );
-
 			return true;
 		}
 		
@@ -359,7 +357,7 @@ namespace DwarfDB.DataStructures
 			// Save records from DC
 			var recs = GetRecords();
 			
-			GetOwnerDB().chunk_manager.CreateChunk(recs, 50);
+			GetOwnerDB().chunk_manager.CreateChunk(recs, 300);
 			GetOwnerDB().chunk_manager.SaveIndexes();
 		}
 		

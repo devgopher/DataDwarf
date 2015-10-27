@@ -71,17 +71,17 @@ namespace DwarfDB.Stack
 		
 		public new void Push( IStructure dta_struct ) {
 			string new_index_hash = dta_struct.GetIndex().HashCode;
-			lock ( idx_hashes ) {
-				if ( !idx_hashes.Contains( new_index_hash ) )
-					idx_hashes.Add( new_index_hash );
-			}
+			//		lock ( idx_hashes ) {
+			if ( !idx_hashes.Contains( new_index_hash ) )
+				idx_hashes.Add( new_index_hash );
+			//	}
 			
-			lock ( records_list ) {
-				if ( dta_struct is Record ) {
-					records_list.Add( dta_struct as Record );
-					Modified = true;
-				}
+			//	lock ( records_list ) {
+			if ( dta_struct is Record ) {
+				records_list.Add( dta_struct as Record );
+				Modified = true;
 			}
+			//		}
 			base.Push(dta_struct);
 		}
 		
@@ -117,21 +117,21 @@ namespace DwarfDB.Stack
 					
 					int element_count = this.Count;
 					
-					Parallel.For( 0, element_count, parallel_opts, ( int cntr ) => {
-					             	//for ( int cntr = 0; cntr <= element_count; ++cntr) {
-					             	if ( (this.TryPop( out tmp )) == true) {
-					             		// Looking for needed records
-					             		if ( tmp is Record ) {
-					             			if ( (tmp as Record).OwnerDC == dc &&  (tmp as Record).Id >= 0 ) {
-					             				ret.Add( tmp as Record );
-					             			}
-					             		}
-					             		
-					             		// If this record is not what we need - let's put it back
-					             		// in the temporary stack
-					             		tmp_stack.Push( tmp );
-					             	}
-					             });
+					//	Parallel.For( 0, element_count, parallel_opts, ( int cntr ) => {
+					for ( int cntr = 0; cntr <= element_count; ++cntr) {
+						if  (this.TryPop( out tmp )) {
+							// Looking for needed records
+							if ( tmp is Record ) {
+								if ( ( tmp as Record ).OwnerDC == dc &&  ( tmp as Record ).Id >= 0 ) {
+									ret.Add( tmp as Record );
+								}
+							}
+							
+							// If this record is not what we need - let's put it back
+							// in the temporary stack
+							tmp_stack.Push( tmp );
+						}
+					};
 					
 					PushFromStack( tmp_stack );
 					// Putting down a flag for next GetRecords operations
@@ -194,9 +194,9 @@ namespace DwarfDB.Stack
 		}
 
 		private void PushFromStack( ConcurrentStack<IStructure> input_stack ) {
-			foreach ( var st in input_stack ) {
-				base.Push( st );
-			}
+			Parallel.ForEach( input_stack, parallel_opts, ( st ) => {
+			                 	base.Push( st );
+			                 });
 		}
 		
 		/// <summary>

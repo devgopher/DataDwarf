@@ -6,6 +6,7 @@
 using System;
 using System.IO;
 using System.Collections.Generic;
+using System.Collections.Concurrent;
 using DwarfDB.DataStructures;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -33,7 +34,9 @@ namespace DwarfDB.ChunkManager
 		private Dictionary<IndexPair, string> chunks_lst = new Dictionary<IndexPair, string>();
 		
 		// < Our index, < parent structure, parent index hash > >
-		private readonly Dictionary<Index, KeyValuePair<IStructure, String>> all_indexes = new Dictionary<Index, KeyValuePair<IStructure, String>>();
+		
+		private readonly ConcurrentDictionary<Index, KeyValuePair<IStructure, String>> all_indexes =
+			new ConcurrentDictionary<Index, KeyValuePair<IStructure, String>>();
 		
 		public string CurrentDbPath {
 			get; private set;
@@ -226,7 +229,7 @@ namespace DwarfDB.ChunkManager
 						var new_chunk = ChunkFormat.CreateNewFile( filepath );
 						ChunkFormat.AddItem( filepath, dc);
 						var index = dc.GetIndex();
-						all_indexes.Add(index, new KeyValuePair<IStructure, string>(dc, dc.GetIndex().HashCode));
+						all_indexes[index] = new KeyValuePair<IStructure, string>(dc, dc.GetIndex().HashCode);
 						chunks_lst.Add( new IndexPair() {
 						               	hash_min =  index.HashCode, hash_max =  index.HashCode
 						               }, dc.Name );
@@ -262,6 +265,7 @@ namespace DwarfDB.ChunkManager
 				                     	var index2 = e2.GetIndex();
 				                     	return index1.HashCode.CompareTo(index2.HashCode);
 				                     } );
+				
 				if ( no_null_records.Count > max_elem_count ) {
 					var sub_range = new List<Record>();
 					for ( int i = 0; i < no_null_records.Count; i += max_elem_count ) {
@@ -292,7 +296,8 @@ namespace DwarfDB.ChunkManager
 					no_null_records.ForEach( (rec) => {
 					                        	if ( !all_hashes.Contains(rec.GetIndex().HashCode) ) {
 					                        		ChunkFormat.AddItem( filepath, rec);
-					                        		AllIndexes[rec.GetIndex()] = new KeyValuePair<IStructure, string>(rec, rec.OwnerDC.GetIndex().HashCode);
+					                        		AllIndexes.TryAdd(rec.GetIndex(),
+					                        		                  new KeyValuePair<IStructure, string>(rec, rec.OwnerDC.GetIndex().HashCode));
 					                        	}
 					                        } );
 					
@@ -391,7 +396,7 @@ namespace DwarfDB.ChunkManager
 			return false;
 		}
 		
-		public Dictionary<Index, KeyValuePair<IStructure,string>> AllIndexes {
+		public ConcurrentDictionary<Index, KeyValuePair<IStructure,string>> AllIndexes {
 			get {
 				if ( all_indexes.Count != all_hashes.Count ) {
 					foreach ( var idx in all_indexes ) {
@@ -436,10 +441,8 @@ namespace DwarfDB.ChunkManager
 									var idx = Index.CreateFromHashCode( dc_hash );
 									var new_dc = GetDataContainer(dc_name);
 									new_dc.AssignOwnerDB(db);
-									if ( !all_indexes.ContainsKey( idx ) ) {
-										all_indexes.Add( idx, new KeyValuePair<IStructure, string>(new_dc, dc_name));
+									all_indexes.TryAdd( idx, new KeyValuePair<IStructure, string>(new_dc, dc_name));
 									}
-								}
 							}
 						}
 						line = sr.ReadLine();
@@ -467,9 +470,8 @@ namespace DwarfDB.ChunkManager
 									var rec_hash = mtc[0].Groups[1].Value;
 									var idx = Index.CreateFromHashCode( rec_hash );
 									
-									if ( !all_indexes.ContainsKey( idx ) ) {
-										all_indexes.Add( idx, new KeyValuePair<IStructure, string>(DummyRecord.Create(), own_dc_hash));
-									}
+									all_indexes.TryAdd( idx,
+									                   new KeyValuePair<IStructure, string>(DummyRecord.Create(), own_dc_hash));
 								}
 							}
 						}
@@ -504,7 +506,8 @@ namespace DwarfDB.ChunkManager
 			}
 			
 			if ( rem_idx != null ) {
-				AllIndexes.Remove( rem_idx );
+				var tmp_val = new KeyValuePair<IStructure, string>();
+				AllIndexes.TryRemove( rem_idx, out tmp_val );
 				SaveIndexes();
 			}
 		}
@@ -573,8 +576,8 @@ namespace DwarfDB.ChunkManager
 				foreach ( var idx in AllIndexes ) {
 					if ( !contents.Contains(idx.Key.HashCode) ) {
 						if ( idx.Value.Key is Record && !( idx.Value.Key is DummyRecord ) ) {
-							Record rec =  idx.Value.Key as Record;
-							DataContainer owner_dc = rec.OwnerDC;
+							var rec =  idx.Value.Key as Record;
+							var owner_dc = rec.OwnerDC;
 							string hash_code = idx.Key.HashCode;
 							sw.WriteLine( "Record:Record:"+hash_code+":"+owner_dc.GetIndex().HashCode);
 						} else if ( idx.Value.Key is DataContainer  ) {
@@ -590,6 +593,7 @@ namespace DwarfDB.ChunkManager
 				}
 			}
 		}
+		
 		
 		private HashSet<string> all_hashes = new HashSet<string>();
 		

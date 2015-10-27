@@ -62,9 +62,6 @@ namespace DwarfDB
 					dc2.AddColumn( column );
 				}
 				
-		//		chunk_manager.CreateChunk( dc );
-		//		chunk_manager.CreateChunk( dc2 );
-				
 				for ( int k =0; k< rows_count; ++k ) {
 					var rec1 = new Record( dc );
 					var rec2 = new Record( dc2 );
@@ -95,15 +92,18 @@ namespace DwarfDB
 					indexes.Add(rec1.GetIndex());
 					dc2.AddRecord( rec2 );
 					indexes.Add(rec2.GetIndex());
+					
+					
+					if  ( k % 3000 == 0 ) {
+						dc.Save();
+						dc2.Save();
+					}
+					
 				}
 
-				//chunk_manager.CreateChunk( dc2.GetRecords(), chunk_size );
-				//chunk_manager.CreateChunk( dc.GetRecords(), chunk_size );
-				//chunk_manager.SaveIndexes();
-				
 				dc.Save();
 				dc2.Save();
-				
+
 			} else {
 				Console.WriteLine("Trying to get data from db \""+db_name+"\"");
 				
@@ -117,14 +117,14 @@ namespace DwarfDB
 				//Console.WriteLine("Preloading DC1...");
 				dc.PreLoad();
 				//Console.WriteLine("Preloading DC2...");
-				dc2.PreLoad();				
+				dc2.PreLoad();
 
 				// Getting a record
 				Record rc = null;
 				Record rc1 = null;
 				Record rc2 = null;
 				Record rc3 = null;
-				Record rc4 = null;				
+				Record rc4 = null;
 				
 				var get_time = Checks.ExecutionTimeCheck.DoCheck(() => {
 				                                                 	rc = dc2.GetRecord(2030);
@@ -156,7 +156,7 @@ namespace DwarfDB
 					Console.WriteLine("Val: "+rc3.Fields[0].Value.ToString());
 				if ( rc4 != null && !(rc4 is DummyRecord) )
 					Console.WriteLine("Val: "+rc4.Fields[0].Value.ToString());
-								
+				
 				Console.WriteLine("Trying LINQ #1...");
 				var query = from x in dc
 					where x.Fields[0].Value.ToString().Contains("итру")

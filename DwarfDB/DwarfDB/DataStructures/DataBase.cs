@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.IO;
 using Newtonsoft.Json;
+using System.Collections.Concurrent;
 using System.Runtime.Serialization;
 
 namespace DwarfDB.DataStructures
@@ -106,11 +107,13 @@ namespace DwarfDB.DataStructures
 			if ( Directory.Exists(cpath) ) {
 				foreach ( var file in Directory.GetFiles(cpath, "*.dwarf") )
 					File.Delete( file );
+				foreach ( var file in Directory.GetFiles(cpath, "*.dw") )
+					File.Delete( file );
 				Directory.Delete(cpath);
 			}
 			
 			// Destroying this object
-			this.Dispose();				
+			this.Dispose();
 		}
 		
 		#region DC cloning
@@ -252,7 +255,7 @@ namespace DwarfDB.DataStructures
 		}
 		
 		[JsonIgnore]
-		public Dictionary<Index, KeyValuePair<IStructure,string>> Indexes {
+		public ConcurrentDictionary<Index, KeyValuePair<IStructure,string>> Indexes {
 			get {
 				if ( chunk_manager != null )
 					return chunk_manager.AllIndexes;
