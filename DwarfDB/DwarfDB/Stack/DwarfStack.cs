@@ -62,7 +62,7 @@ namespace DwarfDB.Stack
 			Modified = true;
 			if ( _db != null )
 				db = _db;
-			parallel_opts.MaxDegreeOfParallelism = Environment.ProcessorCount;
+			parallel_opts.MaxDegreeOfParallelism = Environment.ProcessorCount*4;
 		}
 		
 		private bool IsCapable( IStructure dta_struct ) {

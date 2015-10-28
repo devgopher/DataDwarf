@@ -12,6 +12,7 @@
     <UseMSBuildEngine>False</UseMSBuildEngine>
     <StartupObject>DwarfDB.Program</StartupObject>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <CodePage>65001</CodePage>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
     <PlatformTarget>x86</PlatformTarget>

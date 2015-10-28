@@ -94,10 +94,10 @@ namespace DwarfDB
 					indexes.Add(rec2.GetIndex());
 					
 					
-					if  ( k % 3000 == 0 ) {
-						dc.Save();
-						dc2.Save();
-					}
+					//	if  ( k % 3000 == 0 ) {
+					//		dc.Save();
+					//		dc2.Save();
+					//	}
 					
 				}
 
@@ -190,6 +190,12 @@ namespace DwarfDB
 					Console.WriteLine("Rec:"+rec.Fields[0].Type+"  :  "+rec.Fields[0].Value+" $$"+aa2.Count()+
 					                  ":"+rec.Fields[1].Type+"  :  "+rec.Fields[1].Value+" $$"+aa2.Count());
 				}
+				
+				Console.WriteLine("DO YOU WANT TO DROP THIS DB (Y/N)?");
+				if ( Console.ReadLine() == "Y" ) {
+					db2.Drop();
+				}
+				
 			}
 		}
 	}

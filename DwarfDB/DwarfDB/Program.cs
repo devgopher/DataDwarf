@@ -5,13 +5,16 @@
  * Time: 22:40
  */
 using System;
-
+using System.Runtime;
 namespace DwarfDB
 {
 	partial class Program
 	{
 		public static void Main(string[] args)
 		{
+			GCSettings.LatencyMode = GCLatencyMode.Batch;
+			Console.WriteLine("Is server GC: "+GCSettings.IsServerGC.ToString());
+
 			Console.WriteLine("Hello World!");
 			
 			DataTableChunkCreation();
