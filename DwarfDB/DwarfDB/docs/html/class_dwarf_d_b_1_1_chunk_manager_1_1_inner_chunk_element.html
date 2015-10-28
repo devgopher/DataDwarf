@@ -69,9 +69,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><b>DataType</b> { <b>RECORD</b>, 
-<b>DATACONTAINER</b>, 
-<b>DB</b>
+<tr><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><b>ElemType</b> { <b>RECORD</b> =  0, 
+<b>DATACONTAINER</b> =  1, 
+<b>DB</b> =  2, 
+<b>REMOVED</b> =  3
  }</td></tr>
 <tr><td colspan="2"><h2><a name="properties"></a>
 Properties</h2></td></tr>
@@ -81,8 +82,8 @@ string&#160;</td><td class="memItemRight" valign="bottom"><b>ElemDB</b><code> [g
 string&#160;</td><td class="memItemRight" valign="bottom"><b>ElemParentName</b><code> [get, set]</code></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a546a3b38350bffefe172f7b5e605f099"></a><!-- doxytag: member="DwarfDB::ChunkManager::InnerChunkElement::ElemParentHash" ref="a546a3b38350bffefe172f7b5e605f099" args="" -->
 string&#160;</td><td class="memItemRight" valign="bottom"><b>ElemParentHash</b><code> [get, set]</code></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8d14ab588be8070b8bb1a0be07bf3e91"></a><!-- doxytag: member="DwarfDB::ChunkManager::InnerChunkElement::ElemType" ref="a8d14ab588be8070b8bb1a0be07bf3e91" args="" -->
-DataType&#160;</td><td class="memItemRight" valign="bottom"><b>ElemType</b><code> [get, set]</code></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2c20f27c344aabebc3a5d95d6e65ed35"></a><!-- doxytag: member="DwarfDB::ChunkManager::InnerChunkElement::ElementType" ref="a2c20f27c344aabebc3a5d95d6e65ed35" args="" -->
+ElemType&#160;</td><td class="memItemRight" valign="bottom"><b>ElementType</b><code> [get, set]</code></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a665443eb4b6985cf182ed0452e4ddf8f"></a><!-- doxytag: member="DwarfDB::ChunkManager::InnerChunkElement::ElementName" ref="a665443eb4b6985cf182ed0452e4ddf8f" args="" -->
 string&#160;</td><td class="memItemRight" valign="bottom"><b>ElementName</b><code> [get, set]</code></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7772ab334d416a21f422d6f646593f8d"></a><!-- doxytag: member="DwarfDB::ChunkManager::InnerChunkElement::ElementHash" ref="a7772ab334d416a21f422d6f646593f8d" args="" -->
@@ -128,7 +129,7 @@ string&#160;</td><td class="memItemRight" valign="bottom"><b>Contents</b><code> 
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Thu Oct 8 2015 13:29:34 for DwarfDB by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Oct 28 2015 17:43:04 for DwarfDB by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.2 </small></address>
 </body>

@@ -62,14 +62,14 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <div class="contents">
 <!-- doxytag: class="DwarfDB::Stack::DwarfStack" -->
-<p>Стек для сообщений, хранимых в памяти сервера  
+<p>A stack for improving an access to dwarf records.  
 <a href="#_details">More...</a></p>
 <!-- startSectionHeader --><div class="dynheader">
 Collaboration diagram for DwarfDB.Stack.DwarfStack:<!-- endSectionHeader --></div>
 <!-- startSectionSummary --><!-- endSectionSummary --><!-- startSectionContent --><div class="dyncontent">
 <div class="center"><img src="class_dwarf_d_b_1_1_stack_1_1_dwarf_stack__coll__graph.png" border="0" usemap="#_dwarf_d_b_8_stack_8_dwarf_stack_coll__map" alt="Collaboration graph"/></div>
 <map name="_dwarf_d_b_8_stack_8_dwarf_stack_coll__map" id="_dwarf_d_b_8_stack_8_dwarf_stack_coll__map">
-<area shape="rect" id="node2" href="class_dwarf_d_b_1_1_data_structures_1_1_data_base.html" title="a class for database object" alt="" coords="9,96,233,123"/></map>
+<area shape="rect" id="node2" href="class_dwarf_d_b_1_1_data_structures_1_1_data_base.html" title="a class for database object" alt="" coords="5,96,229,123"/></map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center><!-- endSectionContent --></div>
 
 <p><a href="class_dwarf_d_b_1_1_stack_1_1_dwarf_stack-members.html">List of all members.</a></p>
@@ -85,16 +85,16 @@ new bool&#160;</td><td class="memItemRight" valign="bottom"><b>TryPop</b> (<a cl
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad9a9e05a598682086956db2bfaba217a"></a><!-- doxytag: member="DwarfDB::Stack::DwarfStack::ContainsHash" ref="ad9a9e05a598682086956db2bfaba217a" args="(string hash)" -->
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>ContainsHash</b> (string hash)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">List&lt; <a class="el" href="class_dwarf_d_b_1_1_data_structures_1_1_record.html">Record</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_dwarf_d_b_1_1_stack_1_1_dwarf_stack.html#adca3ef11aa4b86f2f6de7f33e06bb13c">GetRecords</a> (<a class="el" href="class_dwarf_d_b_1_1_data_structures_1_1_data_container.html">DataStructures.DataContainer</a> dc)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Получаем сообщение с заданным index.  <a href="#adca3ef11aa4b86f2f6de7f33e06bb13c"></a><br/></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Receiving records for concrete DataContainer.  <a href="#adca3ef11aa4b86f2f6de7f33e06bb13c"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="interface_dwarf_d_b_1_1_data_structures_1_1_i_structure.html">IStructure</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_dwarf_d_b_1_1_stack_1_1_dwarf_stack.html#a1cf7979ccc18a74d5a2ff3e0205ca2c7">GetStructure</a> (<a class="el" href="class_dwarf_d_b_1_1_data_structures_1_1_index.html">Index</a> ind)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Получаем сообщение с заданным index.  <a href="#a1cf7979ccc18a74d5a2ff3e0205ca2c7"></a><br/></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Receiving records a record with given index.  <a href="#a1cf7979ccc18a74d5a2ff3e0205ca2c7"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="properties"></a>
 Properties</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_dwarf_d_b_1_1_stack_1_1_dwarf_stack.html#a6553f7ef26d0f448c1f1833a8740b774">Modified</a><code> [get, set]</code></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Is stack elements array modified?  <a href="#a6553f7ef26d0f448c1f1833a8740b774"></a><br/></td></tr>
 </table>
 <hr/><a name="_details"></a><h2>Detailed Description</h2>
-<p>Стек для сообщений, хранимых в памяти сервера </p>
+<p>A stack for improving an access to dwarf records. </p>
 <hr/><h2>Member Function Documentation</h2>
 <a class="anchor" id="adca3ef11aa4b86f2f6de7f33e06bb13c"></a><!-- doxytag: member="DwarfDB::Stack::DwarfStack::GetRecords" ref="adca3ef11aa4b86f2f6de7f33e06bb13c" args="(DataStructures.DataContainer dc)" -->
 <div class="memitem">
@@ -111,10 +111,10 @@ Properties</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Получаем сообщение с заданным index. </p>
+<p>Receiving records for concrete DataContainer. </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
-    <tr><td class="paramname">ind</td><td></td></tr>
+    <tr><td class="paramname">dc</td><td>A data container</td></tr>
   </table>
   </dd>
 </dl>
@@ -137,7 +137,7 @@ Properties</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Получаем сообщение с заданным index. </p>
+<p>Receiving records a record with given index. </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">ind</td><td></td></tr>
@@ -182,7 +182,7 @@ Properties</h2></td></tr>
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Thu Oct 8 2015 13:29:35 for DwarfDB by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Oct 28 2015 17:43:06 for DwarfDB by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.2 </small></address>
 </body>

@@ -126,8 +126,8 @@ static <a class="el" href="class_dwarf_d_b_1_1_chunk_manager_1_1_chunk_manager.h
 Properties</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab3d1c419f8c1c396ca43368f5f214614"></a><!-- doxytag: member="DwarfDB::ChunkManager::ChunkManager::CurrentDbPath" ref="ab3d1c419f8c1c396ca43368f5f214614" args="" -->
 string&#160;</td><td class="memItemRight" valign="bottom"><b>CurrentDbPath</b><code> [get, set]</code></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9adc3ce8d62f6341303c48e8dae3cc17"></a><!-- doxytag: member="DwarfDB::ChunkManager::ChunkManager::AllIndexes" ref="a9adc3ce8d62f6341303c48e8dae3cc17" args="" -->
-Dictionary&lt; <a class="el" href="class_dwarf_d_b_1_1_data_structures_1_1_index.html">Index</a>, <br class="typebreak"/>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aea31cf7ac0a6f0ec20ca7087d8898550"></a><!-- doxytag: member="DwarfDB::ChunkManager::ChunkManager::AllIndexes" ref="aea31cf7ac0a6f0ec20ca7087d8898550" args="" -->
+ConcurrentDictionary&lt; <a class="el" href="class_dwarf_d_b_1_1_data_structures_1_1_index.html">Index</a>, <br class="typebreak"/>
 KeyValuePair&lt; <a class="el" href="interface_dwarf_d_b_1_1_data_structures_1_1_i_structure.html">IStructure</a>, <br class="typebreak"/>
 string &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>AllIndexes</b><code> [get]</code></td></tr>
 </table>
@@ -238,8 +238,8 @@ string &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>AllIndexe
 <p>Creates a new chunk for records. </p>
 <dl><dt><b>Parameters:</b></dt><dd>
   <table class="params">
-    <tr><td class="paramname">last_new_elems_count</td><td>A count of new elements to put in new chunk( if needed! )</td></tr>
-    <tr><td class="paramname">max_idx_count</td><td></td></tr>
+    <tr><td class="paramname">records</td><td>A list of records</td></tr>
+    <tr><td class="paramname">max_elem_count</td><td>Maximum amount of elements in a chunk</td></tr>
   </table>
   </dd>
 </dl>
@@ -542,7 +542,7 @@ string &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>AllIndexe
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Thu Oct 8 2015 13:29:34 for DwarfDB by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Oct 28 2015 17:43:04 for DwarfDB by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.2 </small></address>
 </body>

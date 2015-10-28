@@ -14,7 +14,7 @@ Collaboration diagram for DwarfDB.DataStructures.DataBase:
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=251pt]{class_dwarf_d_b_1_1_data_structures_1_1_data_base__coll__graph}
+\includegraphics[width=248pt]{class_dwarf_d_b_1_1_data_structures_1_1_data_base__coll__graph}
 \end{center}
 \end{figure}
 \subsection*{Public Member Functions}
@@ -30,11 +30,8 @@ void {\bfseries GetObjectData} (SerializationInfo info, StreamingContext ctxt)}
 \label{class_dwarf_d_b_1_1_data_structures_1_1_data_base_a34980ba6f61e15d6dcbe5af7f596a6fd}
 
 \item 
-\hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_data_base_ae169105e97a66c5d621b3d945d11fce4}{
-void {\bfseries Drop} ()}
-\label{class_dwarf_d_b_1_1_data_structures_1_1_data_base_ae169105e97a66c5d621b3d945d11fce4}
-
-\item 
+void \hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_data_base_ae169105e97a66c5d621b3d945d11fce4}{Drop} ()
+\begin{DoxyCompactList}\small\item\em Dropping this DB. \item\end{DoxyCompactList}\item 
 bool \hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_data_base_af1cedf55fdab7efe9154ea7570c9abc9}{CloneDataContainer} (\hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_data_base}{DataBase} from, String dc\_\-name)
 \begin{DoxyCompactList}\small\item\em Cloning DC from another DB. \item\end{DoxyCompactList}\item 
 \hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_data_base_ae0180400ee59265e19a5d981f59ca440}{
@@ -42,13 +39,12 @@ void {\bfseries Connect} (\hyperlink{class_dwarf_d_b_1_1_user_1_1_user}{User.Use
 \label{class_dwarf_d_b_1_1_data_structures_1_1_data_base_ae0180400ee59265e19a5d981f59ca440}
 
 \item 
-\hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_data_base_a251d5fa0ba9b21d911a9a1c5dcf33152}{
-bool {\bfseries AddNewDataContainer} (\hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_data_container}{DataContainer} new\_\-dc)}
-\label{class_dwarf_d_b_1_1_data_structures_1_1_data_base_a251d5fa0ba9b21d911a9a1c5dcf33152}
-
-\item 
+bool \hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_data_base_a251d5fa0ba9b21d911a9a1c5dcf33152}{AddNewDataContainer} (\hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_data_container}{DataContainer} new\_\-dc)
+\begin{DoxyCompactList}\small\item\em Adding a new data container to a database. \item\end{DoxyCompactList}\item 
 \hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_data_container}{DataContainer} \hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_data_base_aa554e79937460eb937b90d81093019b5}{GetDataContainer} (string dc\_\-name)
-\begin{DoxyCompactList}\small\item\em Getting \hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_data_container}{DataContainer} by name. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Getting \hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_data_container}{DataContainer} by name. \item\end{DoxyCompactList}\item 
+void \hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_data_base_a35fdd80e2d23da47200c8de150a88642}{Dispose} ()
+\begin{DoxyCompactList}\small\item\em Disposing. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Static Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
@@ -93,14 +89,14 @@ string {\bfseries DbPath}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}}
 \label{class_dwarf_d_b_1_1_data_structures_1_1_data_base_a6d2cec1036e84cf7bd32e14cb57fb2c9}
 
 \item 
-\hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_data_base_a17e9d903646d5709103eabea2113c974}{
-Dictionary$<$ \hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_index}{Index}, KeyValuePair$<$ \hyperlink{interface_dwarf_d_b_1_1_data_structures_1_1_i_structure}{IStructure}, string $>$ $>$ {\bfseries Indexes}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}}
-\label{class_dwarf_d_b_1_1_data_structures_1_1_data_base_a17e9d903646d5709103eabea2113c974}
-
-\item 
 \hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_data_base_ab8b85389f822faa790eaf18a7fe35cce}{
 string {\bfseries Name}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}}
 \label{class_dwarf_d_b_1_1_data_structures_1_1_data_base_ab8b85389f822faa790eaf18a7fe35cce}
+
+\item 
+\hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_data_base_ae5d3a3199e83d89ec2915a788721f96c}{
+ConcurrentDictionary$<$ \hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_index}{Index}, KeyValuePair$<$ \hyperlink{interface_dwarf_d_b_1_1_data_structures_1_1_i_structure}{IStructure}, string $>$ $>$ {\bfseries Indexes}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}}
+\label{class_dwarf_d_b_1_1_data_structures_1_1_data_base_ae5d3a3199e83d89ec2915a788721f96c}
 
 \item 
 \hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_data_base_a2ca4a32633cc1324190d6f37da17cc8b}{
@@ -114,6 +110,27 @@ string {\bfseries Name}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}}
 a class for database object 
 
 \subsection{Member Function Documentation}
+\hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_data_base_a251d5fa0ba9b21d911a9a1c5dcf33152}{
+\index{DwarfDB::DataStructures::DataBase@{DwarfDB::DataStructures::DataBase}!AddNewDataContainer@{AddNewDataContainer}}
+\index{AddNewDataContainer@{AddNewDataContainer}!DwarfDB::DataStructures::DataBase@{DwarfDB::DataStructures::DataBase}}
+\subsubsection[{AddNewDataContainer}]{\setlength{\rightskip}{0pt plus 5cm}bool DwarfDB.DataStructures.DataBase.AddNewDataContainer (
+\begin{DoxyParamCaption}
+\item[{{\bf DataContainer}}]{ new\_\-dc}
+\end{DoxyParamCaption}
+)}}
+\label{class_dwarf_d_b_1_1_data_structures_1_1_data_base_a251d5fa0ba9b21d911a9a1c5dcf33152}
+
+
+Adding a new data container to a database. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\_\-dc} & \hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_data_container}{DataContainer}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
 \hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_data_base_af1cedf55fdab7efe9154ea7570c9abc9}{
 \index{DwarfDB::DataStructures::DataBase@{DwarfDB::DataStructures::DataBase}!CloneDataContainer@{CloneDataContainer}}
 \index{CloneDataContainer@{CloneDataContainer}!DwarfDB::DataStructures::DataBase@{DwarfDB::DataStructures::DataBase}}
@@ -138,6 +155,32 @@ Cloning DC from another DB.
 \begin{DoxyReturn}{Returns}
 
 \end{DoxyReturn}
+\hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_data_base_a35fdd80e2d23da47200c8de150a88642}{
+\index{DwarfDB::DataStructures::DataBase@{DwarfDB::DataStructures::DataBase}!Dispose@{Dispose}}
+\index{Dispose@{Dispose}!DwarfDB::DataStructures::DataBase@{DwarfDB::DataStructures::DataBase}}
+\subsubsection[{Dispose}]{\setlength{\rightskip}{0pt plus 5cm}void DwarfDB.DataStructures.DataBase.Dispose (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{class_dwarf_d_b_1_1_data_structures_1_1_data_base_a35fdd80e2d23da47200c8de150a88642}
+
+
+Disposing. 
+
+\hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_data_base_ae169105e97a66c5d621b3d945d11fce4}{
+\index{DwarfDB::DataStructures::DataBase@{DwarfDB::DataStructures::DataBase}!Drop@{Drop}}
+\index{Drop@{Drop}!DwarfDB::DataStructures::DataBase@{DwarfDB::DataStructures::DataBase}}
+\subsubsection[{Drop}]{\setlength{\rightskip}{0pt plus 5cm}void DwarfDB.DataStructures.DataBase.Drop (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{class_dwarf_d_b_1_1_data_structures_1_1_data_base_ae169105e97a66c5d621b3d945d11fce4}
+
+
+Dropping this DB. 
+
 \hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_data_base_aa554e79937460eb937b90d81093019b5}{
 \index{DwarfDB::DataStructures::DataBase@{DwarfDB::DataStructures::DataBase}!GetDataContainer@{GetDataContainer}}
 \index{GetDataContainer@{GetDataContainer}!DwarfDB::DataStructures::DataBase@{DwarfDB::DataStructures::DataBase}}

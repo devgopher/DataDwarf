@@ -9,8 +9,7 @@
 
 
 
-Inheritance diagram for DwarfDB.DataStructures.DataContainer:
-\nopagebreak
+Inheritance diagram for DwarfDB.DataStructures.DataContainer:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -134,7 +133,9 @@ void \hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_data_container_adb2c609d
 \hyperlink{interface_dwarf_d_b_1_1_data_structures_1_1_i_structure}{IStructure} \hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_data_container_a246c00add5642b9674339a0319bae617}{Clone} ()
 \begin{DoxyCompactList}\small\item\em Cloning procedure for DataStructure with reassigning a new owner object( for DC! ) \item\end{DoxyCompactList}\item 
 \hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_index}{Index} \hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_data_container_a195b9a3fcaa91d3240e07164c1d5c460}{GetIndex} ()
-\begin{DoxyCompactList}\small\item\em Getting an index for element. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Getting an index for element. \item\end{DoxyCompactList}\item 
+Int64 \hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_data_container_aa239b2d6a99537175c0c7e85f88c8d7e}{NextId} ()
+\begin{DoxyCompactList}\small\item\em Next ID. \item\end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Static Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
@@ -188,7 +189,7 @@ int \hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_data_container_af2f2d766c
 \label{class_dwarf_d_b_1_1_data_structures_1_1_data_container_a8b12c9bac22fa5ad7d007267f06e20c1}
 
 \item 
-UInt64 \hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_data_container_a3e5849e957860912c9050dbd84818dfd}{Id}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+Int64 \hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_data_container_a3749f4fe324b56d46caf071488c615d7}{Id}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
 \begin{DoxyCompactList}\small\item\em Element id. \item\end{DoxyCompactList}\item 
 \hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_data_container_a4b7bab104009e416ea771276c2e7161a}{
 List$<$ \hyperlink{class_dwarf_d_b_1_1_data_structures_1_1_column}{Column} $>$ {\bfseries Columns}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}}
@@ -463,6 +464,22 @@ Implements \hyperlink{interface_dwarf_d_b_1_1_data_structures_1_1_i_structure_a2
 
 Loading all records from chunks. 
 
+\hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_data_container_aa239b2d6a99537175c0c7e85f88c8d7e}{
+\index{DwarfDB::DataStructures::DataContainer@{DwarfDB::DataStructures::DataContainer}!NextId@{NextId}}
+\index{NextId@{NextId}!DwarfDB::DataStructures::DataContainer@{DwarfDB::DataStructures::DataContainer}}
+\subsubsection[{NextId}]{\setlength{\rightskip}{0pt plus 5cm}Int64 DwarfDB.DataStructures.DataContainer.NextId (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}
+\label{class_dwarf_d_b_1_1_data_structures_1_1_data_container_aa239b2d6a99537175c0c7e85f88c8d7e}
+
+
+Next ID. 
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
 \hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_data_container_adb2c609dd0c1c9230ac94454a6db723f}{
 \index{DwarfDB::DataStructures::DataContainer@{DwarfDB::DataStructures::DataContainer}!PreLoad@{PreLoad}}
 \index{PreLoad@{PreLoad}!DwarfDB::DataStructures::DataContainer@{DwarfDB::DataStructures::DataContainer}}
@@ -527,18 +544,18 @@ Implements \hyperlink{interface_dwarf_d_b_1_1_data_structures_1_1_i_structure_aa
 
 Outputs full amount of records, that has this DC as a parent element. 
 
-\hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_data_container_a3e5849e957860912c9050dbd84818dfd}{
+\hypertarget{class_dwarf_d_b_1_1_data_structures_1_1_data_container_a3749f4fe324b56d46caf071488c615d7}{
 \index{DwarfDB::DataStructures::DataContainer@{DwarfDB::DataStructures::DataContainer}!Id@{Id}}
 \index{Id@{Id}!DwarfDB::DataStructures::DataContainer@{DwarfDB::DataStructures::DataContainer}}
-\subsubsection[{Id}]{\setlength{\rightskip}{0pt plus 5cm}UInt64 DwarfDB.DataStructures.DataContainer.Id\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}}}
-\label{class_dwarf_d_b_1_1_data_structures_1_1_data_container_a3e5849e957860912c9050dbd84818dfd}
+\subsubsection[{Id}]{\setlength{\rightskip}{0pt plus 5cm}Int64 DwarfDB.DataStructures.DataContainer.Id\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}}}
+\label{class_dwarf_d_b_1_1_data_structures_1_1_data_container_a3749f4fe324b56d46caf071488c615d7}
 
 
 Element id. 
 
 
 
-Implements \hyperlink{interface_dwarf_d_b_1_1_data_structures_1_1_i_structure_a9fab102fba11f70ab46272b53201784d}{DwarfDB.DataStructures.IStructure}.
+Implements \hyperlink{interface_dwarf_d_b_1_1_data_structures_1_1_i_structure_a20776b8ffebc8d77080ef4b9e9817e85}{DwarfDB.DataStructures.IStructure}.
 
 
 

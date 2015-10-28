@@ -78,7 +78,7 @@ Collaboration diagram for DwarfDB.DataStructures.DataContainer:<!-- endSectionHe
 <!-- startSectionSummary --><!-- endSectionSummary --><!-- startSectionContent --><div class="dyncontent">
 <div class="center"><img src="class_dwarf_d_b_1_1_data_structures_1_1_data_container__coll__graph.png" border="0" usemap="#_dwarf_d_b_8_data_structures_8_data_container_coll__map" alt="Collaboration graph"/></div>
 <map name="_dwarf_d_b_8_data_structures_8_data_container_coll__map" id="_dwarf_d_b_8_data_structures_8_data_container_coll__map">
-<area shape="rect" id="node2" href="interface_dwarf_d_b_1_1_data_structures_1_1_i_structure.html" title="An interface for DwarfDB data structures, such as: DataContainer and Record." alt="" coords="413,5,491,32"/><area shape="rect" id="node4" href="class_dwarf_d_b_1_1_data_structures_1_1_record.html" title="Record is the element of DataContainer." alt="" coords="701,43,909,69"/><area shape="rect" id="node7" href="class_dwarf_d_b_1_1_data_structures_1_1_index.html" title="Index of data structure elements." alt="" coords="353,61,551,88"/><area shape="rect" id="node9" href="interface_dwarf_d_b_1_1_data_structures_1_1_i_structure.html" title="An interface for DwarfDB data structures, such as: DataContainer and Record." alt="" coords="6,61,229,88"/><area shape="rect" id="node11" href="class_dwarf_d_b_1_1_data_structures_1_1_data_base.html" title="a class for database object" alt="" coords="693,156,917,183"/></map>
+<area shape="rect" id="node2" href="interface_dwarf_d_b_1_1_data_structures_1_1_i_structure.html" title="An interface for DwarfDB data structures, such as: DataContainer and Record." alt="" coords="413,5,491,32"/><area shape="rect" id="node4" href="class_dwarf_d_b_1_1_data_structures_1_1_record.html" title="Record is the element of DataContainer." alt="" coords="701,47,909,73"/><area shape="rect" id="node7" href="class_dwarf_d_b_1_1_data_structures_1_1_index.html" title="Index of data structure elements." alt="" coords="353,69,551,96"/><area shape="rect" id="node9" href="interface_dwarf_d_b_1_1_data_structures_1_1_i_structure.html" title="An interface for DwarfDB data structures, such as: DataContainer and Record." alt="" coords="6,69,229,96"/><area shape="rect" id="node11" href="class_dwarf_d_b_1_1_data_structures_1_1_data_base.html" title="a class for database object" alt="" coords="693,160,917,187"/></map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center><!-- endSectionContent --></div>
 
 <p><a href="class_dwarf_d_b_1_1_data_structures_1_1_data_container-members.html">List of all members.</a></p>
@@ -145,6 +145,8 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>GetRecordsFromChunk</
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Cloning procedure for DataStructure with reassigning a new owner object( for DC! )  <a href="#a246c00add5642b9674339a0319bae617"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_dwarf_d_b_1_1_data_structures_1_1_index.html">Index</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_dwarf_d_b_1_1_data_structures_1_1_data_container.html#a195b9a3fcaa91d3240e07164c1d5c460">GetIndex</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Getting an index for element.  <a href="#a195b9a3fcaa91d3240e07164c1d5c460"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">Int64&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_dwarf_d_b_1_1_data_structures_1_1_data_container.html#aa239b2d6a99537175c0c7e85f88c8d7e">NextId</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Next ID.  <a href="#aa239b2d6a99537175c0c7e85f88c8d7e"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7a47a45e62754b629dc06c57438a4eca"></a><!-- doxytag: member="DwarfDB::DataStructures::DataContainer::operator==" ref="a7a47a45e62754b629dc06c57438a4eca" args="(DataContainer a, DataContainer b)" -->
@@ -171,8 +173,8 @@ String&#160;</td><td class="memItemRight" valign="bottom"><b>Name</b><code> [get
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Outputs full amount of records, that has this DC as a parent element.  <a href="#af2f2d766cbb2729f91effb3c68fd97e0"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8b12c9bac22fa5ad7d007267f06e20c1"></a><!-- doxytag: member="DwarfDB::DataStructures::DataContainer::this" ref="a8b12c9bac22fa5ad7d007267f06e20c1" args="[int pos]" -->
 <a class="el" href="class_dwarf_d_b_1_1_data_structures_1_1_record.html">Record</a>&#160;</td><td class="memItemRight" valign="bottom"><b>this</b> [int pos]<code> [get, set]</code></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">UInt64&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_dwarf_d_b_1_1_data_structures_1_1_data_container.html#a3e5849e957860912c9050dbd84818dfd">Id</a><code> [get, set]</code></td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Element id.  <a href="#a3e5849e957860912c9050dbd84818dfd"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">Int64&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_dwarf_d_b_1_1_data_structures_1_1_data_container.html#a3749f4fe324b56d46caf071488c615d7">Id</a><code> [get, set]</code></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Element id.  <a href="#a3749f4fe324b56d46caf071488c615d7"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4b7bab104009e416ea771276c2e7161a"></a><!-- doxytag: member="DwarfDB::DataStructures::DataContainer::Columns" ref="a4b7bab104009e416ea771276c2e7161a" args="" -->
 List&lt; <a class="el" href="class_dwarf_d_b_1_1_data_structures_1_1_column.html">Column</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>Columns</b><code> [get, set]</code></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a04e95f117bfb96a32811e7bfeb6c7c32"></a><!-- doxytag: member="DwarfDB::DataStructures::DataContainer::Records" ref="a04e95f117bfb96a32811e7bfeb6c7c32" args="" -->
@@ -511,6 +513,25 @@ List&lt; <a class="el" href="class_dwarf_d_b_1_1_data_structures_1_1_record.html
 
 </div>
 </div>
+<a class="anchor" id="aa239b2d6a99537175c0c7e85f88c8d7e"></a><!-- doxytag: member="DwarfDB::DataStructures::DataContainer::NextId" ref="aa239b2d6a99537175c0c7e85f88c8d7e" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Int64 DwarfDB.DataStructures.DataContainer.NextId </td>
+          <td>(</td>
+          <td class="paramname">&#160;)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Next ID. </p>
+<dl class="return"><dt><b>Returns:</b></dt><dd></dd></dl>
+
+</div>
+</div>
 <a class="anchor" id="adb2c609dd0c1c9230ac94454a6db723f"></a><!-- doxytag: member="DwarfDB::DataStructures::DataContainer::PreLoad" ref="adb2c609dd0c1c9230ac94454a6db723f" args="()" -->
 <div class="memitem">
 <div class="memproto">
@@ -592,12 +613,12 @@ List&lt; <a class="el" href="class_dwarf_d_b_1_1_data_structures_1_1_record.html
 
 </div>
 </div>
-<a class="anchor" id="a3e5849e957860912c9050dbd84818dfd"></a><!-- doxytag: member="DwarfDB::DataStructures::DataContainer::Id" ref="a3e5849e957860912c9050dbd84818dfd" args="" -->
+<a class="anchor" id="a3749f4fe324b56d46caf071488c615d7"></a><!-- doxytag: member="DwarfDB::DataStructures::DataContainer::Id" ref="a3749f4fe324b56d46caf071488c615d7" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">UInt64 DwarfDB.DataStructures.DataContainer.Id<code> [get, set]</code></td>
+          <td class="memname">Int64 DwarfDB.DataStructures.DataContainer.Id<code> [get, set]</code></td>
         </tr>
       </table>
 </div>
@@ -605,7 +626,7 @@ List&lt; <a class="el" href="class_dwarf_d_b_1_1_data_structures_1_1_record.html
 
 <p>Element id. </p>
 
-<p>Implements <a class="el" href="interface_dwarf_d_b_1_1_data_structures_1_1_i_structure.html#a9fab102fba11f70ab46272b53201784d">DwarfDB.DataStructures.IStructure</a>.</p>
+<p>Implements <a class="el" href="interface_dwarf_d_b_1_1_data_structures_1_1_i_structure.html#a20776b8ffebc8d77080ef4b9e9817e85">DwarfDB.DataStructures.IStructure</a>.</p>
 
 </div>
 </div>
@@ -627,7 +648,7 @@ List&lt; <a class="el" href="class_dwarf_d_b_1_1_data_structures_1_1_record.html
 </iframe>
 </div>
 
-<hr class="footer"/><address class="footer"><small>Generated on Thu Oct 8 2015 13:29:34 for DwarfDB by&#160;
+<hr class="footer"/><address class="footer"><small>Generated on Wed Oct 28 2015 17:43:04 for DwarfDB by&#160;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.7.2 </small></address>
 </body>

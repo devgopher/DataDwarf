@@ -1,7 +1,7 @@
 <map id="G" name="G">
 <area shape="rect" id="node2" href="$interface_dwarf_d_b_1_1_data_structures_1_1_i_structure.html" title="An interface for DwarfDB data structures, such as: DataContainer and Record." alt="" coords="413,5,491,32"/>
-<area shape="rect" id="node4" href="$class_dwarf_d_b_1_1_data_structures_1_1_record.html" title="Record is the element of DataContainer." alt="" coords="701,43,909,69"/>
-<area shape="rect" id="node7" href="$class_dwarf_d_b_1_1_data_structures_1_1_index.html" title="Index of data structure elements." alt="" coords="353,61,551,88"/>
-<area shape="rect" id="node9" href="$interface_dwarf_d_b_1_1_data_structures_1_1_i_structure.html" title="An interface for DwarfDB data structures, such as: DataContainer and Record." alt="" coords="6,61,229,88"/>
-<area shape="rect" id="node11" href="$class_dwarf_d_b_1_1_data_structures_1_1_data_base.html" title="a class for database object" alt="" coords="693,156,917,183"/>
+<area shape="rect" id="node4" href="$class_dwarf_d_b_1_1_data_structures_1_1_record.html" title="Record is the element of DataContainer." alt="" coords="701,47,909,73"/>
+<area shape="rect" id="node7" href="$class_dwarf_d_b_1_1_data_structures_1_1_index.html" title="Index of data structure elements." alt="" coords="353,69,551,96"/>
+<area shape="rect" id="node9" href="$interface_dwarf_d_b_1_1_data_structures_1_1_i_structure.html" title="An interface for DwarfDB data structures, such as: DataContainer and Record." alt="" coords="6,69,229,96"/>
+<area shape="rect" id="node11" href="$class_dwarf_d_b_1_1_data_structures_1_1_data_base.html" title="a class for database object" alt="" coords="693,160,917,187"/>
 </map>
