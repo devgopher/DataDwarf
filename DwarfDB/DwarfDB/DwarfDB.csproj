@@ -94,6 +94,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Access\AccessException.cs" />
+    <Compile Include="Access\AccessList.cs" />
     <Compile Include="Checks\ExecutionTimeCheck.cs" />
     <Compile Include="ChunkManager\ChunkException.cs" />
     <Compile Include="ChunkManager\ChunkFormat.cs" />
@@ -139,5 +141,8 @@
       <Project>{EEEA67F9-9089-481D-A4DC-0966DEC9FD7D}</Project>
       <Name>Newtonsoft.Json</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Access" />
   </ItemGroup>
 </Project>

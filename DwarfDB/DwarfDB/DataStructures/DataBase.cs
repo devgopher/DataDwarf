@@ -116,6 +116,51 @@ namespace DwarfDB.DataStructures
 			this.Dispose();
 		}
 		
+		#region
+		
+		/// <summary>
+		/// Adding a new access record for our DB
+		/// </summary>
+		/// <param name="_user"></param>
+		/// <param name="_level"></param>
+		public void AddAccess ( User.User _user,
+		                       DwarfDB.Access.Access.AccessLevel _level ) {
+			var t = Access.Access.Instance( _user, _level, this );
+			accesses.Add(t);
+		}
+		
+		
+		/// <summary>
+		/// Changing a new access record for our DB
+		/// </summary>
+		/// <param name="_user"></param>
+		/// <param name="_new_level"></param>
+		public void ChangeAccess ( User.User _user,
+		                          DwarfDB.Access.Access.AccessLevel _new_level ) {
+			foreach ( var ac in accesses ) {
+				if ( ac.User.Credentials.Login == _user.Credentials.Login ) {
+					ac.Level = _new_level;
+				} else
+					this.AddAccess( _user, _new_level );
+			}
+		}
+		
+		/// <summary>
+		/// Getting an access level for a given user
+		/// </summary>
+		/// <param name="_user"></param>
+		/// <returns></returns>
+		public Access.Access.AccessLevel GetLevel( User.User _user ) {
+			foreach ( var ac in accesses ) {
+				if ( ac.User.Credentials.Login == _user.Credentials.Login )
+					return ac.Level;
+			}
+			
+			return Access.Access.AccessLevel.DENIED;
+		}
+		
+		#endregion
+		
 		#region DC cloning
 		/// <summary>
 		/// Cloning DC from another DB
@@ -281,6 +326,7 @@ namespace DwarfDB.DataStructures
 			inner_dc_dict.Clear();
 		}
 		
+		readonly List<Access.Access> accesses = new List<Access.Access>();
 		DwarfDB.Stack.DwarfStack dbstack;
 		readonly List<User.User> user_list = new List<User.User>();
 		readonly Dictionary< String, DataContainer > inner_dc_dict = new Dictionary<String, DataContainer>();
