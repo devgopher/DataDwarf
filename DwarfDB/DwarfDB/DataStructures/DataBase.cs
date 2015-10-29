@@ -139,10 +139,14 @@ namespace DwarfDB.DataStructures
 		                          DwarfDB.Access.Access.AccessLevel _new_level ) {
 			foreach ( var ac in accesses ) {
 				if ( ac.User.Credentials.Login == _user.Credentials.Login ) {
-					ac.Level = _new_level;
+					ac.SetLevel(_new_level);
 				} else
 					this.AddAccess( _user, _new_level );
 			}
+		}
+		
+		internal List<Access.Access> GetAccesses() {
+			return accesses;
 		}
 		
 		/// <summary>

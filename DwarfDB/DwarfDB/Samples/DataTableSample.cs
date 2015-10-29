@@ -91,14 +91,7 @@ namespace DwarfDB
 					dc.AddRecord( rec1 );
 					indexes.Add(rec1.GetIndex());
 					dc2.AddRecord( rec2 );
-					indexes.Add(rec2.GetIndex());
-					
-					
-					//	if  ( k % 3000 == 0 ) {
-					//		dc.Save();
-					//		dc2.Save();
-					//	}
-					
+					indexes.Add(rec2.GetIndex());			
 				}
 
 				dc.Save();

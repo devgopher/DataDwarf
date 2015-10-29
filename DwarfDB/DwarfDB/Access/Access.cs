@@ -11,7 +11,7 @@ using DwarfDB.DataStructures;
 namespace DwarfDB.Access
 {
 	/// <summary>
-	/// A class for defining parameters of access 
+	/// A class for defining parameters of access
 	/// to a given structure
 	/// </summary>
 	public class Access
@@ -45,6 +45,9 @@ namespace DwarfDB.Access
 			get; private set;
 		}
 		
+		internal void SetLevel( AccessLevel new_lvl ) {
+			Level = new_lvl;
+		}
 		
 		private Access( User.User _user, AccessLevel _level, Object _object )
 		{
