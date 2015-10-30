@@ -14,20 +14,30 @@ namespace DwarfDB.UnitTests
 	public class DataBaseTest
 	{
 		[Test]
-		public void Create() {
+		public static void Create() {
 			var cm = new ChunkManager.ChunkManager();
 			var db  = DataBase.Create( "nunit_db", cm );
 			Assert.AreEqual( true, DataBase.Exists( db.Name ));
 		}
 		
-		/*[Test]
+		[Test]
+		public void Drop() {
+			var cm = new ChunkManager.ChunkManager();
+			var db  = DataBase.Create( "nunit_db_drop", cm );
+			
+			db.Drop();
+			Assert.AreEqual( 0, db.Stack.Count);
+			Assert.IsFalse( System.IO.Directory.Exists(db.DbPath));
+		}
+		
+		[Test]
 		public void CreateContainer() {
 			string container_name = "nunit_container1";
 			var db  = DataBase.LoadFrom( "nunit_db", null );
 			var new_dc = new DataContainer( db, container_name );
 			new_dc.AddColumn( new Column( DataType.STRING, "col1" ) );
 			new_dc.AddColumn( new Column( DataType.FLOAT, "col2" ) );
-			new_dc.Save();		
-		}*/
+			new_dc.Save();
+		}
 	}
 }

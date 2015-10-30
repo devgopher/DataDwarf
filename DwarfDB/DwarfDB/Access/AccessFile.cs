@@ -61,7 +61,7 @@ namespace DwarfDB.Access
  			}
 			 */
 			// TODO: reading an access file for a given object into an array
-			throw NotImplementedException("Not implemented yet! Sorry!");
+			throw new NotImplementedException("Not implemented yet! Sorry!");
 		}
 		
 	}
