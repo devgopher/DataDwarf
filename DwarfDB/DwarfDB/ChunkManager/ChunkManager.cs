@@ -411,7 +411,7 @@ namespace DwarfDB.ChunkManager
 		/// <summary>
 		/// Getting records for a DataContainer
 		/// </summary>
-		/// <param name="dc_index">Record index</param>
+		/// <param name="rec_idxs">Indexes list</param>
 		/// <returns></returns>
 		public List<Record> GetRecords( List<Index> rec_idxs ) {
 			var ret = new List<Record>();
@@ -432,7 +432,7 @@ namespace DwarfDB.ChunkManager
 					var sr = new StreamReader( fs );
 					string line = sr.ReadLine();
 					while ( line != null ) {
-						if ( line.IndexOf(":DataContainer:", 0) > 0 ) {
+						if ( line.IndexOf(":DataContainer:", 0, StringComparison.CurrentCulture) > 0 ) {
 							if ( rgx.IsMatch( line ) ) {
 								var mtc = rgx.Matches( line );
 								if ( mtc[0].Groups.Count > 0 ) {
@@ -452,6 +452,9 @@ namespace DwarfDB.ChunkManager
 				throw new ChunkException( "Indexes.dw is absent! " );
 		}
 		
+		/// <summary>
+		/// Loading an index for each record
+		/// </summary>
 		public void LoadRecordIndexes() {
 			var filepath = CurrentDbPath+@"/indexes.dw";
 			var rgx = new Regex(@"Record:Record:(.*):(.*)");
@@ -462,7 +465,7 @@ namespace DwarfDB.ChunkManager
 					var sr = new StreamReader( fs );
 					string line = sr.ReadLine();
 					while ( line != null ) {
-						if ( line.IndexOf("Record:Record:", 0) == 0 ) {
+						if ( line.IndexOf("Record:Record:", 0, StringComparison.CurrentCulture) == 0 ) {
 							if ( rgx.IsMatch(line ) ) {
 								var mtc = rgx.Matches( line );
 								if ( mtc[0].Groups.Count > 0 ) {
@@ -515,7 +518,7 @@ namespace DwarfDB.ChunkManager
 		/// <summary>
 		/// Removes a record from chunk
 		/// </summary>
-		/// <param name="rec"></param>
+		/// <param name="rec">Record to delete</param>
 		public void RemoveRecord( Record rec ) {
 			var idx =  rec.GetIndex();
 			if ( idx != null ) {
