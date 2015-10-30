@@ -283,6 +283,8 @@ namespace DwarfDB.DataStructures
 			if ( rem_rec == null )
 				return false;
 			
+			rem_rec.BuildIndex();
+			
 			// Removing an uneeded index
 			owner_db.chunk_manager.RemoveIndex( rem_rec.GetIndex() );
 			

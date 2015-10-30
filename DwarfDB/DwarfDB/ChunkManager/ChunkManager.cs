@@ -442,7 +442,7 @@ namespace DwarfDB.ChunkManager
 									var new_dc = GetDataContainer(dc_name);
 									new_dc.AssignOwnerDB(db);
 									all_indexes.TryAdd( idx, new KeyValuePair<IStructure, string>(new_dc, dc_name));
-									}
+								}
 							}
 						}
 						line = sr.ReadLine();
@@ -521,7 +521,9 @@ namespace DwarfDB.ChunkManager
 			if ( idx != null ) {
 				var ind_hash = idx.HashCode;
 				foreach ( var strg in chunks_lst.Values ) {
-					ChunkFormat.RemoveItem( strg, idx );
+					if ( strg!= null )
+						if ( strg != "none" && strg != String.Empty )
+							ChunkFormat.RemoveItem( strg, idx );
 				}
 				
 				//ClearIndexesDw();

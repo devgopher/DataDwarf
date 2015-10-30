@@ -20,11 +20,11 @@
 			Width="438"
 			Height="269"
 			Grid.Column="0"
+			Grid.ColumnSpan="2"
 			Grid.Row="0"
 			HorizontalAlignment="Left"
 			VerticalAlignment="Bottom"
-			Margin="8,0,0,8"
-			Grid.ColumnSpan="2" />
+			Margin="9,0,0,7.80000000000001" />
 		<TextBox
 			Text="input..."
 			x:Name="surname"
@@ -32,7 +32,7 @@
 			Grid.Row="0"
 			HorizontalAlignment="Stretch"
 			VerticalAlignment="Stretch"
-			Margin="28,45.8,33.6,307.8" />
+			Margin="27.2000000000001,38,34.3999999999999,315.6" />
 		<Label
 			Width="130"
 			Height="30"
@@ -44,16 +44,15 @@
 			x:Name="label1"
 			Content="Name:" />
 		<Label
-			Height="30"
 			x:Name="label2"
 			Content="Surname:"
-			Width="130"
+			Width="58"
+			Height="30"
 			Grid.Column="0"
-			Grid.ColumnSpan="2"
 			Grid.Row="0"
 			HorizontalAlignment="Left"
 			VerticalAlignment="Top"
-			Margin="15.8,8,0,0" />
+			Margin="31,8,0,0" />
 		<Button
 			Content="Add"
 			x:Name="GoOn"
@@ -65,18 +64,21 @@
 			HorizontalAlignment="Right"
 			VerticalAlignment="Top"
 			Margin="0,77,8.59999999999999,0"
-			FontWeight="Bold" />
+			FontWeight="Bold"
+			BorderBrush="#FF000000" />
 		<Button
-			Width="75"
-			Height="23"
 			x:Name="Delete"
 			Content="Delete"
 			Click="Delete_Click"
-			Grid.Column="0"
+			Height="23"
+			Width="81"
+			Grid.Column="1"
 			Grid.Row="0"
 			HorizontalAlignment="Right"
 			VerticalAlignment="Top"
-			Margin="0,47.7,11.5,0" />
+			Margin="0,76.8,268.4,0"
+			BorderBrush="#FF000000"
+			RenderTransformOrigin="0.5,0.5" />
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition
 				Width="0.214788732394367*" />

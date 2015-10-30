@@ -63,20 +63,23 @@ namespace AppSample
 		
 		void Delete_Click(object sender, RoutedEventArgs e)
 		{
-			var cellInfo=EmployeeGrid.SelectedCells[0];
-			var cls = cellInfo.Column.GetCellContent(cellInfo.Item);
-			
-			var query = from x in dc_employee_load.GetRecords()
-				where x.Id == Int64.Parse((cls as System.Windows.Controls.TextBlock).Text)
-				select x;
-			
-			var tt = query.ToArray();
-			if ( tt.Any() ) {
-				var rec = tt[0];
-				dc_employee_load.RemoveRecord(rec);
-				dc_employee_load.Save();
+			try {
+				var cellInfo=EmployeeGrid.SelectedCells[0];
+				var cls = cellInfo.Column.GetCellContent(cellInfo.Item);
+				
+				var query = from x in dc_employee_load.GetRecords()
+					where x.Id == Int64.Parse((cls as System.Windows.Controls.TextBlock).Text)
+					select x;
+				
+				var tt = query.ToArray();
+				if ( tt.Any() ) {
+					var rec = tt[0];
+					dc_employee_load.RemoveRecord(rec);
+					dc_employee_load.Save();
+				}
+			} catch ( Exception ex ) {
+				MessageBox.Show(ex.Message+":"+ex.StackTrace);
 			}
-			
 			GridLoad();
 		}
 	}
