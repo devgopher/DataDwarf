@@ -17,7 +17,7 @@ namespace DwarfDB
 			string systemVersionVal = System.Runtime.InteropServices.RuntimeEnvironment.GetRuntimeDirectory().ToString();
 			Console.WriteLine("Framework: "+systemVersionVal);
 
-			Console.WriteLine("Create or use existing db (0/1)?: ");
+			Console.WriteLine("Create or use an existing db (0/1)?: ");
 			string  choise = Console.ReadLine();
 			Console.WriteLine("Enter db name: ");
 			string db_name = Console.ReadLine();
@@ -93,10 +93,8 @@ namespace DwarfDB
 					dc2.AddRecord( rec2 );
 					indexes.Add(rec2.GetIndex());			
 				}
-
 				dc.Save();
 				dc2.Save();
-
 			} else {
 				Console.WriteLine("Trying to get data from db \""+db_name+"\"");
 				
@@ -187,8 +185,7 @@ namespace DwarfDB
 				Console.WriteLine("DO YOU WANT TO DROP THIS DB (Y/N)?");
 				if ( Console.ReadLine() == "Y" ) {
 					db2.Drop();
-				}
-				
+				}		
 			}
 		}
 	}

@@ -114,6 +114,7 @@
     <Compile Include="DwarfCommand\Command.cs" />
     <Compile Include="Errors\ErrorProcessing.cs" />
     <Compile Include="Extensions\DwarfLinq.cs" />
+    <Compile Include="Global\StaticResourceManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Samples\DataBaseSample.cs" />
@@ -146,5 +147,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Access" />
+    <Folder Include="resources" />
+    <Folder Include="Global" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="resources\Strings.resx" />
   </ItemGroup>
 </Project>

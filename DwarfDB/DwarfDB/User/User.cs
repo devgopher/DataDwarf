@@ -15,10 +15,12 @@ namespace DwarfDB.User
 	{
 		private User()
 		{
+			Credentials = new UserCredentials();
 		}
 		
 		static User() {
 			users_file_path = Config.Config.Instance.DataDirectory+"/.users";
+			CreateUsersList();
 		}
 		
 		/// <summary>
@@ -53,9 +55,12 @@ namespace DwarfDB.User
 		/// <param name="passwd"></param>
 		/// <returns></returns>
 		public static User New( string login, string passwd ) {
-			if ( FindLogin( login ) != null )
-				throw new UserException("User with a such login already exists!");
+			if ( FindLogin( login ) != null ) {
+				Errors.ErrorProcessing.Display("User with a such login already exists!", "Adding a new user", "", DateTime.Now);
+				return Get( login );
+			}
 			var user = new User();
+			user.Credentials = new UserCredentials();
 			user.Credentials.Login = login;
 			user.Credentials.Password = passwd;
 			AddToUsersList( user );
@@ -79,7 +84,7 @@ namespace DwarfDB.User
 		/// </summary>
 		private static void CreateUsersList() {
 			if ( !File.Exists( users_file_path ) ) {
-				File.Create( users_file_path );
+				using (var fs = File.Create( users_file_path )) {};
 			}
 		}
 		
@@ -89,10 +94,12 @@ namespace DwarfDB.User
 		/// <param name="_user"></param>
 		private static void AddToUsersList( User _user ) {
 			CreateUsersList();
-			if ( FindLogin(_user.Credentials.Login) != null ) {
+			if ( FindLogin(_user.Credentials.Login) == null ) {
 				using ( var fs = new FileStream( users_file_path, FileMode.Append, FileAccess.Write ) ) {
-					var sr = new StreamReader( fs );
-					var strg = "\r\n" + _user.Credentials.Login + ":" + _user.Credentials.hashed_pwd;
+					var sw = new StreamWriter( fs );
+					var strg = _user.Credentials.Login + ":" + _user.Credentials.hashed_pwd;
+					sw.WriteLine(strg);
+					sw.Close();
 				}
 			}
 		}

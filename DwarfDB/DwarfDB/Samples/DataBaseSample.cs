@@ -14,17 +14,19 @@ namespace DwarfDB
 	{
 		public static void DataBaseChunkCreation() {
 			var indexes = new List<Index>();
-			var chunk_manager = new ChunkManager.ChunkManager();
 			
 			var time = Checks.ExecutionTimeCheck.DoCheck ( () => {
 			                                              	Console.WriteLine("Creating DB...");
-			                                              	var db = DataBase.Create( "testbase3",
-			                                              	                         chunk_manager );
-	
+			                                              	var db = DataBase.Create( "testbase3" );
+			                                              	
+			                                              	User.User new_usr = User.User.New( "root", "12345678" );
+			                                              	db.AddAccess( new_usr, Access.Access.AccessLevel.ADMIN);		                                              	
 			                                              	var dc = new DataContainer( db, "DataC2" );
 			                                              	db.AddNewDataContainer( dc );
-			                                              	chunk_manager.CreateChunk( db );
+			                                              	db.chunk_manager.CreateChunk( db );
 			                                              } );
+
+			
 			Console.WriteLine("Execution time, ms: "+time);
 		}
 	}

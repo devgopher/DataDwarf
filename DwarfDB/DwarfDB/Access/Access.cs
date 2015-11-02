@@ -24,6 +24,16 @@ namespace DwarfDB.Access
 			DENIED = 5
 		}
 		
+		private Access( User.User _user, AccessLevel _level, Object _object )
+		{
+			if ( _user == null || _object == null )
+				throw new AccessException( "User object and/or it's access parameters are NULL" );
+			
+			User = _user;
+			Level = _level;
+			AccessObject = _object;
+		}
+		
 		/// <summary>
 		/// User
 		/// </summary>
@@ -47,16 +57,18 @@ namespace DwarfDB.Access
 		
 		internal void SetLevel( AccessLevel new_lvl ) {
 			Level = new_lvl;
+			Save();
 		}
-		
-		private Access( User.User _user, AccessLevel _level, Object _object )
-		{
-			if ( _user == null || _object == null )
-				throw new AccessException( "User object and/or it's access parameters are NULL" );
 			
-			User = _user;
-			Level = _level;
-			AccessObject = _object;
+		internal void Save() {
+			if ( AccessObject is DataBase ) {
+				var af = new AccessFile( AccessObject as DataBase );
+				af.Save( this );
+			} else if ( AccessObject is DataContainer ) {
+				var af = new AccessFile( AccessObject as DataContainer );
+				af.Save( this );
+			} else
+				throw new AccessException(" Object type is unknown ");
 		}
 		
 		/// <summary>
@@ -70,22 +82,23 @@ namespace DwarfDB.Access
 			// Let's look in our array. Do we already have a such object?
 			foreach ( var al in instances ) {
 				if ( al.User.Credentials.Login == _user.Credentials.Login &&
-				    al.Level== _level &&
+				    al.Level == _level &&
 				    al.AccessObject == _object ) {
 					return al;
 				}
 			}
 			
 			// If we don't have => let's create a new Access instance and add it to our array
-			var new_user = new Access( _user, _level, _object );
-			instances.Add( new_user );
-			return new_user;
+			var new_acc = new Access( _user, _level, _object );
+			instances.Add( new_acc );
+			new_acc.Save();
+			return new_acc;
 		}
 		
 		/// <summary>
 		/// An array of instances
 		/// </summary>
-		private static List<Access> instances = new List<Access>();
+		private static readonly List<Access> instances = new List<Access>();
 		
 	}
 }

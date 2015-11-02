@@ -68,7 +68,7 @@ namespace DwarfDB.DataStructures
 			stream.Close();
 		}
 		
-		public static DataBase Create( string db_name, ChunkManager.ChunkManager _cm ) {
+		public static DataBase Create( string db_name, ChunkManager.ChunkManager _cm = null ) {
 			var cpath = Config.Config.Instance.DataDirectory+db_name;
 			
 			if ( !Directory.Exists(cpath) )
@@ -77,7 +77,8 @@ namespace DwarfDB.DataStructures
 			var new_db = new DataBase( db_name, _cm, true );
 			
 			CreateIndexesDw( db_name );
-			_cm.CreateChunk( new_db );
+			new_db.chunk_manager.CreateChunk( new_db );
+			new_db.DbPath = Config.Config.Instance.DataDirectory+db_name;
 			
 			return new_db;
 		}
@@ -136,7 +137,7 @@ namespace DwarfDB.DataStructures
 		/// <param name="_user"></param>
 		/// <param name="_new_level"></param>
 		public void ChangeAccess ( User.User _user,
-		                          DwarfDB.Access.Access.AccessLevel _new_level ) {
+		                          Access.Access.AccessLevel _new_level ) {
 			foreach ( var ac in accesses ) {
 				if ( ac.User.Credentials.Login == _user.Credentials.Login ) {
 					ac.SetLevel(_new_level);

@@ -18,7 +18,7 @@ namespace DwarfDB.Access
 		public AccessFile( DataBase _db ) {
 			if ( _db != null ) {
 				db = _db;
-				filepath = db.DbPath+"_"+db.Name+".access";
+				filepath = db.DbPath+"/_"+db.Name+".access";
 			} else
 				throw new AccessException( " Database is not defined! " );
 		}
@@ -30,19 +30,36 @@ namespace DwarfDB.Access
 				if ( dc.GetOwnerDB() == null )
 					throw new AccessException( " Database is not defined for this datacontainer! " );
 				
-				filepath = db.DbPath+"_"+dc.Name+".access";
+				filepath = db.DbPath+"/_"+dc.Name+".access";
 			}
+		}
+		
+		public void CreateAccessFile() {
+			if ( !File.Exists( filepath ) )
+				using ( var fs = File.Create( filepath ) ) {};
 		}
 
 		public void Save() {
+			CreateAccessFile();
 			var users_acc = db.GetAccesses();
 			if ( users_acc.Count > 0 ) {
-				using ( var fs = new FileStream( filepath, FileMode.CreateNew, FileAccess.Write ) ) {
+				using ( var fs = new FileStream( filepath, FileMode.Append, FileAccess.Write ) ) {
 					var sw = new StreamWriter( fs );
 					foreach ( var acc in users_acc ) {
 						sw.WriteLine( acc.User.Credentials.Login + ":" +acc.Level );
 					}
+					
+					sw.Close();
 				}
+			}
+		}
+		
+		public void Save( Access _acc ) {
+			CreateAccessFile();
+			using ( var fs = new FileStream( filepath, FileMode.Append, FileAccess.Write ) ) {
+				var sw = new StreamWriter( fs );
+				sw.WriteLine( _acc.User.Credentials.Login + ":" +_acc.Level );
+				sw.Close();
 			}
 		}
 		
