@@ -109,6 +109,7 @@
     <Compile Include="DataStructures\DummyRecord.cs" />
     <Compile Include="DataStructures\IStructure.cs" />
     <Compile Include="DataStructures\Index.cs" />
+    <Compile Include="DataStructures\IStructureAccess.cs" />
     <Compile Include="DataStructures\Record.cs" />
     <Compile Include="DataStructures\DataContainer.cs" />
     <Compile Include="DwarfCommand\Command.cs" />

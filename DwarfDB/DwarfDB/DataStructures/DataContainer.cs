@@ -78,7 +78,7 @@ namespace DwarfDB.DataStructures
 	/// DwarfDB data structure
 	/// </summary>
 	[Serializable][JsonObject]
-	public class DataContainer :IStructure, IEnumerable<Record>
+	public class DataContainer :IStructure, IEnumerable<Record>, IStructureAccess
 	{
 		[JsonConstructor]
 		public DataContainer( DataBase _owner_db, string _dc_name )
@@ -104,6 +104,46 @@ namespace DwarfDB.DataStructures
 			info.AddValue("OwnerDB", owner_db, typeof(DataBase));
 			info.AddValue("Columns", Columns, typeof(List<Column>));
 		}
+		#endregion
+		
+		#region Access
+
+		/// <summary>
+		/// Adding a new access record for our DC
+		/// </summary>
+		/// <param name="_user"></param>
+		/// <param name="_level"></param>
+		public void AddAccess ( User.User _user,
+		                       DwarfDB.Access.Access.AccessLevel _level ) {
+			throw new NotImplementedException();
+		}
+		
+		
+		/// <summary>
+		/// Changing an access record for our DC
+		/// </summary>
+		/// <param name="_user"></param>
+		/// <param name="_new_level"></param>
+		public void ChangeAccess ( User.User _user,
+		                          Access.Access.AccessLevel _new_level ) {
+			throw new NotImplementedException();
+		}
+		
+		internal List<Access.Access> GetAccesses() {
+			throw new NotImplementedException();
+			return null;
+		}
+		
+		/// <summary>
+		/// Getting an access level for a given user
+		/// </summary>
+		/// <param name="_user"></param>
+		/// <returns></returns>
+		public Access.Access.AccessLevel GetLevel( User.User _user ) {
+			throw new NotImplementedException();
+			return Access.Access.AccessLevel.DENIED;
+		}
+
 		#endregion
 		
 		#region Object
@@ -319,7 +359,7 @@ namespace DwarfDB.DataStructures
 					                               "", "", DateTime.Now);
 				}
 			}
-					
+			
 			new_rec.BuildIndex();
 			new_rec.OwnerDC = this;
 			owner_db.Stack.Push( new_rec );
@@ -581,7 +621,7 @@ namespace DwarfDB.DataStructures
 		public Int64 NextId() {
 			Int64 next_id = 1;
 			var tmp_recs = new HashSet<Record>(Records);
-		
+			
 			checked {
 				foreach ( var rec in tmp_recs ) {
 					if ( rec.Id > next_id )

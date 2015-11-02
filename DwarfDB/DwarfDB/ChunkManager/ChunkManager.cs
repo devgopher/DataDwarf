@@ -308,7 +308,7 @@ namespace DwarfDB.ChunkManager
 						               	hash_max =  no_null_records.Last().GetIndex().HashCode
 						               }, "none" );
 					} catch ( Exception ex ) {
-						Errors.ErrorProcessing.Display("Chunk processing error: "+ex.Message);
+						Errors.ErrorProcessing.Display("Chunk processing error: "+ex.Message, "", "", DateTime.Now);
 					}
 				}
 			} catch ( Exception ex ) {

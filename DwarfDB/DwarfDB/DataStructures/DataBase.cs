@@ -17,7 +17,7 @@ namespace DwarfDB.DataStructures
 	/// a class for database object
 	/// </summary>
 	[Serializable][JsonObject]
-	public class DataBase : ISerializable, IDisposable
+	public class DataBase : ISerializable, IDisposable, IStructureAccess
 	{
 		#region ISerializable
 		public DataBase( SerializationInfo info, StreamingContext ctxt )
@@ -132,7 +132,7 @@ namespace DwarfDB.DataStructures
 		
 		
 		/// <summary>
-		/// Changing a new access record for our DB
+		/// Changing an access record for our DB
 		/// </summary>
 		/// <param name="_user"></param>
 		/// <param name="_new_level"></param>
