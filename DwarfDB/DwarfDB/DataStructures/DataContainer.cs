@@ -107,7 +107,8 @@ namespace DwarfDB.DataStructures
 		#endregion
 		
 		#region Access
-
+		private DSAccessManager local_am = new DSAccessManager( this );
+		
 		/// <summary>
 		/// Adding a new access record for our DC
 		/// </summary>
@@ -115,9 +116,8 @@ namespace DwarfDB.DataStructures
 		/// <param name="_level"></param>
 		public void AddAccess ( User.User _user,
 		                       DwarfDB.Access.Access.AccessLevel _level ) {
-			throw new NotImplementedException();
+			local_am.AddAccess( _user, _level );
 		}
-		
 		
 		/// <summary>
 		/// Changing an access record for our DC
@@ -126,12 +126,11 @@ namespace DwarfDB.DataStructures
 		/// <param name="_new_level"></param>
 		public void ChangeAccess ( User.User _user,
 		                          Access.Access.AccessLevel _new_level ) {
-			throw new NotImplementedException();
+			local_am.ChangeAccess(_user, _new_level );
 		}
 		
 		internal List<Access.Access> GetAccesses() {
-			throw new NotImplementedException();
-			return null;
+			return local_am.GetAccesses();
 		}
 		
 		/// <summary>
@@ -140,10 +139,9 @@ namespace DwarfDB.DataStructures
 		/// <param name="_user"></param>
 		/// <returns></returns>
 		public Access.Access.AccessLevel GetLevel( User.User _user ) {
-			throw new NotImplementedException();
-			return Access.Access.AccessLevel.DENIED;
+			return local_am.GetLevel( _user );
 		}
-
+		
 		#endregion
 		
 		#region Object

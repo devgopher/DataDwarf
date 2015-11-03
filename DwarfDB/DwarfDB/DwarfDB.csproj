@@ -105,6 +105,7 @@
     <Compile Include="Crypto\Hash.cs" />
     <Compile Include="DataStructures\DataBase.cs" />
     <Compile Include="DataStructures\DataException.cs" />
+    <Compile Include="DataStructures\DSAccessManager.cs" />
     <Compile Include="DataStructures\DummyContainer.cs" />
     <Compile Include="DataStructures\DummyRecord.cs" />
     <Compile Include="DataStructures\IStructure.cs" />

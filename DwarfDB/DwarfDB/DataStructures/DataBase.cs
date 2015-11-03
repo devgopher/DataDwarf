@@ -80,6 +80,9 @@ namespace DwarfDB.DataStructures
 			new_db.chunk_manager.CreateChunk( new_db );
 			new_db.DbPath = Config.Config.Instance.DataDirectory+db_name;
 			
+			// Let's change an access rights to ADMIN for creator
+		//	this.AddAccess(  )
+			
 			return new_db;
 		}
 		
@@ -117,7 +120,9 @@ namespace DwarfDB.DataStructures
 			this.Dispose();
 		}
 		
-		#region
+		#region Access	
+
+		private DSAccessManager local_am = new DSAccessManager( this );
 		
 		/// <summary>
 		/// Adding a new access record for our DB
@@ -126,10 +131,8 @@ namespace DwarfDB.DataStructures
 		/// <param name="_level"></param>
 		public void AddAccess ( User.User _user,
 		                       DwarfDB.Access.Access.AccessLevel _level ) {
-			var t = Access.Access.Instance( _user, _level, this );
-			accesses.Add(t);
-		}
-		
+			local_am.AddAccess( _user, _level );
+		}		
 		
 		/// <summary>
 		/// Changing an access record for our DB
@@ -138,16 +141,11 @@ namespace DwarfDB.DataStructures
 		/// <param name="_new_level"></param>
 		public void ChangeAccess ( User.User _user,
 		                          Access.Access.AccessLevel _new_level ) {
-			foreach ( var ac in accesses ) {
-				if ( ac.User.Credentials.Login == _user.Credentials.Login ) {
-					ac.SetLevel(_new_level);
-				} else
-					this.AddAccess( _user, _new_level );
-			}
+			local_am.ChangeAccess(_user, _new_level );
 		}
 		
 		internal List<Access.Access> GetAccesses() {
-			return accesses;
+			return local_am.GetAccesses();
 		}
 		
 		/// <summary>
@@ -156,12 +154,7 @@ namespace DwarfDB.DataStructures
 		/// <param name="_user"></param>
 		/// <returns></returns>
 		public Access.Access.AccessLevel GetLevel( User.User _user ) {
-			foreach ( var ac in accesses ) {
-				if ( ac.User.Credentials.Login == _user.Credentials.Login )
-					return ac.Level;
-			}
-			
-			return Access.Access.AccessLevel.DENIED;
+			return local_am.GetLevel( _user );
 		}
 		
 		#endregion
@@ -331,7 +324,7 @@ namespace DwarfDB.DataStructures
 			inner_dc_dict.Clear();
 		}
 		
-		readonly List<Access.Access> accesses = new List<Access.Access>();
+
 		DwarfDB.Stack.DwarfStack dbstack;
 		readonly List<User.User> user_list = new List<User.User>();
 		readonly Dictionary< String, DataContainer > inner_dc_dict = new Dictionary<String, DataContainer>();
