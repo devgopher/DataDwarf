@@ -38,6 +38,7 @@ namespace DwarfDB.DataStructures
 		
 		protected DataBase( string db_name, ChunkManager.ChunkManager _cm, bool is_new_db)
 		{
+			local_am = new DSAccessManager( this );
 			Stack = new DwarfDB.Stack.DwarfStack( this );
 			
 			if ( _cm != null )
@@ -122,7 +123,7 @@ namespace DwarfDB.DataStructures
 		
 		#region Access	
 
-		private DSAccessManager local_am = new DSAccessManager( this );
+		private DSAccessManager local_am;
 		
 		/// <summary>
 		/// Adding a new access record for our DB

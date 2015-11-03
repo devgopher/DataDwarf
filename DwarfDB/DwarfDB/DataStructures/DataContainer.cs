@@ -88,6 +88,7 @@ namespace DwarfDB.DataStructures
 			Name = _dc_name;
 			owner_db = _owner_db;
 			BuildIndex();
+			local_am = new DSAccessManager( this );
 		}
 		
 		#region ISerializable
@@ -107,7 +108,7 @@ namespace DwarfDB.DataStructures
 		#endregion
 		
 		#region Access
-		private DSAccessManager local_am = new DSAccessManager( this );
+		private DSAccessManager local_am;
 		
 		/// <summary>
 		/// Adding a new access record for our DC
