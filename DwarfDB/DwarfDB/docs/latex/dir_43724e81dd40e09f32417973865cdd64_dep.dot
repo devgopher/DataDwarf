@@ -6,7 +6,5 @@ digraph "obj" {
     graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_43724e81dd40e09f32417973865cdd64.html"];
     dir_43724e81dd40e09f32417973865cdd64 [shape=plaintext label="obj"];
     dir_a71c3b2ad23b9ff58220dd012d201987 [shape=box label="Debug" color="black" fillcolor="white" style="filled" URL="dir_a71c3b2ad23b9ff58220dd012d201987.html"];
-    dir_385eed33a93d43377d3e98e7474c8435 [shape=box label="Debug2" color="black" fillcolor="white" style="filled" URL="dir_385eed33a93d43377d3e98e7474c8435.html"];
-    dir_9fe5cc214b8578ee5b8e153089aca810 [shape=box label="Release" color="black" fillcolor="white" style="filled" URL="dir_9fe5cc214b8578ee5b8e153089aca810.html"];
   }
 }

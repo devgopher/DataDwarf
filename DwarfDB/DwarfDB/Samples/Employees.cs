@@ -7,7 +7,6 @@ using System;
 using System.Linq;
 using DwarfDB.DataStructures;
 using DwarfDB.ChunkManager;
-using System.Collections.Generic;
 
 namespace DwarfDB
 {

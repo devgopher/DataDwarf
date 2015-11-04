@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['load',['Load',['../class_dwarf_d_b_1_1_chunk_manager_1_1_chunk_manager.html#a607e45973d9d32b61e0f18edb09f1229',1,'DwarfDB.ChunkManager.ChunkManager.Load()'],['../class_dwarf_d_b_1_1_data_structures_1_1_data_container.html#ab045853ddb62b681d2474d7e547186de',1,'DwarfDB.DataStructures.DataContainer.Load()'],['../interface_dwarf_d_b_1_1_data_structures_1_1_i_structure.html#acc1c091913384168ec50edad8b94b94b',1,'DwarfDB.DataStructures.IStructure.Load()'],['../class_dwarf_d_b_1_1_data_structures_1_1_record.html#aba01a54cf8111326625980fd9b1d4d92',1,'DwarfDB.DataStructures.Record.Load()']]],
-  ['loadfromchunkdir',['LoadFromChunkDir',['../class_dwarf_d_b_1_1_data_structures_1_1_data_container.html#a0a82f79c53628134d16f2fa21db221bf',1,'DwarfDB.DataStructures.DataContainer.LoadFromChunkDir()'],['../interface_dwarf_d_b_1_1_data_structures_1_1_i_structure.html#a2e187a88a03b9e81e6e602be9329a395',1,'DwarfDB.DataStructures.IStructure.LoadFromChunkDir()'],['../class_dwarf_d_b_1_1_data_structures_1_1_record.html#a81ac5ba44d5682bfba61592af0195cd0',1,'DwarfDB.DataStructures.Record.LoadFromChunkDir()']]],
-  ['loadrecords',['LoadRecords',['../class_dwarf_d_b_1_1_data_structures_1_1_data_container.html#aa5a712b9a8923f2d57278b58d46d6927',1,'DwarfDB::DataStructures::DataContainer']]]
+  ['journal',['Journal',['../class_dwarf_d_b_1_1_transaction_journals_1_1_journal.html',1,'DwarfDB::TransactionJournals']]]
 ];

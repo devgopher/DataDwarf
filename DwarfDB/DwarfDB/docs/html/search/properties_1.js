@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['fields',['Fields',['../class_dwarf_d_b_1_1_data_structures_1_1_record.html#ae901326df950b811aa2cbb5f632a21c3',1,'DwarfDB::DataStructures::Record']]]
+  ['credentials',['Credentials',['../class_dwarf_d_b_1_1_user_1_1_user.html#ab59cfb6b9b4044adc4f20bb342bd0eef',1,'DwarfDB::User::User']]]
 ];

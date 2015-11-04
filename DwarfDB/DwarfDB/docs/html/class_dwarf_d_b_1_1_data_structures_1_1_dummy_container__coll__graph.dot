@@ -1,0 +1,16 @@
+digraph "DwarfDB.DataStructures.DummyContainer"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="DwarfDB.DataStructures.Dummy\lContainer",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node2 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="Record",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_dwarf_d_b_1_1_data_structures_1_1_record.html",tooltip="Record is the element of DataContainer "];
+  Node3 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="IStructure",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$interface_dwarf_d_b_1_1_data_structures_1_1_i_structure.html",tooltip="An interface for DwarfDB data structures, such as: DataContainer and Record "];
+  Node4 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="IEnumerator\< Record \>",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node5 -> Node2 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" current_index" ,fontname="Helvetica"];
+  Node5 [label="DwarfDB.DataStructures.Index",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_dwarf_d_b_1_1_data_structures_1_1_index.html",tooltip="Index of data structure elements "];
+  Node6 -> Node5 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" index_object" ,fontname="Helvetica"];
+  Node6 [label="DwarfDB.DataStructures.IStructure",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$interface_dwarf_d_b_1_1_data_structures_1_1_i_structure.html",tooltip="An interface for DwarfDB data structures, such as: DataContainer and Record "];
+}

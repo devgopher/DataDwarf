@@ -1,0 +1,14 @@
+digraph "DwarfDB.DataStructures.Record"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="DwarfDB.DataStructures.Record",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
+  Node2 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid"];
+  Node2 [label="IStructure",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$interface_dwarf_d_b_1_1_data_structures_1_1_i_structure.html",tooltip="An interface for DwarfDB data structures, such as: DataContainer and Record "];
+  Node3 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid"];
+  Node3 [label="IEnumerator\< Record \>",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node1 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid"];
+  Node4 [label="DwarfDB.DataStructures.Dummy\lContainer",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_dwarf_d_b_1_1_data_structures_1_1_dummy_container.html",tooltip="DummyContainer class - it&#39;s class for using instead of NULL "];
+  Node1 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid"];
+  Node5 [label="DwarfDB.DataStructures.Dummy\lRecord",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_dwarf_d_b_1_1_data_structures_1_1_dummy_record.html",tooltip="DummyRecord class - it&#39;s class for using instead of NULL "];
+}
