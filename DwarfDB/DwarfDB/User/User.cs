@@ -113,7 +113,7 @@ namespace DwarfDB.User
 				}
 			}
 		}
-		 */
+		*/
 		
 		/// <summary>
 		/// Seeking for a given login in userlist file

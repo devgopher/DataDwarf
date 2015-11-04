@@ -17,7 +17,7 @@ namespace DwarfDB.DataStructures
 			index_object = _index_object;
 		}
 		
-		private Index( )
+		private Index()
 		{
 			index_object = null;
 		}
@@ -71,6 +71,11 @@ namespace DwarfDB.DataStructures
 			return new Index( _index_object );
 		}
 		
+		/// <summary>
+		/// Creating an index from hashcode 
+		/// </summary>
+		/// <param name="hash"></param>
+		/// <returns></returns>
 		static public Index CreateFromHashCode( string hash ) {
 			var new_idx = new Index();
 			new_idx.HashCode = hash;

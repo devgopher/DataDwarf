@@ -125,28 +125,58 @@ namespace DwarfDB.DataStructures
 			}
 			
 			answer_msg = " Access denied for user: "+_user.Credentials.Login +
-				". You don't have an "+prm.ToString()+" access! ";
+				". You don't have a \""+prm.ToString()+"\" access! ";
 			return false;
 		}
 		
 		public bool CheckWritePermission( User.User _user ) {
-			return CheckPermission( Permissions.WRITE, _user );
+			string answer = String.Empty;
+			var ret = CheckPermission( Permissions.WRITE, _user, ref answer );
+			
+			if ( ret == false )
+				Errors.ErrorProcessing.Display( answer, String.Empty, String.Empty, DateTime.Now );
+			
+			return ret;
 		}
 		
 		public bool CheckReadPermission( User.User _user ) {
-			return CheckPermission( Permissions.READ, _user );
+			string answer = String.Empty;
+			var ret = CheckPermission( Permissions.READ, _user, ref answer );
+			
+			if ( ret == false )
+				Errors.ErrorProcessing.Display( answer, String.Empty, String.Empty, DateTime.Now );
+			
+			return ret;
 		}
 		
 		public bool CheckDeletePermission( User.User _user ) {
-			return CheckPermission( Permissions.DELETE, _user );
+			string answer = String.Empty;
+			var ret = CheckPermission( Permissions.DELETE, _user, ref answer );
+			
+			if ( ret == false )
+				Errors.ErrorProcessing.Display( answer, String.Empty, String.Empty, DateTime.Now );
+			
+			return ret;
 		}
 		
 		public bool CheckCreateSubsPermission( User.User _user ) {
-			return CheckPermission( Permissions.CREATE_SUBS, _user );
+			string answer = String.Empty;
+			var ret = CheckPermission( Permissions.CREATE_SUBS, _user, ref answer );
+			
+			if ( ret == false )
+				Errors.ErrorProcessing.Display( answer, String.Empty, String.Empty, DateTime.Now );
+			
+			return ret;
 		}
 		
 		public bool CheckDropPermission( User.User _user ) {
-			return CheckPermission( Permissions.DROP, _user );
+			string answer = String.Empty;
+			var ret = CheckPermission( Permissions.DROP, _user, ref answer );
+			
+			if ( ret == false )
+				Errors.ErrorProcessing.Display( answer, String.Empty, String.Empty, DateTime.Now );
+			
+			return ret;
 		}
 		
 		readonly List<Access.Access> accesses = new List<Access.Access>();
