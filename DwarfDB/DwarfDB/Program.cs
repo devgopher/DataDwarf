@@ -12,6 +12,10 @@ namespace DwarfDB
 	{
 		public static void Main(string[] args)
 		{
+
+			string systemVersionVal = System.Runtime.InteropServices.RuntimeEnvironment.GetRuntimeDirectory().ToString();
+			Console.WriteLine("Framework: "+systemVersionVal);
+
 			GCSettings.LatencyMode = GCLatencyMode.Batch;
 			Console.WriteLine("Is server GC: "+GCSettings.IsServerGC.ToString());
 

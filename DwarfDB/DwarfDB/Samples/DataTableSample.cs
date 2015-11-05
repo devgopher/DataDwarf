@@ -14,9 +14,6 @@ namespace DwarfDB
 	partial class Program
 	{
 		public static void DataTableChunkCreation() {
-			string systemVersionVal = System.Runtime.InteropServices.RuntimeEnvironment.GetRuntimeDirectory().ToString();
-			Console.WriteLine("Framework: "+systemVersionVal);
-
 			Console.WriteLine("Create or use an existing db (0/1)?: ");
 			string  choise = Console.ReadLine();
 			Console.WriteLine("Enter db name: ");

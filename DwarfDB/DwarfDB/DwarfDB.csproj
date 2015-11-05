@@ -45,6 +45,11 @@
     <WarningLevel>4</WarningLevel>
     <Externalconsole>true</Externalconsole>
     <LangVersion>5</LangVersion>
+    <CustomCommands>
+      <CustomCommands>
+        <Command type="BeforeExecute" command="rm -r -f obj" workingdir="${ProjectDir}" externalConsole="True" />
+      </CustomCommands>
+    </CustomCommands>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <WarningLevel>4</WarningLevel>
@@ -146,11 +151,6 @@
       <Project>{EEEA67F9-9089-481D-A4DC-0966DEC9FD7D}</Project>
       <Name>Newtonsoft.Json</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Access" />
-    <Folder Include="resources" />
-    <Folder Include="Global" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="resources\Strings.resx" />
