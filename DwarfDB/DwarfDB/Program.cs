@@ -20,9 +20,10 @@ namespace DwarfDB
 			Console.WriteLine("Is server GC: "+GCSettings.IsServerGC.ToString());
 
 			Console.WriteLine("Hello World!");
-			
+
+			DataTableChunkCreationBin();			
 			//DataTableChunkCreation();
-			DataBaseChunkCreation();
+			//DataBaseChunkCreation();
 			//Employees();
 			//UnitTests.RecordTest.CreateRecord("nunit_db", "nunit_container1");
 			

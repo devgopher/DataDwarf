@@ -47,7 +47,7 @@
     <LangVersion>5</LangVersion>
     <CustomCommands>
       <CustomCommands>
-        <Command type="BeforeExecute" command="rm -r -f obj" workingdir="${ProjectDir}" externalConsole="True" />
+        <Command type="BeforeExecute" command="cp ${ProjectDir}/testdata/* ${TargetPath} | rm -r -f obj" workingdir="${ProjectFile}" externalConsole="True" />
       </CustomCommands>
     </CustomCommands>
   </PropertyGroup>
@@ -140,10 +140,14 @@
     <Compile Include="Crypto\GenKey.cs" />
     <Compile Include="Crypto\GenKeyException.cs" />
     <Compile Include="User\UserException.cs" />
+    <Compile Include="Samples\DataTableSampleBinary.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+    <None Include="testdata\binary.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -154,5 +158,8 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="resources\Strings.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="testdata\" />
   </ItemGroup>
 </Project>
