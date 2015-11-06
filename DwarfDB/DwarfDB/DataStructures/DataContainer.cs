@@ -319,12 +319,12 @@ namespace DwarfDB.DataStructures
 		}
 		
 		public bool RemoveRecord( Record rem_rec ) {
-			if ( rem_rec == null )
+			/*if ( rem_rec == null )
 				return false;
 			
 			rem_rec.BuildIndex();
 			
-			// Removing an uneeded index
+			// Removing an unneeded index
 			owner_db.chunk_manager.RemoveIndex( rem_rec.GetIndex() );
 			
 			// Removing from a chunk
@@ -338,6 +338,9 @@ namespace DwarfDB.DataStructures
 				return false;
 			
 			inner_records.Remove( rem_rec );
+			 */
+			
+			throw new NotImplementedException( "RebuildIndexes and record deletion process in whole should be rethinked!" );
 			
 			return true;
 		}

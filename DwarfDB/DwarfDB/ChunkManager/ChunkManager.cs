@@ -474,7 +474,7 @@ namespace DwarfDB.ChunkManager
 									var idx = Index.CreateFromHashCode( rec_hash );
 									
 									all_indexes.TryAdd( idx,
-									                   new KeyValuePair<IStructure, string>(DummyRecord.Create(), own_dc_hash));
+									                   new KeyValuePair<IStructure, string>(DummyRecord.Create(own_dc_hash, conn_db), own_dc_hash));
 								}
 							}
 						}
@@ -511,7 +511,7 @@ namespace DwarfDB.ChunkManager
 			if ( rem_idx != null ) {
 				var tmp_val = new KeyValuePair<IStructure, string>();
 				AllIndexes.TryRemove( rem_idx, out tmp_val );
-				SaveIndexes();
+				RebuildIndexes();
 			}
 		}
 		
@@ -567,6 +567,37 @@ namespace DwarfDB.ChunkManager
 			
 			return contents;
 		}
+		
+		/// <summary>
+		/// Saves all indexes in format Name:Type:IndexHash
+		/// </summary>
+		public void RebuildIndexes() {
+			/*	ClearIndexesDw();
+			var filepath = CurrentDbPath+@"/indexes.dw";
+			string contents = ReadIndexesDw();
+			
+			var fs = File.Open( filepath, FileMode.Append );
+			// let's add new records
+			using ( var sw = new StreamWriter( fs ) ) {
+				foreach ( var idx in AllIndexes ) {
+					if ( idx.Value.Key is Record ) {
+						var rec =  idx.Value.Key as Record;
+						var owner_dc = rec.OwnerDC;
+						string hash_code = idx.Key.HashCode;
+						sw.WriteLine( "Record:Record:"+hash_code+":"+owner_dc.GetIndex().HashCode);
+					} else if ( idx.Value.Key is DataContainer ) {
+						var dc = (DataContainer)idx.Value.Key;
+						sw.WriteLine( dc.Name+
+						             ":DataContainer:"+
+						             dc.GetOwnerDB().Name+":"+
+						             idx.Key.HashCode );
+					}
+				}
+			}*/
+			
+			throw new NotImplementedException( "RebuildIndexes and record deletion process in whole should be rethinked!" );
+		}
+		
 		
 		/// <summary>
 		/// Saves all indexes in format Name:Type:IndexHash

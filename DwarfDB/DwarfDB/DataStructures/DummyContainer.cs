@@ -10,18 +10,14 @@ namespace DwarfDB.DataStructures
 	/// <summary>
 	/// DummyContainer class - it's class for using instead of NULL
 	/// </summary>
-	public class DummyContainer : Record
+	public class DummyContainer : DataContainer
 	{
-		public DummyContainer( DataContainer _owner_dc ) : base( _owner_dc )
-		{
-		}
-
-		public DummyContainer( ) : base()
+		public DummyContainer( DataBase _owner_db ) : base ( _owner_db, "dummy" )
 		{
 		}
 		
-		static public DummyContainer Create() {
-			return new DummyContainer();
+		static public DummyContainer Create( DataBase _owner_db ) {
+			return new DummyContainer( _owner_db );
 		}
 	}
 }

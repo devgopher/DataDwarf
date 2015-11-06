@@ -30,6 +30,7 @@ namespace AppSample
 			cm = new DwarfDB.ChunkManager.ChunkManager();
 			db = DataBase.LoadFrom("employees", cm);
 			dc_employee_load = db.GetDataContainer("employee");
+			dc_employee_load.AssignOwnerDB(db);
 			GridLoad();
 		}
 		
@@ -80,6 +81,7 @@ namespace AppSample
 			} catch ( Exception ex ) {
 				MessageBox.Show(ex.Message+":"+ex.StackTrace);
 			}
+			
 			GridLoad();
 		}
 	}

@@ -48,8 +48,11 @@ namespace DwarfDB.DataStructures
 		{
 		}
 		
-		static public DummyRecord Create() {
-			return new DummyRecord();
+		static public DummyRecord Create( string own_dc_hash, DataBase own_db ) {
+			var rec = new DummyRecord();			
+			rec.OwnerDC = DummyContainer.Create( own_db );
+			
+			return rec;
 		}
 	}
 }
