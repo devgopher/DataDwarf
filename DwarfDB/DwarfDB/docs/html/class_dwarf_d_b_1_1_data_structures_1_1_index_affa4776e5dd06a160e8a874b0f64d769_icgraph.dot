@@ -1,9 +1,0 @@
-digraph "DwarfDB.DataStructures.Index.CreateFromHashCode"
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  rankdir="LR";
-  Node1 [label="DwarfDB.DataStructures.Index.\lCreateFromHashCode",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
-  Node2 [label="DwarfDB.ChunkManager.Chunk\lManager.LoadRecordIndexes",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_dwarf_d_b_1_1_chunk_manager_1_1_chunk_manager.html#a80aab988ea4c69f7abcfcd2015623a9c",tooltip="Loading an index for each record "];
-}

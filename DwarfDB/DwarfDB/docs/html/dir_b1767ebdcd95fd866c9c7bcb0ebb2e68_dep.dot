@@ -1,6 +1,0 @@
-digraph "Crypto" {
-  compound=true
-  node [ fontsize="10", fontname="Helvetica"];
-  edge [ labelfontsize="10", labelfontname="Helvetica"];
-  dir_b1767ebdcd95fd866c9c7bcb0ebb2e68 [shape=box, label="Crypto", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_b1767ebdcd95fd866c9c7bcb0ebb2e68.html"];
-}

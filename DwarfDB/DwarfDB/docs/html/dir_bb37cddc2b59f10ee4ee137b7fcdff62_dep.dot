@@ -1,6 +1,0 @@
-digraph "Access" {
-  compound=true
-  node [ fontsize="10", fontname="Helvetica"];
-  edge [ labelfontsize="10", labelfontname="Helvetica"];
-  dir_bb37cddc2b59f10ee4ee137b7fcdff62 [shape=box, label="Access", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_bb37cddc2b59f10ee4ee137b7fcdff62.html"];
-}

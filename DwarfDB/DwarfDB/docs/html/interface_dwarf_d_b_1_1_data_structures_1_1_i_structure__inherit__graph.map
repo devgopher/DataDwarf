@@ -1,6 +1,0 @@
-<map id="G" name="G">
-<area shape="rect" id="node3" href="$class_dwarf_d_b_1_1_data_structures_1_1_data_container.html" title="DataContainer is the base element of DwarfDB data structure." alt="" coords="5,80,253,107"/>
-<area shape="rect" id="node5" href="$class_dwarf_d_b_1_1_data_structures_1_1_record.html" title="Record is the element of DataContainer." alt="" coords="279,80,487,107"/>
-<area shape="rect" id="node7" href="$class_dwarf_d_b_1_1_data_structures_1_1_dummy_container.html" title="DummyContainer class &#45; it&#39;s class for using instead of NULL." alt="" coords="108,155,375,181"/>
-<area shape="rect" id="node9" href="$class_dwarf_d_b_1_1_data_structures_1_1_dummy_record.html" title="DummyRecord class &#45; it&#39;s class for using instead of NULL." alt="" coords="399,155,652,181"/>
-</map>

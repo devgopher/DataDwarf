@@ -1,9 +1,0 @@
-digraph "DwarfDB.DataStructures.DataBase.GetLevel"
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  rankdir="LR";
-  Node1 [label="DwarfDB.DataStructures.Data\lBase.GetLevel",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black"];
-  Node1 -> Node2 [color="midnightblue",fontsize="10",style="solid"];
-  Node2 [label="DwarfDB.DataStructures.DSAccess\lManager.GetLevel",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_dwarf_d_b_1_1_data_structures_1_1_d_s_access_manager.html#a96628d21bb3399f062c1416374a63b8c",tooltip="Getting an access level for a given user "];
-}
