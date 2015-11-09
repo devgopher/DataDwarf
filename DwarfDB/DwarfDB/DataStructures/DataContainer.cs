@@ -222,13 +222,13 @@ namespace DwarfDB.DataStructures
 		/// <param name="_owner_db">Owner DB object</param>
 		/// <param name="_name">DataContainer name</param>
 		/// <returns>true or false</returns>
-		public static bool Create( DataBase _owner_db, String _name ) {
+		public static bool Create( DataBase _owner_db, String _name, User.User user ) {
 			if ( _owner_db == null )
 				return false;
 			
 			var new_dc = new DataContainer( _owner_db, _name );
 			
-			return ( _owner_db.AddNewDataContainer( new_dc ) );
+			return ( _owner_db.AddNewDataContainer( new_dc, user ) );
 		}
 
 		/// <summary>

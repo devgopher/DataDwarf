@@ -82,7 +82,7 @@ namespace DwarfDB.DataStructures
 			new_db.DbPath = Config.Config.Instance.DataDirectory+db_name;
 			
 			// Let's change an access rights to ADMIN for creator
-		//	this.AddAccess(  )
+			//	this.AddAccess(  )
 			
 			return new_db;
 		}
@@ -121,7 +121,7 @@ namespace DwarfDB.DataStructures
 			this.Dispose();
 		}
 		
-		#region Access	
+		#region Access
 
 		private DSAccessManager local_am;
 		
@@ -133,7 +133,16 @@ namespace DwarfDB.DataStructures
 		public void AddAccess ( User.User _user,
 		                       DwarfDB.Access.Access.AccessLevel _level ) {
 			local_am.AddAccess( _user, _level );
-		}		
+			
+			// If we're setting admin rights => we need to set it on all of 
+			// DCs under this DB
+			if ( _level == Access.Access.AccessLevel.ADMIN ) {
+				foreach ( DataContainer dc in inner_dc_dict.Values ) {
+					dc.AddAccess( _user, _level );
+				}
+			}
+			
+		}
 		
 		/// <summary>
 		/// Changing an access record for our DB
@@ -230,17 +239,28 @@ namespace DwarfDB.DataStructures
 		/// </summary>
 		/// <param name="new_dc">DataContainer</param>
 		/// <returns></returns>
-		public bool AddNewDataContainer( DataContainer new_dc ) {
-			if ( CheckDCNameUnique( new_dc.Name )) {
-				// TODO: loading data new container into stack and file chunks
-				inner_dc_dict.Add( new_dc.Name, new_dc );
-				Stack.Push( new_dc );
-				new_dc.AssignOwnerDB(this);
-				// Don't try to save new_dc in this method!
-				return true;
+		public bool AddNewDataContainer( DataContainer new_dc, User.User user ) {
+			var user_acc_lvl = GetLevel( user );
+			if ( user_acc_lvl == Access.Access.AccessLevel.READ_WRITE ||
+			    user_acc_lvl == Access.Access.AccessLevel.READ_WRITE_DROP ||
+			    user_acc_lvl == Access.Access.AccessLevel.ADMIN ) {
+				if ( CheckDCNameUnique( new_dc.Name )) {
+					// TODO: loading data new container into stack and file chunks
+					inner_dc_dict.Add( new_dc.Name, new_dc );
+					Stack.Push( new_dc );
+					new_dc.AssignOwnerDB(this);
+					// Don't try to save new_dc in this method!
+					return true;
+				} else {
+					Errors.ErrorProcessing.Display(
+						String.Format("DataContainer named \"{0}\" already exists in DB!", new_dc.Name),
+						"Adding new DC",
+						"Check the DB structure or select another name",
+						DateTime.Now);
+				}
 			} else {
 				Errors.ErrorProcessing.Display(
-					String.Format("DataContainer named \"{0}\" already exists in DB!", new_dc.Name),
+					String.Format( Global.StaticResourceManager.GetStringResource("ACCESS_REASON_DENIED_FOR_SOME PROBLEMS"), new_dc.Name),
 					"Adding new DC",
 					"Check the DB structure or select another name",
 					DateTime.Now);

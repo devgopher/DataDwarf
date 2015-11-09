@@ -27,10 +27,12 @@ namespace DwarfDB
 			if (DataBase.Exists(db_name)) {
 				db = DataBase.LoadFrom( db_name, cm );
 			} else {
+				var user = User.User.New( "root", "12345678");
 				db = DataBase.Create( db_name, cm );
-				DataContainer.Create( db, "employee" );
-				DataContainer.Create( db, "positions" );
-				DataContainer.Create( db, "divisions" );
+				db.AddAccess( user, Access.Access.AccessLevel.ADMIN );
+				DataContainer.Create( db, "employee", user );
+				DataContainer.Create( db, "positions", user );
+				DataContainer.Create( db, "divisions", user );
 				
 				dc_employee = db.GetDataContainer("employee");
 				dc_positions = db.GetDataContainer("positions");
