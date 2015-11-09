@@ -103,7 +103,17 @@ namespace DwarfDB.DataStructures
 		/// <summary>
 		/// Dropping this DB
 		/// </summary>
-		public void Drop() {
+		public void Drop( User.User user ) {
+			// Access check
+			if ( this.GetLevel( user ) != Access.Access.AccessLevel.ADMIN ) {
+				Errors.ErrorProcessing.Display(
+					Global.StaticResourceManager.GetStringResource( "ACCESS_REASON_DENIED_FOR_THIS_USER" ),
+					"",
+					"",
+					DateTime.Now );
+				return;
+			}
+			
 			// Cleaning memory
 			this.Stack.Clear();
 			
@@ -134,7 +144,7 @@ namespace DwarfDB.DataStructures
 		                       DwarfDB.Access.Access.AccessLevel _level ) {
 			local_am.AddAccess( _user, _level );
 			
-			// If we're setting admin rights => we need to set it on all of 
+			// If we're setting admin rights => we need to set it on all of
 			// DCs under this DB
 			if ( _level == Access.Access.AccessLevel.ADMIN ) {
 				foreach ( DataContainer dc in inner_dc_dict.Values ) {

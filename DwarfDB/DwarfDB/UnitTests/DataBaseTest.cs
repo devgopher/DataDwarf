@@ -24,8 +24,8 @@ namespace DwarfDB.UnitTests
 		public void Drop() {
 			var cm = new ChunkManager.ChunkManager();
 			var db  = DataBase.Create( "nunit_db_drop", cm );
-			
-			db.Drop();
+			User.User user = User.User.New("root", "12345678");
+			db.Drop(user);
 			Assert.AreEqual( 0, db.Stack.Count);
 			Assert.IsFalse( System.IO.Directory.Exists(db.DbPath));
 		}

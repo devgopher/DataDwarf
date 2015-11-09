@@ -76,7 +76,7 @@ namespace DwarfDB
 				dc.Save ();
 			} else {
 				Console.WriteLine ("Trying to get data from db \"" + db_name + "\"");
-				
+				User.User user = User.User.New("root", "12345678");
 				var db2 = DataBase.LoadFrom (db_name, chunk_manager);
 				
 				var dc = chunk_manager.GetDataContainer ("DCBin");
@@ -137,7 +137,7 @@ namespace DwarfDB
 				
 				Console.WriteLine ("DO YOU WANT TO DROP THIS DB (Y/N)?");
 				if (Console.ReadLine ().ToUpper() == "Y") {
-					db2.Drop ();
+					db2.Drop (user);
 				}
 			}
 		}
