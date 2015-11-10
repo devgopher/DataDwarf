@@ -39,7 +39,7 @@ namespace DwarfDB.Global
 			return CheckLevel( dwarf_obj,  Access.AccessLevel.READ_WRITE_DROP, user );
 		}
 		
-		public static bool CheckLevel( object dwarf_obj, Access.AccessLevel level, User.User user ) {
+		private static bool CheckLevel( object dwarf_obj, Access.AccessLevel level, User.User user ) {
 			if ( dwarf_obj != null ) {
 				var chk_lvl = Access.AccessLevel.DENIED;
 				if ( dwarf_obj is DataContainer ) {

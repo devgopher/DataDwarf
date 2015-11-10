@@ -10,7 +10,7 @@ using System.Reflection;
 namespace DwarfDB.Global
 {
 	/// <summary>
-	/// Description of StaticResourceManager.
+	/// A Static (global) resource manager for a simple access to .resx
 	/// </summary>
 	public static class StaticResourceManager
 	{

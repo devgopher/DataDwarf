@@ -301,7 +301,7 @@ namespace DwarfDB.DataStructures
 			return true;
 		}
 		
-		public bool Delete( String name ) {
+		public bool Drop( String name ) {
 			// TODO
 			return false;
 		}
