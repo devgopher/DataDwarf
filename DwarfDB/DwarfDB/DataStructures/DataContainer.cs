@@ -218,12 +218,17 @@ namespace DwarfDB.DataStructures
 		}
 		
 		/// <summary>
-		/// Create new DataContainer
+		/// Create a new DataContainer
 		/// </summary>
 		/// <param name="_owner_db">Owner DB object</param>
 		/// <param name="_name">DataContainer name</param>
 		/// <returns>true or false</returns>
-		public static bool Create( DataBase _owner_db, String _name, User.User user ) {
+		public static bool Create( DataBase _owner_db, String _name, User.User user ) {			
+			if ( !Global.CheckAccess.CheckWriteAccess(_owner_db, user) ) {
+				Errors.ErrorProcessing.Display( Global.StaticResourceManager.StringManager.GetString("ACCESS_REASON_DENIED_FOR_THIS_USER"));
+				return false;
+			}
+			
 			if ( _owner_db == null )
 				return false;
 			
@@ -358,8 +363,7 @@ namespace DwarfDB.DataStructures
 						return false;
 					}
 				} catch ( Exception ex ) {
-					Errors.ErrorProcessing.Display("Error in adding a record to stack: "+ex.Message,
-					                               "", "", DateTime.Now);
+					Errors.ErrorProcessing.Display("Error in adding a record to stack: "+ex.Message);
 				}
 			}
 			

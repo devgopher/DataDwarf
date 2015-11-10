@@ -18,6 +18,10 @@ namespace DwarfDB.Errors
 		{
 		}
 		
+		public static void Display( String _error_text ) {
+			System.Console.WriteLine( String.Format( "Error: {0} When: {1}", _error_text, DateTime.Now.ToLocalTime()));
+		}
+		
 		public static void Display( String _error_text,
 		                           String _where,
 		                           String _advices,

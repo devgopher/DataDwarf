@@ -252,9 +252,7 @@ namespace DwarfDB.DataStructures
 		/// <returns></returns>
 		public bool AddNewDataContainer( DataContainer new_dc, User.User user ) {
 			var user_acc_lvl = GetLevel( user );
-			if ( user_acc_lvl == Access.AccessLevel.READ_WRITE ||
-			    user_acc_lvl == Access.AccessLevel.READ_WRITE_DROP ||
-			    user_acc_lvl == Access.AccessLevel.ADMIN ) {
+			if ( Global.CheckAccess.CheckWriteAccess( this, user  ) ) {
 				if ( CheckDCNameUnique( new_dc.Name )) {
 					// TODO: loading data new container into stack and file chunks
 					inner_dc_dict.Add( new_dc.Name, new_dc );

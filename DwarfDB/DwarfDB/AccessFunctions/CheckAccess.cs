@@ -10,7 +10,7 @@ using DwarfDB.AccessFunctions;
 namespace DwarfDB.Global
 {
 	/// <summary>
-	/// Description of CheckAccess.
+	/// A static class for a simplified access check
 	/// </summary>
 	public static class CheckAccess
 	{
@@ -18,10 +18,25 @@ namespace DwarfDB.Global
 		{
 		}
 		
-		public static bool CheckWriteAccess( object dwarf_obj, User.User user )  {			
+		public static bool CheckAdminAccess( object dwarf_obj, User.User user )  {
+			return CheckLevel( dwarf_obj,  Access.AccessLevel.ADMIN, user );
+		}
+		
+		public static bool CheckReadAccess( object dwarf_obj, User.User user )  {
+			return CheckLevel( dwarf_obj,  Access.AccessLevel.ADMIN, user ) ||
+				CheckLevel( dwarf_obj,  Access.AccessLevel.READ_WRITE, user ) ||
+				CheckLevel( dwarf_obj,  Access.AccessLevel.READ_WRITE_DROP, user ) ||
+				CheckLevel( dwarf_obj,  Access.AccessLevel.READ_ONLY, user );
+		}
+		
+		public static bool CheckWriteAccess( object dwarf_obj, User.User user )  {
 			return CheckLevel( dwarf_obj,  Access.AccessLevel.ADMIN, user ) ||
 				CheckLevel( dwarf_obj,  Access.AccessLevel.READ_WRITE, user ) ||
 				CheckLevel( dwarf_obj,  Access.AccessLevel.READ_WRITE_DROP, user );
+		}
+		
+		public static bool CheckDropAccess( object dwarf_obj, User.User user )  {
+			return CheckLevel( dwarf_obj,  Access.AccessLevel.READ_WRITE_DROP, user );
 		}
 		
 		public static bool CheckLevel( object dwarf_obj, Access.AccessLevel level, User.User user ) {
