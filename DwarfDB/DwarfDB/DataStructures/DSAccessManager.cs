@@ -11,9 +11,9 @@ using DwarfDB.User;
 namespace DwarfDB.DataStructures
 {
 	/// <summary>
-	/// Description of DSAccessManager.
+	/// DataStructure access manager
 	/// </summary>
-	public class DSAccessManager : IStructureAccess
+	public class DSAccessManager
 	{
 		object acc_object;
 		public DSAccessManager( object _object ) {
@@ -21,7 +21,7 @@ namespace DwarfDB.DataStructures
 		}
 		
 		/// <summary>
-		/// Adding a new access record for our DB
+		/// Adding a new access record for our DataStructure
 		/// </summary>
 		/// <param name="_user"></param>
 		/// <param name="_level"></param>

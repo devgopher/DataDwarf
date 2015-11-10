@@ -15,7 +15,7 @@ using DwarfDB.AccessFunctions;
 namespace DwarfDB.DataStructures
 {
 	/// <summary>
-	/// a class for database object
+	/// A class for database object
 	/// </summary>
 	[Serializable][JsonObject]
 	public class DataBase : ISerializable, IDisposable, IStructureAccess
