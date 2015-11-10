@@ -5,7 +5,7 @@
  */
 using System;
 using System.Collections.Generic;
-using DwarfDB.Access;
+using DwarfDB.AccessFunctions;
 using DwarfDB.User;
 
 namespace DwarfDB.DataStructures
@@ -26,8 +26,8 @@ namespace DwarfDB.DataStructures
 		/// <param name="_user"></param>
 		/// <param name="_level"></param>
 		public void AddAccess ( User.User _user,
-		                       DwarfDB.Access.Access.AccessLevel _level ) {
-			var t = Access.Access.Instance( _user, _level, acc_object );
+		                       Access.AccessLevel _level ) {
+			var t = Access.Instance( _user, _level, acc_object );
 			accesses.Add(t);
 		}
 		
@@ -37,7 +37,7 @@ namespace DwarfDB.DataStructures
 		/// <param name="_user"></param>
 		/// <param name="_new_level"></param>
 		public void ChangeAccess ( User.User _user,
-		                          Access.Access.AccessLevel _new_level ) {
+		                          Access.AccessLevel _new_level ) {
 			foreach ( var ac in accesses ) {
 				if ( ac.User.Credentials.Login == _user.Credentials.Login ) {
 					ac.SetLevel(_new_level);
@@ -46,7 +46,7 @@ namespace DwarfDB.DataStructures
 			}
 		}
 		
-		internal List<Access.Access> GetAccesses() {
+		internal List<Access> GetAccesses() {
 			return accesses;
 		}
 		
@@ -55,13 +55,13 @@ namespace DwarfDB.DataStructures
 		/// </summary>
 		/// <param name="_user"></param>
 		/// <returns></returns>
-		public Access.Access.AccessLevel GetLevel( User.User _user ) {
+		public Access.AccessLevel GetLevel( User.User _user ) {
 			foreach ( var ac in accesses ) {
 				if ( ac.User.Credentials.Login == _user.Credentials.Login )
 					return ac.Level;
 			}
 			
-			return Access.Access.AccessLevel.DENIED;
+			return Access.AccessLevel.DENIED;
 		}
 		
 		private enum Permissions {
@@ -88,33 +88,33 @@ namespace DwarfDB.DataStructures
 						answer_msg = prm.ToString() + " - OK!";
 						return true;
 					} else if ( prm == Permissions.WRITE ) {
-						if ( user_level == Access.Access.AccessLevel.ADMIN ||
-						    user_level == Access.Access.AccessLevel.READ_WRITE ||
-						    user_level == Access.Access.AccessLevel.READ_WRITE_DROP )
+						if ( user_level == Access.AccessLevel.ADMIN ||
+						    user_level == Access.AccessLevel.READ_WRITE ||
+						    user_level == Access.AccessLevel.READ_WRITE_DROP )
 						{
 							answer_msg = prm.ToString() + " - OK!";
 							return true;
 						}
 					} else if ( prm == Permissions.READ ) {
-						if ( user_level == Access.Access.AccessLevel.ADMIN ||
-						    user_level == Access.Access.AccessLevel.READ_WRITE ||
-						    user_level == Access.Access.AccessLevel.READ_WRITE_DROP ||
-						    user_level == Access.Access.AccessLevel.READ_ONLY  )
+						if ( user_level == Access.AccessLevel.ADMIN ||
+						    user_level == Access.AccessLevel.READ_WRITE ||
+						    user_level == Access.AccessLevel.READ_WRITE_DROP ||
+						    user_level == Access.AccessLevel.READ_ONLY  )
 						{
 							answer_msg = prm.ToString() + " - OK!";
 							return true;
 						}
 					} else if ( prm == Permissions.DROP ) {
-						if ( user_level == Access.Access.AccessLevel.ADMIN ||
-						    user_level == Access.Access.AccessLevel.READ_WRITE_DROP )
+						if ( user_level == Access.AccessLevel.ADMIN ||
+						    user_level == Access.AccessLevel.READ_WRITE_DROP )
 						{
 							answer_msg = prm.ToString() + " - OK!";
 							return true;
 						}
 					} else if ( prm == Permissions.DELETE ) {
-						if ( user_level == Access.Access.AccessLevel.ADMIN ||
-						    user_level == Access.Access.AccessLevel.READ_WRITE ||
-						    user_level == Access.Access.AccessLevel.READ_WRITE_DROP )
+						if ( user_level == Access.AccessLevel.ADMIN ||
+						    user_level == Access.AccessLevel.READ_WRITE ||
+						    user_level == Access.AccessLevel.READ_WRITE_DROP )
 						{
 							answer_msg = prm.ToString() + " - OK!";
 							return true;
@@ -179,6 +179,6 @@ namespace DwarfDB.DataStructures
 			return ret;
 		}
 		
-		readonly List<Access.Access> accesses = new List<Access.Access>();
+		readonly List<Access> accesses = new List<Access>();
 	}
 }

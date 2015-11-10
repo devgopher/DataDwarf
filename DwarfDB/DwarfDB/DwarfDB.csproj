@@ -99,9 +99,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Access\AccessException.cs" />
-    <Compile Include="Access\Access.cs" />
-    <Compile Include="Access\AccessFile.cs" />
+    <Compile Include="AccessFunctions\AccessException.cs" />
+    <Compile Include="AccessFunctions\Access.cs" />
+    <Compile Include="AccessFunctions\AccessFile.cs" />
+    <Compile Include="AccessFunctions\CheckAccess.cs" />
     <Compile Include="Checks\ExecutionTimeCheck.cs" />
     <Compile Include="ChunkManager\ChunkException.cs" />
     <Compile Include="ChunkManager\ChunkFormat.cs" />

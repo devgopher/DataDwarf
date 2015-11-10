@@ -7,7 +7,7 @@ using System;
 using System.IO;
 using DwarfDB.DataStructures;
 
-namespace DwarfDB.Access
+namespace DwarfDB.AccessFunctions
 {
 	internal class AccessFile
 	{

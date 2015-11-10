@@ -7,6 +7,7 @@ using System;
 using System.Linq;
 using DwarfDB.DataStructures;
 using DwarfDB.ChunkManager;
+using DwarfDB.AccessFunctions;
 
 namespace DwarfDB
 {
@@ -29,7 +30,7 @@ namespace DwarfDB
 			} else {
 				var user = User.User.New( "root", "12345678");
 				db = DataBase.Create( db_name, cm );
-				db.AddAccess( user, Access.Access.AccessLevel.ADMIN );
+				db.AddAccess( user, Access.AccessLevel.ADMIN );
 				DataContainer.Create( db, "employee", user );
 				DataContainer.Create( db, "positions", user );
 				DataContainer.Create( db, "divisions", user );

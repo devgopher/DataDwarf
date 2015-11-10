@@ -2,9 +2,9 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.Workbench ActiveDocument="ChunkManager\ChunkFormat.cs">
     <Files>
-      <File FileName="Program.cs" Line="24" Column="35" />
-      <File FileName="Samples\DataTableSample.cs" Line="10" Column="34" />
-      <File FileName="DataStructures\Record.cs" Line="90" Column="3" />
+      <File FileName="Program.cs" Line="1" Column="1" />
+      <File FileName="Samples\DataTableSample.cs" Line="1" Column="1" />
+      <File FileName="DataStructures\Record.cs" Line="1" Column="1" />
       <File FileName="Stack\DwarfStack.cs" Line="1" Column="1" />
       <File FileName="Samples\Employees.cs" Line="1" Column="1" />
       <File FileName="Crypto\Hash.cs" Line="1" Column="1" />
@@ -12,31 +12,12 @@
       <File FileName="DataStructures\DataException.cs" Line="1" Column="1" />
       <File FileName="Crypto\GenKeyException.cs" Line="1" Column="1" />
       <File FileName="app.config" Line="1" Column="1" />
-      <File FileName="resources\Strings.resx" Line="61" Column="8" />
-      <File FileName="DataStructures\IStructureAccess.cs" Line="26" Column="24" />
-      <File FileName="DataStructures\DSAccessManager.cs" Line="53" Column="16" />
-      <File FileName="Samples\DataTableSampleBinary.cs" Line="34" Column="4" />
-      <File FileName="ChunkManager\ChunkFormat.cs" Line="268" Column="1" />
+      <File FileName="resources\Strings.resx" Line="1" Column="1" />
+      <File FileName="DataStructures\IStructureAccess.cs" Line="1" Column="1" />
+      <File FileName="DataStructures\DSAccessManager.cs" Line="1" Column="1" />
+      <File FileName="Samples\DataTableSampleBinary.cs" Line="1" Column="1" />
+      <File FileName="ChunkManager\ChunkFormat.cs" Line="396" Column="34" />
     </Files>
-    <Pads>
-      <Pad Id="ProjectPad">
-        <State name="__root__">
-          <Node name="DwarfDB" expanded="True">
-            <Node name="DwarfDB" expanded="True">
-              <Node name="ChunkManager" expanded="True">
-                <Node name="ChunkFormat.cs" selected="True" />
-              </Node>
-              <Node name="DataStructures" expanded="True" />
-              <Node name="resources" expanded="True" />
-              <Node name="Samples" expanded="True" />
-              <Node name="Stack" expanded="True" />
-              <Node name="testdata" expanded="True" />
-              <Node name="UnitTests" expanded="True" />
-            </Node>
-          </Node>
-        </State>
-      </Pad>
-    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>

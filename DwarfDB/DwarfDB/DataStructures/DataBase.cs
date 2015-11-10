@@ -10,6 +10,7 @@ using System.IO;
 using Newtonsoft.Json;
 using System.Collections.Concurrent;
 using System.Runtime.Serialization;
+using DwarfDB.AccessFunctions;
 
 namespace DwarfDB.DataStructures
 {
@@ -105,7 +106,7 @@ namespace DwarfDB.DataStructures
 		/// </summary>
 		public void Drop( User.User user ) {
 			// Access check
-			if ( this.GetLevel( user ) != Access.Access.AccessLevel.ADMIN ) {
+			if ( this.GetLevel( user ) != Access.AccessLevel.ADMIN ) {
 				Errors.ErrorProcessing.Display(
 					Global.StaticResourceManager.GetStringResource( "ACCESS_REASON_DENIED_FOR_THIS_USER" ),
 					"",
@@ -141,12 +142,12 @@ namespace DwarfDB.DataStructures
 		/// <param name="_user"></param>
 		/// <param name="_level"></param>
 		public void AddAccess ( User.User _user,
-		                       DwarfDB.Access.Access.AccessLevel _level ) {
+		                       Access.AccessLevel _level ) {
 			local_am.AddAccess( _user, _level );
 			
 			// If we're setting admin rights => we need to set it on all of
 			// DCs under this DB
-			if ( _level == Access.Access.AccessLevel.ADMIN ) {
+			if ( _level == Access.AccessLevel.ADMIN ) {
 				foreach ( DataContainer dc in inner_dc_dict.Values ) {
 					dc.AddAccess( _user, _level );
 				}
@@ -160,11 +161,11 @@ namespace DwarfDB.DataStructures
 		/// <param name="_user"></param>
 		/// <param name="_new_level"></param>
 		public void ChangeAccess ( User.User _user,
-		                          Access.Access.AccessLevel _new_level ) {
+		                          Access.AccessLevel _new_level ) {
 			local_am.ChangeAccess(_user, _new_level );
 		}
 		
-		internal List<Access.Access> GetAccesses() {
+		internal List<Access> GetAccesses() {
 			return local_am.GetAccesses();
 		}
 		
@@ -173,7 +174,7 @@ namespace DwarfDB.DataStructures
 		/// </summary>
 		/// <param name="_user"></param>
 		/// <returns></returns>
-		public Access.Access.AccessLevel GetLevel( User.User _user ) {
+		public Access.AccessLevel GetLevel( User.User _user ) {
 			return local_am.GetLevel( _user );
 		}
 		
@@ -251,9 +252,9 @@ namespace DwarfDB.DataStructures
 		/// <returns></returns>
 		public bool AddNewDataContainer( DataContainer new_dc, User.User user ) {
 			var user_acc_lvl = GetLevel( user );
-			if ( user_acc_lvl == Access.Access.AccessLevel.READ_WRITE ||
-			    user_acc_lvl == Access.Access.AccessLevel.READ_WRITE_DROP ||
-			    user_acc_lvl == Access.Access.AccessLevel.ADMIN ) {
+			if ( user_acc_lvl == Access.AccessLevel.READ_WRITE ||
+			    user_acc_lvl == Access.AccessLevel.READ_WRITE_DROP ||
+			    user_acc_lvl == Access.AccessLevel.ADMIN ) {
 				if ( CheckDCNameUnique( new_dc.Name )) {
 					// TODO: loading data new container into stack and file chunks
 					inner_dc_dict.Add( new_dc.Name, new_dc );

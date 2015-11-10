@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using DwarfDB.User;
 using DwarfDB.DataStructures;
 
-namespace DwarfDB.Access
+namespace DwarfDB.AccessFunctions
 {
 	/// <summary>
 	/// A class for defining parameters of access

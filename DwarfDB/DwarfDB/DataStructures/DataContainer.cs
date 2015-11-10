@@ -8,6 +8,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
+using DwarfDB.AccessFunctions;
 using System.Runtime.Serialization;
 
 namespace DwarfDB.DataStructures
@@ -116,7 +117,7 @@ namespace DwarfDB.DataStructures
 		/// <param name="_user"></param>
 		/// <param name="_level"></param>
 		public void AddAccess ( User.User _user,
-		                       DwarfDB.Access.Access.AccessLevel _level ) {
+		                       Access.AccessLevel _level ) {
 			local_am.AddAccess( _user, _level );
 		}
 		
@@ -126,11 +127,11 @@ namespace DwarfDB.DataStructures
 		/// <param name="_user"></param>
 		/// <param name="_new_level"></param>
 		public void ChangeAccess ( User.User _user,
-		                          Access.Access.AccessLevel _new_level ) {
+		                          Access.AccessLevel _new_level ) {
 			local_am.ChangeAccess(_user, _new_level );
 		}
 		
-		internal List<Access.Access> GetAccesses() {
+		internal List<Access> GetAccesses() {
 			return local_am.GetAccesses();
 		}
 		
@@ -139,7 +140,7 @@ namespace DwarfDB.DataStructures
 		/// </summary>
 		/// <param name="_user"></param>
 		/// <returns></returns>
-		public Access.Access.AccessLevel GetLevel( User.User _user ) {
+		public Access.AccessLevel GetLevel( User.User _user ) {
 			return local_am.GetLevel( _user );
 		}
 		

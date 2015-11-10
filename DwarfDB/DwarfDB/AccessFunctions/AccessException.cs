@@ -6,7 +6,7 @@
 using System;
 using System.Runtime.Serialization;
 
-namespace DwarfDB.Access
+namespace DwarfDB.AccessFunctions
 {
 	/// <summary>
 	/// Description of AccessException.
