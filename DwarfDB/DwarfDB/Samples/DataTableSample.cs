@@ -19,6 +19,8 @@ namespace DwarfDB
 			Console.WriteLine("Enter db name: ");
 			string db_name = Console.ReadLine();
 
+			User.User user = User.User.New("root", "12345678");
+			
 			var indexes = new List<Index>();
 			var chunk_manager = new ChunkManager.ChunkManager();
 			
@@ -44,7 +46,7 @@ namespace DwarfDB
 						column.Type = DataType.STRING;
 					else
 						column.Type = DataType.INT;
-					dc.AddColumn( column );
+					dc.AddColumn( column, user );
 				}
 				
 				for ( int i = 0; i < cols_count; ++i ) {
@@ -54,7 +56,7 @@ namespace DwarfDB
 						column.Type = DataType.STRING;
 					else
 						column.Type = DataType.INT;
-					dc2.AddColumn( column );
+					dc2.AddColumn( column, user );
 				}
 				
 				for ( int k =0; k< rows_count; ++k ) {
@@ -83,15 +85,14 @@ namespace DwarfDB
 						rec1.BuildIndex();
 						rec2.BuildIndex();
 					}
-					dc.AddRecord( rec1 );
+					dc.AddRecordToStack( rec1 );
 					indexes.Add(rec1.GetIndex());
-					dc2.AddRecord( rec2 );
-					indexes.Add(rec2.GetIndex());			
+					dc2.AddRecordToStack( rec2 );
+					indexes.Add(rec2.GetIndex());
 				}
 				dc.Save();
 				dc2.Save();
 			} else {
-				User.User user = User.User.New("root", "12345678");
 				Console.WriteLine("Trying to get data from db \""+db_name+"\"");
 				
 				var db2 = DataBase.LoadFrom( db_name , chunk_manager );
@@ -102,9 +103,9 @@ namespace DwarfDB
 				dc.AssignOwnerDB(db2);
 				
 				//Console.WriteLine("Preloading DC1...");
-				dc.PreLoad();
+				dc.PreLoad(user);
 				//Console.WriteLine("Preloading DC2...");
-				dc2.PreLoad();
+				dc2.PreLoad(user);
 
 				// Getting a record
 				Record rc = null;
@@ -114,19 +115,19 @@ namespace DwarfDB
 				Record rc4 = null;
 				
 				var get_time = Checks.ExecutionTimeCheck.DoCheck(() => {
-				                                                 	rc = dc2.GetRecord(2030);
+				                                                 	rc = dc2.GetRecord(2030, user);
 				                                                 });
 				var get_time2 = Checks.ExecutionTimeCheck.DoCheck(() => {
-				                                                  	rc1 = dc2.GetRecord(10);
+				                                                  	rc1 = dc2.GetRecord(10, user);
 				                                                  });
 				var get_time3 = Checks.ExecutionTimeCheck.DoCheck(() => {
-				                                                  	rc = dc2.GetRecord(30);
+				                                                  	rc = dc2.GetRecord(30, user);
 				                                                  });
 				var get_time4 = Checks.ExecutionTimeCheck.DoCheck(() => {
-				                                                  	rc3 = dc2.GetRecord(20);
+				                                                  	rc3 = dc2.GetRecord(20, user);
 				                                                  });
 				var get_time2s = Checks.ExecutionTimeCheck.DoCheck(() => {
-				                                                   	rc4 = dc.GetRecord(7900);
+				                                                   	rc4 = dc.GetRecord(7900, user);
 				                                                   });
 				Console.WriteLine("Getting value time1, ms: "+get_time.ToString());
 
@@ -181,7 +182,7 @@ namespace DwarfDB
 				Console.WriteLine("DO YOU WANT TO DROP THIS DB (Y/N)?");
 				if ( Console.ReadLine() == "Y" ) {
 					db2.Drop( user );
-				}		
+				}
 			}
 		}
 	}

@@ -223,7 +223,7 @@ namespace DwarfDB.DataStructures
 		/// <param name="_owner_db">Owner DB object</param>
 		/// <param name="_name">DataContainer name</param>
 		/// <returns>true or false</returns>
-		public static bool Create( DataBase _owner_db, String _name, User.User user ) {			
+		public static bool Create( DataBase _owner_db, String _name, User.User user ) {
 			if ( !Global.CheckAccess.CheckWriteAccess(_owner_db, user) ) {
 				Errors.ErrorProcessing.Display( Global.StaticResourceManager.StringManager.GetString("ACCESS_REASON_DENIED_FOR_THIS_USER"));
 				return false;
@@ -240,12 +240,16 @@ namespace DwarfDB.DataStructures
 		/// <summary>
 		/// Loading all records from chunks
 		/// </summary>
-		public void LoadRecords() {
+		public void LoadRecords( User.User user ) {
+			if ( !Global.CheckAccess.CheckReadAccess(this, user) ) {
+				Errors.ErrorProcessing.Display( Global.StaticResourceManager.StringManager.GetString("ACCESS_REASON_DENIED_FOR_THIS_USER"));
+				return;
+			}
 			var own_hash = this.GetIndex().HashCode;
 
 			var chunk_recs = owner_db.chunk_manager.LoadAllChunks( this.GetIndex().HashCode );
 			foreach ( var rec in chunk_recs ) {
-				AddRecord( rec );
+				AddRecordToStack( rec );
 			}
 		}
 		
@@ -254,7 +258,7 @@ namespace DwarfDB.DataStructures
 		/// </summary>
 		/// <param name="number"></param>
 		/// <returns></returns>
-		public bool AddNextCoupleOfRecords( int number = 20 ) {
+		internal bool AddNextCoupleOfRecordsToStack( int number ) {
 			var idx_dict = owner_db.Indexes;
 			int cntr = 0;
 			bool has_new_recs = false;
@@ -266,7 +270,7 @@ namespace DwarfDB.DataStructures
 					var rec = owner_db.chunk_manager.GetRecord( idx_entry.Key );
 					if ( rec != null && !(rec is DummyRecord)) {
 						has_new_recs = true;
-						AddRecord(rec);
+						AddRecordToStack( rec );
 						++cntr;
 					}
 				}
@@ -306,7 +310,13 @@ namespace DwarfDB.DataStructures
 			return false;
 		}
 		
-		public bool AddColumn( Column new_clmn ) {
+		public bool AddColumn( Column new_clmn, User.User user ) {
+			if ( !Global.CheckAccess.CheckWriteAccess( this, user ) ) {
+				var err = Global.StaticResourceManager.GetStringResource("ACCESS_REASON_DENIED_FOR_THIS_USER");
+				Errors.ErrorProcessing.Display("Can't add a column: "+err);
+				return false;
+			}
+			
 			foreach ( var col in Columns ) {
 				if ( new_clmn.Name == col.Name )
 					return false;
@@ -315,16 +325,27 @@ namespace DwarfDB.DataStructures
 			return true;
 		}
 
-		public void RemoveAllRecords() {
-			var records = GetRecords();
+		public void RemoveAllRecords( User.User user ) {
+			if ( !Global.CheckAccess.CheckWriteAccess( this, user ) ) {
+				var err = Global.StaticResourceManager.GetStringResource("ACCESS_REASON_DENIED_FOR_THIS_USER");
+				Errors.ErrorProcessing.Display("Can't remove records: "+err);
+				return;
+			}
+			
+			var records = GetRecordsInternal();
 			foreach ( var rec in records ) {
-				this.RemoveRecord( rec );
+				this.RemoveRecord( rec, user );
 			}
 			
 			//this.Save();
 		}
 		
-		public bool RemoveRecord( Record rem_rec ) {
+		public bool RemoveRecord( Record rem_rec, User.User user ) {
+			if ( !Global.CheckAccess.CheckWriteAccess( this, user ) ) {
+				var err = Global.StaticResourceManager.GetStringResource("ACCESS_REASON_DENIED_FOR_THIS_USER");
+				Errors.ErrorProcessing.Display("Can't remove records: "+err);
+				return false;
+			}
 			/*if ( rem_rec == null )
 				return false;
 			
@@ -351,11 +372,11 @@ namespace DwarfDB.DataStructures
 			return true;
 		}
 		
-		public bool AddRecord( Record new_rec ) {
+		public bool AddRecordToStack( Record new_rec ) {
 			if ( new_rec == null )
 				return false;
 			
-			var tmp_recs = GetRecords();
+			var tmp_recs = GetRecordsInternal();
 			
 			foreach ( var rec in tmp_recs ) {
 				try {
@@ -373,7 +394,12 @@ namespace DwarfDB.DataStructures
 			return true;
 		}
 		
-		public bool RemoveColumn( Column new_clmn ) {
+		public bool RemoveColumn( Column new_clmn, User.User user ) {
+			if ( !Global.CheckAccess.CheckWriteAccess( this, user ) ) {
+				var err = Global.StaticResourceManager.GetStringResource("ACCESS_REASON_DENIED_FOR_THIS_USER");
+				Errors.ErrorProcessing.Display("Can't remove a column: "+err);
+				return false;
+			}
 			Columns.Remove( new_clmn );
 			
 			return false;
@@ -404,7 +430,7 @@ namespace DwarfDB.DataStructures
 			GetOwnerDB().chunk_manager.CreateChunk( this );
 			
 			// Save records from DC
-			var recs = GetRecords();
+			var recs = GetRecordsInternal();
 			
 			GetOwnerDB().chunk_manager.CreateChunk(recs, 300);
 			GetOwnerDB().chunk_manager.SaveIndexes();
@@ -448,7 +474,7 @@ namespace DwarfDB.DataStructures
 		/// Assinging owner database object
 		/// </summary>
 		/// <returns></returns>
-		public bool AssignOwnerDB( DataBase new_owner ) {
+		internal bool AssignOwnerDB( DataBase new_owner ) {
 			if ( new_owner != null ) {
 				owner_db = new_owner;
 				return true;
@@ -456,13 +482,14 @@ namespace DwarfDB.DataStructures
 			return false;
 		}
 		
+		
 		/// <summary>
 		/// Incapsulating this.Records[i].get
 		/// for making some additional operations safely
 		/// </summary>
 		/// <param name="i">index</param>
 		/// <returns></returns>
-		public Record GetRecord( int i ) {
+		internal Record GetRecordInternal( int i ) {		
 			if ( i >= AllRecordsCount ) {
 				Errors.ErrorProcessing.Display("Argument "+i.ToString()+" is out of range! ", "Getting  record", "", DateTime.Now);
 				return new DummyRecord( this );
@@ -482,10 +509,55 @@ namespace DwarfDB.DataStructures
 		}
 		
 		/// <summary>
+		/// Incapsulating this.Records[i].get
+		/// for making some additional operations safely
+		/// </summary>
+		/// <param name="i">index</param>
+		/// <returns></returns>
+		public Record GetRecord( int i, User.User user ) {
+			if ( !Global.CheckAccess.CheckReadAccess( this, user ) ) {
+				var err = Global.StaticResourceManager.GetStringResource("ACCESS_REASON_DENIED_FOR_THIS_USER");
+				Errors.ErrorProcessing.Display("Can't get records: "+err);
+				return null;
+			}
+			
+			if ( i >= AllRecordsCount ) {
+				Errors.ErrorProcessing.Display("Argument "+i.ToString()+" is out of range! ", "Getting  record", "", DateTime.Now);
+				return new DummyRecord( this );
+			}
+			
+			// Looking in stack
+			if ( i < Records.Count )
+				return Records[i];
+			// Still didn't found ? Let's seek in chunks...
+			int start_position = 0;
+			
+			while ( Records.Count <=  i ) {
+				GetRecordsFromChunk( start_position );
+				start_position += 1;
+			}
+			return Records[i];
+		}
+		
+		
+		/// <summary>
 		/// Getting Records
 		/// </summary>
 		/// <returns></returns>
-		public List<Record> GetRecords() {
+		public List<Record> GetRecords( User.User user ) {
+			if ( !Global.CheckAccess.CheckReadAccess( this, user ) ) {
+				var err = Global.StaticResourceManager.GetStringResource("ACCESS_REASON_DENIED_FOR_THIS_USER");
+				Errors.ErrorProcessing.Display("Can't get records: "+err);
+				return null;
+			}
+			return Records.ToList();
+		}
+		
+		/// <summary>
+		/// Getting Records
+		/// </summary>
+		/// <returns></returns>
+		internal List<Record> GetRecordsInternal() {
 			return Records.ToList();
 		}
 		
@@ -509,10 +581,10 @@ namespace DwarfDB.DataStructures
 		
 		int all_rec_count = -1;
 		
-		public bool  GetRecordsFromChunk( int chunk_number = 0 ) {
+		internal bool  GetRecordsFromChunk( int chunk_number = 0 ) {
 			var couple = owner_db.chunk_manager.LoadChunk( chunk_number,  this.GetIndex().HashCode );
 			foreach ( var rec in couple )
-				AddRecord( rec );
+				AddRecordToStack( rec );
 			
 			return couple.Any();
 		}
@@ -520,11 +592,11 @@ namespace DwarfDB.DataStructures
 		/// <summary>
 		/// Method for loading all DC content into the stack
 		/// </summary>
-		public void PreLoad() {
+		internal void PreLoad( User.User user ) {
 			int pos = 0;
 			int all_rec_cnt = this.AllRecordsCount;
 			if ( all_rec_count > 0 )
-				GetRecord(0);
+				GetRecordInternal(0);
 			while ( pos < all_rec_count ) {
 				GetRecordsFromChunk( pos );
 				++pos;
@@ -580,7 +652,7 @@ namespace DwarfDB.DataStructures
 			foreach ( var rec in Records ) {
 				var tmp_rec = (Record)rec.Clone();
 				tmp_rec.AssignOwnerDC( this );
-				ret_dc.AddRecord( tmp_rec );
+				ret_dc.AddRecordToStack( tmp_rec );
 				if ( tmp_rec != null )
 					ret_dc.BuildIndex();
 			}

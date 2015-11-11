@@ -216,7 +216,7 @@ namespace DwarfDB.DataStructures
 			get {
 				try {
 					if ( position >= 0 )
-						return OwnerDC.GetRecord( position );
+						return OwnerDC.GetRecordInternal( position );
 					else
 						return new DummyRecord(null);
 				} catch ( DataException<Record> de ) {
@@ -235,9 +235,9 @@ namespace DwarfDB.DataStructures
 			    OwnerDC.StackRecordsCount()< OwnerDC.AllRecordsCount) {
 				var diff = OwnerDC.AllRecordsCount - OwnerDC.StackRecordsCount();
 				if ( diff < 30 )
-					OwnerDC.AddNextCoupleOfRecords(diff);
+					OwnerDC.AddNextCoupleOfRecordsToStack(diff);
 				else
-					OwnerDC.AddNextCoupleOfRecords(30);
+					OwnerDC.AddNextCoupleOfRecordsToStack(30);
 			}
 			return ( position < OwnerDC.AllRecordsCount );
 		}

@@ -18,7 +18,8 @@ namespace DwarfDB
 		{
 
 			string test_binary = String.Empty;
-
+			var user = User.User.New( "root", "12345678");
+			
 			if (!File.Exists ("./testdata/binary.jpg")) {
 				Errors.ErrorProcessing.Display ("No file : ./testdata/binary.jpg", String.Empty, String.Empty, DateTime.Now);
 			}
@@ -56,7 +57,7 @@ namespace DwarfDB
 					var column = new Column ();
 					column.Name = "col" + i.ToString ();
 					column.Type = DataType.BINARY;
-					dc.AddColumn (column);
+					dc.AddColumn (column, user);
 				}
 				
 				
@@ -70,19 +71,18 @@ namespace DwarfDB
 
 						rec1.BuildIndex ();
 					}
-					dc.AddRecord (rec1);
+					dc.AddRecordToStack (rec1);
 					indexes.Add (rec1.GetIndex ());
 				}
 				dc.Save ();
 			} else {
 				Console.WriteLine ("Trying to get data from db \"" + db_name + "\"");
-				User.User user = User.User.New("root", "12345678");
 				var db2 = DataBase.LoadFrom (db_name, chunk_manager);
 				
 				var dc = chunk_manager.GetDataContainer ("DCBin");
 				dc.AssignOwnerDB (db2);
 				//Console.WriteLine("Preloading DC1...");
-				dc.PreLoad ();
+				dc.PreLoad ( user );
 				
 				// Getting a record
 				Record rc = null;
@@ -92,19 +92,19 @@ namespace DwarfDB
 				Record rc4 = null;
 				
 				var get_time = Checks.ExecutionTimeCheck.DoCheck (() => {
-				                                                  	rc = dc.GetRecord (2030);
+				                                                  	rc = dc.GetRecord (2030, user);
 				                                                  });
 				var get_time2 = Checks.ExecutionTimeCheck.DoCheck (() => {
-				                                                   	rc1 = dc.GetRecord (10);
+				                                                   	rc1 = dc.GetRecord (10, user);
 				                                                   });
 				var get_time3 = Checks.ExecutionTimeCheck.DoCheck (() => {
-				                                                   	rc = dc.GetRecord (30);
+				                                                   	rc = dc.GetRecord (30, user);
 				                                                   });
 				var get_time4 = Checks.ExecutionTimeCheck.DoCheck (() => {
-				                                                   	rc3 = dc.GetRecord (20);
+				                                                   	rc3 = dc.GetRecord (20, user);
 				                                                   });
 				var get_time2s = Checks.ExecutionTimeCheck.DoCheck (() => {
-				                                                    	rc4 = dc.GetRecord (7900);
+				                                                    	rc4 = dc.GetRecord (7900, user);
 				                                                    });
 				
 				Console.WriteLine ("Getting value time1, ms: " + get_time.ToString ());

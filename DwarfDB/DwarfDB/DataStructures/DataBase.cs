@@ -283,14 +283,20 @@ namespace DwarfDB.DataStructures
 		/// </summary>
 		/// <param name="dc_name">DC name</param>
 		/// <returns></returns>
-		public DataContainer GetDataContainer( string dc_name ) {
+		public DataContainer GetDataContainer( string dc_name, User.User user ) {
+			
+			if ( !Global.CheckAccess.CheckWriteAccess(this, user) ) {
+				Errors.ErrorProcessing.Display( Global.StaticResourceManager.StringManager.GetString("ACCESS_REASON_DENIED_FOR_THIS_USER"));
+				return null;
+			}
+			
 			if ( dc_name != String.Empty ) {
 				foreach ( var k in inner_dc_dict ) {
 					if ( k.Key == dc_name ) {
 						if ( k.Value != null ) {
 							k.Value.AssignOwnerDB(this);
 							k.Value.BuildIndex();
-							k.Value.LoadRecords();
+							k.Value.LoadRecords( user );
 							return k.Value;
 						}
 					}
@@ -299,7 +305,7 @@ namespace DwarfDB.DataStructures
 				var chk_dc = chunk_manager.GetDataContainer( dc_name );
 				if ( chk_dc != null ) {
 					chk_dc.AssignOwnerDB(this);
-					chk_dc.LoadRecords();
+					chk_dc.LoadRecords( user );
 					return chk_dc;
 				}
 				// If we hadn't found DC with such name, we should write

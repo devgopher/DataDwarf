@@ -30,7 +30,6 @@ namespace AppSample
 			cm = new DwarfDB.ChunkManager.ChunkManager();
 			db = DataBase.LoadFrom("employees", cm);
 			dc_employee_load = db.GetDataContainer("employee");
-			dc_employee_load.AssignOwnerDB(db);
 			GridLoad();
 		}
 		
@@ -56,7 +55,7 @@ namespace AppSample
 			new_rec["Name"].Value = _name;
 			new_rec["Surname"].Value = _surname;
 			new_rec.Id = dc_employee_load.NextId();
-			dc_employee_load.AddRecord(new_rec);
+			dc_employee_load.AddRecordToStack(new_rec);
 			dc_employee_load.Save();
 			
 			GridLoad();

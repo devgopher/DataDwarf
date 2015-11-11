@@ -14,20 +14,21 @@ namespace DwarfDB.UnitTests
 	{
 		[TestCase(@"nunit_db", "nunit_container1")]
 		public static void CreateRecord( string db_name, string container_name ) {
+			var user = User.User.New( "root", "12345678");
 			var cm = new ChunkManager.ChunkManager();
 			var db = DataBase.LoadFrom( db_name, cm );
-			var dc = db.GetDataContainer( container_name );
+			var dc = db.GetDataContainer( container_name, user );
 			
 			// Creating a new record
 			var rec = new Record(dc);
 			rec["col1"].Value = "AAABBBCCC";
 			rec["col2"].Value = 20.390494;
 			rec.BuildIndex();
-			dc.AddRecord(rec);
+			dc.AddRecordToStack(rec);
 			
 			dc.Save();
 			
-			Assert.IsTrue( dc.GetRecords().Count >= 1 );
+			Assert.IsTrue( dc.GetRecordsInternal().Count >= 1 );
 		}
 		
 		[TestCase(@"nunit_db", "nunit_container1")]
@@ -37,7 +38,7 @@ namespace DwarfDB.UnitTests
 			var dc1 = new DataContainer( db1, container_name );
 			var rec1 = new Record( dc1 );
 			rec1.Id = 102;
-			rec1.BuildIndex();			
+			rec1.BuildIndex();
 			var hash_expected = "2D8C1282A16592B40656F06F80D75172";
 			
 			Assert.AreEqual( hash_expected, rec1.GetIndex().HashCode );

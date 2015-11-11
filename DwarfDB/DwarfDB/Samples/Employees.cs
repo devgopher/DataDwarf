@@ -18,6 +18,7 @@ namespace DwarfDB
 	{
 		public static void Employees() {
 			const string db_name= "employees";
+			var user = User.User.New( "root", "12345678");
 			DataBase db = null;
 			DataContainer dc_employee = null;
 			DataContainer dc_positions = null;
@@ -28,28 +29,28 @@ namespace DwarfDB
 			if (DataBase.Exists(db_name)) {
 				db = DataBase.LoadFrom( db_name, cm );
 			} else {
-				var user = User.User.New( "root", "12345678");
+
 				db = DataBase.Create( db_name, cm );
 				db.AddAccess( user, Access.AccessLevel.ADMIN );
 				DataContainer.Create( db, "employee", user );
 				DataContainer.Create( db, "positions", user );
 				DataContainer.Create( db, "divisions", user );
 				
-				dc_employee = db.GetDataContainer("employee");
-				dc_positions = db.GetDataContainer("positions");
-				dc_divisions = db.GetDataContainer("divisions");
+				dc_employee = db.GetDataContainer("employee", user);
+				dc_positions = db.GetDataContainer("positions", user);
+				dc_divisions = db.GetDataContainer("divisions", user);
 				
-				dc_employee.AddColumn( new Column( DataType.INT, "EmplId" ) );
-				dc_employee.AddColumn( new Column( DataType.STRING, "Surname" ) );
-				dc_employee.AddColumn( new Column( DataType.STRING, "Name" ) );
-				dc_employee.AddColumn( new Column( DataType.INT, "PosId" ) );
-				dc_employee.AddColumn( new Column( DataType.INT, "DivId" ) );
+				dc_employee.AddColumn( new Column( DataType.INT, "EmplId" ), user );
+				dc_employee.AddColumn( new Column( DataType.STRING, "Surname" ), user );
+				dc_employee.AddColumn( new Column( DataType.STRING, "Name" ), user );
+				dc_employee.AddColumn( new Column( DataType.INT, "PosId" ), user );
+				dc_employee.AddColumn( new Column( DataType.INT, "DivId" ), user );
 				
-				dc_positions.AddColumn( new Column( DataType.INT, "PosId" ) );
-				dc_positions.AddColumn( new Column( DataType.STRING, "Name" ) );
+				dc_positions.AddColumn( new Column( DataType.INT, "PosId" ), user );
+				dc_positions.AddColumn( new Column( DataType.STRING, "Name" ), user );
 
-				dc_divisions.AddColumn( new Column( DataType.INT, "DivId" ) );
-				dc_divisions.AddColumn( new Column( DataType.STRING, "Name" ) );
+				dc_divisions.AddColumn( new Column( DataType.INT, "DivId"), user );
+				dc_divisions.AddColumn( new Column( DataType.STRING, "Name"), user );
 				
 				
 				dc_employee.Save();
@@ -63,14 +64,14 @@ namespace DwarfDB
 			Console.WriteLine("Filling our db...");
 			Console.WriteLine("Loading db \""+db_name+"\"");
 			Console.WriteLine("Loading container \"employee\"");
-			DataContainer dc_employee_load = db.GetDataContainer( "employee" );
+			DataContainer dc_employee_load = db.GetDataContainer( "employee", user );
 			Console.WriteLine("Adding records into \"employee\"");
 			
-			dc_employee_load.PreLoad();
+			dc_employee_load.PreLoad( user );
 			
 			// viewing existing records
 			Console.WriteLine("Now, let's see our employees list: ");
-			foreach ( var rec in dc_employee_load.GetRecords() ) {
+			foreach ( var rec in dc_employee_load.GetRecordsInternal() ) {
 				Console.WriteLine( String.Format("Name: {0}, Surname: {1}",
 				                                 rec["Name"].Value.ToString(),
 				                                 rec["Surname"].Value.ToString())  );
@@ -89,7 +90,7 @@ namespace DwarfDB
 				tmp["Surname"].Value = surname;
 				tmp.Id = ++rec_id;
 				
-				if (!dc_employee_load.AddRecord(tmp)) {
+				if (!dc_employee_load.AddRecordToStack(tmp)) {
 					Console.WriteLine("Failed! Press \"Y\" - to enter an another employee");
 					if (  Console.ReadKey().Key != ConsoleKey.N )
 						continue;
