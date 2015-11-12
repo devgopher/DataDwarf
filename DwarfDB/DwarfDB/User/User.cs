@@ -5,6 +5,7 @@
  */
 using System;
 using System.IO;
+using System.Collections.Generic;
 
 namespace DwarfDB.User
 {
@@ -63,7 +64,7 @@ namespace DwarfDB.User
 			user.Credentials = new UserCredentials();
 			user.Credentials.Login = login;
 			user.Credentials.Password = passwd;
-			AddToUsersList( user );
+			SaveToUsersList( user );
 			return user;
 		}
 		
@@ -89,19 +90,47 @@ namespace DwarfDB.User
 		}
 		
 		/// <summary>
-		/// Adding a new user to userlist file
+		/// Adding a new user to a userlist file
 		/// </summary>
 		/// <param name="_user"></param>
-		private static void AddToUsersList( User _user ) {
+		private static void SaveToUsersList( User _user ) {
 			CreateUsersList();
-			if ( FindLogin(_user.Credentials.Login) == null ) {
+			CreateBackup();
+			var fl = FindLogin(_user.Credentials.Login);
+			var usr_strg = _user.Credentials.Login + ":" + _user.Credentials.hashed_pwd;
+			if ( fl == null ) {
 				using ( var fs = new FileStream( users_file_path, FileMode.Append, FileAccess.Write ) ) {
 					var sw = new StreamWriter( fs );
-					var strg = _user.Credentials.Login + ":" + _user.Credentials.hashed_pwd;
-					sw.WriteLine(strg);
+					sw.WriteLine(usr_strg);
+					sw.Close();
+				}
+			} else {
+				using ( var fs = new FileStream( users_file_path, FileMode.Append, FileAccess.Write ) ) {
+					var sw = new StreamWriter( fs );
+					sw.BaseStream.Position = fl.Value;
+					sw.WriteLine(usr_strg);
 					sw.Close();
 				}
 			}
+		}
+		
+		private void CreateBackup() {
+			int numb = 0;
+			if ( File.Exists( users_file_path ) ) {
+				File.Copy( users_file_path, users_file_path + "0.bak" );
+				while ( File.Exists( users_file_path + numb.ToString() + ".bak" ) ) {
+					++numb;
+					File.Copy( users_file_path, users_file_path + numb.ToString() + ".bak" );
+				}
+			}
+		}
+		
+		/// <summary>
+		/// Adding a new user to a userlist file
+		/// </summary>
+		/// <param name="_user"></param>
+		private static void ChangePassword( User _user, string new_password ) {
+			_user.Credentials.Password = new_password;
 		}
 		
 		/*	private static void RemoveFromUsersList( User _user ) {
@@ -113,25 +142,26 @@ namespace DwarfDB.User
 				}
 			}
 		}
-		*/
+		 */
 		
 		/// <summary>
 		/// Seeking for a given login in userlist file
 		/// </summary>
 		/// <param name="login"></param>
 		/// <returns></returns>
-		private static string FindLogin( string login ) {
+		private static KeyValuePair<string, long> FindLogin( string login ) {
 			using ( var fs = new FileStream( users_file_path, FileMode.Open, FileAccess.Read ) ) {
 				var sr = new StreamReader( fs );
 				string strg = String.Empty;
-				int strg_number = 0;
+				long strg_pos = -1;
 				while ( (strg = sr.ReadLine()) != null ) {
 					var tmp = strg.Split(':');
-					++strg_number;
 					if ( tmp.Length > 1 )
 						if ( tmp[0].Trim() == login.Trim() )
-							return strg;
+							return new KeyValuePair<string, long>(strg, strg_pos++);
+					strg_pos = sr.BaseStream.Position;
 				}
+				
 			}
 			return null;
 		}
