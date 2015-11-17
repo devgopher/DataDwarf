@@ -18,7 +18,7 @@ namespace DwarfDB.AccessFunctions
 		public AccessFile( DataBase _db ) {
 			if ( _db != null ) {
 				db = _db;
-				filepath = db.DbPath+"/_"+db.Name+".access";
+				filepath = db.DbPath+"/_db_"+db.Name+".access";
 			} else
 				throw new AccessException( " Database is not defined! " );
 		}
@@ -30,7 +30,7 @@ namespace DwarfDB.AccessFunctions
 				if ( dc.GetOwnerDB() == null )
 					throw new AccessException( " Database is not defined for this datacontainer! " );
 				
-				filepath = db.DbPath+"/_"+dc.Name+".access";
+				filepath = dc.GetOwnerDB().DbPath+"/_dc_"+dc.Name+".access";
 			}
 		}
 		

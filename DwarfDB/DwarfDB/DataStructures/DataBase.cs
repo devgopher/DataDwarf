@@ -147,6 +147,7 @@ namespace DwarfDB.DataStructures
 			
 			// If we're setting admin rights => we need to set it on all of
 			// DCs under this DB
+			UpdateDataContainers();
 			if ( _level == Access.AccessLevel.ADMIN ) {
 				foreach ( DataContainer dc in inner_dc_dict.Values ) {
 					dc.AddAccess( _user, _level );
@@ -232,6 +233,7 @@ namespace DwarfDB.DataStructures
 		/// Loading and updating data containers list for DB
 		/// </summary>
 		private void UpdateDataContainers() {
+			chunk_manager.ClearAllIndexes();
 			chunk_manager.LoadDCIndexes(this);
 			chunk_manager.LoadRecordIndexes();
 			var indexes = chunk_manager.AllIndexes;

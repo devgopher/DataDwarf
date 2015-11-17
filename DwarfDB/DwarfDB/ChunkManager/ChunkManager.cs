@@ -423,6 +423,10 @@ namespace DwarfDB.ChunkManager
 			return ret;
 		}
 		
+		public void ClearAllIndexes() {
+			all_indexes.Clear();
+		}
+		
 		public void LoadDCIndexes( DataBase db ) {
 			var filepath = CurrentDbPath+@"/indexes.dw";
 			var rgx = new Regex(@"(.*):DataContainer:(.*):(.*)");
@@ -460,7 +464,6 @@ namespace DwarfDB.ChunkManager
 			var rgx = new Regex(@"Record:Record:(.*):(.*)");
 			
 			if ( File.Exists(filepath) ) {
-				all_indexes.Clear();
 				using ( var fs = File.OpenRead( filepath )) {
 					var sr = new StreamReader( fs );
 					string line = sr.ReadLine();
