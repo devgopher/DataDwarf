@@ -46,7 +46,7 @@ namespace DwarfDB.Global
 					var obj = ( dwarf_obj as DataContainer );
 					chk_lvl = obj.GetLevel( user );
 				} else if ( dwarf_obj is DataBase ) {
-					var obj = ( dwarf_obj as DataContainer );
+					var obj = ( dwarf_obj as DataBase );
 					chk_lvl = obj.GetLevel( user );
 				} else
 					return false;

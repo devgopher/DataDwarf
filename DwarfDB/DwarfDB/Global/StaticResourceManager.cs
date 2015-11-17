@@ -6,6 +6,7 @@
 using System;
 using System.Resources;
 using System.Reflection;
+using System.Globalization;
 
 namespace DwarfDB.Global
 {
@@ -14,7 +15,7 @@ namespace DwarfDB.Global
 	/// </summary>
 	public static class StaticResourceManager
 	{
-		private static readonly ResourceManager string_manager = new ResourceManager("DwarfDB.Strings", Assembly.GetExecutingAssembly());
+		private static readonly ResourceManager string_manager = new ResourceManager("DwarfDB.resources.Strings", Assembly.GetExecutingAssembly());
 		
 		static StaticResourceManager()
 		{
@@ -26,7 +27,7 @@ namespace DwarfDB.Global
 		}
 		
 		public static string GetStringResource( string res_name ) {
-			return string_manager.GetString(res_name);
+			return string_manager.GetString( res_name );
 		}		
 	}
 }

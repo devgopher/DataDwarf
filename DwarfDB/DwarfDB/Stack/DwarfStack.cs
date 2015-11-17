@@ -71,17 +71,13 @@ namespace DwarfDB.Stack
 		
 		public new void Push( IStructure dta_struct ) {
 			string new_index_hash = dta_struct.GetIndex().HashCode;
-			//		lock ( idx_hashes ) {
 			if ( !idx_hashes.Contains( new_index_hash ) )
 				idx_hashes.Add( new_index_hash );
-			//	}
-			
-			//	lock ( records_list ) {
+
 			if ( dta_struct is Record ) {
 				records_list.Add( dta_struct as Record );
 				Modified = true;
 			}
-			//		}
 			base.Push(dta_struct);
 		}
 		
@@ -200,7 +196,7 @@ namespace DwarfDB.Stack
 		}
 		
 		/// <summary>
-		/// Is stack elements array modified?
+		/// Are stack elements array modified?
 		/// </summary>
 		public bool Modified {
 			get; private set;

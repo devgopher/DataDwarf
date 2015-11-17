@@ -18,7 +18,7 @@ namespace DwarfDB
 	{
 		public static void Employees() {
 			const string db_name= "employees";
-			var user = User.User.New( "root", "12345678");
+			var user = User.User.Get( "root" );
 			DataBase db = null;
 			DataContainer dc_employee = null;
 			DataContainer dc_positions = null;

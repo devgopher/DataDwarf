@@ -10,7 +10,7 @@ using System.Collections.Generic;
 namespace DwarfDB.User
 {
 	/// <summary>
-	/// Description of User.
+	/// A class for users representation
 	/// </summary>
 	public class User
 	{
@@ -40,7 +40,7 @@ namespace DwarfDB.User
 		public static User Get( string login ) {
 			var strg = FindLogin( login );
 			if ( strg != null ) {
-				var tmp = strg.Split(':');
+				var tmp = strg.Item1.Split(':');
 				var user = new User();
 				user.Credentials.Login = login;
 				user.Credentials.hashed_pwd = tmp[1];
@@ -57,7 +57,8 @@ namespace DwarfDB.User
 		/// <returns></returns>
 		public static User New( string login, string passwd ) {
 			if ( FindLogin( login ) != null ) {
-				Errors.ErrorProcessing.Display("User with a such login already exists!", "Adding a new user", "", DateTime.Now);
+				Errors.ErrorProcessing.Display("User with a such login already exists!", "Adding a new user", 
+				                               "", DateTime.Now);
 				return Get( login );
 			}
 			var user = new User();
@@ -107,14 +108,14 @@ namespace DwarfDB.User
 			} else {
 				using ( var fs = new FileStream( users_file_path, FileMode.Append, FileAccess.Write ) ) {
 					var sw = new StreamWriter( fs );
-					sw.BaseStream.Position = fl.Value;
+					sw.BaseStream.Position = fl.Item2;
 					sw.WriteLine(usr_strg);
 					sw.Close();
 				}
 			}
 		}
 		
-		private void CreateBackup() {
+		static private void CreateBackup() {
 			int numb = 0;
 			if ( File.Exists( users_file_path ) ) {
 				File.Copy( users_file_path, users_file_path + "0.bak" );
@@ -149,7 +150,7 @@ namespace DwarfDB.User
 		/// </summary>
 		/// <param name="login"></param>
 		/// <returns></returns>
-		private static KeyValuePair<string, long> FindLogin( string login ) {
+		private static Tuple<string, long> FindLogin( string login ) {
 			using ( var fs = new FileStream( users_file_path, FileMode.Open, FileAccess.Read ) ) {
 				var sr = new StreamReader( fs );
 				string strg = String.Empty;
@@ -158,7 +159,7 @@ namespace DwarfDB.User
 					var tmp = strg.Split(':');
 					if ( tmp.Length > 1 )
 						if ( tmp[0].Trim() == login.Trim() )
-							return new KeyValuePair<string, long>(strg, strg_pos++);
+							return Tuple.Create<string, long>(strg, strg_pos++);
 					strg_pos = sr.BaseStream.Position;
 				}
 				
