@@ -65,7 +65,7 @@ namespace DwarfDB
 			Console.WriteLine("Loading db \""+db_name+"\"");
 			Console.WriteLine("Loading container \"employee\"");
 			
-			db.AddAccess( user, Access.AccessLevel.ADMIN );
+			//db.AddAccess( user, Access.AccessLevel.ADMIN );
 			
 			DataContainer dc_employee_load = db.GetDataContainer( "employee", user );
 			Console.WriteLine("Adding records into \"employee\"");

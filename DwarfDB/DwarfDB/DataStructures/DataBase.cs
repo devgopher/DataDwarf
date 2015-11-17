@@ -279,6 +279,13 @@ namespace DwarfDB.DataStructures
 			return false;
 		}
 		
+		private DataContainer RetDCAccess( DataContainer dc, User.User user) {
+			if ( !Global.CheckAccess.CheckWriteAccess(this, user) ) {
+				Errors.ErrorProcessing.Display( Global.StaticResourceManager.GetStringResource("ACCESS_REASON_DENIED_FOR_THIS_USER"));
+				return null;
+			}
+			return dc;			
+		}
 		
 		/// <summary>
 		/// Getting DataContainer by name
@@ -286,20 +293,14 @@ namespace DwarfDB.DataStructures
 		/// <param name="dc_name">DC name</param>
 		/// <returns></returns>
 		public DataContainer GetDataContainer( string dc_name, User.User user ) {
-			
-			if ( !Global.CheckAccess.CheckWriteAccess(this, user) ) {
-				Errors.ErrorProcessing.Display( Global.StaticResourceManager.GetStringResource("ACCESS_REASON_DENIED_FOR_THIS_USER"));
-				return null;
-			}
-			
 			if ( dc_name != String.Empty ) {
 				foreach ( var k in inner_dc_dict ) {
 					if ( k.Key == dc_name ) {
 						if ( k.Value != null ) {
 							k.Value.AssignOwnerDB(this);
 							k.Value.BuildIndex();
-							k.Value.LoadRecords( user );
-							return k.Value;
+							k.Value.LoadRecords( user );	
+							return RetDCAccess( k.Value, user );
 						}
 					}
 				}
@@ -308,7 +309,7 @@ namespace DwarfDB.DataStructures
 				if ( chk_dc != null ) {
 					chk_dc.AssignOwnerDB(this);
 					chk_dc.LoadRecords( user );
-					return chk_dc;
+					return RetDCAccess( chk_dc, user );
 				}
 				// If we hadn't found DC with such name, we should write
 				// an error

@@ -63,7 +63,7 @@ namespace DwarfDB.AccessFunctions
 			}
 		}
 		
-		public Access[] ReadAccessFile() {
+		public static Access[] ReadAccessFile( object dwarf_obj ) {
 			/*	Access[] ret = new Access[0];
 			using ( var fs = new FileStream( filepath, FileMode.Open, FileAccess.Read ) ) {
 				var sr = new StreamReader( fs );
