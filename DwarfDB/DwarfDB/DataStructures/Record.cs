@@ -137,9 +137,7 @@ namespace DwarfDB.DataStructures
 		/// Destroying an index for an element ( for deletion )
 		/// </summary>
 		public void DestroyIndex() {
-			if ( current_index != null ) {
-				current_index = null;
-			}
+			current_index = null;
 		}
 		
 		/// <summary>
@@ -265,6 +263,12 @@ namespace DwarfDB.DataStructures
 		public void AssignOwnerDC( DataContainer _owner_dc ) {
 			OwnerDC = _owner_dc;
 		}
+		
+		#region LinkProcessing
+		private bool is_link = false;
+		private string link_where = null;
+		private string link_constant_id = null;
+		#endregion
 		
 		protected Index current_index;
 		protected int position = -1;

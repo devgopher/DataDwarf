@@ -363,6 +363,11 @@ namespace DwarfDB.DataStructures
 			inner_dc_dict.Clear();
 		}
 		
+		#region LinkProcessing
+		private bool is_link = false;
+		private string link_where = null;
+		private string link_constant_id = null;
+		#endregion
 
 		DwarfDB.Stack.DwarfStack dbstack;
 		readonly List<User.User> user_list = new List<User.User>();

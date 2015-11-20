@@ -90,7 +90,8 @@ namespace DwarfDB.DataStructures
 					if ( prm == Permissions.CREATE_SUBS ) {
 						answer_msg = prm.ToString() + " - OK!";
 						return true;
-					} else if ( prm == Permissions.WRITE ) {
+					} 
+					if ( prm == Permissions.WRITE ) {
 						if ( user_level == Access.AccessLevel.ADMIN ||
 						    user_level == Access.AccessLevel.READ_WRITE ||
 						    user_level == Access.AccessLevel.READ_WRITE_DROP )

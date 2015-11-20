@@ -489,7 +489,7 @@ namespace DwarfDB.DataStructures
 		/// </summary>
 		/// <param name="i">index</param>
 		/// <returns></returns>
-		internal Record GetRecordInternal( int i ) {		
+		internal Record GetRecordInternal( int i ) {
 			if ( i >= AllRecordsCount ) {
 				Errors.ErrorProcessing.Display("Argument "+i.ToString()+" is out of range! ", "Getting  record", "", DateTime.Now);
 				return new DummyRecord( this );
@@ -712,6 +712,12 @@ namespace DwarfDB.DataStructures
 			
 			return next_id;
 		}
+		
+		#region LinkProcessing
+		private bool is_link = false;
+		private string link_where = null;
+		private string link_constant_id = null;
+		#endregion
 		
 		private List<Record> inner_records = new List<Record>();
 		protected Record enum_rec = null;
