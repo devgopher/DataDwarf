@@ -28,7 +28,7 @@ namespace DwarfDB.AccessFunctions
 				dc = _dc;
 				
 				if ( dc.GetOwnerDB() == null )
-					throw new AccessException( " Database is not defined for this datacontainer! " );
+					throw new AccessException( " Database is not defined for this DataСontainer! " );
 				
 				filepath = dc.GetOwnerDB().DbPath+"/_dc_"+dc.Name+".access";
 			}
@@ -63,22 +63,63 @@ namespace DwarfDB.AccessFunctions
 			}
 		}
 		
-		public static Access[] ReadAccessFile( object dwarf_obj ) {
-			/*	Access[] ret = new Access[0];
-			using ( var fs = new FileStream( filepath, FileMode.Open, FileAccess.Read ) ) {
-				var sr = new StreamReader( fs );
+		private static string GetAccessFilePath( object dwarf_obj ) {
+			var cfg = Config.Config.Instance;
+			if ( dwarf_obj == null )
+				return null;
+			
+			if ( dwarf_obj is DataBase ) {
+				var db_name = (dwarf_obj as DataBase).Name;
+				return cfg.DataDirectory+"/"+db_name+"/_db_"+db_name+".access";
+			}
+			
+			if ( dwarf_obj is DataContainer ) {
+				var dc = (dwarf_obj as DataContainer);
+				var dc_name = dc.Name;
+				var db_name = dc.GetOwnerDB().Name;
+				return cfg.DataDirectory+"/"+db_name+"/_dc_"+dc_name+".access";
+			}
+			
+			return null;
+		}
+		
+		public static Access[] ReadAccessFile( object dwarf_obj, User.User _user ) {
+			Access[] ret = new Access[0];
+			
+			var acc_filepath = GetAccessFilePath( dwarf_obj );
+
+			using ( var fs = new FileStream( acc_filepath, FileMode.Open, FileAccess.Read ) ) {
 				string strg = String.Empty;
+				var sr = new StreamReader( fs );
 				while ((strg = sr.ReadLine()) != null) {
-					User new_user = new User.User();
 					var tmp = strg.Split(':');
 					if ( tmp.Length == 2 ) {
-						new_user.
+						Access.AccessLevel al = Access.AccessLevel.DENIED;
+						
+						switch ( tmp[1] ) {
+							case "ADMIN":
+								al = Access.AccessLevel.ADMIN;
+								break;
+							case "READ_ONLY":
+								al = Access.AccessLevel.READ_ONLY;
+								break;
+							case "READ_WRITE":
+								al = Access.AccessLevel.READ_WRITE_DROP;
+								break;
+							case "READ_WRITE_DROP":
+								al = Access.AccessLevel.READ_WRITE_DROP;
+								break;
+						}
+						
+						var ret_acc = Access.Instance( _user, al, dwarf_obj );
+						Array.Resize(ref ret, ret.Length+1);
+						ret[ret.Length-1] = ret_acc;						
 					}
 				}
- 			}
-			 */
-			// TODO: reading an access file for a given object into an array
-			throw new NotImplementedException("Not implemented yet! Sorry!");
+				sr.Close();
+			}
+
+			return ret;
 		}
 		
 	}

@@ -57,7 +57,7 @@ namespace DwarfDB.DataStructures
 		/// <param name="_user"></param>
 		/// <returns></returns>
 		public Access.AccessLevel GetLevel( User.User _user ) {
-			AccessFile.ReadAccessFile( acc_object );
+			AccessFile.ReadAccessFile( acc_object, _user );
 			foreach ( var ac in accesses ) {
 				if ( ac.User.Credentials.Login == _user.Credentials.Login )
 					return ac.Level;
@@ -77,7 +77,7 @@ namespace DwarfDB.DataStructures
 		private bool CheckPermission( Permissions prm,
 		                             User.User _user,
 		                             ref string answer_msg ) {
-			AccessFile.ReadAccessFile( acc_object );
+			AccessFile.ReadAccessFile( acc_object, _user );
 			if ( !(acc_object is DataBase || acc_object is DataContainer) ) {
 				answer_msg = " This object must be a Database or a DataContainer! ";
 				return false;

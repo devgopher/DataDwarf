@@ -146,7 +146,7 @@ namespace DwarfDB.User
 		 */
 		
 		/// <summary>
-		/// Seeking for a given login in userlist file
+		/// Seeking for a given login in a userlist file
 		/// </summary>
 		/// <param name="login"></param>
 		/// <returns></returns>

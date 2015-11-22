@@ -91,7 +91,7 @@ namespace DwarfDB.AccessFunctions
 			// If we don't have => let's create a new Access instance and add it to our array
 			var new_acc = new Access( _user, _level, _object );
 			instances.Add( new_acc );
-			new_acc.Save();
+			//new_acc.Save();
 			return new_acc;
 		}
 		

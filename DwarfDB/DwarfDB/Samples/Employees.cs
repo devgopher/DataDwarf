@@ -68,6 +68,9 @@ namespace DwarfDB
 			//db.AddAccess( user, Access.AccessLevel.ADMIN );
 			
 			DataContainer dc_employee_load = db.GetDataContainer( "employee", user );
+			if ( dc_employee_load == null )
+				return;
+			
 			Console.WriteLine("Adding records into \"employee\"");
 			
 			dc_employee_load.PreLoad( user );
@@ -86,7 +89,7 @@ namespace DwarfDB
 				var tmp = new Record( dc_employee_load );
 				Console.WriteLine("Enter a new employee name: ");
 				var name = Console.ReadLine();
-				Console.WriteLine("surname: ");
+				Console.WriteLine("Surname: ");
 				var surname = Console.ReadLine();
 				
 				tmp["Name"].Value = name;
