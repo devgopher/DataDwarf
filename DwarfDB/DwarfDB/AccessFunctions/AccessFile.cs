@@ -9,6 +9,9 @@ using DwarfDB.DataStructures;
 
 namespace DwarfDB.AccessFunctions
 {
+	/// <summary>
+	/// A class for basic operations with ".access" files
+	/// </summary>
 	internal class AccessFile
 	{
 		string filepath = String.Empty;
@@ -83,8 +86,14 @@ namespace DwarfDB.AccessFunctions
 			return null;
 		}
 		
+		/// <summary>
+		/// Reading an access file to an array of "Access" objects
+		/// </summary>
+		/// <param name="dwarf_obj">An object, for which we need to get a set of accesses</param>
+		/// <param name="_user"></param>
+		/// <returns></returns>
 		public static Access[] ReadAccessFile( object dwarf_obj, User.User _user ) {
-			Access[] ret = new Access[0];
+			var ret = new Access[0];
 			
 			var acc_filepath = GetAccessFilePath( dwarf_obj );
 
