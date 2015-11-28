@@ -8,7 +8,6 @@
 
 using System;
 using System.Text;
-using System.Security.Cryptography;
 using System.Net.NetworkInformation;
 
 namespace DwarfDB

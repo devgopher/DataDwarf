@@ -10,7 +10,7 @@ using DwarfDB.AccessFunctions;
 namespace DwarfDB.Global
 {
 	/// <summary>
-	/// A static class for a simplified access check
+	/// A static class for simplified access check
 	/// </summary>
 	public static class CheckAccess
 	{

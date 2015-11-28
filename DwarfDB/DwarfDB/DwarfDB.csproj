@@ -124,6 +124,7 @@
     <Compile Include="Extensions\DwarfLinq.cs" />
     <Compile Include="Global\StaticResourceManager.cs" />
     <Compile Include="Links\ILink.cs" />
+    <Compile Include="Links\RecordLink.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Samples\DataBaseSample.cs" />
@@ -156,6 +157,10 @@
     <ProjectReference Include="..\..\..\Newtonsoft.Json\Src\Newtonsoft.Json\Newtonsoft.Json.csproj">
       <Project>{EEEA67F9-9089-481D-A4DC-0966DEC9FD7D}</Project>
       <Name>Newtonsoft.Json</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\DwarfServer\DwarfServer.csproj">
+      <Project>{01776743-16BC-418E-B7C3-60C24D93E6D8}</Project>
+      <Name>DwarfServer</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
