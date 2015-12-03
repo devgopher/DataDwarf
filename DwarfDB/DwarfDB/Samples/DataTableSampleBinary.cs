@@ -123,9 +123,8 @@ namespace DwarfDB
 							sw.Write( chr );
 						sw.Close();
 					}
-					
-					
 				}
+				
 				if (rc2 != null && !(rc2 is DummyRecord))
 					Console.WriteLine ("Val: " + rc2.Fields [0].Value.ToString ());
 				if (rc3 != null && !(rc3 is DummyRecord))
