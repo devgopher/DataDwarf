@@ -13,10 +13,10 @@ namespace DwarfDB.Links
 	/// </summary>
 	public class RecordLink : ILink
 	{
-		DwarfServer server = null;
-		public RecordLink( DwarfServer _server )
+		//DwarfServer server = null;
+		public RecordLink( object _server )
 		{
-			server = _server;
+		//	server = _server;
 		}
 		
 		public ILink Create( string reference ) {

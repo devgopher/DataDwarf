@@ -33,11 +33,14 @@ namespace DwarfDB
 				Console.WriteLine("Creating DB...");
 				var db = DataBase.Create( db_name,
 				                         chunk_manager );
-				
+				User.User new_usr = User.User.New( "root", "12345678" );
+				db.AddAccess( new_usr, DwarfDB.AccessFunctions.Access.AccessLevel.ADMIN);
 				Console.WriteLine("Creating DC...");
 				
 				var dc = new DataContainer( db, "DataC1" );
+				dc.AddAccess( new_usr, DwarfDB.AccessFunctions.Access.AccessLevel.ADMIN);
 				var dc2 = new DataContainer( db, "DataC2" );
+				dc2.AddAccess( new_usr, DwarfDB.AccessFunctions.Access.AccessLevel.ADMIN);
 				
 				for ( int i = 0; i < cols_count; ++i ) {
 					var column = new Column();

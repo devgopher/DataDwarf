@@ -60,5 +60,11 @@
       <Name>DwarfDB</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Listener" />
+    <Folder Include="QueryProcessor" />
+    <Folder Include="Respondent" />
+    <Folder Include="UnitTests" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

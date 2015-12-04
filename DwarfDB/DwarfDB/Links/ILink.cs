@@ -4,6 +4,7 @@
  * Time: 23:42
  */
 using System;
+using DwarfDB.DataStructures;
 
 namespace DwarfDB.Links
 {

@@ -38,8 +38,12 @@ namespace DwarfDB.AccessFunctions
 		}
 		
 		public void CreateAccessFile() {
-			if ( !File.Exists( filepath ) )
-				using ( var fs = File.Create( filepath ) ) {};
+			CreateAccessFile(filepath);
+		}
+		
+		public static void CreateAccessFile( string acc_filepath ) {
+			if ( !File.Exists( acc_filepath ) )
+				using ( var fs = File.Create( acc_filepath ) ) {};
 		}
 
 		public void Save() {
@@ -97,37 +101,48 @@ namespace DwarfDB.AccessFunctions
 			
 			var acc_filepath = GetAccessFilePath( dwarf_obj );
 
+			if ( !File.Exists( acc_filepath ) )
+			{
+				CreateAccessFile(acc_filepath);
+			}
+			
+			string contents = String.Empty;
+			
 			using ( var fs = new FileStream( acc_filepath, FileMode.Open, FileAccess.Read ) ) {
 				string strg = String.Empty;
 				var sr = new StreamReader( fs );
-				while ((strg = sr.ReadLine()) != null) {
-					var tmp = strg.Split(':');
-					if ( tmp.Length == 2 ) {
-						Access.AccessLevel al = Access.AccessLevel.DENIED;
-						
-						switch ( tmp[1] ) {
-							case "ADMIN":
-								al = Access.AccessLevel.ADMIN;
-								break;
-							case "READ_ONLY":
-								al = Access.AccessLevel.READ_ONLY;
-								break;
-							case "READ_WRITE":
-								al = Access.AccessLevel.READ_WRITE_DROP;
-								break;
-							case "READ_WRITE_DROP":
-								al = Access.AccessLevel.READ_WRITE_DROP;
-								break;
-						}
-						
-						var ret_acc = Access.Instance( _user, al, dwarf_obj );
-						Array.Resize(ref ret, ret.Length+1);
-						ret[ret.Length-1] = ret_acc;						
-					}
-				}
+				
+				contents = sr.ReadToEnd();
 				sr.Close();
 			}
-
+			
+			var contents_splitted = contents.Replace("\r",String.Empty).Split('\n');
+			
+			foreach ( var strg in contents_splitted ) {
+				var tmp = strg.Split(':');
+				if ( tmp.Length == 2 ) {
+					Access.AccessLevel al = Access.AccessLevel.DENIED;
+					
+					switch ( tmp[1] ) {
+						case "ADMIN":
+							al = Access.AccessLevel.ADMIN;
+							break;
+						case "READ_ONLY":
+							al = Access.AccessLevel.READ_ONLY;
+							break;
+						case "READ_WRITE":
+							al = Access.AccessLevel.READ_WRITE_DROP;
+							break;
+						case "READ_WRITE_DROP":
+							al = Access.AccessLevel.READ_WRITE_DROP;
+							break;
+					}
+					
+					var ret_acc = Access.Instance( _user, al, dwarf_obj );
+					Array.Resize(ref ret, ret.Length+1);
+					ret[ret.Length-1] = ret_acc;
+				}
+			}
 			return ret;
 		}
 		

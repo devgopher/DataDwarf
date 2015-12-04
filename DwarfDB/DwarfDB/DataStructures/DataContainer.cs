@@ -336,8 +336,6 @@ namespace DwarfDB.DataStructures
 			foreach ( var rec in records ) {
 				this.RemoveRecord( rec, user );
 			}
-			
-			//this.Save();
 		}
 		
 		public bool RemoveRecord( Record rem_rec, User.User user ) {
