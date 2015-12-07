@@ -13,7 +13,9 @@ namespace DwarfDB.Links
 	/// </summary>
 	public interface ILink
 	{
-		ILink Create( string reference );
+		ILink Create( string db_name, 
+		             string dc_name, 
+		             string rec_hash );
 		IStructure Get();
 		void Drop();		
 	}

@@ -366,8 +366,6 @@ namespace DwarfDB.DataStructures
 			 */
 			
 			throw new NotImplementedException( "RebuildIndexes and record deletion process in whole should be rethinked!" );
-			
-			return true;
 		}
 		
 		public bool AddRecordToStack( Record new_rec ) {

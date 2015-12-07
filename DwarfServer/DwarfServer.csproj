@@ -55,16 +55,10 @@
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DataDwarf\DwarfDB\DwarfDB\DwarfDB.csproj">
-      <Project>{D4E12558-0D40-48D4-899D-0A098F986CB2}</Project>
-      <Name>DwarfDB</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Listener" />
-    <Folder Include="QueryProcessor" />
-    <Folder Include="Respondent" />
-    <Folder Include="UnitTests" />
+    <Folder Include="Listener\" />
+    <Folder Include="QueryProcessor\" />
+    <Folder Include="Respondent\" />
+    <Folder Include="UnitTests\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
