@@ -14,9 +14,9 @@ namespace DwarfDB.Links
 	public class RecordLink : ILink
 	{
 		//DwarfServer server = null;
-		public RecordLink( object _server )
+		public RecordLink( object _client )
 		{
-		//	server = _server;
+		
 		}
 		
 		public ILink Create( string reference ) {
@@ -28,7 +28,13 @@ namespace DwarfDB.Links
 		}
 		
 		
+		/// <summary>
+		/// This function asks DwarfClient to receive copy of a real
+		/// record
+		/// </summary>
+		/// <returns></returns>
 		public IStructure Get() {
+			
 			return inner_record;
 		}
 		
@@ -38,5 +44,9 @@ namespace DwarfDB.Links
 		
 		// inner copy of a remote record
 		private Record inner_record = null;
+		
+		private string db_name = String.Empty;
+		private string dc_name = String.Empty;
+		private string rec_hash = String.Empty;
 	}
 }
