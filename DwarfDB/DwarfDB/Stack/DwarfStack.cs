@@ -62,7 +62,8 @@ namespace DwarfDB.Stack
 			Modified = true;
 			if ( _db != null )
 				db = _db;
-			parallel_opts.MaxDegreeOfParallelism = Environment.ProcessorCount*4;
+
+			parallel_opts.MaxDegreeOfParallelism = Environment.ProcessorCount;
 		}
 		
 		private bool IsCapable( IStructure dta_struct ) {
@@ -104,18 +105,18 @@ namespace DwarfDB.Stack
 		/// </summary>
 		/// <param name="dc">A data container</param>
 		/// <returns></returns>
-		public List<Record> GetRecords( DataStructures.DataContainer dc ) {
+		public List<Record> GetRecords( DataContainer dc ) {
 			try {
 				if ( this.Modified ) {
-					var ret = new ConcurrentBag<Record>();
+					//var ret = new ConcurrentBag<Record>();
+					var ret = new BlockingCollection<Record>( dc.AllRecordsCount * 2 );
 					var tmp_stack = new ConcurrentStack<IStructure>(); // A temporary stack
 					IStructure tmp = null;
 					
 					int element_count = this.Count;
 					
-					//	Parallel.For( 0, element_count, parallel_opts, ( int cntr ) => {
 					for ( int cntr = 0; cntr <= element_count; ++cntr) {
-						if  (this.TryPop( out tmp )) {
+						if  ( this.TryPop( out tmp ) ) {
 							// Looking for needed records
 							if ( tmp is Record ) {
 								if ( ( tmp as Record ).OwnerDC == dc &&  ( tmp as Record ).Id >= 0 ) {
@@ -124,7 +125,7 @@ namespace DwarfDB.Stack
 							}
 							
 							// If this record is not what we need - let's put it back
-							// in the temporary stack
+							// to the temporary stack
 							tmp_stack.Push( tmp );
 						}
 					};

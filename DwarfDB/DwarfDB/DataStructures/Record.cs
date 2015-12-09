@@ -227,17 +227,21 @@ namespace DwarfDB.DataStructures
 			position = -1;
 		}
 		
+		private const int couple_size = 300;
+		
 		public bool MoveNext() {
 			position++;
-			if ( (OwnerDC.StackRecordsCount() - position < 2 ) &&
-			    OwnerDC.StackRecordsCount()< OwnerDC.AllRecordsCount) {
-				var diff = OwnerDC.AllRecordsCount - OwnerDC.StackRecordsCount();
-				if ( diff < 30 )
+			var stack_rec_cnt = OwnerDC.StackRecordsCount();
+			var all_rec_cnt = OwnerDC.AllRecordsCount;
+			if ( ( stack_rec_cnt - position < 2 ) &&
+			    	 stack_rec_cnt < all_rec_cnt ) {
+				var diff = all_rec_cnt - stack_rec_cnt;
+				if ( diff < couple_size )
 					OwnerDC.AddNextCoupleOfRecordsToStack(diff);
 				else
-					OwnerDC.AddNextCoupleOfRecordsToStack(30);
+					OwnerDC.AddNextCoupleOfRecordsToStack(couple_size);
 			}
-			return ( position < OwnerDC.AllRecordsCount );
+			return ( position < all_rec_cnt );
 		}
 		#endregion
 		

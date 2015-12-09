@@ -509,6 +509,7 @@ namespace DwarfDB.DataStructures
 		/// for making some additional operations safely
 		/// </summary>
 		/// <param name="i">index</param>
+		/// <param name="user">user</param>
 		/// <returns></returns>
 		public Record GetRecord( int i, User.User user ) {
 			if ( !Global.CheckAccess.CheckReadAccess( this, user ) ) {
@@ -535,7 +536,6 @@ namespace DwarfDB.DataStructures
 			return Records[i];
 		}
 		
-		
 		/// <summary>
 		/// Getting Records
 		/// </summary>
@@ -550,7 +550,7 @@ namespace DwarfDB.DataStructures
 		}
 		
 		/// <summary>
-		/// Getting Records
+		/// Getting Records  ( no authentification! )
 		/// </summary>
 		/// <returns></returns>
 		internal List<Record> GetRecordsInternal() {

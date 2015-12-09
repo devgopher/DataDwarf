@@ -101,8 +101,7 @@ namespace DwarfDB.AccessFunctions
 			
 			var acc_filepath = GetAccessFilePath( dwarf_obj );
 
-			if ( !File.Exists( acc_filepath ) )
-			{
+			if ( !File.Exists( acc_filepath ) ) {
 				CreateAccessFile(acc_filepath);
 			}
 			

@@ -102,9 +102,13 @@ namespace DwarfDB
 				
 				var dc2 = chunk_manager.GetDataContainer( "DataC1" );
 				var dc = chunk_manager.GetDataContainer( "DataC2" );
+				
+	
+				
 				dc2.AssignOwnerDB(db2);
 				dc.AssignOwnerDB(db2);
-				
+				Console.WriteLine("DC2 reccount:  "+dc2.AllRecordsCount);
+				Console.WriteLine("DC reccount:  "+dc.AllRecordsCount);						
 				//Console.WriteLine("Preloading DC1...");
 				//dc.PreLoad(user);
 				//Console.WriteLine("Preloading DC2...");
@@ -116,9 +120,9 @@ namespace DwarfDB
 				Record rc2 = null;
 				Record rc3 = null;
 				Record rc4 = null;
-				
+				/*
 				var get_time = Checks.ExecutionTimeCheck.DoCheck(() => {
-				                                                 	rc = dc2.GetRecord(2030, user);
+				                                                 	rc = dc2.GetRecord(230, user);
 				                                                 });
 				var get_time2 = Checks.ExecutionTimeCheck.DoCheck(() => {
 				                                                  	rc1 = dc2.GetRecord(10, user);
@@ -133,17 +137,17 @@ namespace DwarfDB
 				                                                   	rc4 = dc.GetRecord(7900, user);
 				                                                   });
 
-				var get_time2t = Checks.ExecutionTimeCheck.DoCheck(() => {
-				                                                   	rc4 = dc.GetRecord(18000, user);
-				                                                   });
+				//		var get_time2t = Checks.ExecutionTimeCheck.DoCheck(() => {
+				//		                                                   	rc4 = dc.GetRecord(18000, user);
+				//		                                                   });
 				Console.WriteLine("Getting value time1, ms: "+get_time.ToString());
 
 				Console.WriteLine("Getting value time2, ms: "+get_time2.ToString());
 				Console.WriteLine("Getting value time3, ms: "+get_time3.ToString());
 				Console.WriteLine("Getting value time4, ms: "+get_time4.ToString());
 				Console.WriteLine("Getting value time2s, ms: "+get_time2s.ToString());
-				Console.WriteLine("Getting value time2t, ms: "+get_time2t.ToString());
-				
+				//	Console.WriteLine("Getting value time2t, ms: "+get_time2t.ToString());
+				*/
 				if ( rc1 != null &&  !(rc is DummyRecord))
 					Console.WriteLine("Val: "+rc1.Fields[0].Value.ToString());
 				if ( rc2 != null && !(rc2 is DummyRecord) )
@@ -158,33 +162,51 @@ namespace DwarfDB
 					where x.Fields[0].Value.ToString().Contains("итру")
 					select x;
 				
-				var aa = query.ToList();
+				dc.PreLoad(user);
+				
+				/*var aa = query.ToArray();
 				foreach ( var rec in aa) {
-					Console.WriteLine("Rec:"+rec.Fields[0].Type+"  :  "+rec.Fields[0].Value+" $$"+aa.Count);
+					Console.WriteLine("Rec:"+rec.Fields[0].Type+"  :  "+rec.Fields[0].Value+" $$"+aa.Count());
+				}*/
+				
+				foreach ( var rec in dc.GetRecords( user )) {
+					Console.WriteLine("Rec:"+rec.Fields[0].Type+"  :  "+rec.Fields[0].Value+" $$"+dc.AllRecordsCount);
 				}
 
 				Console.WriteLine("Trying LINQ #2...");
 				var aa1 = dc.Select((x,y)=>x).Where( (x) => {
 				                                    	return x.Fields[1].Type == DataType.INT &&
 				                                    		(int.Parse(x.Fields[1].Value.ToString()) % 3 == 0);
-				                                    }).ToList();
+				                                    }).ToArray();
 
 				foreach ( var rec in aa1) {
-					Console.WriteLine("Rec:"+rec.Fields[0].Type+"  :  "+rec.Fields[0].Value+" $$"+aa1.Count+
-					                  ":"+rec.Fields[1].Type+"  :  "+rec.Fields[1].Value+" $$"+aa1.Count);
+					Console.WriteLine("Rec:"+rec.Fields[0].Type+"  :  "+rec.Fields[0].Value+" $$"+aa1.Count()+
+					                  ":"+rec.Fields[1].Type+"  :  "+rec.Fields[1].Value+" $$"+aa1.Count());
 				}
 
-
 				Console.WriteLine("Trying LINQ #3...");
-				var aa2 = from rec in dc
+				var aa2 = dc.Select((x,y)=>x).Where( (x) => {
+				                                    	return x.Fields[1].Type == DataType.INT &&
+				                                    		(int.Parse(x.Fields[1].Value.ToString()) % 5 == 0);
+				                                    }).ToArray();
+
+				foreach ( var rec in aa2) {
+					Console.WriteLine("Rec:"+rec.Fields[0].Type+"  :  "+rec.Fields[0].Value+" $$"+aa1.Count()+
+					                  ":"+rec.Fields[1].Type+"  :  "+rec.Fields[1].Value+" $$"+aa1.Count());
+				}
+				
+				
+				Console.WriteLine("Trying LINQ #4 (dc & dc2)...");
+				dc2.PreLoad(user);
+				var aa3 = (from rec in dc
 					join recb in dc2 on
 					rec.Fields[1].Value.ToString() equals recb.Fields[1].Value.ToString()
 					where rec.Fields[1].Type == DataType.INT && recb.Fields[1].Type == DataType.INT
-					select rec;
+					select rec).ToArray();
 
-				foreach ( var rec in aa2 ) {
-					Console.WriteLine("Rec:"+rec.Fields[0].Type+"  :  "+rec.Fields[0].Value+" $$"+aa2.Count()+
-					                  ":"+rec.Fields[1].Type+"  :  "+rec.Fields[1].Value+" $$"+aa2.Count());
+				foreach ( var rec in aa3 ) {
+					Console.WriteLine("Rec:"+rec.Fields[0].Type+"  :  "+rec.Fields[0].Value+" $$"+aa3.Count()+
+					                  ":"+rec.Fields[1].Type+"  :  "+rec.Fields[1].Value+" $$"+aa3.Count());
 				}
 				
 				Console.WriteLine("DO YOU WANT TO DROP THIS DB (Y/N)?");
