@@ -26,7 +26,7 @@ namespace DwarfDB.DataStructures
 			Name = info.GetString( "Name" );
 			inner_dc_dict = (Dictionary<string,DataContainer>)
 				(info.GetValue( "inner_dc_dict", typeof(Dictionary<string,DataContainer>)));
-			Stack = new DwarfDB.Stack.DataStorage( this );
+			MemStorage = new DwarfDB.Stack.DataStorage( this );
 		}
 		
 		public void GetObjectData(SerializationInfo info, StreamingContext ctxt) {
@@ -40,7 +40,7 @@ namespace DwarfDB.DataStructures
 		protected DataBase( string db_name, ChunkManager.ChunkManager _cm, bool is_new_db)
 		{
 			local_am = new DSAccessManager( this );
-			Stack = new DwarfDB.Stack.DataStorage( this );
+			MemStorage = new DwarfDB.Stack.DataStorage( this );
 			
 			if ( _cm != null )
 				chunk_manager = _cm;
@@ -116,7 +116,7 @@ namespace DwarfDB.DataStructures
 			}
 			
 			// Cleaning memory
-			this.Stack.Clear();
+			this.MemStorage.Clear();
 			
 			// Cleaning files
 			var cpath = Config.Config.Instance.DataDirectory+this.Name;
@@ -258,7 +258,7 @@ namespace DwarfDB.DataStructures
 				if ( CheckDCNameUnique( new_dc.Name )) {
 					// TODO: loading data new container into stack and file chunks
 					inner_dc_dict.Add( new_dc.Name, new_dc );
-					Stack.Push( new_dc );
+					MemStorage.Add( new_dc );
 					new_dc.AssignOwnerDB(this);
 					// Don't try to save new_dc in this method!
 					return true;
@@ -346,7 +346,7 @@ namespace DwarfDB.DataStructures
 		}
 		
 		[JsonIgnore]
-		public Stack.DataStorage Stack {
+		public Stack.DataStorage MemStorage {
 			get {
 				return dbstack;
 			} private set {

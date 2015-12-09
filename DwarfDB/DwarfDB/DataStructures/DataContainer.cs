@@ -386,7 +386,7 @@ namespace DwarfDB.DataStructures
 			
 			new_rec.BuildIndex();
 			new_rec.OwnerDC = this;
-			owner_db.Stack.Push( new_rec );
+			owner_db.MemStorage.Add( new_rec );
 			return true;
 		}
 		
@@ -677,10 +677,10 @@ namespace DwarfDB.DataStructures
 		[JsonIgnore]
 		protected List<Record> Records {
 			get {
-				DwarfDB.Stack.DataStorage stack = GetOwnerDB().Stack;
+				DwarfDB.Stack.DataStorage stack = GetOwnerDB().MemStorage;
 				
 				if ( stack != null ) {
-					inner_records = stack.GetRecords( this );
+					inner_records = stack.GetRecords( this ).ToList();
 				}
 				
 				return inner_records;
