@@ -57,7 +57,8 @@ namespace DwarfDB.DataStructures
 		/// <param name="_user"></param>
 		/// <returns></returns>
 		public Access.AccessLevel GetLevel( User.User _user ) {
-			AccessFile.ReadAccessFile( acc_object, _user );
+			var new_acc_array = AccessFile.ReadAccessFile( acc_object, _user );
+			accesses.AddRange(new_acc_array);
 			foreach ( var ac in accesses ) {
 				if ( ac.User.Credentials.Login == _user.Credentials.Login )
 					return ac.Level;
