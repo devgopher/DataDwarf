@@ -677,7 +677,7 @@ namespace DwarfDB.DataStructures
 		[JsonIgnore]
 		protected List<Record> Records {
 			get {
-				DwarfDB.Stack.DwarfStack stack = GetOwnerDB().Stack;
+				DwarfDB.Stack.DataStorage stack = GetOwnerDB().Stack;
 				
 				if ( stack != null ) {
 					inner_records = stack.GetRecords( this );

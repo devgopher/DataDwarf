@@ -26,7 +26,7 @@ namespace DwarfDB.DataStructures
 			Name = info.GetString( "Name" );
 			inner_dc_dict = (Dictionary<string,DataContainer>)
 				(info.GetValue( "inner_dc_dict", typeof(Dictionary<string,DataContainer>)));
-			Stack = new DwarfDB.Stack.DwarfStack( this );
+			Stack = new DwarfDB.Stack.DataStorage( this );
 		}
 		
 		public void GetObjectData(SerializationInfo info, StreamingContext ctxt) {
@@ -40,7 +40,7 @@ namespace DwarfDB.DataStructures
 		protected DataBase( string db_name, ChunkManager.ChunkManager _cm, bool is_new_db)
 		{
 			local_am = new DSAccessManager( this );
-			Stack = new DwarfDB.Stack.DwarfStack( this );
+			Stack = new DwarfDB.Stack.DataStorage( this );
 			
 			if ( _cm != null )
 				chunk_manager = _cm;
@@ -346,7 +346,7 @@ namespace DwarfDB.DataStructures
 		}
 		
 		[JsonIgnore]
-		public Stack.DwarfStack Stack {
+		public Stack.DataStorage Stack {
 			get {
 				return dbstack;
 			} private set {
@@ -369,7 +369,7 @@ namespace DwarfDB.DataStructures
 		private string link_constant_id = null;
 		#endregion
 
-		DwarfDB.Stack.DwarfStack dbstack;
+		DwarfDB.Stack.DataStorage dbstack;
 		readonly List<User.User> user_list = new List<User.User>();
 		readonly Dictionary< String, DataContainer > inner_dc_dict = new Dictionary<String, DataContainer>();
 	}

@@ -130,7 +130,7 @@
     <Compile Include="Samples\DataBaseSample.cs" />
     <Compile Include="Samples\DataTableSample.cs" />
     <Compile Include="Samples\Employees.cs" />
-    <Compile Include="Stack\DwarfStack.cs" />
+    <Compile Include="MemStorage\DataStorage.cs" />
     <Compile Include="TransactionJournals\TransactionJournals.cs" />
     <Compile Include="Transactions\DwarfTransaction.cs" />
     <Compile Include="UnitTests\DataContainerTest.cs" />

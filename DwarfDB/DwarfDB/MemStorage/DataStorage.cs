@@ -19,18 +19,18 @@ namespace DwarfDB.Stack
 	/// Exception for data stacks
 	/// </summary>
 	[Serializable]
-	public class DataStackException : Exception
+	public class DataStorageException : Exception
 	{
-		public DataStackException()
+		public DataStorageException()
 		{
 		}
 		
-		public DataStackException(string reason) : base("DataStack: "+ reason)
+		public DataStorageException(string reason) : base("DataStack: "+ reason)
 		{
 			Init();
 		}
 
-		public DataStackException( string reason,
+		public DataStorageException( string reason,
 		                          Exception innerException) : base( "DataStack: "+ reason, innerException)
 		{
 			Init();
@@ -47,7 +47,7 @@ namespace DwarfDB.Stack
 		}
 		
 		// This constructor is needed for serialization.
-		protected DataStackException(SerializationInfo info, StreamingContext context) : base(info, context)
+		protected DataStorageException(SerializationInfo info, StreamingContext context) : base(info, context)
 		{
 		}
 	}
@@ -55,9 +55,9 @@ namespace DwarfDB.Stack
 	/// <summary>
 	/// A stack for improving an access to dwarf records
 	/// </summary>
-	public class DwarfStack : ConcurrentStack<IStructure>
+	public class DataStorage
 	{
-		public DwarfStack( DataBase _db )
+		public DataStorage( DataBase _db )
 		{
 			Modified = true;
 			if ( _db != null )
