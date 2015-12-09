@@ -107,10 +107,6 @@ namespace DwarfDB
 				dc.AssignOwnerDB(db2);
 				Console.WriteLine("DC2 reccount:  "+dc2.AllRecordsCount);
 				Console.WriteLine("DC reccount:  "+dc.AllRecordsCount);
-				//Console.WriteLine("Preloading DC1...");
-				//dc.PreLoad(user);
-				//Console.WriteLine("Preloading DC2...");
-				//dc2.PreLoad(user);
 
 				// Getting a record
 				Record rc = null;
@@ -168,7 +164,7 @@ namespace DwarfDB
 					Console.WriteLine("Rec:"+rec.Fields[0].Type+"  :  "+rec.Fields[0].Value+" $$"+aa.Count());
 				}*/
 					
-					foreach ( var rec in dc.GetRecords( user )) {
+				foreach ( var rec in dc.GetRecords( user )) {
 					Console.WriteLine("Rec:"+rec.Fields[0].Type+"  :  "+rec.Fields[0].Value+" $$"+dc.AllRecordsCount);
 				}
 

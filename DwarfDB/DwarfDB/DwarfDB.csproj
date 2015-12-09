@@ -50,6 +50,8 @@
         <Command type="BeforeExecute" command="cp ${ProjectDir}/testdata/* ${TargetPath} | rm -r -f obj" workingdir="${ProjectFile}" externalConsole="True" />
       </CustomCommands>
     </CustomCommands>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <Optimize>false</Optimize>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <WarningLevel>4</WarningLevel>
@@ -166,10 +168,7 @@
   <ItemGroup>
     <EmbeddedResource Include="resources\Strings.resx" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Links" />
-    <Folder Include="testdata\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="ProfilingSessions\Session20151209_114303.sdps" />
     <Content Include="ProfilingSessions\Session20151209_123143.sdps" />
@@ -178,5 +177,11 @@
     <Content Include="ProfilingSessions\Session20151209_162503.sdps" />
     <Content Include="ProfilingSessions\Session20151209_163218.sdps" />
     <Content Include="ProfilingSessions\Session20151209_163635.sdps" />
+    <Content Include="ProfilingSessions\Session20151209_231420.sdps" />
+    <Content Include="ProfilingSessions\Session20151209_233814.sdps" />
+    <Content Include="ProfilingSessions\Session20151209_234051.sdps" />
+    <Content Include="ProfilingSessions\Session20151209_234657.sdps" />
+    <Content Include="ProfilingSessions\Session20151209_234906.sdps" />
+    <Content Include="ProfilingSessions\Session20151209_235324.sdps" />
   </ItemGroup>
 </Project>

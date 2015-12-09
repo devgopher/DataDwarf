@@ -74,7 +74,7 @@ namespace DwarfDB.Stack
 			}
 		}
 		
-		new public bool TryRemove( IStructure data ) {
+		public bool TryRemove( IStructure data ) {
 			if ( items_dict.ContainsKey(data.GetIndex().HashCode) ) {
 				IStructure dummy = null;
 				return items_dict.TryRemove( data.GetIndex().HashCode, out dummy);
@@ -140,8 +140,7 @@ namespace DwarfDB.Stack
 			}
 			return null;
 		}
-
-
+        
 		/// <summary>
 		/// Are stack elements array modified?
 		/// </summary>

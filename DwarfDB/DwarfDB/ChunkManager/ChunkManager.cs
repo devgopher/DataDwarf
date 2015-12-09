@@ -461,25 +461,20 @@ namespace DwarfDB.ChunkManager
 		/// </summary>
 		public void LoadRecordIndexes() {
 			var filepath = CurrentDbPath+@"/indexes.dw";
-			var rgx = new Regex(@"Record:Record:(.*):(.*)");
-			
+			var seek_str = "Record:Record:";
 			if ( File.Exists(filepath) ) {
 				using ( var fs = File.OpenRead( filepath )) {
 					var sr = new StreamReader( fs );
 					string line = sr.ReadLine();
 					while ( line != null ) {
-						if ( line.IndexOf("Record:Record:", 0, StringComparison.CurrentCulture) == 0 ) {
-							if ( rgx.IsMatch(line ) ) {
-								var mtc = rgx.Matches( line );
-								if ( mtc[0].Groups.Count > 0 ) {
-									var own_dc_hash = mtc[0].Groups[2].Value;
-									var rec_hash = mtc[0].Groups[1].Value;
-									var idx = Index.CreateFromHashCode( rec_hash );
-									
-									all_indexes.TryAdd( idx,
-									                   new KeyValuePair<IStructure, string>(DummyRecord.Create(own_dc_hash, conn_db), own_dc_hash));
-								}
-							}
+						if ( line.IndexOf( seek_str ) == 0 ) {
+							var rec_hash = line.Substring(
+								line.IndexOf(seek_str)+seek_str.Length, 32 );
+							var own_dc_hash = line.Substring(line.IndexOf(rec_hash+":")+33, 32);
+							var idx = Index.CreateFromHashCode( rec_hash );
+							
+							all_indexes.TryAdd( idx,
+							                   new KeyValuePair<IStructure, string>(DummyRecord.Create(own_dc_hash, conn_db), own_dc_hash));
 						}
 						line = sr.ReadLine();
 					}
