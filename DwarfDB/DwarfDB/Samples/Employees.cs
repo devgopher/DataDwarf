@@ -37,6 +37,7 @@ namespace DwarfDB
 				DataContainer.Create( db, "divisions", user );
 				
 				dc_employee = db.GetDataContainer("employee", user);
+				dc_employee.AddAccess( user, Access.AccessLevel.ADMIN );
 				dc_positions = db.GetDataContainer("positions", user);
 				dc_divisions = db.GetDataContainer("divisions", user);
 				

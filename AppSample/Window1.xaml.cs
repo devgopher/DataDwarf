@@ -19,7 +19,7 @@ namespace AppSample
 		private DwarfDB.ChunkManager.ChunkManager cm = null;
 		private DataBase db = null;
 		private DataContainer dc_employee_load = null;
-		
+		public static GradientConverter gc = new GradientConverter();
 		public AppSampleWindow()
 		{
 			InitializeComponent();
@@ -27,14 +27,18 @@ namespace AppSample
 		}
 		
 		private void Load() {
+			DwarfDB.User.User user = DwarfDB.User.User.New( "root", "12345678" );;
+			
 			cm = new DwarfDB.ChunkManager.ChunkManager();
 			db = DataBase.LoadFrom("employees", cm);
-			dc_employee_load = db.GetDataContainer("employee");
+			dc_employee_load = db.GetDataContainer("employee", user);
 			GridLoad();
 		}
 		
 		private void GridLoad() {
-			var items_query = from x in dc_employee_load.GetRecords()
+			DwarfDB.User.User user = DwarfDB.User.User.New( "root", "12345678" );;
+			
+			var items_query = from x in dc_employee_load.GetRecords(user)
 				orderby x.Id ascending
 				select new  {
 				id = x.Id,
@@ -66,15 +70,16 @@ namespace AppSample
 			try {
 				var cellInfo=EmployeeGrid.SelectedCells[0];
 				var cls = cellInfo.Column.GetCellContent(cellInfo.Item);
+				DwarfDB.User.User user = DwarfDB.User.User.New( "root", "12345678" );;
 				
-				var query = from x in dc_employee_load.GetRecords()
+				var query = from x in dc_employee_load.GetRecords(user)
 					where x.Id == Int64.Parse((cls as System.Windows.Controls.TextBlock).Text)
 					select x;
 				
 				var tt = query.ToArray();
 				if ( tt.Any() ) {
 					var rec = tt[0];
-					dc_employee_load.RemoveRecord(rec);
+					dc_employee_load.RemoveRecord(rec, user);
 					dc_employee_load.Save();
 				}
 			} catch ( Exception ex ) {

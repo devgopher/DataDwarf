@@ -1,48 +1,54 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Window
-	x:Class="AppSample.AppSampleWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	x:Class="AppSample.AppSampleWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:AppSample="clr-namespace:AppSample"
 	Title="DwarfDB App Sample"
-	Height="416"
-	Width="464">
+	Height="412"
+	Width="614">
+	<Window.Resources>
+		<AppSample:GradientConverter
+			x:Key="gradientConverter" />
+	</Window.Resources>
 	<Grid
 		Height="381"
-		Width="456">
+		Width="614"
+		Background="{Binding Source='White-Green', Converter={StaticResource gradientConverter}}">
 		<TextBox
 			Text="input..."
 			x:Name="name"
-			Grid.Column="1"
+			Grid.Column="0"
 			Grid.Row="0"
 			HorizontalAlignment="Stretch"
 			VerticalAlignment="Stretch"
-			Margin="27.6,7.39999999999998,34,346.2" />
+			Margin="97,7,34,347" />
 		<DataGrid
 			x:Name="EmployeeGrid"
-			Width="438"
+			Background="{Binding Source='Gray-White', Converter={StaticResource gradientConverter}}"
 			Height="269"
+			Width="570"
 			Grid.Column="0"
-			Grid.ColumnSpan="2"
 			Grid.Row="0"
 			HorizontalAlignment="Left"
 			VerticalAlignment="Bottom"
-			Margin="9,0,0,7.80000000000001" />
+			Margin="9,0,0,8" />
 		<TextBox
 			Text="input..."
 			x:Name="surname"
-			Grid.Column="1"
+			Grid.Column="0"
 			Grid.Row="0"
 			HorizontalAlignment="Stretch"
 			VerticalAlignment="Stretch"
-			Margin="27.2000000000001,38,34.3999999999999,315.6" />
+			Margin="97,38,35,316" />
 		<Label
 			Width="130"
 			Height="30"
+			x:Name="label1"
+			Content="Name:"
+			RenderTransformOrigin="-0.3846,1.5"
 			Grid.Column="0"
 			Grid.Row="0"
 			HorizontalAlignment="Right"
 			VerticalAlignment="Top"
-			Margin="0,8,311,0"
-			x:Name="label1"
-			Content="Name:" />
+			Margin="0,36.5,452,0" />
 		<Label
 			x:Name="label2"
 			Content="Surname:"
@@ -52,40 +58,33 @@
 			Grid.Row="0"
 			HorizontalAlignment="Left"
 			VerticalAlignment="Top"
-			Margin="31,8,0,0" />
+			Margin="31,8,0,0"
+			Grid.RowSpan="2" />
 		<Button
 			Content="Add"
 			x:Name="GoOn"
 			Click="GoOn_Click"
 			Height="23"
 			Width="81.200000000000045"
+			FontWeight="Bold"
+			BorderBrush="#FF000000"
 			Grid.Column="0"
 			Grid.Row="0"
 			HorizontalAlignment="Right"
 			VerticalAlignment="Top"
-			Margin="0,77,8.59999999999999,0"
-			FontWeight="Bold"
-			BorderBrush="#FF000000" />
+			Margin="0,74,35,0" />
 		<Button
 			x:Name="Delete"
 			Content="Delete"
 			Click="Delete_Click"
 			Height="23"
-			Width="81"
-			Grid.Column="1"
-			Grid.Row="0"
-			HorizontalAlignment="Right"
-			VerticalAlignment="Top"
-			Margin="0,76.8,268.4,0"
 			BorderBrush="#FF000000"
-			RenderTransformOrigin="0.5,0.5" />
-		<Grid.ColumnDefinitions>
-			<ColumnDefinition
-				Width="0.214788732394367*" />
-			<ColumnDefinition
-				Width="0.781891135395885*" />
-			<ColumnDefinition
-				Width="0.00332013220974892*" />
-		</Grid.ColumnDefinitions>
+			RenderTransformOrigin="0.5,0.5"
+			Grid.Column="0"
+			Grid.Row="0"
+			VerticalAlignment="Top"
+			Width="81"
+			HorizontalAlignment="Left"
+			Margin="8,73.5,0,0" />
 	</Grid>
 </Window>
