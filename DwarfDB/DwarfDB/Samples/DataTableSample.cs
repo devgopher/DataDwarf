@@ -6,7 +6,6 @@
 using System;
 using System.Linq;
 using DwarfDB.DataStructures;
-using DwarfDB.ChunkManager;
 using System.Collections.Generic;
 
 namespace DwarfDB
@@ -133,16 +132,12 @@ namespace DwarfDB
 				                                                   	rc4 = dc.GetRecord(7900, user);
 				                                                   });
 
-				//		var get_time2t = Checks.ExecutionTimeCheck.DoCheck(() => {
-				//		                                                   	rc4 = dc.GetRecord(18000, user);
-				//		                                                   });
-				Console.WriteLine("Getting value time1, ms: "+get_time.ToString());
+                Console.WriteLine("Getting value time1, ms: "+get_time.ToString());
 
 				Console.WriteLine("Getting value time2, ms: "+get_time2.ToString());
 				Console.WriteLine("Getting value time3, ms: "+get_time3.ToString());
 				Console.WriteLine("Getting value time4, ms: "+get_time4.ToString());
 				Console.WriteLine("Getting value time2s, ms: "+get_time2s.ToString());
-				//	Console.WriteLine("Getting value time2t, ms: "+get_time2t.ToString());
 				
 				if ( rc1 != null &&  !(rc is DummyRecord))
 					Console.WriteLine("Val: "+rc1.Fields[0].Value.ToString());
@@ -154,15 +149,6 @@ namespace DwarfDB
 					Console.WriteLine("Val: "+rc4.Fields[0].Value.ToString());
 				
 				Console.WriteLine("Trying LINQ #1...");
-				/*var query = from x in dc
-						where x.Fields[0].Value.ToString().Contains("итру")
-					select x;
-
-				
-				var aa = query.ToArray();
-				foreach ( var rec in aa) {
-					Console.WriteLine("Rec:"+rec.Fields[0].Type+"  :  "+rec.Fields[0].Value+" $$"+aa.Count());
-				}*/
 					
 				foreach ( var rec in dc.GetRecords( user )) {
 					Console.WriteLine("Rec:"+rec.Fields[0].Type+"  :  "+rec.Fields[0].Value+" $$"+dc.AllRecordsCount);
