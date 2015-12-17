@@ -25,7 +25,7 @@ namespace DwarfDB.ChunkManager
 			RECORD = 0,
 			DATACONTAINER = 1,
 			DB = 2,
-			REMOVED = 3 
+			REMOVED = 3
 		}
 		
 		public string ElemDB {
@@ -229,6 +229,25 @@ namespace DwarfDB.ChunkManager
 				return null;
 		}
 		
+		private static Random randg = new Random(DateTime.Now.Millisecond);
+		
+		private static string CreateTemporaryFile( string orig_filepath ) {
+			string tmp_filepath = orig_filepath + ".tmp" + randg.Next().ToString();
+			
+			while ( File.Exists(tmp_filepath) ) {
+				tmp_filepath += randg.Next().ToString();
+			}
+			File.Copy( orig_filepath, tmp_filepath );
+			return tmp_filepath;
+		}
+		
+		private static void DeleteTemporaryFile( string tmp_filepath ) {
+			if ( File.Exists(tmp_filepath) ) {
+				File.Delete(tmp_filepath);
+			}
+
+		}
+		
 		/// <summary>
 		/// Getting all records from the chunk
 		/// </summary>
@@ -236,7 +255,12 @@ namespace DwarfDB.ChunkManager
 		/// <param name="dc_hash">DataContainer hash</param>
 		public static List<Record> GetRecordsInFile( string filepath, string dc_hash ) {
 			var ret = new List<Record>();
-			using (var json_reader = new JsonTextReader(new StreamReader(File.Open( filepath, FileMode.Open )))) {
+			
+			var tmp_path = CreateTemporaryFile( filepath );
+			
+			FileStream fstream = File.Open( tmp_path, FileMode.Open );
+			
+			using (var json_reader = new JsonTextReader(new StreamReader(fstream))) {
 				json_reader.SupportMultipleContent = true;
 				var item = new InnerChunkElement();
 				while ( json_reader.Read() ) {
@@ -249,6 +273,8 @@ namespace DwarfDB.ChunkManager
 					}
 				}
 			}
+
+			DeleteTemporaryFile( tmp_path );
 			return ret;
 		}
 		
@@ -318,7 +344,7 @@ namespace DwarfDB.ChunkManager
 				}
 			}
 			return ret_arr;
-		}		
+		}
 		
 		/// <summary>
 		/// Removing an item to a chunk file in multithread mode
@@ -342,7 +368,7 @@ namespace DwarfDB.ChunkManager
 					int str_hash_pos = buf.IndexOf(tmp_el_hash, StringComparison.InvariantCultureIgnoreCase);
 					if ( str_hash_pos > -1 )
 						needed_idx_pos = str_hash_pos+15;
-					if ( str_elem_type_pos > -1 ) 
+					if ( str_elem_type_pos > -1 )
 						needed_elem_type_pos = str_elem_type_pos + 15;
 				}
 			}

@@ -5,6 +5,7 @@
  */
 using System;
 using System.Linq;
+using System.Threading;
 using DwarfDB.DataStructures;
 using System.Collections.Generic;
 
@@ -61,7 +62,7 @@ namespace DwarfDB
 					dc2.AddColumn( column, user );
 				}
 				
-				for ( int k =0; k< rows_count; ++k ) {
+				for ( int k = 0; k < rows_count; ++k ) {
 					var rec1 = new Record( dc );
 					var rec2 = new Record( dc2 );
 					rec1.Id = dc.NextId();
@@ -114,7 +115,12 @@ namespace DwarfDB
 				Record rc3 = null;
 				Record rc4 = null;
 				
-				dc.PreLoad(user);
+				
+				Thread tp1 = new Thread(()=>{dc.PreLoad(user);});
+				Thread tp2 = new Thread(()=>{dc2.PreLoad(user);});
+				
+				tp1.Start();
+				tp2.Start();
 				
 				var get_time = Checks.ExecutionTimeCheck.DoCheck(() => {
 				                                                 	rc = dc2.GetRecord(230, user);
@@ -132,7 +138,7 @@ namespace DwarfDB
 				                                                   	rc4 = dc.GetRecord(7900, user);
 				                                                   });
 
-                Console.WriteLine("Getting value time1, ms: "+get_time.ToString());
+				Console.WriteLine("Getting value time1, ms: "+get_time.ToString());
 
 				Console.WriteLine("Getting value time2, ms: "+get_time2.ToString());
 				Console.WriteLine("Getting value time3, ms: "+get_time3.ToString());
@@ -149,7 +155,7 @@ namespace DwarfDB
 					Console.WriteLine("Val: "+rc4.Fields[0].Value.ToString());
 				
 				Console.WriteLine("Trying LINQ #1...");
-					
+				
 				foreach ( var rec in dc.GetRecords( user )) {
 					Console.WriteLine("Rec:"+rec.Fields[0].Type+"  :  "+rec.Fields[0].Value+" $$"+dc.AllRecordsCount);
 				}
@@ -178,7 +184,7 @@ namespace DwarfDB
 				
 				
 				Console.WriteLine("Trying LINQ #4 (dc & dc2)...");
-				dc2.PreLoad(user);
+
 				var aa3 = (from rec in dc
 				           join recb in dc2 on
 				           rec.Fields[1].Value.ToString() equals recb.Fields[1].Value.ToString()
