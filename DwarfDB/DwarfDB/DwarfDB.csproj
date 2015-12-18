@@ -183,5 +183,6 @@
     <Content Include="ProfilingSessions\Session20151209_234657.sdps" />
     <Content Include="ProfilingSessions\Session20151209_234906.sdps" />
     <Content Include="ProfilingSessions\Session20151209_235324.sdps" />
+    <Content Include="ProfilingSessions\Session20151218_114859.sdps" />
   </ItemGroup>
 </Project>

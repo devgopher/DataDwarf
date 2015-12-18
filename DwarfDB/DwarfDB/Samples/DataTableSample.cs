@@ -122,7 +122,7 @@ namespace DwarfDB
 				tp1.Start();
 				tp2.Start();
 				
-				var get_time = Checks.ExecutionTimeCheck.DoCheck(() => {
+				/*var get_time = Checks.ExecutionTimeCheck.DoCheck(() => {
 				                                                 	rc = dc2.GetRecord(230, user);
 				                                                 });
 				var get_time2 = Checks.ExecutionTimeCheck.DoCheck(() => {
@@ -158,7 +158,7 @@ namespace DwarfDB
 				
 				foreach ( var rec in dc.GetRecords( user )) {
 					Console.WriteLine("Rec:"+rec.Fields[0].Type+"  :  "+rec.Fields[0].Value+" $$"+dc.AllRecordsCount);
-				}
+				}*/
 
 				Console.WriteLine("Trying LINQ #2...");
 				var aa1 = dc.Select((x,y)=>x).Where( (x) => {
@@ -170,7 +170,7 @@ namespace DwarfDB
 					Console.WriteLine("Rec:"+rec.Fields[0].Type+"  :  "+rec.Fields[0].Value+" $$"+aa1.Count()+
 					                  ":"+rec.Fields[1].Type+"  :  "+rec.Fields[1].Value+" $$"+aa1.Count());
 				}
-
+/*
 				Console.WriteLine("Trying LINQ #3...");
 				var aa2 = dc.Select((x,y)=>x).Where( (x) => {
 				                                    	return x.Fields[1].Type == DataType.INT &&
@@ -200,6 +200,7 @@ namespace DwarfDB
 				if ( Console.ReadLine() == "Y" ) {
 					db2.Drop( user );
 				}
+				*/
 			}
 		}
 	}

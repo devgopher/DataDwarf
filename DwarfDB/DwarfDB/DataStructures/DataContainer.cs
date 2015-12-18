@@ -70,7 +70,7 @@ namespace DwarfDB.DataStructures
 			}
 		}
 		
-		private string name = "";
+		private string name = String.Empty;
 		private DataType type = DataType.UNDEF;
 	}
 	
@@ -435,7 +435,6 @@ namespace DwarfDB.DataStructures
 		/// <summary>
 		/// Load Element from file chunk
 		/// </summary>
-		/// <param name="filepath"></param>
 		/// <param name="index"></param>
 		public void Load( Index index ){
 			// TODO!!
@@ -569,7 +568,7 @@ namespace DwarfDB.DataStructures
 
 					all_rec_count = (indexes.Where( ( idxs ) => {
 					                               	return idxs.Value.Value == this.GetIndex().HashCode;
-					                               } )).Count();
+					                               })).Count();
 				}
 				return all_rec_count;
 			}

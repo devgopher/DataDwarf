@@ -200,10 +200,14 @@ namespace DwarfDB.ChunkManager
 		/// <param name="filepath">path to file</param>
 		/// <param name="hash">hash</param>
 		public static IStructure GetItem( string filepath, string hash ) {
-			using (var json_reader = new JsonTextReader(new StreamReader(File.Open( filepath, FileMode.Open )))) {
+			var tmp_path = CreateTemporaryFile( filepath );
+			IStructure ret_item = null;
+			using (var json_reader = new JsonTextReader(new StreamReader(File.Open( tmp_path, FileMode.Open )))) {
 				json_reader.SupportMultipleContent = true;
-				return GetItemInfile( json_reader, hash );
+				ret_item = GetItemInfile( json_reader, hash );
 			}
+			DeleteTemporaryFile( tmp_path );	
+			return ret_item;
 		}
 		
 		/// <summary>
@@ -249,7 +253,7 @@ namespace DwarfDB.ChunkManager
 		}
 		
 		/// <summary>
-		/// Getting all records from the chunk
+		/// Getting all records from a chunk
 		/// </summary>
 		/// <param name="filepath">path to file</param>
 		/// <param name="dc_hash">DataContainer hash</param>
@@ -284,7 +288,10 @@ namespace DwarfDB.ChunkManager
 		/// <param name="filepath">path to file</param>
 		/// <param name="dc_name">DC name</param>
 		public static DataContainer GetDCInFile( string filepath, string dc_name ) {
-			using (var json_reader = new JsonTextReader(new StreamReader(File.Open( filepath, FileMode.Open )))) {
+			
+			var tmp_path = CreateTemporaryFile( filepath );
+			
+			using (var json_reader = new JsonTextReader(new StreamReader(File.Open( tmp_path, FileMode.Open )))) {
 				json_reader.SupportMultipleContent = true;
 				var item = new InnerChunkElement();
 				while ( json_reader.Read() ) {
@@ -299,6 +306,8 @@ namespace DwarfDB.ChunkManager
 					}
 				}
 			}
+			
+			DeleteTemporaryFile( tmp_path );
 			return null;
 		}
 		
@@ -333,7 +342,9 @@ namespace DwarfDB.ChunkManager
 		public static IStructure[] GetItemRange( string filepath, Index[] idx_arr ) {
 			var ret_arr = new IStructure[0];
 
-			using (var json_reader = new JsonTextReader(new StreamReader(File.Open( filepath, FileMode.Open )))) {
+			var tmp_path = CreateTemporaryFile( filepath );
+			
+			using (var json_reader = new JsonTextReader(new StreamReader(File.Open( tmp_path, FileMode.Open )))) {
 				json_reader.SupportMultipleContent = true;
 				foreach ( var index in idx_arr ) {
 					var elem = GetItemInfile( json_reader, index );
@@ -343,6 +354,9 @@ namespace DwarfDB.ChunkManager
 					}
 				}
 			}
+			
+			DeleteTemporaryFile( tmp_path );
+			
 			return ret_arr;
 		}
 		

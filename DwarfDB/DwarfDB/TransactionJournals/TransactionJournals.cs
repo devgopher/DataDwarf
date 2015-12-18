@@ -20,6 +20,4 @@ namespace DwarfDB.TransactionJournals
 		protected List<DwarfDB.DataStructures.IStructure> journal_objects = new List<DwarfDB.DataStructures.IStructure>();
 		
 	}
-	
-	
 }
