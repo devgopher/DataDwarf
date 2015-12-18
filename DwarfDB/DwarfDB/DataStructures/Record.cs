@@ -141,15 +141,6 @@ namespace DwarfDB.DataStructures
 		}
 		
 		/// <summary>
-		/// Load Record from file chunk directory
-		/// </summary>
-		/// <param name="filepath"></param>
-		/// <param name="index"></param>
-		public void LoadFromChunkDir( string dirpath, Index index ) {
-			// TODO
-		}
-		
-		/// <summary>
 		/// Element id
 		/// </summary>
 		public Int64 Id { get; set; }
@@ -222,26 +213,18 @@ namespace DwarfDB.DataStructures
 			}
 		}
 		
+		private int all_rec_cnt = 0;
+		private int stack_rec_cnt = 0;
+		
 		public void Reset() {
 			position = -1;
+
+			all_rec_cnt = OwnerDC.AllRecordsCount;
+			stack_rec_cnt = OwnerDC.StackRecordsCount();
 		}
-		
-		private const int couple_size = 300;
 		
 		public bool MoveNext() {
 			position++;
-			var stack_rec_cnt = OwnerDC.StackRecordsCount();
-			var all_rec_cnt = OwnerDC.AllRecordsCount;
-			
-			if ( ( stack_rec_cnt - position < 2 ) &&
-			    	 stack_rec_cnt < all_rec_cnt ) {
-				var diff = all_rec_cnt - stack_rec_cnt;
-				if ( diff < couple_size )
-					OwnerDC.AddNextCoupleOfRecordsToStack(diff);
-				else
-					OwnerDC.AddNextCoupleOfRecordsToStack(couple_size
-					                                     );
-			}
 			return ( position < all_rec_cnt );
 		}
 		#endregion

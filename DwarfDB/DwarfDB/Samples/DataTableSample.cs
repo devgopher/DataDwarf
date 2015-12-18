@@ -115,12 +115,16 @@ namespace DwarfDB
 				Record rc3 = null;
 				Record rc4 = null;
 				
-				
+				Console.WriteLine("DCs preloading... ");				
 				Thread tp1 = new Thread(()=>{dc.PreLoad(user);});
 				Thread tp2 = new Thread(()=>{dc2.PreLoad(user);});
 				
 				tp1.Start();
 				tp2.Start();
+				
+				while (tp1.ThreadState == ThreadState.Running && tp2.ThreadState == ThreadState.Running) {
+					Thread.Sleep(100);
+				}
 				
 				/*var get_time = Checks.ExecutionTimeCheck.DoCheck(() => {
 				                                                 	rc = dc2.GetRecord(230, user);
@@ -170,7 +174,7 @@ namespace DwarfDB
 					Console.WriteLine("Rec:"+rec.Fields[0].Type+"  :  "+rec.Fields[0].Value+" $$"+aa1.Count()+
 					                  ":"+rec.Fields[1].Type+"  :  "+rec.Fields[1].Value+" $$"+aa1.Count());
 				}
-/*
+
 				Console.WriteLine("Trying LINQ #3...");
 				var aa2 = dc.Select((x,y)=>x).Where( (x) => {
 				                                    	return x.Fields[1].Type == DataType.INT &&
@@ -182,7 +186,7 @@ namespace DwarfDB
 					                  ":"+rec.Fields[1].Type+"  :  "+rec.Fields[1].Value+" $$"+aa1.Count());
 				}
 				
-				
+				/*
 				Console.WriteLine("Trying LINQ #4 (dc & dc2)...");
 
 				var aa3 = (from rec in dc

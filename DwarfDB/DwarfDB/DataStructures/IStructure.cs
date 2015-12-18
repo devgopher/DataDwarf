@@ -31,7 +31,7 @@ namespace DwarfDB.DataStructures
 		/// </summary>
 		/// <param name="filepath"></param>
 		/// <param name="index"></param>
-		void LoadFromChunkDir( string dirpath, Index index );
+		// void LoadFromChunkDir( string dirpath, Index index );
 		
 		/// <summary>
 		/// Setting up a transaction for this element
