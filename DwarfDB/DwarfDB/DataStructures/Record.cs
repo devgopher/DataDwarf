@@ -66,6 +66,15 @@ namespace DwarfDB.DataStructures
 			OwnerDC = _owner_dc;
 			FillFields();
 			BuildIndex();
+			
+			SetCnt();
+		}
+		
+		private void SetCnt() {
+			if ( OwnerDC != null ) {
+				all_rec_cnt = OwnerDC.AllRecordsCount;
+				stack_rec_cnt = OwnerDC.StackRecordsCount();
+			}
 		}
 		
 		private void FillFields() {
@@ -218,9 +227,6 @@ namespace DwarfDB.DataStructures
 		
 		public void Reset() {
 			position = -1;
-
-			all_rec_cnt = OwnerDC.AllRecordsCount;
-			stack_rec_cnt = OwnerDC.StackRecordsCount();
 		}
 		
 		public bool MoveNext() {
@@ -247,9 +253,11 @@ namespace DwarfDB.DataStructures
 			return ret_rec;
 		}
 		#endregion
-		public DataContainer OwnerDC {get; set;}
+		public DataContainer OwnerDC { get; private set; }
 		public void AssignOwnerDC( DataContainer _owner_dc ) {
 			OwnerDC = _owner_dc;
+			if ( !(_owner_dc is DummyContainer ) )
+				SetCnt();
 		}
 		
 		#region LinkProcessing

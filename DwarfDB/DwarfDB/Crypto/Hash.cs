@@ -11,6 +11,10 @@ namespace DwarfDB.Crypto
 	/// </summary>
 	static class ComputeHash
 	{
+		static public Int32 IntHash( object obj ) {
+			return obj.GetHashCode();
+		}
+		
 		/// <summary>
 		/// Getting a MD hash sequence for datastructure
 		/// </summary>

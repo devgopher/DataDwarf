@@ -385,7 +385,7 @@ namespace DwarfDB.DataStructures
 			}
 			
 			new_rec.BuildIndex();
-			new_rec.OwnerDC = this;
+			new_rec.AssignOwnerDC(this);
 			owner_db.MemStorage.Add( new_rec );
 			return true;
 		}

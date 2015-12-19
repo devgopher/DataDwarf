@@ -107,13 +107,14 @@ namespace DwarfDB.Stack
 			return items_dict.ContainsKey(hash);
 		}
 
-		private IEnumerable<Record> GR( DataContainer dc)
+		private IEnumerable<Record> GR(DataContainer dc)
 		{
+			var int_hash = dc.Name.GetHashCode();
 			foreach (var kvp in items_dict)
 			{
 				if (kvp.Value is Record)
 				{
-					if ((kvp.Value as Record).OwnerDC.Name == dc.Name)
+					if ((kvp.Value as Record).OwnerDC.Name.GetHashCode() == int_hash)
 						yield return (kvp.Value as Record);
 				}
 			}

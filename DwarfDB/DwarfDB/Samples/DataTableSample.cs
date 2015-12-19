@@ -165,14 +165,11 @@ namespace DwarfDB
 				}*/
 
 				Console.WriteLine("Trying LINQ #2...");
-				var aa1 = dc.Select((x,y)=>x).Where( (x) => {
-				                                    	return x.Fields[1].Type == DataType.INT &&
-				                                    		(int.Parse(x.Fields[1].Value.ToString()) % 3 == 0);
-				                                    }).ToArray();
-
-				foreach ( var rec in aa1) {
-					Console.WriteLine("Rec:"+rec.Fields[0].Type+"  :  "+rec.Fields[0].Value+" $$"+aa1.Count()+
-					                  ":"+rec.Fields[1].Type+"  :  "+rec.Fields[1].Value+" $$"+aa1.Count());
+				var aa1 = dc.Select((x,y)=>x);
+				var bb = aa1.ToArray();
+				foreach ( var rec in bb) {
+					Console.WriteLine("Rec:"+rec.Fields[0].Type+"  :  "+rec.Fields[0].Value+" $$"+bb.Count()+
+					                  ":"+rec.Fields[1].Type+"  :  "+rec.Fields[1].Value+" $$"+bb.Count());
 				}
 
 				Console.WriteLine("Trying LINQ #3...");
@@ -182,8 +179,8 @@ namespace DwarfDB
 				                                    }).ToArray();
 
 				foreach ( var rec in aa2) {
-					Console.WriteLine("Rec:"+rec.Fields[0].Type+"  :  "+rec.Fields[0].Value+" $$"+aa1.Count()+
-					                  ":"+rec.Fields[1].Type+"  :  "+rec.Fields[1].Value+" $$"+aa1.Count());
+					Console.WriteLine("Rec:"+rec.Fields[0].Type+"  :  "+rec.Fields[0].Value+" $$"+aa2.Count()+
+					                  ":"+rec.Fields[1].Type+"  :  "+rec.Fields[1].Value+" $$"+aa2.Count());
 				}
 				
 				/*
