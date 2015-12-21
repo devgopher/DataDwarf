@@ -12,11 +12,9 @@ namespace DwarfDB.Config
 	/// </summary>
 	public sealed class Config
 	{
-		//#if DEBUG
-		Config() {
+		protected Config() {
 			DataDirectory = HomePath+"/DataDwarf/";
 		}
-		//#endif
 		
 		/// <summary>
 		/// A directory for databases
@@ -30,7 +28,7 @@ namespace DwarfDB.Config
 		/// <summary>
 		/// User's HOME path
 		/// </summary>
-		public string HomePath {
+		public static string HomePath {
 			get {
 				return (Environment.OSVersion.Platform == PlatformID.Unix)
 					? Environment.GetEnvironmentVariable("HOME")
