@@ -48,6 +48,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Logger\Logger.cs" />
+    <Compile Include="MainLogic\MainLogic.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -59,6 +61,8 @@
     <Folder Include="QueryProcessor\" />
     <Folder Include="Respondent\" />
     <Folder Include="UnitTests\" />
+    <Folder Include="MainLogic" />
+    <Folder Include="Logger" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
