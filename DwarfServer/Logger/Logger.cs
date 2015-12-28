@@ -33,8 +33,8 @@ namespace Logger
 		
 		private void StartLog()
 		{
-			WriteIn("============================" + Assembly.GetEntryAssembly().GetName().Name + " ver. "+
-			        Assembly.GetEntryAssembly().GetName().Version +" ==============================\r\n");
+			WriteIn("Assembly: " + Assembly.GetEntryAssembly().GetName().Name + " \r\n Version:"+
+			        Assembly.GetEntryAssembly().GetName().Version +"\r\n");
 		}
 		
 		public void WriteEntry(string content)
