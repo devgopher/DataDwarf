@@ -70,13 +70,21 @@ namespace DwarfDB.DataStructures
 			SetCnt();
 		}
 		
+		/// <summary>
+		/// Sets record amounts for (DataStorage/all records)
+		/// ( In order not to repeat LINQ-queries and some other
+		/// operations, that takes additional cost )
+		/// </summary>
 		private void SetCnt() {
 			if ( OwnerDC != null ) {
 				all_rec_cnt = OwnerDC.AllRecordsCount;
-				stack_rec_cnt = OwnerDC.StackRecordsCount();
+				datastorage_rec_cnt = OwnerDC.StackRecordsCount();
 			}
 		}
 		
+		/// <summary>
+		/// Defines columns for a record
+		/// </summary>
 		private void FillFields() {
 			if ( OwnerDC != null ) {
 				foreach ( var col in OwnerDC.Columns ) {
@@ -223,7 +231,7 @@ namespace DwarfDB.DataStructures
 		}
 		
 		private int all_rec_cnt = 0;
-		private int stack_rec_cnt = 0;
+		private int datastorage_rec_cnt = 0;
 		
 		public void Reset() {
 			position = -1;
@@ -253,6 +261,7 @@ namespace DwarfDB.DataStructures
 			return ret_rec;
 		}
 		#endregion
+		
 		public DataContainer OwnerDC { get; private set; }
 		public void AssignOwnerDC( DataContainer _owner_dc ) {
 			OwnerDC = _owner_dc;

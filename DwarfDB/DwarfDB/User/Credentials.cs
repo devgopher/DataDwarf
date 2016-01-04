@@ -31,6 +31,7 @@ namespace DwarfDB.User
 			}
 		}
 		
+		// A password in MD5 hash
 		public string hashed_pwd = null;
 	}
 }

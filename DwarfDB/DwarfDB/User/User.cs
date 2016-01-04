@@ -5,7 +5,6 @@
  */
 using System;
 using System.IO;
-using System.Collections.Generic;
 
 namespace DwarfDB.User
 {
@@ -115,6 +114,9 @@ namespace DwarfDB.User
 			}
 		}
 		
+		/// <summary>
+		/// Creates a backup of user list
+		/// </summary>
 		static private void CreateBackup() {
 			int numb = 0;
 			if ( File.Exists( users_file_path ) ) {
@@ -134,7 +136,8 @@ namespace DwarfDB.User
 			_user.Credentials.Password = new_password;
 		}
 		
-		/*	private static void RemoveFromUsersList( User _user ) {
+		/*	
+ 		private static void RemoveFromUsersList( User _user ) {
 			int user_strg_num = FindLogin(_user.Credentials.Login);
 			if ( user_strg_num  > -1 ) {
 				using ( var fs = new FileStream( users_file_path, FileMode.Append, FileAccess.Write ) ) {
@@ -143,7 +146,7 @@ namespace DwarfDB.User
 				}
 			}
 		}
-		 */
+		*/
 		
 		/// <summary>
 		/// Seeking for a given login in a userlist file

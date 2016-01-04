@@ -22,22 +22,7 @@ namespace DwarfDB.DataStructures
 			index_object = null;
 		}
 		
-		/// <summary>
-		/// Creating hash code...
-		/// </summary>
-		private void MakeHashCode()
-		{
-			if ( index_object is DataContainer ) {
-				var tmp = (index_object as DataContainer);
-				hash_code = Crypto.ComputeHash.MD5Hash(tmp.Name + ":" + tmp.GetOwnerDB().Name);
-			} else if ( index_object is Record ) {
-				var tmp = (index_object as Record);
-				hash_code = Crypto.ComputeHash.MD5Hash(tmp.OwnerDC.Name + ":" + tmp.Id.GetHashCode());
-			} else
-				hash_code = Crypto.ComputeHash.MD5Hash(index_object);
-		}
-
-		#region Equals and GetHashCode implementation
+		#region Equals() and GetHashCode() implementations
 		public override bool Equals(object obj)
 		{
 			var other = obj as Index;
@@ -57,11 +42,11 @@ namespace DwarfDB.DataStructures
 
 		public static bool operator !=(Index lhs, Index rhs) {
 			return !(lhs == rhs);
-		}		
+		}
 		#endregion()
 		
 		/// <summary>
-		/// Computing a new index
+		/// Creates a new index
 		/// </summary>
 		/// <param name="_index_object">Object for indexing</param>
 		/// <returns></returns>
@@ -72,7 +57,22 @@ namespace DwarfDB.DataStructures
 		}
 		
 		/// <summary>
-		/// Creating an index from hashcode 
+		/// Creates a db-object hash code...
+		/// </summary>
+		private void MakeHashCode()
+		{
+			if ( index_object is DataContainer ) {
+				var tmp = (index_object as DataContainer);
+				hash_code = Crypto.ComputeHash.MD5Hash(tmp.Name + ":" + tmp.GetOwnerDB().Name);
+			} else if ( index_object is Record ) {
+				var tmp = (index_object as Record);
+				hash_code = Crypto.ComputeHash.MD5Hash(tmp.OwnerDC.Name + ":" + tmp.Id.GetHashCode());
+			} else
+				hash_code = Crypto.ComputeHash.MD5Hash(index_object);
+		}
+		
+		/// <summary>
+		/// Creating an index from hashcode
 		/// </summary>
 		/// <param name="hash"></param>
 		/// <returns></returns>
@@ -82,6 +82,9 @@ namespace DwarfDB.DataStructures
 			return new_idx;
 		}
 		
+		/// <summary>
+		/// Gets/sets a DB-object hash code
+		/// </summary>
 		public string HashCode {
 			get {
 				if ( hash_code == null )

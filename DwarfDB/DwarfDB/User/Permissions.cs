@@ -8,7 +8,7 @@ using System;
 namespace DwarfDB.User
 {
 	/// <summary>
-	/// Description of Permissions.
+	/// A class for defining user permissions
 	/// </summary>
 	public class UserPermissions
 	{
