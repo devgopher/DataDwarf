@@ -88,9 +88,9 @@ namespace DwarfDB
 						rec1.BuildIndex();
 						rec2.BuildIndex();
 					}
-					dc.AddRecordToStack( rec1 );
+					dc.AddRecordToDataStorage( rec1 );
 					indexes.Add(rec1.GetIndex());
-					dc2.AddRecordToStack( rec2 );
+					dc2.AddRecordToDataStorage( rec2 );
 					indexes.Add(rec2.GetIndex());
 				}
 				dc.Save();

@@ -249,7 +249,7 @@ namespace DwarfDB.DataStructures
 
 			var chunk_recs = owner_db.chunk_manager.LoadAllChunks( this.GetIndex().HashCode );
 			foreach ( var rec in chunk_recs ) {
-				AddRecordToStack( rec );
+				AddRecordToDataStorage( rec );
 			}
 		}
 		
@@ -270,7 +270,7 @@ namespace DwarfDB.DataStructures
 					var rec = owner_db.chunk_manager.GetRecord( idx_entry.Key );
 					if ( rec != null && !(rec is DummyRecord)) {
 						has_new_recs = true;
-						AddRecordToStack( rec );
+						AddRecordToDataStorage( rec );
 						++cntr;
 					}
 				}
@@ -310,6 +310,12 @@ namespace DwarfDB.DataStructures
 			return false;
 		}
 		
+		/// <summary>
+		/// Adds a new column
+		/// </summary>
+		/// <param name="new_clmn">Column definition</param>
+		/// <param name="user">User</param>
+		/// <returns></returns>
 		public bool AddColumn( Column new_clmn, User.User user ) {
 			if ( !Global.CheckAccess.CheckWriteAccess( this, user ) ) {
 				var err = Global.StaticResourceManager.GetStringResource("ACCESS_REASON_DENIED_FOR_THIS_USER");
@@ -325,6 +331,10 @@ namespace DwarfDB.DataStructures
 			return true;
 		}
 
+		/// <summary>
+		/// Removes all records
+		/// </summary>
+		/// <param name="user">User</param>
 		public void RemoveAllRecords( User.User user ) {
 			if ( !Global.CheckAccess.CheckWriteAccess( this, user ) ) {
 				var err = Global.StaticResourceManager.GetStringResource("ACCESS_REASON_DENIED_FOR_THIS_USER");
@@ -338,37 +348,27 @@ namespace DwarfDB.DataStructures
 			}
 		}
 		
+		/// <summary>
+		/// Removes a record
+		/// </summary>
+		/// <param name="rem_rec">Record</param>
+		/// <param name="user">User</param>
+		/// <returns></returns>
 		public bool RemoveRecord( Record rem_rec, User.User user ) {
 			if ( !Global.CheckAccess.CheckWriteAccess( this, user ) ) {
 				var err = Global.StaticResourceManager.GetStringResource("ACCESS_REASON_DENIED_FOR_THIS_USER");
 				Errors.ErrorProcessing.Display("Can't remove records: "+err);
 				return false;
 			}
-			/*if ( rem_rec == null )
-				return false;
-			
-			rem_rec.BuildIndex();
-			
-			// Removing an unneeded index
-			owner_db.chunk_manager.RemoveIndex( rem_rec.GetIndex() );
-			
-			// Removing from a chunk
-			owner_db.chunk_manager.RemoveRecord( rem_rec );
-			
-			// Destroying index
-			rem_rec.DestroyIndex();
-			
-			// Removing from stack
-			if (owner_db.Stack.TryPop( rem_rec ) == null)
-				return false;
-			
-			inner_records.Remove( rem_rec );
-			 */
-			
 			throw new NotImplementedException( "RebuildIndexes and record deletion process in whole should be rethinked!" );
 		}
 		
-		public bool AddRecordToStack( Record new_rec ) {
+		/// <summary>
+		/// Adds records to a DataStorage
+		/// </summary>
+		/// <param name="new_rec"></param>
+		/// <returns></returns>
+		public bool AddRecordToDataStorage( Record new_rec ) {
 			if ( new_rec == null )
 				return false;
 			
@@ -390,13 +390,19 @@ namespace DwarfDB.DataStructures
 			return true;
 		}
 		
-		public bool RemoveColumn( Column new_clmn, User.User user ) {
+		/// <summary>
+		/// Removes column from a datacontainer
+		/// </summary>
+		/// <param name="rem_clmn">Column to remove</param>
+		/// <param name="user">User</param>
+		/// <returns></returns>
+		public bool RemoveColumn( Column rem_clmn, User.User user ) {
 			if ( !Global.CheckAccess.CheckWriteAccess( this, user ) ) {
 				var err = Global.StaticResourceManager.GetStringResource("ACCESS_REASON_DENIED_FOR_THIS_USER");
 				Errors.ErrorProcessing.Display("Can't remove a column: "+err);
 				return false;
 			}
-			Columns.Remove( new_clmn );
+			Columns.Remove( rem_clmn );
 			
 			return false;
 		}
@@ -579,7 +585,7 @@ namespace DwarfDB.DataStructures
 		internal bool  GetRecordsFromChunk( int chunk_number = 0 ) {
 			var couple = owner_db.chunk_manager.LoadChunk( chunk_number,  this.GetIndex().HashCode );
 			foreach ( var rec in couple )
-				AddRecordToStack( rec );
+				AddRecordToDataStorage( rec );
 			
 			return couple.Any();
 		}
@@ -647,7 +653,7 @@ namespace DwarfDB.DataStructures
 			foreach ( var rec in Records ) {
 				var tmp_rec = (Record)rec.Clone();
 				tmp_rec.AssignOwnerDC( this );
-				ret_dc.AddRecordToStack( tmp_rec );
+				ret_dc.AddRecordToDataStorage( tmp_rec );
 				if ( tmp_rec != null )
 					ret_dc.BuildIndex();
 			}

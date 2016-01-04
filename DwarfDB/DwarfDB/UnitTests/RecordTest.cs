@@ -24,7 +24,7 @@ namespace DwarfDB.UnitTests
 			rec["col1"].Value = "AAABBBCCC";
 			rec["col2"].Value = 20.390494;
 			rec.BuildIndex();
-			dc.AddRecordToStack(rec);
+			dc.AddRecordToDataStorage(rec);
 			
 			dc.Save();
 			

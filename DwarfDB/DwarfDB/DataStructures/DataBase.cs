@@ -70,7 +70,14 @@ namespace DwarfDB.DataStructures
 			stream.Close();
 		}
 		
-		public static DataBase Create( string db_name, ChunkManager.ChunkManager _cm = null ) {
+		/// <summary>
+		/// Creates a new DB
+		/// </summary>
+		/// <param name="db_name"></param>
+		/// <param name="_cm"></param>
+		/// <returns></returns>
+		public static DataBase Create( string db_name, 
+		                              ChunkManager.ChunkManager _cm = null ) {
 			var cpath = Config.Config.Instance.DataDirectory+db_name;
 			
 			if ( !Directory.Exists(cpath) )
@@ -81,14 +88,18 @@ namespace DwarfDB.DataStructures
 			CreateIndexesDw( db_name );
 			new_db.chunk_manager.CreateChunk( new_db );
 			new_db.DbPath = Config.Config.Instance.DataDirectory+db_name;
-			
-			// Let's change an access rights to ADMIN for creator
-			//	this.AddAccess(  )
-			
+
 			return new_db;
 		}
 		
-		public static DataBase LoadFrom( string db_name, ChunkManager.ChunkManager _cm ) {
+		/// <summary>
+		/// Loads database from a filesystem
+		/// </summary>
+		/// <param name="db_name">DB name</param>
+		/// <param name="_cm">Chunk manager</param>
+		/// <returns></returns>
+		public static DataBase LoadFrom( string db_name, 
+		                                ChunkManager.ChunkManager _cm ) {
 			var cpath = Config.Config.Instance.DataDirectory+db_name;
 			if ( Directory.Exists(cpath) ) {
 				var db =  new DataBase( db_name, _cm, false );
@@ -159,8 +170,8 @@ namespace DwarfDB.DataStructures
 		/// <summary>
 		/// Changing an access record for our DB
 		/// </summary>
-		/// <param name="_user"></param>
-		/// <param name="_new_level"></param>
+		/// <param name="_user">User</param>
+		/// <param name="_new_level">Required access level</param>
 		public void ChangeAccess ( User.User _user,
 		                          Access.AccessLevel _new_level ) {
 			local_am.ChangeAccess(_user, _new_level );
@@ -221,12 +232,6 @@ namespace DwarfDB.DataStructures
 			return false;
 		}
 		
-		#endregion
-		
-		#region Connection
-		public void Connect( User.User user ) {
-			
-		}
 		#endregion
 		
 		/// <summary>

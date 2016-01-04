@@ -95,7 +95,7 @@ namespace DwarfDB
 				tmp["Surname"].Value = surname;
 				tmp.Id = ++rec_id;
 				
-				if (!dc_employee_load.AddRecordToStack(tmp)) {
+				if (!dc_employee_load.AddRecordToDataStorage(tmp)) {
 					Console.WriteLine("Failed! Press \"Y\" - to enter an another employee");
 					if (  Console.ReadKey().Key != ConsoleKey.N )
 						continue;

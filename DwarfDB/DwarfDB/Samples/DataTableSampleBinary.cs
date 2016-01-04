@@ -71,7 +71,7 @@ namespace DwarfDB
 
 						rec1.BuildIndex ();
 					}
-					dc.AddRecordToStack (rec1);
+					dc.AddRecordToDataStorage (rec1);
 					indexes.Add (rec1.GetIndex ());
 				}
 				dc.Save ();
