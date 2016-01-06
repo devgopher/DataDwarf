@@ -234,12 +234,25 @@ namespace DwarfDB.ChunkManager
 		}
 		
 		private static Random randg = new Random(DateTime.Now.Millisecond);
+        private static object randg_sync_object = new object();
+
+        /// <summary>
+        /// A random generation method for
+        /// usage in multithread environment
+        /// </summary>
+        /// <returns></returns>
+        private static int GetNextRandom() {
+            lock ( randg_sync_object )
+            {
+                return randg.Next();
+            }
+        }
 		
 		private static string CreateTemporaryFile( string orig_filepath ) {
 			string tmp_filepath = orig_filepath + ".tmp" + randg.Next().ToString();
-			
+
 			while ( File.Exists(tmp_filepath) ) {
-				tmp_filepath += randg.Next().ToString();
+				tmp_filepath += GetNextRandom().ToString();
 			}
 			File.Copy( orig_filepath, tmp_filepath );
 			return tmp_filepath;
