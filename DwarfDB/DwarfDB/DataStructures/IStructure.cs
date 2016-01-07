@@ -16,13 +16,11 @@ namespace DwarfDB.DataStructures
 		/// <summary>
 		/// Save to file chunk
 		/// </summary>
-		/// <param name="filepath"></param>
 		void Save();
 		
 		/// <summary>
 		/// Load Element from file chunk
 		/// </summary>
-		/// <param name="filepath"></param>
 		/// <param name="index"></param>
 		void Load( Index index );
 		

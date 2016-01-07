@@ -163,8 +163,7 @@ namespace DwarfDB.DataStructures
 				foreach ( DataContainer dc in inner_dc_dict.Values ) {
 					dc.AddAccess( _user, _level );
 				}
-			}
-			
+			}			
 		}
 		
 		/// <summary>
@@ -188,8 +187,7 @@ namespace DwarfDB.DataStructures
 		/// <returns></returns>
 		public Access.AccessLevel GetLevel( User.User _user ) {
 			return local_am.GetLevel( _user );
-		}
-		
+		}		
 		#endregion
 		
 		#region DC cloning
@@ -231,7 +229,6 @@ namespace DwarfDB.DataStructures
 			}
 			return false;
 		}
-		
 		#endregion
 		
 		/// <summary>
