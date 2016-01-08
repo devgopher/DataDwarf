@@ -48,6 +48,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Logger\ConsoleUtils.cs" />
     <Compile Include="Logger\Logger.cs" />
     <Compile Include="MainLogic\MainLogic.cs" />
     <Compile Include="Program.cs" />

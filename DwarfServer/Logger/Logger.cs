@@ -27,13 +27,24 @@ namespace Logger
 		              Encoding _encoding )
 		{
 			Path = _path;
-			CheckPath();
+			//CheckPath();
 			application_name = _application_name;
 			encoding = _encoding;
 			StartLog();
 			WriteEntry("Start logging...");
 		}
-			
+		
+		/// <summary>
+		/// User's HOME path
+		/// </summary>
+		private static string HomePath {
+			get {
+				return (Environment.OSVersion.Platform == PlatformID.Unix)
+					? Environment.GetEnvironmentVariable("HOME")
+					: Environment.ExpandEnvironmentVariables("%HOMEDRIVE%%HOMEPATH%");
+			}
+		}
+		
 		private void CheckPath() {
 			if ( !Directory.Exists(this.Path) ) {
 				Directory.CreateDirectory( this.Path );
@@ -45,14 +56,17 @@ namespace Logger
 		
 		public static Logger GetInstance() {
 			if ( logger_instance == null )
-				logger_instance = new Logger( Environment.SpecialFolder.ApplicationData+
-				                             @"\"+Assembly.GetEntryAssembly().FullName,
+				logger_instance = new Logger( HomePath+
+				                             @"\DataDwarf\"+
+				                             Assembly.GetEntryAssembly().GetName().Name+
+				                             DateTime.Now.ToString( "__HH_mm_ss__dd.MM.yyyy" )+
+				                             ".log",
 				                             Assembly.GetEntryAssembly().FullName,
 				                             Encoding.Default );
 			return logger_instance;
 		}
 		#endregion
-		
+	
 		private void StartLog()
 		{
 			WriteIn("Assembly: " + Assembly.GetEntryAssembly().GetName().Name + " \r\n Version:"+
@@ -66,12 +80,18 @@ namespace Logger
 		
 		public void WriteError(string content)
 		{
+			var ex_color = ConsoleUtils.GetConsoleFontColor();
+			ConsoleUtils.SetConsoleFontColor( ConsoleColor.Red );
 			WriteIn(DateTime.Now.ToString("\r\ndd.MM.yyyy HH:mm:ss") + ": ERROR:" + content);
+			ConsoleUtils.SetConsoleFontColor( ex_color );
 		}
 		
 		public void WriteWarning(string content)
 		{
+			var ex_color = ConsoleUtils.GetConsoleFontColor();
+			ConsoleUtils.SetConsoleFontColor( ConsoleColor.Yellow );
 			WriteIn(DateTime.Now.ToString("\r\ndd.MM.yyyy HH:mm:ss") + ": WARNING: " + content);
+			ConsoleUtils.SetConsoleFontColor( ex_color );
 		}
 
 		public string GetText() {

@@ -18,6 +18,8 @@ namespace DwarfDB.Errors
 		{
 		}
 		
+		private static Logger.Logger logger = Logger.Logger.GetInstance();
+		
 		public static void Display( String _error_text ) {
 			System.Console.WriteLine( String.Format( "Error: {0} When: {1}", _error_text, DateTime.Now.ToLocalTime()));
 		}
@@ -26,15 +28,11 @@ namespace DwarfDB.Errors
 		                           String _where,
 		                           String _advices,
 		                           DateTime date_time ) {
-			System.Console.WriteLine( String.Format( "Error: {0} in: {1}. When: {2}. To Fix: {3}",
-			                                        _error_text, _where, date_time.ToLocalTime().ToString(), _advices ));
-		}
-		
-		public static ConsoleColor GetConsoleFontColor() {
-			return Console.ForegroundColor;
-		}
-		public static void SetConsoleFontColor( ConsoleColor cc ) {
-			Console.ForegroundColor = cc;
+			logger.WriteError( String.Format( "Error: {0} in: {1}. When: {2}. To Fix: {3}",
+			                                 _error_text,
+			                                 _where,
+			                                 date_time.ToLocalTime(),
+			                                 _advices ));
 		}
 		
 		public static void Display( Stream out_str,
@@ -42,17 +40,11 @@ namespace DwarfDB.Errors
 		                           String _where,
 		                           String _advices,
 		                           DateTime date_time ) {
-			var out_sw = new StreamWriter( out_str );
-			
-			var old_color = GetConsoleFontColor();
-			
-			SetConsoleFontColor( ConsoleColor.Red );
-			
-			out_sw.WriteLine( String.Format( "Error: {0} in: {1}. When: {2}. To Fix: {3}",
-			                                _error_text, _where, date_time.ToLocalTime().ToString(), _advices ));
-			
-			out_sw.Close();
-			SetConsoleFontColor( old_color );
+			logger.WriteError( String.Format( "Error: {0} in: {1}. When: {2}. To Fix: {3}",
+			                                 _error_text,
+			                                 _where,
+			                                 date_time.ToLocalTime(),
+			                                 _advices ));			
 		}
 	}
 }

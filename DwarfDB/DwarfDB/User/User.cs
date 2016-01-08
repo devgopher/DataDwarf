@@ -56,8 +56,10 @@ namespace DwarfDB.User
 		/// <returns></returns>
 		public static User New( string login, string passwd ) {
 			if ( FindLogin( login ) != null ) {
-				Errors.ErrorProcessing.Display("User with a such login already exists!", "Adding a new user", 
-				                               "", DateTime.Now);
+				Errors.ErrorProcessing.Display("User with a such login already exists!", 
+				                               "Adding a new user",
+				                               "", 
+				                               DateTime.Now);
 				return Get( login );
 			}
 			var user = new User();
