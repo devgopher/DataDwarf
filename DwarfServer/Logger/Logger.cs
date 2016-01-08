@@ -44,13 +44,7 @@ namespace Logger
 					: Environment.ExpandEnvironmentVariables("%HOMEDRIVE%%HOMEPATH%");
 			}
 		}
-		
-		private void CheckPath() {
-			if ( !Directory.Exists(this.Path) ) {
-				Directory.CreateDirectory( this.Path );
-			}
-		}
-		
+			
 		#region GetInstance
 		private static Logger logger_instance = null;
 		
