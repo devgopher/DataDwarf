@@ -22,14 +22,36 @@ namespace Logger
 		String application_name;
 		readonly Encoding encoding;
 		
-		public Logger(string _path, string _application_name, Encoding _encoding)
+		public Logger( string _path,
+		              string _application_name,
+		              Encoding _encoding )
 		{
 			Path = _path;
+			CheckPath();
 			application_name = _application_name;
 			encoding = _encoding;
 			StartLog();
 			WriteEntry("Start logging...");
 		}
+			
+		private void CheckPath() {
+			if ( !Directory.Exists(this.Path) ) {
+				Directory.CreateDirectory( this.Path );
+			}
+		}
+		
+		#region GetInstance
+		private static Logger logger_instance = null;
+		
+		public static Logger GetInstance() {
+			if ( logger_instance == null )
+				logger_instance = new Logger( Environment.SpecialFolder.ApplicationData+
+				                             @"\"+Assembly.GetEntryAssembly().FullName,
+				                             Assembly.GetEntryAssembly().FullName,
+				                             Encoding.Default );
+			return logger_instance;
+		}
+		#endregion
 		
 		private void StartLog()
 		{
@@ -60,7 +82,7 @@ namespace Logger
 						rd_text = log_sr.ReadToEnd();
 					}
 				}
-			}			
+			}
 			return rd_text;
 		}
 		

@@ -18,18 +18,14 @@ namespace DwarfDB.Links
 			@"(.*):(.*):(.*):(.*)";
 		
 		public void Parse( String input, ILink link ) {
-			try {
-				var rec_link = link as RecordLink;
-				if ( rec_link == null )
-					return;
-				
+			try {				
 				var match = Regex.Match( input, regexp );
 				if ( match.Groups.Count == 4 ) {
 					var address = match.Groups[0].Value;
 					var db_name = match.Groups[1].Value;
 					var dc_name = match.Groups[2].Value;
 					var rec_hash = match.Groups[3].Value;
-					rec_link = (RecordLink)(RecordLink.Create(
+					link = (RecordLink)(RecordLink.Create(
 						address,
 						db_name,
 						dc_name,
@@ -37,7 +33,7 @@ namespace DwarfDB.Links
 					));
 				}
 			} catch ( Exception ex ) {
-				
+				Logger.Logger.GetInstance().WriteError( "Record link parsing: "+ex.Message );
 			}
 		}
 	}
