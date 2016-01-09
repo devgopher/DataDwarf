@@ -9,7 +9,7 @@ using DwarfDB.DataStructures;
 namespace DwarfDB.Links
 {
 	/// <summary>
-	/// A class for links to records
+	/// A class for links to datacontainers
 	/// </summary>
 	public class DataContainerLink : ILink
 	{

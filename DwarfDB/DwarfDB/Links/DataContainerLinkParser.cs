@@ -9,7 +9,7 @@ using System.Text.RegularExpressions;
 namespace DwarfDB.Links
 {
 	/// <summary>
-	/// A Record link parser
+	/// A DC link parser
 	/// Link: ip_address:db_name:dc_name:rec_hash
 	/// </summary>
 	public class DataContainerLinkParser : ILinkParser
