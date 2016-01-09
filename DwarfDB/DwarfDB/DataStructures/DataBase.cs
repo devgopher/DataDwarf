@@ -283,7 +283,7 @@ namespace DwarfDB.DataStructures
 		
 		private DataContainer RetDCAccess( DataContainer dc, User.User user) {
 			if ( !Global.CheckAccess.CheckWriteAccess(this, user) ) {
-				Errors.Messages.Display( Global.StaticResourceManager.GetStringResource("ACCESS_REASON_DENIED_FOR_THIS_USER"));
+				Errors.Messages.DisplayError( Global.StaticResourceManager.GetStringResource("ACCESS_REASON_DENIED_FOR_THIS_USER"));
 				return null;
 			}
 			return dc;			

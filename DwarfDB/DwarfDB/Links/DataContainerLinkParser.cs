@@ -31,7 +31,7 @@ namespace DwarfDB.Links
 					));
 				}
 			} catch ( Exception ex ) {
-				Errors.Messages.Display( "DC link parsing: "+ex.Message );
+				Errors.Messages.DisplayError( "DC link parsing: "+ex.Message );
 			}
 		}
 	}

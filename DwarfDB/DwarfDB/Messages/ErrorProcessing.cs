@@ -20,7 +20,7 @@ namespace DwarfDB.Errors
 		
 		private static Logger.Logger logger = Logger.Logger.GetInstance();
 		
-		public static void Display( String _error_text ) {
+		public static void DisplayError( String _error_text ) {
 			System.Console.WriteLine( String.Format( "Error: {0} When: {1}", _error_text, DateTime.Now.ToLocalTime()));
 		}
 		

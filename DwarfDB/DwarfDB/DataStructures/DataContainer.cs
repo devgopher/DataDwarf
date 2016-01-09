@@ -225,7 +225,7 @@ namespace DwarfDB.DataStructures
 		/// <returns>true or false</returns>
 		public static bool Create( DataBase _owner_db, String _name, User.User user ) {
 			if ( !Global.CheckAccess.CheckWriteAccess(_owner_db, user) ) {
-				Errors.Messages.Display( Global.StaticResourceManager.StringManager.GetString("ACCESS_REASON_DENIED_FOR_THIS_USER"));
+				Errors.Messages.DisplayError( Global.StaticResourceManager.StringManager.GetString("ACCESS_REASON_DENIED_FOR_THIS_USER"));
 				return false;
 			}
 			
@@ -242,7 +242,7 @@ namespace DwarfDB.DataStructures
 		/// </summary>
 		public void LoadRecords( User.User user ) {
 			if ( !Global.CheckAccess.CheckReadAccess(this, user) ) {
-				Errors.Messages.Display( Global.StaticResourceManager.StringManager.GetString("ACCESS_REASON_DENIED_FOR_THIS_USER"));
+				Errors.Messages.DisplayError( Global.StaticResourceManager.StringManager.GetString("ACCESS_REASON_DENIED_FOR_THIS_USER"));
 				return;
 			}
 			var own_hash = this.GetIndex().HashCode;
@@ -319,7 +319,7 @@ namespace DwarfDB.DataStructures
 		public bool AddColumn( Column new_clmn, User.User user ) {
 			if ( !Global.CheckAccess.CheckWriteAccess( this, user ) ) {
 				var err = Global.StaticResourceManager.GetStringResource("ACCESS_REASON_DENIED_FOR_THIS_USER");
-				Errors.Messages.Display("Can't add a column: "+err);
+				Errors.Messages.DisplayError("Can't add a column: "+err);
 				return false;
 			}
 			
@@ -338,7 +338,7 @@ namespace DwarfDB.DataStructures
 		public void RemoveAllRecords( User.User user ) {
 			if ( !Global.CheckAccess.CheckWriteAccess( this, user ) ) {
 				var err = Global.StaticResourceManager.GetStringResource("ACCESS_REASON_DENIED_FOR_THIS_USER");
-				Errors.Messages.Display("Can't remove records: "+err);
+				Errors.Messages.DisplayError("Can't remove records: "+err);
 				return;
 			}
 			
@@ -357,7 +357,7 @@ namespace DwarfDB.DataStructures
 		public bool RemoveRecord( Record rem_rec, User.User user ) {
 			if ( !Global.CheckAccess.CheckWriteAccess( this, user ) ) {
 				var err = Global.StaticResourceManager.GetStringResource("ACCESS_REASON_DENIED_FOR_THIS_USER");
-				Errors.Messages.Display("Can't remove records: "+err);
+				Errors.Messages.DisplayError("Can't remove records: "+err);
 				return false;
 			}
 			throw new NotImplementedException( "RebuildIndexes and record deletion process in whole should be rethinked!" );
@@ -380,7 +380,7 @@ namespace DwarfDB.DataStructures
 						return false;
 					}
 				} catch ( Exception ex ) {
-					Errors.Messages.Display("Error in adding a record to stack: "+ex.Message);
+					Errors.Messages.DisplayError("Error in adding a record to stack: "+ex.Message);
 				}
 			}
 			
@@ -399,7 +399,7 @@ namespace DwarfDB.DataStructures
 		public bool RemoveColumn( Column rem_clmn, User.User user ) {
 			if ( !Global.CheckAccess.CheckWriteAccess( this, user ) ) {
 				var err = Global.StaticResourceManager.GetStringResource("ACCESS_REASON_DENIED_FOR_THIS_USER");
-				Errors.Messages.Display("Can't remove a column: "+err);
+				Errors.Messages.DisplayError("Can't remove a column: "+err);
 				return false;
 			}
 			Columns.Remove( rem_clmn );
@@ -519,7 +519,7 @@ namespace DwarfDB.DataStructures
 		public Record GetRecord( int i, User.User user ) {
 			if ( !Global.CheckAccess.CheckReadAccess( this, user ) ) {
 				var err = Global.StaticResourceManager.GetStringResource("ACCESS_REASON_DENIED_FOR_THIS_USER");
-				Errors.Messages.Display("Can't get records: "+err);
+				Errors.Messages.DisplayError("Can't get records: "+err);
 				return null;
 			}
 			
@@ -548,7 +548,7 @@ namespace DwarfDB.DataStructures
 		public List<Record> GetRecords( User.User user ) {
 			if ( !Global.CheckAccess.CheckReadAccess( this, user ) ) {
 				var err = Global.StaticResourceManager.GetStringResource("ACCESS_REASON_DENIED_FOR_THIS_USER");
-				Errors.Messages.Display("Can't get records: "+err);
+				Errors.Messages.DisplayError("Can't get records: "+err);
 				return null;
 			}
 			return Records.ToList();
