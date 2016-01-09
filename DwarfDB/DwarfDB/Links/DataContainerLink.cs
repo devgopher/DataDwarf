@@ -11,25 +11,16 @@ namespace DwarfDB.Links
 	/// <summary>
 	/// A class for links to records
 	/// </summary>
-	public class RecordLink : ILink
+	public class DataContainerLink : ILink
 	{
-		public RecordLink(object _client)
+		public DataContainerLink(object _client)
 		{
 
 		}
 		
-		public ILink CreateNew( string address,
-		                       string db_name,
-		                       string dc_name,
-		                       string rec_hash )
-		{
-			return Create( address, db_name, dc_name, rec_hash );
-		}
-
 		public static ILink Create( string address,
 		                           string db_name,
-		                           string dc_name,
-		                           string rec_hash )
+		                           string dc_name )
 		{
 			/*
 			 	1. Reference parsing
@@ -38,9 +29,10 @@ namespace DwarfDB.Links
 			throw new NotImplementedException();
 		}
 
-		public ILink CreateNew(string db_name,
+		public ILink CreateNew( string address,
+		                       string db_name,
 		                       string dc_name,
-		                       string rec_hash)
+		                       string rec_hash )
 		{
 			/*
 			 	1. Reference parsing
@@ -56,19 +48,18 @@ namespace DwarfDB.Links
 		/// <returns></returns>
 		public IStructure Get()
 		{
-			return inner_record;
+			return inner_dc;
 		}
 
 		public void Drop()
 		{
-			inner_record = null;
+			inner_dc = null;
 		}
 
-		// inner copy of a remote record
-		private Record inner_record = null;
-		private RecordLinkParser parser = new RecordLinkParser();
+		// inner copy of a remote DC
+		private DataContainer inner_dc = null;
+		private DataContainerLinkParser parser = new DataContainerLinkParser();
 		private string db_name = String.Empty;
 		private string dc_name = String.Empty;
-		private string rec_hash = String.Empty;
 	}
 }

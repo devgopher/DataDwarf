@@ -144,6 +144,8 @@
     <Compile Include="Errors\ErrorProcessing.cs" />
     <Compile Include="Extensions\DwarfLinq.cs" />
     <Compile Include="Global\StaticResourceManager.cs" />
+    <Compile Include="Links\DataContainerLink.cs" />
+    <Compile Include="Links\DataContainerLinkParser.cs" />
     <Compile Include="Links\ILink.cs" />
     <Compile Include="Links\ILinkParser.cs" />
     <Compile Include="Links\RecordLink.cs" />

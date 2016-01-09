@@ -12,10 +12,10 @@ namespace DwarfDB.Links
 	/// A Record link parser
 	/// Link: ip_address:db_name:dc_name:rec_hash
 	/// </summary>
-	public class RecordLinkParser : ILinkParser
+	public class DataContainerLinkParser : ILinkParser
 	{
 		private String regexp =
-			@"(.*):(.*):(.*):(.*)";
+			@"(.*):(.*):(.*)";
 		
 		public void Parse( String input, ILink link ) {
 			try {				
@@ -24,16 +24,14 @@ namespace DwarfDB.Links
 					var address = match.Groups[0].Value;
 					var db_name = match.Groups[1].Value;
 					var dc_name = match.Groups[2].Value;
-					var rec_hash = match.Groups[3].Value;
-					link = (RecordLink)(RecordLink.Create(
+					link = (DataContainerLink)(DataContainerLink.Create(
 						address,
 						db_name,
-						dc_name,
-						rec_hash
+						dc_name
 					));
 				}
 			} catch ( Exception ex ) {
-				Errors.ErrorProcessing.Display( "Record link parsing: "+ex.Message );
+				Errors.ErrorProcessing.Display( "DC link parsing: "+ex.Message );
 			}
 		}
 	}
