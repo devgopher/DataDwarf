@@ -141,7 +141,7 @@
     <Compile Include="DataStructures\Record.cs" />
     <Compile Include="DataStructures\DataContainer.cs" />
     <Compile Include="DwarfCommand\Command.cs" />
-    <Compile Include="Errors\ErrorProcessing.cs" />
+    <Compile Include="Messages\ErrorProcessing.cs" />
     <Compile Include="Extensions\DwarfLinq.cs" />
     <Compile Include="Global\StaticResourceManager.cs" />
     <Compile Include="Links\DataContainerLink.cs" />

@@ -21,7 +21,7 @@ namespace DwarfDB
 			var user = User.User.New( "root", "12345678");
 			
 			if (!File.Exists ("./testdata/binary.jpg")) {
-				Errors.ErrorProcessing.Display ("No file : ./testdata/binary.jpg", String.Empty, String.Empty, DateTime.Now);
+				Errors.Messages.DisplayError ("No file : ./testdata/binary.jpg", String.Empty, String.Empty, DateTime.Now);
 			}
 
 

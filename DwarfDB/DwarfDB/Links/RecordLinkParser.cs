@@ -33,7 +33,7 @@ namespace DwarfDB.Links
 					));
 				}
 			} catch ( Exception ex ) {
-				Errors.ErrorProcessing.Display( "Record link parsing: "+ex.Message );
+				Errors.Messages.Display( "Record link parsing: "+ex.Message );
 			}
 		}
 	}

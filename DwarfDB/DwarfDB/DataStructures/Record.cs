@@ -187,7 +187,7 @@ namespace DwarfDB.DataStructures
 			get {
 				var f_field = FindField( field_name );
 				if ( f_field == null ) {
-					Errors.ErrorProcessing.Display(
+					Errors.Messages.DisplayError(
 						"There're no field \""+field_name+"\" in your record! ",
 						"Fetching the record",
 						"Please, specify the field name",

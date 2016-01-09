@@ -138,7 +138,7 @@ namespace DwarfDB.DataStructures
 			var ret = CheckPermission( Permissions.WRITE, _user, ref answer );
 			
 			if ( ret == false )
-				Errors.ErrorProcessing.Display( answer, String.Empty, String.Empty, DateTime.Now );
+				Errors.Messages.DisplayError( answer, String.Empty, String.Empty, DateTime.Now );
 			
 			return ret;
 		}
@@ -148,7 +148,7 @@ namespace DwarfDB.DataStructures
 			var ret = CheckPermission( Permissions.READ, _user, ref answer );
 			
 			if ( ret == false )
-				Errors.ErrorProcessing.Display( answer, String.Empty, String.Empty, DateTime.Now );
+				Errors.Messages.DisplayError( answer, String.Empty, String.Empty, DateTime.Now );
 			
 			return ret;
 		}
@@ -158,7 +158,7 @@ namespace DwarfDB.DataStructures
 			var ret = CheckPermission( Permissions.DELETE, _user, ref answer );
 			
 			if ( ret == false )
-				Errors.ErrorProcessing.Display( answer, String.Empty, String.Empty, DateTime.Now );
+				Errors.Messages.DisplayError( answer, String.Empty, String.Empty, DateTime.Now );
 			
 			return ret;
 		}
@@ -168,7 +168,7 @@ namespace DwarfDB.DataStructures
 			var ret = CheckPermission( Permissions.CREATE_SUBS, _user, ref answer );
 			
 			if ( ret == false )
-				Errors.ErrorProcessing.Display( answer, String.Empty, String.Empty, DateTime.Now );
+				Errors.Messages.DisplayError( answer, String.Empty, String.Empty, DateTime.Now );
 			
 			return ret;
 		}
@@ -178,7 +178,7 @@ namespace DwarfDB.DataStructures
 			var ret = CheckPermission( Permissions.DROP, _user, ref answer );
 			
 			if ( ret == false )
-				Errors.ErrorProcessing.Display( answer, String.Empty, String.Empty, DateTime.Now );
+				Errors.Messages.DisplayError( answer, String.Empty, String.Empty, DateTime.Now );
 			
 			return ret;
 		}

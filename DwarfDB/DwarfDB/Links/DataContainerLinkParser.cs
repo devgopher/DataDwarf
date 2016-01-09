@@ -10,7 +10,7 @@ namespace DwarfDB.Links
 {
 	/// <summary>
 	/// A DC link parser
-	/// Link: ip_address:db_name:dc_name:rec_hash
+	/// Link: ip_address:db_name:dc_name
 	/// </summary>
 	public class DataContainerLinkParser : ILinkParser
 	{
@@ -31,7 +31,7 @@ namespace DwarfDB.Links
 					));
 				}
 			} catch ( Exception ex ) {
-				Errors.ErrorProcessing.Display( "DC link parsing: "+ex.Message );
+				Errors.Messages.Display( "DC link parsing: "+ex.Message );
 			}
 		}
 	}

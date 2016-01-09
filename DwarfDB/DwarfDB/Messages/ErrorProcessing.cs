@@ -12,9 +12,9 @@ namespace DwarfDB.Errors
 	/// <summary>
 	/// A class for errors output
 	/// </summary>
-	public class ErrorProcessing
+	public class Messages
 	{
-		public ErrorProcessing()
+		public Messages()
 		{
 		}
 		
@@ -24,7 +24,7 @@ namespace DwarfDB.Errors
 			System.Console.WriteLine( String.Format( "Error: {0} When: {1}", _error_text, DateTime.Now.ToLocalTime()));
 		}
 		
-		public static void Display( String _error_text,
+		public static void DisplayError( String _error_text,
 		                           String _where,
 		                           String _advices,
 		                           DateTime date_time ) {
@@ -35,7 +35,7 @@ namespace DwarfDB.Errors
 			                                 _advices ));
 		}
 		
-		public static void Display( Stream out_str,
+		public static void DisplayError( Stream out_str,
 		                           String _error_text,
 		                           String _where,
 		                           String _advices,

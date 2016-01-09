@@ -83,7 +83,7 @@ namespace DwarfDB.ChunkManager
 				inner_object = new ChunkManager();
 				inner_object.conn_db = inner_object.FindDB( db_to_connect );
 				if ( inner_object.conn_db == null ) {
-					Errors.ErrorProcessing.Display(
+					Errors.Messages.DisplayError(
 						"Can't find DB with name \""+db_to_connect+"\"",
 						"",
 						"Please, check DB name or create such DB",
@@ -206,7 +206,7 @@ namespace DwarfDB.ChunkManager
 					ChunkFormat.AddItem( filepath, db);
 					chunks_lst[ new IndexPair() { hash_min = null, hash_max = null } ] = db.Name;
 				} else {
-					Errors.ErrorProcessing.Display("Database \""+db.Name+"\" already exists!",
+					Errors.Messages.DisplayError("Database \""+db.Name+"\" already exists!",
 					                               "creating DB", "Choose another name", DateTime.Now);
 					return;
 				}
@@ -308,7 +308,7 @@ namespace DwarfDB.ChunkManager
 						               	hash_max =  no_null_records.Last().GetIndex().HashCode
 						               }, "none" );
 					} catch ( Exception ex ) {
-						Errors.ErrorProcessing.Display("Chunk processing error: "+ex.Message, "", "", DateTime.Now);
+						Errors.Messages.DisplayError("Chunk processing error: "+ex.Message, "", "", DateTime.Now);
 					}
 				}
 			} catch ( Exception ex ) {

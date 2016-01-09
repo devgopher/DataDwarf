@@ -146,7 +146,7 @@ namespace DwarfDB.Stack
 			}
 			catch (Exception ex)
 			{
-				Errors.ErrorProcessing.Display("FAILED TO GET STRUCTURE: " + ex.Message + ":" + ex.StackTrace,
+				Errors.Messages.DisplayError("FAILED TO GET STRUCTURE: " + ex.Message + ":" + ex.StackTrace,
 				                               "", "", DateTime.Now);
 			}
 			return null;

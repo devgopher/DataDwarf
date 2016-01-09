@@ -134,7 +134,7 @@ namespace DwarfDB.ChunkManager
 				
 				if ( icm == null )
 				{
-					Errors.ErrorProcessing.Display("Can't find such item!", "Saving an item", "", DateTime.Now);
+					Errors.Messages.DisplayError("Can't find such item!", "Saving an item", "", DateTime.Now);
 					return;
 				}
 				
@@ -149,7 +149,7 @@ namespace DwarfDB.ChunkManager
 					sw_write.Write(JsonConvert.SerializeObject(elem, Formatting.Indented));
 				}
 			} else {
-				Errors.ErrorProcessing.Display( "DataStructure object is null!", "", "", DateTime.Now);
+				Errors.Messages.DisplayError( "DataStructure object is null!", "", "", DateTime.Now);
 			}
 		}
 		
@@ -181,7 +181,7 @@ namespace DwarfDB.ChunkManager
 					sw.Write(JsonConvert.SerializeObject(elem, Formatting.Indented));
 				}
 			} else {
-				Errors.ErrorProcessing.Display( "DataStructure object is null!", "", "", DateTime.Now);
+				Errors.Messages.DisplayError( "DataStructure object is null!", "", "", DateTime.Now);
 			}
 		}
 		

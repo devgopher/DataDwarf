@@ -107,7 +107,7 @@ namespace DwarfDB.DataStructures
 				db.UpdateDataContainers();
 				return db;
 			} else {
-				Errors.ErrorProcessing.Display( "Can't find a directory: "+cpath, "DB loading", "Check DB name or path existance", DateTime.Now );
+				Errors.Messages.DisplayError( "Can't find a directory: "+cpath, "DB loading", "Check DB name or path existance", DateTime.Now );
 				return null;
 			}
 		}
@@ -118,7 +118,7 @@ namespace DwarfDB.DataStructures
 		public void Drop( User.User user ) {
 			// Access check
 			if ( this.GetLevel( user ) != Access.AccessLevel.ADMIN ) {
-				Errors.ErrorProcessing.Display(
+				Errors.Messages.DisplayError(
 					Global.StaticResourceManager.GetStringResource( "ACCESS_REASON_DENIED_FOR_THIS_USER" ),
 					"",
 					"",
@@ -265,14 +265,14 @@ namespace DwarfDB.DataStructures
 					// Don't try to save new_dc in this method!
 					return true;
 				} else {
-					Errors.ErrorProcessing.Display(
+					Errors.Messages.DisplayError(
 						String.Format("DataContainer named \"{0}\" already exists in DB!", new_dc.Name),
 						"Adding new DC",
 						"Check the DB structure or select another name",
 						DateTime.Now);
 				}
 			} else {
-				Errors.ErrorProcessing.Display(
+				Errors.Messages.DisplayError(
 					String.Format( Global.StaticResourceManager.GetStringResource("ACCESS_REASON_DENIED_FOR_SOME PROBLEMS"), new_dc.Name),
 					"Adding new DC",
 					"Check the DB structure or select another name",
@@ -283,7 +283,7 @@ namespace DwarfDB.DataStructures
 		
 		private DataContainer RetDCAccess( DataContainer dc, User.User user) {
 			if ( !Global.CheckAccess.CheckWriteAccess(this, user) ) {
-				Errors.ErrorProcessing.Display( Global.StaticResourceManager.GetStringResource("ACCESS_REASON_DENIED_FOR_THIS_USER"));
+				Errors.Messages.Display( Global.StaticResourceManager.GetStringResource("ACCESS_REASON_DENIED_FOR_THIS_USER"));
 				return null;
 			}
 			return dc;			
@@ -316,7 +316,7 @@ namespace DwarfDB.DataStructures
 				// If we hadn't found DC with such name, we should write
 				// an error
 				
-				Errors.ErrorProcessing.Display( "Can't find a DataContainer with name \""+dc_name+"\"",
+				Errors.Messages.DisplayError( "Can't find a DataContainer with name \""+dc_name+"\"",
 				                               "Getting a DataContainer drom DB",
 				                               "Please, check a name or create such DataContainer",
 				                               DateTime.Now );
