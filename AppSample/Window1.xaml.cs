@@ -59,7 +59,7 @@ namespace AppSample
 			new_rec["Name"].Value = _name;
 			new_rec["Surname"].Value = _surname;
 			new_rec.Id = dc_employee_load.NextId();
-			dc_employee_load.AddRecordToStack(new_rec);
+			dc_employee_load.AddRecordToDataStorage(new_rec);
 			dc_employee_load.Save();
 			
 			GridLoad();
