@@ -1,6 +1,6 @@
 ﻿/*
  * User: Igor
- * Date: 29.11.2015
+ * Date: 09.01.2016
  * Time: 0:19
  */
 using System;
@@ -15,7 +15,10 @@ namespace DwarfDB.Links
 	{
 		public DataContainerLink(object _client)
 		{
+		}
 
+		public DataContainerLink()
+		{
 		}
 		
 		public void Init( string _address,
