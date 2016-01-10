@@ -15,12 +15,13 @@ namespace Logger
 	/// </summary>
 	public class Logger : IDisposable
 	{
-		public String Path { get; private set; }
 		FileStream log_fs;
 		StreamWriter log_sw;
 		StreamReader log_sr;
 		String application_name;
 		readonly Encoding encoding;
+
+		public String Path { get; private set; }
 		
 		public Logger( string _path,
 		              string _application_name,
@@ -44,7 +45,7 @@ namespace Logger
 					: Environment.ExpandEnvironmentVariables("%HOMEDRIVE%%HOMEPATH%");
 			}
 		}
-			
+		
 		#region GetInstance
 		private static Logger logger_instance = null;
 		
@@ -60,7 +61,7 @@ namespace Logger
 			return logger_instance;
 		}
 		#endregion
-	
+		
 		private void StartLog()
 		{
 			WriteIn("Assembly: " + Assembly.GetEntryAssembly().GetName().Name + " \r\n Version:"+

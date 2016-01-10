@@ -146,7 +146,7 @@ namespace DwarfServer.Server
 					response_proc_thread = new Thread( ResponseProc );
 					response_proc_thread.Start();
 				}
-			} catch (HttpListenerException ex) {
+			} catch ( HttpListenerException ex ) {
 				logger.WriteError( ex.Message );
 				Status = ServerStatus.ERROR;
 			} catch ( ThreadStartException ex ) {
@@ -167,7 +167,7 @@ namespace DwarfServer.Server
 					listener_thread.Abort();
 					listener.Stop();
 				}
-			} catch (HttpListenerException ex) {
+			} catch ( HttpListenerException ex ) {
 				logger.WriteError( ex.Message );
 				Status = ServerStatus.ERROR;
 			} catch ( ThreadAbortException ex ) {
@@ -178,19 +178,37 @@ namespace DwarfServer.Server
 			Status = ServerStatus.OFF;
 		}
 		
-		
+		/// <summary>
+		/// Checks availability of a host
+		/// </summary>
+		/// <param name="host">Host</param>
+		/// <param name="delay">Delay, ms</param>
+		/// <returns></returns>
+		private bool IsAvailable( string host, int delay ) {
+			// TODO: send request
+			Thread.Sleep( delay );
+			// TODO: do we have any response?
+			
+			return false;
+		}
 		
 		/// <summary>
-		/// Checking availability of all hosts by sending special requests
+		/// Checks availability of all hosts by sending special requests
 		/// </summary>
 		private void CheckAvailability() {
 			var active_hosts_copy = active_hosts.ToArray();
 			foreach ( var host in active_hosts_copy ) {
-				// TODO: send a special request and wait for a response if timeout expires - delete in from active hosts
-				// active_hosts.TryTake(host);
+				// TODO: send a special request and wait
+				// for a response if timeout expires - delete in
+				// from active hosts
+				if ( !IsAvailable( host, 2000 ) ) {
+					var thr = new Thread (
+						() => active_hosts.TryTake( out host )
+					);
+					
+					thr.Start();
+				}
 			}
 		}
-
 	}
 }
-
