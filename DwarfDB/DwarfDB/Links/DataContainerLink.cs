@@ -50,7 +50,7 @@ namespace DwarfDB.Links
 			/*
 			 	1. Reference parsing
 				2. Receiving content
-			 */			
+			 */
 			parser.Parse( orig_string, this );
 			
 			return inner_dc;
@@ -66,5 +66,6 @@ namespace DwarfDB.Links
 		static private DataContainerLinkParser parser = new DataContainerLinkParser();
 		private string db_name = String.Empty;
 		private string dc_name = String.Empty;
+		private DwarfServer.Receiver.Receiver receiver;
 	}
 }

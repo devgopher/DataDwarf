@@ -50,9 +50,10 @@
   <ItemGroup>
     <Compile Include="Logger\ConsoleUtils.cs" />
     <Compile Include="Logger\Logger.cs" />
-    <Compile Include="MainLogic\MainLogic.cs" />
+    <Compile Include="MainLogic\Server.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Receiver\Receiver.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -64,6 +65,7 @@
     <Folder Include="UnitTests\" />
     <Folder Include="MainLogic" />
     <Folder Include="Logger" />
+    <Folder Include="Receiver" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -12,7 +12,7 @@ using System.Collections.Generic;
 using System.Collections.Concurrent;
 using System.Threading;
 
-namespace DwarfServer.MainLogic
+namespace DwarfServer.Server
 {
 	/// <summary>
 	/// A general logic of DwarfServer.
@@ -21,7 +21,7 @@ namespace DwarfServer.MainLogic
 	/// - receiving specially formed responses from another layers of a DwarfServer ( as an exmaple, we can transmit a DC record )
 	/// - receiving and updating of a clients list ( ON/OFF/ERROR/BUSY client states )
 	/// </summary>
-	public class MainLogic {
+	public class Server {
 		int port = 45000;
 		WebClient web_client = new WebClient();
 		HttpListener listener = new HttpListener();
@@ -51,7 +51,7 @@ namespace DwarfServer.MainLogic
 			get; private set;
 		}
 		
-		public MainLogic()
+		public Server()
 		{
 			// Setting a prefix to listen for a needed port
 			listener.Prefixes.Add("http://*:"+port.ToString()+"/");
