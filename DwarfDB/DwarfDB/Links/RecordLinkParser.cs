@@ -25,12 +25,12 @@ namespace DwarfDB.Links
 					var db_name = match.Groups[1].Value;
 					var dc_name = match.Groups[2].Value;
 					var rec_hash = match.Groups[3].Value;
-					link = (RecordLink)(RecordLink.Create(
+					((RecordLink)link).Init(
 						address,
 						db_name,
 						dc_name,
 						rec_hash
-					));
+					);
 				}
 			} catch ( Exception ex ) {
 				Errors.Messages.DisplayError( "Record link parsing: "+ex.Message );

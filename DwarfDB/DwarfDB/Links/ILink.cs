@@ -13,11 +13,11 @@ namespace DwarfDB.Links
 	/// </summary>
 	public interface ILink
 	{
-		ILink CreateNew( string address,
-		                string db_name,
-		                string dc_name,
-		                string rec_hash );
-		IStructure Get();
+		void Init( string _address,
+		                 string _db_name,
+		                 string _dc_name,
+		                 string _rec_hash );
+		//IStructure Get( string orig_string );
 		void Drop();
 	}
 }
