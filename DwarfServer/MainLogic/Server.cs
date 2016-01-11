@@ -202,8 +202,9 @@ namespace DwarfServer.Server
 				// for a response if timeout expires - delete in
 				// from active hosts
 				if ( !IsAvailable( host, 2000 ) ) {
+					var tmp_host = host;
 					var thr = new Thread (
-						() => active_hosts.TryTake( out host )
+						() => active_hosts.TryTake( out tmp_host )
 					);
 					
 					thr.Start();

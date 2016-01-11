@@ -7,6 +7,7 @@ using System;
 using System.IO;
 using System.Text;
 using System.Reflection;
+using System.Collections.Generic;
 
 namespace Logger
 {
@@ -17,10 +18,10 @@ namespace Logger
 	{
 		FileStream log_fs;
 		StreamWriter log_sw;
-		StreamReader log_sr;
 		String application_name;
 		readonly Encoding encoding;
-
+		
+		public List<LogElement> log_elements = new List<LogElement>();
 		public String Path { get; private set; }
 		
 		public Logger( string _path,
@@ -28,9 +29,12 @@ namespace Logger
 		              Encoding _encoding )
 		{
 			Path = _path;
-			//CheckPath();
 			application_name = _application_name;
 			encoding = _encoding;
+			
+			log_elements.Add( FileLogElement.GetInstance( encoding, Path ) );
+			log_elements.Add( ConsoleLogElement.GetInstance() );
+			
 			StartLog();
 			WriteEntry("Start logging...");
 		}
@@ -62,70 +66,48 @@ namespace Logger
 		}
 		#endregion
 		
+		/// <summary>
+		/// Starts logging process
+		/// </summary>
 		private void StartLog()
 		{
-			WriteIn("Assembly: " + Assembly.GetEntryAssembly().GetName().Name + " \r\n Version:"+
-			        Assembly.GetEntryAssembly().GetName().Version +"\r\n");
+			var content = "Assembly: " + Assembly.GetEntryAssembly().GetName().Name + " \r\n Version:"+
+				Assembly.GetEntryAssembly().GetName().Version;
+			foreach ( var log_elem in log_elements ) {
+				log_elem.WriteIn( content, "INFO");
+			}
 		}
 		
-		public void WriteEntry(string content)
+		/// <summary>
+		/// Writes a simple entry
+		/// </summary>
+		/// <param name="content"></param>
+		public void WriteEntry( string content )
 		{
-			WriteIn(DateTime.Now.ToString("\r\ndd.MM.yyyy HH:mm:ss") + ": " + content);
+			foreach ( var log_elem in log_elements ) {
+				log_elem.WriteIn( content, "MESSAGE", ConsoleColor.DarkGreen );
+			}
 		}
 		
+		/// <summary>
+		/// Writes an error message
+		/// </summary>
+		/// <param name="content"></param>
 		public void WriteError(string content)
 		{
-			var ex_color = ConsoleUtils.GetConsoleFontColor();
-			ConsoleUtils.SetConsoleFontColor( ConsoleColor.Red );
-			WriteIn(DateTime.Now.ToString("\r\ndd.MM.yyyy HH:mm:ss") + ": ERROR:" + content);
-			ConsoleUtils.SetConsoleFontColor( ex_color );
+			foreach ( var log_elem in log_elements ) {
+				log_elem.WriteIn( content, "ERROR", ConsoleColor.Red );
+			}
 		}
 		
+		/// <summary>
+		/// Writes a warning message
+		/// </summary>
+		/// <param name="content"></param>
 		public void WriteWarning(string content)
 		{
-			var ex_color = ConsoleUtils.GetConsoleFontColor();
-			ConsoleUtils.SetConsoleFontColor( ConsoleColor.Yellow );
-			WriteIn(DateTime.Now.ToString("\r\ndd.MM.yyyy HH:mm:ss") + ": WARNING: " + content);
-			ConsoleUtils.SetConsoleFontColor( ex_color );
-		}
-
-		public string GetText() {
-			string rd_text = String.Empty;
-			if (File.Exists(Path)) {
-				using (log_fs = File.OpenRead(Path)) {
-					using (log_sr = new StreamReader(log_fs, encoding)) {
-						rd_text = log_sr.ReadToEnd();
-					}
-				}
-			}
-			return rd_text;
-		}
-		
-		private void WriteIn( string input )
-		{
-			try {
-				Console.WriteLine(input);
-				if (!File.Exists(Path)) {
-					using (log_fs = File.Open(Path, FileMode.CreateNew)) {
-						using (log_sw = new StreamWriter(log_fs, encoding)) {
-							log_sw.WriteLine(input);
-						}
-					}
-				} else {
-					using (log_fs = File.Open(Path, FileMode.Append)) {
-						using (log_sw = new StreamWriter(log_fs, encoding)) {
-							log_sw.WriteLine(input);
-						}
-					}
-				}
-			} catch ( IOException ex ) {
-				var rand = new Random(DateTime.Now.Millisecond);
-				var new_path = Path + "_" + rand.Next().ToString();
-				while (File.Exists(new_path)) {
-					new_path = Path + "_" + rand.Next().ToString();
-				}
-				Path = new_path;
-				WriteIn(input);
+			foreach ( var log_elem in log_elements ) {
+				log_elem.WriteIn( content, "WARNING", ConsoleColor.Yellow );
 			}
 		}
 		

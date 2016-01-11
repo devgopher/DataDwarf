@@ -48,7 +48,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Logger\ConsoleLogElement.cs" />
     <Compile Include="Logger\ConsoleUtils.cs" />
+    <Compile Include="Logger\FileLogElement.cs" />
+    <Compile Include="Logger\ILogElement.cs" />
+    <Compile Include="Logger\LogElement.cs" />
     <Compile Include="Logger\Logger.cs" />
     <Compile Include="MainLogic\Server.cs" />
     <Compile Include="Program.cs" />

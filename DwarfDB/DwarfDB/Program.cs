@@ -12,7 +12,7 @@ namespace DwarfDB
 	{
 		public static void Main(string[] args)
 		{
-
+			Logger.Logger.GetInstance();
 			string systemVersionVal = System.Runtime.InteropServices.RuntimeEnvironment.GetRuntimeDirectory().ToString();
 			Console.WriteLine("Framework: "+systemVersionVal);
 
