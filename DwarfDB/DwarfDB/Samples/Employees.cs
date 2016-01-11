@@ -29,7 +29,6 @@ namespace DwarfDB
 			if (DataBase.Exists(db_name)) {
 				db = DataBase.LoadFrom( db_name, cm );
 			} else {
-
 				db = DataBase.Create( db_name, cm );
 				db.AddAccess( user, Access.AccessLevel.ADMIN );
 				DataContainer.Create( db, "employee", user );

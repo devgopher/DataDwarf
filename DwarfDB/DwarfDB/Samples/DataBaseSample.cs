@@ -25,7 +25,6 @@ namespace DwarfDB
 			                                              	db.AddNewDataContainer( dc, new_usr );
 			                                              	db.chunk_manager.CreateChunk( db );
 			                                              } );
-
 			
 			Console.WriteLine("Execution time, ms: "+time);
 		}

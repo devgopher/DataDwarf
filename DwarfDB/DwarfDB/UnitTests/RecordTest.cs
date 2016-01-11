@@ -14,6 +14,10 @@ namespace DwarfDB.UnitTests
 	{
 		[TestCase(@"nunit_db", "nunit_container1")]
 		public static void CreateRecord( string db_name, string container_name ) {
+			
+			UnitTests.DataBaseTest.Create();
+			UnitTests.DataBaseTest.CreateContainer();
+			
 			var user = User.User.New( "root", "12345678");
 			var cm = new ChunkManager.ChunkManager();
 			var db = DataBase.LoadFrom( db_name, cm );

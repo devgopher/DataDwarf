@@ -113,7 +113,7 @@ namespace DwarfDB.DataStructures
 		}
 		
 		/// <summary>
-		/// Dropping this DB
+		/// Drops the DB
 		/// </summary>
 		public void Drop( User.User user ) {
 			// Access check
@@ -133,6 +133,8 @@ namespace DwarfDB.DataStructures
 			var cpath = Config.Config.Instance.DataDirectory+this.Name;
 			if ( Directory.Exists(cpath) ) {
 				foreach ( var file in Directory.GetFiles(cpath, "*.dwarf") )
+					File.Delete( file );
+				foreach ( var file in Directory.GetFiles(cpath, "*.access") )
 					File.Delete( file );
 				foreach ( var file in Directory.GetFiles(cpath, "*.dw") )
 					File.Delete( file );
@@ -282,7 +284,7 @@ namespace DwarfDB.DataStructures
 		}
 		
 		private DataContainer RetDCAccess( DataContainer dc, User.User user) {
-			if ( !Global.CheckAccess.CheckWriteAccess(this, user) ) {
+			if ( !Global.CheckAccess.CheckWriteAccess(dc, user) ) {
 				Errors.Messages.DisplayError( Global.StaticResourceManager.GetStringResource("ACCESS_REASON_DENIED_FOR_THIS_USER"));
 				return null;
 			}

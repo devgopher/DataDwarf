@@ -22,8 +22,21 @@ namespace Logger
 		readonly Encoding encoding;
 		String log_text = String.Empty;
 		
+		static Assembly assembly = Assembly.GetEntryAssembly();
+		static String assembly_name = "tmp";
+		static String assembly_fullname = "tmp";
+		static String assembly_ver = "0.1.0";
+		
 		public List<LogElement> log_elements = new List<LogElement>();
 		public String Path { get; private set; }
+		
+		static Logger() {
+			if ( assembly != null ) {
+				assembly_name = assembly.GetName().Name;
+				assembly_fullname = Assembly.GetEntryAssembly().FullName;
+				assembly_ver = Assembly.GetEntryAssembly().GetName().Version.ToString();
+			}
+		}
 		
 		protected Logger( string _path,
 		                 string _application_name,
@@ -51,6 +64,15 @@ namespace Logger
 			}
 		}
 		
+		/// <summary>
+		/// User's TEMP path
+		/// </summary>
+		private static string TempPath {
+			get {
+				return System.IO.Path.GetTempPath();
+			}
+		}
+		
 		#region GetInstance
 		private static Dictionary< String, Logger > instances = new Dictionary< String, Logger >();
 		
@@ -63,24 +85,39 @@ namespace Logger
 		public static Logger GetInstance( string log_dir = null, string filename = null ) {
 			Logger ret = null;
 			String filepath = "";
+			
 			try {
-				if ( log_dir == null  )
-					log_dir = HomePath+@"\"+ Assembly.GetEntryAssembly().GetName().Name+@"\";
+				if ( log_dir == null  ) {
+					if ( assembly != null )
+						log_dir = HomePath+@"\"+ assembly_name+@"\";
+					else
+						log_dir =  TempPath+@"\";
+					
+				}
 				
 				Directory.CreateDirectory( log_dir );
 				
 				if ( filename != null )
 					filepath = log_dir + @"\"+filename;
-				else
-					filepath = log_dir +
-						Assembly.GetEntryAssembly().GetName().Name+
-						DateTime.Now.ToString( "__HH_mm_ss__dd.MM.yyyy" )+
-						".log";
+				else {
+					if ( assembly != null )
+						filepath = log_dir +
+							assembly_name+
+							DateTime.Now.ToString( "__HH_mm_ss__dd.MM.yyyy" )+
+							".log";
+					else
+						filepath = log_dir +
+							"tmp_log"+
+							DateTime.Now.ToString( "__HH_mm_ss__dd.MM.yyyy" )+
+							".log";
+				}
+				
+				var encoding = Encoding.Default;
 				
 				if ( !instances.ContainsKey(filepath) ) {
 					ret = new Logger( filepath,
-					                 Assembly.GetEntryAssembly().FullName,
-					                 Encoding.Default );
+					                 assembly_fullname,
+					                 encoding );
 					instances[filepath] = ret;
 				} else {
 					ret = instances[filepath];
@@ -97,8 +134,8 @@ namespace Logger
 		/// </summary>
 		private void StartLog()
 		{
-			var content = "Assembly: " + Assembly.GetEntryAssembly().GetName().Name + " \r\n Version:"+
-				Assembly.GetEntryAssembly().GetName().Version;
+			var content = "Assembly: " + assembly_name + " \r\n Version:"+
+				assembly_ver;
 			log_text+="\r\n "+content;
 			foreach ( var log_elem in log_elements ) {
 				log_elem.Output( content, "INFO");
