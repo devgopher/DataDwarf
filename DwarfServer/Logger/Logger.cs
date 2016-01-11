@@ -74,7 +74,7 @@ namespace Logger
 			var content = "Assembly: " + Assembly.GetEntryAssembly().GetName().Name + " \r\n Version:"+
 				Assembly.GetEntryAssembly().GetName().Version;
 			foreach ( var log_elem in log_elements ) {
-				log_elem.WriteIn( content, "INFO");
+				log_elem.Output( content, "INFO");
 			}
 		}
 		
@@ -85,7 +85,7 @@ namespace Logger
 		public void WriteEntry( string content )
 		{
 			foreach ( var log_elem in log_elements ) {
-				log_elem.WriteIn( content, "MESSAGE", ConsoleColor.DarkGreen );
+				log_elem.Output( content, "MESSAGE", ConsoleColor.DarkGreen );
 			}
 		}
 		
@@ -96,7 +96,7 @@ namespace Logger
 		public void WriteError(string content)
 		{
 			foreach ( var log_elem in log_elements ) {
-				log_elem.WriteIn( content, "ERROR", ConsoleColor.Red );
+				log_elem.Output( content, "ERROR", ConsoleColor.Red );
 			}
 		}
 		
@@ -107,7 +107,7 @@ namespace Logger
 		public void WriteWarning(string content)
 		{
 			foreach ( var log_elem in log_elements ) {
-				log_elem.WriteIn( content, "WARNING", ConsoleColor.Yellow );
+				log_elem.Output( content, "WARNING", ConsoleColor.Yellow );
 			}
 		}
 		
