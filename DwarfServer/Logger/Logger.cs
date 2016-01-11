@@ -54,6 +54,12 @@ namespace Logger
 		#region GetInstance
 		private static Dictionary< String, Logger > instances = new Dictionary< String, Logger >();
 		
+		/// <summary>
+		/// Getting/defining a Logger instance
+		/// </summary>
+		/// <param name="log_dir">A directory for logs</param>
+		/// <param name="filename">Log file name</param>
+		/// <returns></returns>
 		public static Logger GetInstance( string log_dir = null, string filename = null ) {
 			Logger ret = null;
 			String filepath = "";

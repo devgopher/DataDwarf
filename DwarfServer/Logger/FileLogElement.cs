@@ -6,7 +6,6 @@
 using System;
 using System.IO;
 using System.Text;
-using System.Reflection;
 using System.Collections.Generic;
 
 namespace Logger
@@ -95,13 +94,12 @@ namespace Logger
 					instance.UseEncoding = encoding;
 					instances[path] = instance;
 					
-					return instance;					
-				} else {
-					return instances[path];
+					return instance;
 				}
+				return instances[path];
 				
-			} else
-				throw new IOException( "Filepath isn't defined!" );
+			}
+			throw new IOException( "Filepath isn't defined!" );
 		}
 		
 		protected static Dictionary<String, FileLogElement> instances =
