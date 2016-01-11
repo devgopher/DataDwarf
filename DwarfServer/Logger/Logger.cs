@@ -25,9 +25,9 @@ namespace Logger
 		public List<LogElement> log_elements = new List<LogElement>();
 		public String Path { get; private set; }
 		
-		public Logger( string _path,
-		              string _application_name,
-		              Encoding _encoding )
+		protected Logger( string _path,
+		                 string _application_name,
+		                 Encoding _encoding )
 		{
 			Path = _path;
 			application_name = _application_name;
@@ -52,18 +52,37 @@ namespace Logger
 		}
 		
 		#region GetInstance
-		private static Logger logger_instance = null;
+		private static Dictionary< String, Logger > instances = new Dictionary< String, Logger >();
 		
-		public static Logger GetInstance() {
-			if ( logger_instance == null )
-				logger_instance = new Logger( HomePath+
-				                             @"\DataDwarf\"+
-				                             Assembly.GetEntryAssembly().GetName().Name+
-				                             DateTime.Now.ToString( "__HH_mm_ss__dd.MM.yyyy" )+
-				                             ".log",
-				                             Assembly.GetEntryAssembly().FullName,
-				                             Encoding.Default );
-			return logger_instance;
+		public static Logger GetInstance( string log_dir = null, string filename = null ) {
+			Logger ret = null;
+			String filepath = "";
+			try {
+				if ( log_dir == null  )
+					log_dir = HomePath+@"\"+ Assembly.GetEntryAssembly().GetName().Name+@"\";
+				
+				Directory.CreateDirectory( log_dir );
+				
+				if ( filename != null )
+					filepath = log_dir + @"\"+filename;
+				else
+					filepath = log_dir +
+						Assembly.GetEntryAssembly().GetName().Name+
+						DateTime.Now.ToString( "__HH_mm_ss__dd.MM.yyyy" )+
+						".log";
+				
+				if ( !instances.ContainsKey(filepath) ) {
+					ret = new Logger( filepath,
+					                 Assembly.GetEntryAssembly().FullName,
+					                 Encoding.Default );
+					instances[filepath] = ret;
+				} else {
+					ret = instances[filepath];
+				}
+			}  catch ( Exception ex ) {
+				throw new IOException( " Error while defining a new logger instance: "+ex.Message, ex );
+			}
+			return ret;
 		}
 		#endregion
 		

@@ -25,7 +25,7 @@ namespace DwarfServer.Server
 		int port = 45000;
 		WebClient web_client = new WebClient();
 		HttpListener listener = new HttpListener();
-		Logger.Logger logger = new Logger.Logger( "./", "DwarfServer", Encoding.Default );
+		Logger.Logger logger = Logger.Logger.GetInstance( "./" );
 		Thread listener_thread = null;
 		Thread response_proc_thread = null;
 

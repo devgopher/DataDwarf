@@ -7,6 +7,7 @@ using System;
 using System.IO;
 using System.Text;
 using System.Reflection;
+using System.Collections.Generic;
 
 namespace Logger
 {
@@ -78,19 +79,32 @@ namespace Logger
 		/// <param name="pars">Params array ( Encoding, Path )</param>
 		/// <returns>Log element</returns>
 		public static FileLogElement GetInstance( params object[] pars ) {
-			if ( instance == null ) {
-				instance  = new FileLogElement();
-				if ( pars != null  ) {
-					if ( pars.Length >= 1 ) {
-						instance.UseEncoding = pars[0] as Encoding;
-						if ( pars.Length == 2 )
-							instance.Path =  pars[1] as String;
-					}
+			string path = null;
+			Encoding encoding = null;
+
+			if ( pars != null  ) {
+				if ( pars.Length >= 1 ) {
+					encoding = pars[0] as Encoding;
+					if ( pars.Length == 2 )
+						path =  pars[1] as String;
 				}
-			}
-			return instance;
+				
+				if ( !instances.ContainsKey( path ) ) {
+					var instance = new FileLogElement();
+					instance.Path = path;
+					instance.UseEncoding = encoding;
+					instances[path] = instance;
+					
+					return instance;					
+				} else {
+					return instances[path];
+				}
+				
+			} else
+				throw new IOException( "Filepath isn't defined!" );
 		}
 		
-		protected static FileLogElement instance = null;
+		protected static Dictionary<String, FileLogElement> instances =
+			new Dictionary<String, FileLogElement>();
 	}
 }
