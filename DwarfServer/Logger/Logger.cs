@@ -20,6 +20,7 @@ namespace Logger
 		StreamWriter log_sw;
 		String application_name;
 		readonly Encoding encoding;
+		String log_text = String.Empty;
 		
 		public List<LogElement> log_elements = new List<LogElement>();
 		public String Path { get; private set; }
@@ -73,9 +74,14 @@ namespace Logger
 		{
 			var content = "Assembly: " + Assembly.GetEntryAssembly().GetName().Name + " \r\n Version:"+
 				Assembly.GetEntryAssembly().GetName().Version;
+			log_text+="\r\n "+content;
 			foreach ( var log_elem in log_elements ) {
 				log_elem.Output( content, "INFO");
 			}
+		}
+		
+		public String GetText() {
+			return log_text;
 		}
 		
 		/// <summary>
@@ -84,6 +90,7 @@ namespace Logger
 		/// <param name="content"></param>
 		public void WriteEntry( string content )
 		{
+			log_text+="\r\n "+content;
 			foreach ( var log_elem in log_elements ) {
 				log_elem.Output( content, "MESSAGE", ConsoleColor.DarkGreen );
 			}
@@ -95,6 +102,7 @@ namespace Logger
 		/// <param name="content"></param>
 		public void WriteError(string content)
 		{
+			log_text+="\r\n "+content;
 			foreach ( var log_elem in log_elements ) {
 				log_elem.Output( content, "ERROR", ConsoleColor.Red );
 			}
@@ -106,6 +114,7 @@ namespace Logger
 		/// <param name="content"></param>
 		public void WriteWarning(string content)
 		{
+			log_text+="\r\n "+content;
 			foreach ( var log_elem in log_elements ) {
 				log_elem.Output( content, "WARNING", ConsoleColor.Yellow );
 			}
