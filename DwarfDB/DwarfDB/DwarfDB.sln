@@ -12,8 +12,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Newtonsoft.Json", "..\..\..
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DwarfServer", "..\..\DwarfServer\DwarfServer.csproj", "{01776743-16BC-418E-B7C3-60C24D93E6D8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DwarfWcfService", "..\..\..\DwarfWcfService\DwarfWcfService.csproj", "{F4691802-AA9A-4B3B-B7A3-78DC1814A02E}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,16 +61,6 @@ Global
 		{01776743-16BC-418E-B7C3-60C24D93E6D8}.Debug4|Any CPU.Build.0 = Debug|Any CPU
 		{01776743-16BC-418E-B7C3-60C24D93E6D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{01776743-16BC-418E-B7C3-60C24D93E6D8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F4691802-AA9A-4B3B-B7A3-78DC1814A02E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F4691802-AA9A-4B3B-B7A3-78DC1814A02E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F4691802-AA9A-4B3B-B7A3-78DC1814A02E}.Debug2|Any CPU.ActiveCfg = Debug2|Any CPU
-		{F4691802-AA9A-4B3B-B7A3-78DC1814A02E}.Debug2|Any CPU.Build.0 = Debug2|Any CPU
-		{F4691802-AA9A-4B3B-B7A3-78DC1814A02E}.Debug3|Any CPU.ActiveCfg = Debug3|Any CPU
-		{F4691802-AA9A-4B3B-B7A3-78DC1814A02E}.Debug3|Any CPU.Build.0 = Debug3|Any CPU
-		{F4691802-AA9A-4B3B-B7A3-78DC1814A02E}.Debug4|Any CPU.ActiveCfg = Debug4|Any CPU
-		{F4691802-AA9A-4B3B-B7A3-78DC1814A02E}.Debug4|Any CPU.Build.0 = Debug4|Any CPU
-		{F4691802-AA9A-4B3B-B7A3-78DC1814A02E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F4691802-AA9A-4B3B-B7A3-78DC1814A02E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

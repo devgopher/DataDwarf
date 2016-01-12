@@ -54,10 +54,10 @@
     <Compile Include="Logger\ILogElement.cs" />
     <Compile Include="Logger\LogElement.cs" />
     <Compile Include="Logger\Logger.cs" />
-    <Compile Include="MainLogic\Server.cs" />
+    <Compile Include="Server\Server.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Receiver\Receiver.cs" />
+    <Compile Include="Client\Receiver.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -67,9 +67,9 @@
     <Folder Include="QueryProcessor\" />
     <Folder Include="Respondent\" />
     <Folder Include="UnitTests\" />
-    <Folder Include="MainLogic" />
+    <Folder Include="Server" />
     <Folder Include="Logger" />
-    <Folder Include="Receiver" />
+    <Folder Include="Client" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -5,7 +5,7 @@
  */
 using System;
 
-namespace DwarfServer.Receiver
+namespace DwarfServer.Client
 {
 	/// <summary>
 	/// Description of Receiver.
