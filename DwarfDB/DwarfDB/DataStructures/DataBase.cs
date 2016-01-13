@@ -76,7 +76,7 @@ namespace DwarfDB.DataStructures
 		/// <param name="db_name"></param>
 		/// <param name="_cm"></param>
 		/// <returns></returns>
-		public static DataBase Create( string db_name, 
+		public static DataBase Create( string db_name,
 		                              ChunkManager.ChunkManager _cm = null ) {
 			var cpath = Config.Config.Instance.DataDirectory+db_name;
 			
@@ -98,7 +98,7 @@ namespace DwarfDB.DataStructures
 		/// <param name="db_name">DB name</param>
 		/// <param name="_cm">Chunk manager</param>
 		/// <returns></returns>
-		public static DataBase LoadFrom( string db_name, 
+		public static DataBase LoadFrom( string db_name,
 		                                ChunkManager.ChunkManager _cm ) {
 			var cpath = Config.Config.Instance.DataDirectory+db_name;
 			if ( Directory.Exists(cpath) ) {
@@ -138,6 +138,8 @@ namespace DwarfDB.DataStructures
 					File.Delete( file );
 				foreach ( var file in Directory.GetFiles(cpath, "*.dw") )
 					File.Delete( file );
+				foreach ( var file in Directory.GetFiles(cpath, "*.tmp*") )
+					File.Delete( file );
 				Directory.Delete(cpath);
 			}
 			
@@ -165,7 +167,7 @@ namespace DwarfDB.DataStructures
 				foreach ( DataContainer dc in inner_dc_dict.Values ) {
 					dc.AddAccess( _user, _level );
 				}
-			}			
+			}
 		}
 		
 		/// <summary>
@@ -189,7 +191,7 @@ namespace DwarfDB.DataStructures
 		/// <returns></returns>
 		public Access.AccessLevel GetLevel( User.User _user ) {
 			return local_am.GetLevel( _user );
-		}		
+		}
 		#endregion
 		
 		#region DC cloning
@@ -288,7 +290,7 @@ namespace DwarfDB.DataStructures
 				Errors.Messages.DisplayError( Global.StaticResourceManager.GetStringResource("ACCESS_REASON_DENIED_FOR_THIS_USER"));
 				return null;
 			}
-			return dc;			
+			return dc;
 		}
 		
 		/// <summary>
@@ -303,7 +305,7 @@ namespace DwarfDB.DataStructures
 						if ( k.Value != null ) {
 							k.Value.AssignOwnerDB(this);
 							k.Value.BuildIndex();
-							k.Value.LoadRecords( user );	
+							k.Value.LoadRecords( user );
 							return RetDCAccess( k.Value, user );
 						}
 					}
@@ -319,9 +321,9 @@ namespace DwarfDB.DataStructures
 				// an error
 				
 				Errors.Messages.DisplayError( "Can't find a DataContainer with name \""+dc_name+"\"",
-				                               "Getting a DataContainer drom DB",
-				                               "Please, check a name or create such DataContainer",
-				                               DateTime.Now );
+				                             "Getting a DataContainer drom DB",
+				                             "Please, check a name or create such DataContainer",
+				                             DateTime.Now );
 				return null;
 			} else
 				throw new DataBaseException( this, "DataContainer name is empty!" );

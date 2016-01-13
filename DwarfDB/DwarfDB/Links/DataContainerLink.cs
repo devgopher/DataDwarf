@@ -69,6 +69,6 @@ namespace DwarfDB.Links
 		static private DataContainerLinkParser parser = new DataContainerLinkParser();
 		private string db_name = String.Empty;
 		private string dc_name = String.Empty;
-		private DwarfServer.Receiver.Receiver receiver;
+		//private DwarfServer.Receiver.Receiver receiver;
 	}
 }

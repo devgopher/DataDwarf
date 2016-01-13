@@ -183,7 +183,6 @@ namespace DwarfDB
 					                  ":"+rec.Fields[1].Type+"  :  "+rec.Fields[1].Value+" $$"+aa2.Count());
 				}
 				
-				/*
 				Console.WriteLine("Trying LINQ #4 (dc & dc2)...");
 
 				var aa3 = (from rec in dc
@@ -201,7 +200,6 @@ namespace DwarfDB
 				if ( Console.ReadLine() == "Y" ) {
 					db2.Drop( user );
 				}
-				*/
 			}
 		}
 	}

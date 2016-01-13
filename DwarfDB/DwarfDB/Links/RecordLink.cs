@@ -77,6 +77,6 @@ namespace DwarfDB.Links
 		private string db_name = String.Empty;
 		private string dc_name = String.Empty;
 		private string rec_hash = String.Empty;
-		private DwarfServer.Receiver.Receiver receiver;
+		//private DwarfServer.Receiver.Receiver receiver;
 	}
 }

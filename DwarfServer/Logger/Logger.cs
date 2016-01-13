@@ -8,6 +8,8 @@ using System.IO;
 using System.Text;
 using System.Reflection;
 using System.Collections.Generic;
+using System.Collections.Concurrent;
+
 
 namespace Logger
 {
@@ -25,11 +27,11 @@ namespace Logger
 		static Assembly assembly = Assembly.GetEntryAssembly();
 		static String assembly_name = "tmp";
 		static String assembly_fullname = "tmp";
-		static String assembly_ver = "0.1.0";
+		static String assembly_ver = "0.0.0";
 		
-		public List<LogElement> log_elements = new List<LogElement>();
+		public readonly List<LogElement> log_elements = new List<LogElement>();
 		public String Path { get; private set; }
-		
+				
 		static Logger() {
 			if ( assembly != null ) {
 				assembly_name = assembly.GetName().Name;
@@ -45,6 +47,7 @@ namespace Logger
 			Path = _path;
 			application_name = _application_name;
 			encoding = _encoding;
+			
 			
 			log_elements.Add( FileLogElement.GetInstance( encoding, Path ) );
 			log_elements.Add( ConsoleLogElement.GetInstance() );
@@ -74,7 +77,8 @@ namespace Logger
 		}
 		
 		#region GetInstance
-		private static Dictionary< String, Logger > instances = new Dictionary< String, Logger >();
+		private static ConcurrentDictionary< String, Logger > instances = 
+			new ConcurrentDictionary< String, Logger >();
 		
 		/// <summary>
 		/// Getting/defining a Logger instance
@@ -91,8 +95,7 @@ namespace Logger
 					if ( assembly != null )
 						log_dir = HomePath+@"\"+ assembly_name+@"\";
 					else
-						log_dir =  TempPath+@"\";
-					
+						log_dir =  TempPath+@"\";					
 				}
 				
 				Directory.CreateDirectory( log_dir );
