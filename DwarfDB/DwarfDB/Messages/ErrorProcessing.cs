@@ -18,10 +18,13 @@ namespace DwarfDB.Errors
 		{
 		}
 		
-		private static Logger.Logger logger = Logger.Logger.GetInstance();
+		private static Logger.Logger logger = 
+			Logger.Logger.GetInstance();
 		
 		public static void DisplayError( String _error_text ) {
-			System.Console.WriteLine( String.Format( "Error: {0} When: {1}", _error_text, DateTime.Now.ToLocalTime()));
+			System.Console.WriteLine( String.Format( "Error: {0} When: {1}", 
+			                                        _error_text, 
+			                                        DateTime.Now.ToLocalTime()));
 		}
 		
 		public static void DisplayError( String _error_text,
@@ -33,18 +36,6 @@ namespace DwarfDB.Errors
 			                                 _where,
 			                                 date_time.ToLocalTime(),
 			                                 _advices ));
-		}
-		
-		public static void DisplayError( Stream out_str,
-		                           String _error_text,
-		                           String _where,
-		                           String _advices,
-		                           DateTime date_time ) {
-			logger.WriteError( String.Format( "Error: {0} in: {1}. When: {2}. To Fix: {3}",
-			                                 _error_text,
-			                                 _where,
-			                                 date_time.ToLocalTime(),
-			                                 _advices ));			
 		}
 	}
 }
