@@ -114,12 +114,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\DwarfServer\Logger\ConsoleUtils.cs">
-      <Link>Logger\ConsoleUtils.cs</Link>
-    </Compile>
-    <Compile Include="..\..\DwarfServer\Logger\Logger.cs">
-      <Link>Logger\Logger.cs</Link>
-    </Compile>
     <Compile Include="AccessFunctions\AccessException.cs" />
     <Compile Include="AccessFunctions\Access.cs" />
     <Compile Include="AccessFunctions\AccessFile.cs" />
@@ -187,12 +181,13 @@
       <Project>{01776743-16BC-418E-B7C3-60C24D93E6D8}</Project>
       <Name>DwarfServer</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Logger\Logger.csproj">
+      <Project>{A7DEADB2-FB2C-4AFE-9608-0BFCD0E3DD2D}</Project>
+      <Name>Logger</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="resources\Strings.resx" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Logger" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="ProfilingSessions\Session20151209_114303.sdps" />
