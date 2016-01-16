@@ -18,8 +18,6 @@ namespace Logger
 	/// </summary>
 	public class Logger : IDisposable
 	{
-		FileStream log_fs;
-		StreamWriter log_sw;
 		String application_name;
 		readonly Encoding encoding;
 		String log_text = String.Empty;
