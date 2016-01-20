@@ -56,10 +56,11 @@ namespace DwarfDB.User
 		/// <returns></returns>
 		public static User New( string login, string passwd ) {
 			if ( FindLogin( login ) != null ) {
-				Errors.Messages.DisplayError("User with a such login already exists!", 
-				                               "Adding a new user",
-				                               "", 
-				                               DateTime.Now);
+				Errors.Messages.DisplayError(
+					Global.StaticResourceManager.GetStringResource( "USER_ALREADY_EXISTS" ),
+					"Adding a new user",
+					"",
+					DateTime.Now);
 				return Get( login );
 			}
 			var user = new User();
@@ -138,7 +139,7 @@ namespace DwarfDB.User
 			_user.Credentials.Password = new_password;
 		}
 		
-		/*	
+		/*
  		private static void RemoveFromUsersList( User _user ) {
 			int user_strg_num = FindLogin(_user.Credentials.Login);
 			if ( user_strg_num  > -1 ) {
@@ -148,7 +149,7 @@ namespace DwarfDB.User
 				}
 			}
 		}
-		*/
+		 */
 		
 		/// <summary>
 		/// Seeking for a given login in a userlist file

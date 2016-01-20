@@ -19,13 +19,14 @@
     <NoStdLib>False</NoStdLib>
     <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Platform)' == 'AnyCPU' ">
     <PlatformTarget>x86</PlatformTarget>
     <BaseAddress>4194304</BaseAddress>
     <RegisterForComInterop>False</RegisterForComInterop>
     <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
-    <Prefer32Bit>True</Prefer32Bit>
     <FileAlignment>4096</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
@@ -52,6 +53,8 @@
     <Optimize>False</Optimize>
     <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <BaseIntermediateOutputPath>obj\</BaseIntermediateOutputPath>
+    <StartAction>Project</StartAction>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <WarningLevel>4</WarningLevel>
@@ -62,7 +65,6 @@
         <Command type="BeforeExecute" command="cp ${ProjectDir}/testdata/* ${TargetPath} | rm -r -f obj" workingdir="${ProjectFile}" externalConsole="True" />
       </CustomCommands>
     </CustomCommands>
-    <AllowUnsafeBlocks>False</AllowUnsafeBlocks>
     <Optimize>False</Optimize>
     <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
@@ -167,6 +169,8 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+    <None Include="resources\CommonStrings.en.txt" />
+    <None Include="resources\CommonStrings.ru.txt" />
     <None Include="testdata\binary.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -187,24 +191,14 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="resources\Strings.resx" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="ProfilingSessions\Session20151209_114303.sdps" />
-    <Content Include="ProfilingSessions\Session20151209_123143.sdps" />
-    <Content Include="ProfilingSessions\Session20151209_140755.sdps" />
-    <Content Include="ProfilingSessions\Session20151209_142440.sdps" />
-    <Content Include="ProfilingSessions\Session20151209_162503.sdps" />
-    <Content Include="ProfilingSessions\Session20151209_163218.sdps" />
-    <Content Include="ProfilingSessions\Session20151209_163635.sdps" />
-    <Content Include="ProfilingSessions\Session20151209_231420.sdps" />
-    <Content Include="ProfilingSessions\Session20151209_233814.sdps" />
-    <Content Include="ProfilingSessions\Session20151209_234051.sdps" />
-    <Content Include="ProfilingSessions\Session20151209_234657.sdps" />
-    <Content Include="ProfilingSessions\Session20151209_234906.sdps" />
-    <Content Include="ProfilingSessions\Session20151209_235324.sdps" />
-    <Content Include="ProfilingSessions\Session20151218_114859.sdps" />
-    <Content Include="ProfilingSessions\Session20151219_220205.sdps" />
-    <Content Include="ProfilingSessions\Session20160104_115542.sdps" />
+    <EmbeddedResource Include="resources\CommonStrings.en-US.resources">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="resources\CommonStrings.resources">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="resources\CommonStrings.ru-RU.resources">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>

@@ -30,7 +30,8 @@ namespace Logger
 		public readonly List<LogElement> log_elements = new List<LogElement>();
 		public String Path { get; private set; }
 				
-		static Logger() {
+		static Logger() 
+		{
 			if ( assembly != null ) {
 				assembly_name = assembly.GetName().Name;
 				assembly_fullname = Assembly.GetEntryAssembly().FullName;
@@ -46,7 +47,6 @@ namespace Logger
 			application_name = _application_name;
 			encoding = _encoding;
 			
-			
 			log_elements.Add( FileLogElement.GetInstance( encoding, Path ) );
 			log_elements.Add( ConsoleLogElement.GetInstance() );
 			
@@ -57,7 +57,8 @@ namespace Logger
 		/// <summary>
 		/// User's HOME path
 		/// </summary>
-		private static string HomePath {
+		private static string HomePath 
+		{
 			get {
 				return (Environment.OSVersion.Platform == PlatformID.Unix)
 					? Environment.GetEnvironmentVariable("HOME")
@@ -84,7 +85,8 @@ namespace Logger
 		/// <param name="log_dir">A directory for logs</param>
 		/// <param name="filename">Log file name</param>
 		/// <returns></returns>
-		public static Logger GetInstance( string log_dir = null, string filename = null ) {
+		public static Logger GetInstance( string log_dir = null, string filename = null ) 
+		{
 			Logger ret = null;
 			String filepath = "";
 			

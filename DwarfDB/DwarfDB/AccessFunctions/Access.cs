@@ -68,7 +68,7 @@ namespace DwarfDB.AccessFunctions
 				var af = new AccessFile( AccessObject as DataContainer );
 				af.Save( this );
 			} else
-				throw new AccessException(" Object type is unknown ");
+				throw new AccessException("Object type is unknown");
 		}
 		
 		/// <summary>
@@ -98,7 +98,6 @@ namespace DwarfDB.AccessFunctions
 		/// <summary>
 		/// An array of instances
 		/// </summary>
-		private static readonly List<Access> instances = new List<Access>();
-		
+		private static readonly List<Access> instances = new List<Access>();		
 	}
 }

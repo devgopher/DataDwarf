@@ -7,6 +7,7 @@ using System;
 using System.Resources;
 using System.Reflection;
 using System.Globalization;
+using System.IO;
 
 namespace DwarfDB.Global
 {
@@ -15,19 +16,28 @@ namespace DwarfDB.Global
 	/// </summary>
 	public static class StaticResourceManager
 	{
-		private static readonly ResourceManager string_manager = new ResourceManager("DwarfDB.resources.Strings", Assembly.GetExecutingAssembly());
+		private static readonly ResourceManager string_manager;
+		private static readonly CultureInfo ci;
 		
 		static StaticResourceManager()
 		{
 			StringManager = string_manager;
+
+			string_manager =
+				ResourceManager.CreateFileBasedResourceManager( "CommonStrings",
+				                                               Directory.GetCurrentDirectory()+@"\resources",
+				                                               null
+				                                              );		
 		}
-		
+
+		public static String Language { get ; private set; }
+
 		public static ResourceManager StringManager {
 			get; private set;
 		}
 		
 		public static string GetStringResource( string res_name ) {
 			return string_manager.GetString( res_name );
-		}		
+		}
 	}
 }

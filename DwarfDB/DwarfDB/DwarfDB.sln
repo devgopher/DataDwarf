@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-# SharpDevelop 4.4
+# SharpDevelop 5.1
 VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DwarfDB", "DwarfDB.csproj", "{D4E12558-0D40-48D4-899D-0A098F986CB2}"
@@ -63,16 +63,16 @@ Global
 		{01776743-16BC-418E-B7C3-60C24D93E6D8}.Debug4|Any CPU.Build.0 = Debug|Any CPU
 		{01776743-16BC-418E-B7C3-60C24D93E6D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{01776743-16BC-418E-B7C3-60C24D93E6D8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A7DEADB2-FB2C-4AFE-9608-0BFCD0E3DD2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A7DEADB2-FB2C-4AFE-9608-0BFCD0E3DD2D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A7DEADB2-FB2C-4AFE-9608-0BFCD0E3DD2D}.Debug2|Any CPU.Build.0 = Debug|Any CPU
+		{A7DEADB2-FB2C-4AFE-9608-0BFCD0E3DD2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A7DEADB2-FB2C-4AFE-9608-0BFCD0E3DD2D}.Debug2|Any CPU.ActiveCfg = Debug|Any CPU
-		{A7DEADB2-FB2C-4AFE-9608-0BFCD0E3DD2D}.Debug3|Any CPU.Build.0 = Debug|Any CPU
+		{A7DEADB2-FB2C-4AFE-9608-0BFCD0E3DD2D}.Debug2|Any CPU.Build.0 = Debug|Any CPU
 		{A7DEADB2-FB2C-4AFE-9608-0BFCD0E3DD2D}.Debug3|Any CPU.ActiveCfg = Debug|Any CPU
-		{A7DEADB2-FB2C-4AFE-9608-0BFCD0E3DD2D}.Debug4|Any CPU.Build.0 = Debug|Any CPU
+		{A7DEADB2-FB2C-4AFE-9608-0BFCD0E3DD2D}.Debug3|Any CPU.Build.0 = Debug|Any CPU
 		{A7DEADB2-FB2C-4AFE-9608-0BFCD0E3DD2D}.Debug4|Any CPU.ActiveCfg = Debug|Any CPU
-		{A7DEADB2-FB2C-4AFE-9608-0BFCD0E3DD2D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7DEADB2-FB2C-4AFE-9608-0BFCD0E3DD2D}.Debug4|Any CPU.Build.0 = Debug|Any CPU
 		{A7DEADB2-FB2C-4AFE-9608-0BFCD0E3DD2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7DEADB2-FB2C-4AFE-9608-0BFCD0E3DD2D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

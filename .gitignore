@@ -51,8 +51,13 @@ Temporary Items
 *.exe
 *.dll
 
-#txt files
-*.txt
+#archives
+*.zip
+*.7z
+*.tar
+*.tar.bz
+*.rar
+*.arj
 
 #Temporary
 *Temporary*
