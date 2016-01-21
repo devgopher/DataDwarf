@@ -28,7 +28,7 @@ namespace DwarfDB.Links
 		protected abstract void InitLink( String input, ILink link );
 		
 		/// <summary>
-		/// A template method, that defines a main logic of parsing process
+		/// A template method, that defines main logic of a parsing process
 		/// </summary>
 		/// <param name="input"></param>
 		/// <param name="link"></param>

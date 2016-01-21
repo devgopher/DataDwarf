@@ -129,7 +129,7 @@ namespace DwarfDB.ChunkManager
 				InnerChunkElement icm = null;
 				
 				using ( var json_reader = new JsonTextReader(sw_read) ) {
-					icm = FindItem( json_reader, ds.GetIndex().HashCode );
+					icm = FindItem( json_reader, ds.GetIndex().DwarfHashCode );
 				}
 				
 				if ( icm == null )
@@ -145,7 +145,7 @@ namespace DwarfDB.ChunkManager
 					} else if ( ds is DataContainer ) {
 						icm.Contents = JsonConvert.SerializeObject(ds as DataContainer, Formatting.Indented);
 					}
-					elem.ElementHash = ds.GetIndex().HashCode;
+					elem.ElementHash = ds.GetIndex().DwarfHashCode;
 					sw_write.Write(JsonConvert.SerializeObject(elem, Formatting.Indented));
 				}
 			} else {
@@ -166,7 +166,7 @@ namespace DwarfDB.ChunkManager
 					if ( ds is Record ) {
 						elem.ElementType = InnerChunkElement.ElemType.RECORD;
 						elem.ElemParentName = ((Record)ds).OwnerDC.Name;
-						elem.ElemParentHash = ((Record)ds).OwnerDC.GetIndex().HashCode;
+						elem.ElemParentHash = ((Record)ds).OwnerDC.GetIndex().DwarfHashCode;
 						elem.Contents = JsonConvert.SerializeObject(ds, Formatting.Indented );
 					} else if ( ds is DataContainer ) {
 						elem.ElementType = InnerChunkElement.ElemType.DATACONTAINER;
@@ -177,7 +177,7 @@ namespace DwarfDB.ChunkManager
 						var ds_sec = (DataContainer)ds;
 						elem.Contents = JsonConvert.SerializeObject(ds_sec, Formatting.Indented);
 					}
-					elem.ElementHash = ds.GetIndex().HashCode;
+					elem.ElementHash = ds.GetIndex().DwarfHashCode;
 					sw.Write(JsonConvert.SerializeObject(elem, Formatting.Indented));
 				}
 			} else {
@@ -191,7 +191,7 @@ namespace DwarfDB.ChunkManager
 		/// <param name="filepath">path to a chunk file</param>
 		/// <param name="idx">item index</param>
 		public static IStructure GetItem( string filepath, Index idx ) {
-			return GetItem( filepath, idx.HashCode );
+			return GetItem( filepath, idx.DwarfHashCode );
 		}
 		
 		/// <summary>
@@ -389,7 +389,7 @@ namespace DwarfDB.ChunkManager
 				if ( fs.Read( buffer, offset, MaxChunkSize  ) > 0 ) {
 					string buf = System.Text.Encoding.UTF8.GetString(buffer);
 					const string tmp_el_type  ="\"ElementType\":";
-					string tmp_el_hash  ="\"ElementHash\": \""+idx.HashCode+"\"";
+					string tmp_el_hash  ="\"ElementHash\": \""+idx.DwarfHashCode+"\"";
 
 					int str_elem_type_pos = buf.IndexOf(tmp_el_type, StringComparison.InvariantCultureIgnoreCase);
 					int str_hash_pos = buf.IndexOf(tmp_el_hash, StringComparison.InvariantCultureIgnoreCase);
@@ -421,7 +421,7 @@ namespace DwarfDB.ChunkManager
 			var item = new InnerChunkElement();
 			while ( json_reader.Read() ) {
 				item = json_serializer.Deserialize<InnerChunkElement>( json_reader );
-				if ( item.ElementHash == ds.GetIndex().HashCode ) {
+				if ( item.ElementHash == ds.GetIndex().DwarfHashCode ) {
 					return ds;
 				}
 			}
@@ -430,7 +430,7 @@ namespace DwarfDB.ChunkManager
 		}
 		
 		private static InnerChunkElement FindItem( JsonTextReader jr, Index idx ) {
-			return FindItem( jr, idx.HashCode );
+			return FindItem( jr, idx.DwarfHashCode );
 		}
 		
 		private static InnerChunkElement FindItem( JsonTextReader jr, string hash ) {

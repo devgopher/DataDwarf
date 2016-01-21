@@ -97,12 +97,12 @@ namespace DwarfDB.DataStructures
 		{
 			Name = info.GetString( "Name" );
 			current_index = new Index( this );
-			current_index.HashCode = info.GetString( "ElementHash" );
+			current_index.DwarfHashCode = info.GetString( "ElementHash" );
 		}
 		
 		public void GetObjectData(SerializationInfo info, StreamingContext ctxt) {
 			info.AddValue("Name", Name);
-			info.AddValue("ElementHash", current_index.HashCode);
+			info.AddValue("ElementHash", current_index.DwarfHashCode);
 			info.AddValue("OwnerDB", owner_db, typeof(DataBase));
 			info.AddValue("Columns", Columns, typeof(List<Column>));
 		}
@@ -245,9 +245,9 @@ namespace DwarfDB.DataStructures
 				Errors.Messages.DisplayError( Global.StaticResourceManager.StringManager.GetString("ACCESS_REASON_DENIED_FOR_THIS_USER"));
 				return;
 			}
-			var own_hash = this.GetIndex().HashCode;
+			var own_hash = this.GetIndex().DwarfHashCode;
 
-			var chunk_recs = owner_db.chunk_manager.LoadAllChunks( this.GetIndex().HashCode );
+			var chunk_recs = owner_db.chunk_manager.LoadAllChunks( this.GetIndex().DwarfHashCode );
 			foreach ( var rec in chunk_recs ) {
 				AddRecordToDataStorage( rec );
 			}
@@ -264,7 +264,7 @@ namespace DwarfDB.DataStructures
 			bool has_new_recs = false;
 			foreach ( var idx_entry in idx_dict ) {
 				// First of all, we nedd to check if an index of parent element equals to index of our DC
-				if ( idx_entry.Value.Value == GetIndex().HashCode) {
+				if ( idx_entry.Value.Value == GetIndex().DwarfHashCode) {
 					if ( cntr >= number )
 						break;
 					var rec = owner_db.chunk_manager.GetRecord( idx_entry.Key );
@@ -573,7 +573,7 @@ namespace DwarfDB.DataStructures
 					var indexes = db.Indexes;
 
 					all_rec_count = (indexes.Where( ( idxs ) => {
-					                               	return idxs.Value.Value == this.GetIndex().HashCode;
+					                               	return idxs.Value.Value == this.GetIndex().DwarfHashCode;
 					                               })).Count();
 				}
 				return all_rec_count;
@@ -583,7 +583,7 @@ namespace DwarfDB.DataStructures
 		int all_rec_count = -1;
 		
 		internal bool  GetRecordsFromChunk( int chunk_number = 0 ) {
-			var couple = owner_db.chunk_manager.LoadChunk( chunk_number,  this.GetIndex().HashCode );
+			var couple = owner_db.chunk_manager.LoadChunk( chunk_number,  this.GetIndex().DwarfHashCode );
 			foreach ( var rec in couple )
 				AddRecordToDataStorage( rec );
 			

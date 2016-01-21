@@ -69,7 +69,7 @@ namespace DwarfDB.Stack
 
 		public new void Add(IStructure dta_struct)
 		{
-			string new_index_hash = dta_struct.GetIndex().HashCode;
+			string new_index_hash = dta_struct.GetIndex().DwarfHashCode;
 			if (dta_struct is Record)
 			{
 				items_dict.TryAdd(new_index_hash, dta_struct);
@@ -79,10 +79,10 @@ namespace DwarfDB.Stack
 
 		public bool TryRemove(IStructure data)
 		{
-			if (items_dict.ContainsKey(data.GetIndex().HashCode))
+			if (items_dict.ContainsKey(data.GetIndex().DwarfHashCode))
 			{
 				IStructure dummy = null;
-				return items_dict.TryRemove(data.GetIndex().HashCode, out dummy);
+				return items_dict.TryRemove(data.GetIndex().DwarfHashCode, out dummy);
 			}
 
 			return false;
@@ -139,8 +139,8 @@ namespace DwarfDB.Stack
 		{
 			try
 			{
-				if (items_dict.ContainsKey(ind.HashCode))
-					return items_dict[ind.HashCode];
+				if (items_dict.ContainsKey(ind.DwarfHashCode))
+					return items_dict[ind.DwarfHashCode];
 				else
 					return null;
 			}

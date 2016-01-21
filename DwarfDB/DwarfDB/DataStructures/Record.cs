@@ -102,7 +102,7 @@ namespace DwarfDB.DataStructures
 		}
 		
 		public void GetObjectData(SerializationInfo info, StreamingContext ctxt) {
-			info.AddValue("ElementHash", current_index.HashCode);
+			info.AddValue("ElementHash", current_index.DwarfHashCode);
 		}
 		
 		#endregion

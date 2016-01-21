@@ -45,7 +45,7 @@ namespace DwarfDB.UnitTests
 			rec1.BuildIndex();
 			var hash_expected = "2D8C1282A16592B40656F06F80D75172";
 			
-			Assert.AreEqual( hash_expected, rec1.GetIndex().HashCode );
+			Assert.AreEqual( hash_expected, rec1.GetIndex().DwarfHashCode );
 		}
 	}
 }

@@ -27,7 +27,7 @@ namespace DwarfDB.DataStructures
 		{
 			var other = obj as Index;
 			if (other != null) {
-				return this.HashCode == other.HashCode;
+				return this.DwarfHashCode == other.DwarfHashCode;
 			}
 			return false;
 		}
@@ -43,6 +43,10 @@ namespace DwarfDB.DataStructures
 		public static bool operator !=(Index lhs, Index rhs) {
 			return !(lhs == rhs);
 		}
+		
+		public override int GetHashCode() {
+			return base.GetHashCode();
+		}		
 		#endregion()
 		
 		/// <summary>
@@ -59,7 +63,7 @@ namespace DwarfDB.DataStructures
 		/// <summary>
 		/// Creates a db-object hash code...
 		/// </summary>
-		private void MakeHashCode()
+		private void MakeDwarfHashCode()
 		{
 			if ( index_object is DataContainer ) {
 				var tmp = (index_object as DataContainer);
@@ -76,19 +80,19 @@ namespace DwarfDB.DataStructures
 		/// </summary>
 		/// <param name="hash"></param>
 		/// <returns></returns>
-		static public Index CreateFromHashCode( string hash ) {
+		static public Index CreateFromDwarfHashCode( string hash ) {
 			var new_idx = new Index();
-			new_idx.HashCode = hash;
+			new_idx.DwarfHashCode = hash;
 			return new_idx;
 		}
 		
 		/// <summary>
 		/// Gets/sets a DB-object hash code
 		/// </summary>
-		public string HashCode {
+		public string DwarfHashCode {
 			get {
 				if ( hash_code == null )
-					MakeHashCode();
+					MakeDwarfHashCode();
 				return hash_code;
 			}
 			set {
