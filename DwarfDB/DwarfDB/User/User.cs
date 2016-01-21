@@ -32,7 +32,7 @@ namespace DwarfDB.User
 		}
 		
 		/// <summary>
-		/// Getting user from a 'users' list
+		/// Gets user from a 'users' list
 		/// </summary>
 		/// <param name="login"></param>
 		/// <returns></returns>
@@ -49,7 +49,7 @@ namespace DwarfDB.User
 		}
 		
 		/// <summary>
-		/// Creaing a new user
+		/// Creates a new user
 		/// </summary>
 		/// <param name="login"></param>
 		/// <param name="passwd"></param>
@@ -84,7 +84,7 @@ namespace DwarfDB.User
 		}
 		
 		/// <summary>
-		/// Creating a file with a list of users
+		/// Creates a file with a list of users
 		/// </summary>
 		private static void CreateUsersList() {
 			if ( !File.Exists( users_file_path ) ) {
@@ -93,7 +93,7 @@ namespace DwarfDB.User
 		}
 		
 		/// <summary>
-		/// Adding a new user to a userlist file
+		/// Adds a new user to a userlist file
 		/// </summary>
 		/// <param name="_user"></param>
 		private static void SaveToUsersList( User _user ) {
@@ -118,7 +118,7 @@ namespace DwarfDB.User
 		}
 		
 		/// <summary>
-		/// Creates a backup of user list
+		/// Creates a backup copy of a user list
 		/// </summary>
 		static private void CreateBackup() {
 			int numb = 0;
@@ -132,27 +132,19 @@ namespace DwarfDB.User
 		}
 		
 		/// <summary>
-		/// Adding a new user to a userlist file
+		/// Adds a new user to a userlist file
 		/// </summary>
 		/// <param name="_user"></param>
 		private static void ChangePassword( User _user, string new_password ) {
 			_user.Credentials.Password = new_password;
 		}
-		
-		/*
+
  		private static void RemoveFromUsersList( User _user ) {
-			int user_strg_num = FindLogin(_user.Credentials.Login);
-			if ( user_strg_num  > -1 ) {
-				using ( var fs = new FileStream( users_file_path, FileMode.Append, FileAccess.Write ) ) {
-					var sw = new StreamWriter( fs );
-					sw.
-				}
-			}
+			throw new NotImplementedException("Method isn't implemented");
 		}
-		 */
 		
 		/// <summary>
-		/// Seeking for a given login in a userlist file
+		/// Seeks for a given login in a userlist file
 		/// </summary>
 		/// <param name="login"></param>
 		/// <returns></returns>

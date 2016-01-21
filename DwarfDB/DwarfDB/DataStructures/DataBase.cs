@@ -259,7 +259,6 @@ namespace DwarfDB.DataStructures
 		/// <param name="new_dc">DataContainer</param>
 		/// <returns></returns>
 		public bool AddNewDataContainer( DataContainer new_dc, User.User user ) {
-			var user_acc_lvl = GetLevel( user );
 			if ( Global.CheckAccess.CheckWriteAccess( this, user  ) ) {
 				if ( CheckDCNameUnique( new_dc.Name )) {
 					// TODO: loading data new container into stack and file chunks

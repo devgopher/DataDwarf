@@ -1,23 +1,33 @@
 ﻿<Properties StartupItem="DwarfDB.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="ChunkManager\ChunkFormat.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Program.cs">
     <Files>
-      <File FileName="Program.cs" Line="1" Column="1" />
+      <File FileName="Program.cs" Line="22" Column="24" />
       <File FileName="Samples\DataTableSample.cs" Line="1" Column="1" />
       <File FileName="DataStructures\Record.cs" Line="1" Column="1" />
-      <File FileName="Stack\DwarfStack.cs" Line="1" Column="1" />
       <File FileName="Samples\Employees.cs" Line="1" Column="1" />
       <File FileName="Crypto\Hash.cs" Line="1" Column="1" />
       <File FileName="Crypto\GenKey.cs" Line="1" Column="1" />
       <File FileName="DataStructures\DataException.cs" Line="1" Column="1" />
       <File FileName="Crypto\GenKeyException.cs" Line="1" Column="1" />
       <File FileName="app.config" Line="1" Column="1" />
-      <File FileName="resources\Strings.resx" Line="1" Column="1" />
       <File FileName="DataStructures\IStructureAccess.cs" Line="1" Column="1" />
       <File FileName="DataStructures\DSAccessManager.cs" Line="1" Column="1" />
       <File FileName="Samples\DataTableSampleBinary.cs" Line="1" Column="1" />
-      <File FileName="ChunkManager\ChunkFormat.cs" Line="396" Column="34" />
+      <File FileName="ChunkManager\ChunkFormat.cs" Line="393" Column="6" />
     </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="DwarfDB" expanded="True">
+            <Node name="DwarfDB" expanded="True">
+              <Node name="ChunkManager" expanded="True" />
+            </Node>
+            <Node name="Logger" selected="True" />
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
@@ -34,7 +44,6 @@
       <Breakpoint file="C:\Users\igor.evdokimov\Documents\Github\Newtonsoft.Json\Src\Newtonsoft.Json\Linq\JValue.cs" line="44" column="1" />
       <Breakpoint file="C:\Users\igor.evdokimov\Documents\Github\DataDwarf\DwarfDB\DwarfDB\Samples\DataTableSample.cs" line="164" column="44" />
       <Breakpoint file="C:\Users\igor.evdokimov\Documents\Github\DataDwarf\DwarfDB\DwarfDB\Samples\DataTableSample.cs" line="176" column="1" />
-      <Breakpoint file="C:\Users\igor.evdokimov\Documents\Github\DataDwarf\DwarfDB\DwarfDB\Program.cs" line="24" column="1" />
       <Breakpoint file="C:\Users\igor.evdokimov\Documents\Github\DataDwarf\DwarfDB\DwarfDB\Samples\DataTableSampleBinary.cs" line="36" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

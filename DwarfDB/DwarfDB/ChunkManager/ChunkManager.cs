@@ -193,8 +193,7 @@ namespace DwarfDB.ChunkManager
 		/// <param name="db">Database</param>
 		public void CreateChunk( DataBase db ) {
 			try {
-				var add_records = new List<Record>();
-				var db_filename = CurrentDbPath+
+					var db_filename = CurrentDbPath+
 					@"\db_"+ db.Name + ".dwarf";
 				
 				Directory.CreateDirectory(CurrentDbPath);
@@ -202,7 +201,6 @@ namespace DwarfDB.ChunkManager
 				if ( !File.Exists(db_filename) ) {
 					var filepath = CurrentDbPath + @"/db_"+ db.Name + ".dwarf";
 					
-					var new_chunk = ChunkFormat.CreateNewFile( filepath );
 					ChunkFormat.AddItem( filepath, db);
 					chunks_lst[ new IndexPair() { hash_min = null, hash_max = null } ] = db.Name;
 				} else {
@@ -221,12 +219,9 @@ namespace DwarfDB.ChunkManager
 		/// <param name="dc">DataContainer</param>
 		public void CreateChunk( DataContainer dc ) {
 			try {
-				var add_records = new List<Record>();
-
 				if ( !all_indexes.Keys.Contains(dc.GetIndex()) ) {
 					var filepath = CurrentDbPath +@"/dc_"+ dc.Name + ".dwarf";
 					if ( !File.Exists( filepath ) ) {
-						var new_chunk = ChunkFormat.CreateNewFile( filepath );
 						ChunkFormat.AddItem( filepath, dc);
 						var index = dc.GetIndex();
 						all_indexes[index] = new KeyValuePair<IStructure, string>(dc, dc.GetIndex().DwarfHashCode);
@@ -280,10 +275,7 @@ namespace DwarfDB.ChunkManager
 					
 					return;
 				}
-				
-				var add_no_null_records = new List<Record>();
-				
-				
+
 				if ( no_null_records.Count > 0  ) {
 					// 1. Let's sort our hashes
 					no_null_records.Sort(IndexComparer);
@@ -292,7 +284,6 @@ namespace DwarfDB.ChunkManager
 					//    already created chunks and an ability to place in existing chunks
 					var filepath = CurrentDbPath + "/rec_"+no_null_records.First().GetIndex().DwarfHashCode +
 						"_" + no_null_records.Last().GetIndex().DwarfHashCode + ".dwarf";
-					var new_chunk = ChunkFormat.CreateNewFile( filepath );
 					no_null_records.ForEach( (rec) => {
 					                        	if ( !all_hashes.Contains(rec.GetIndex().DwarfHashCode) ) {
 					                        		ChunkFormat.AddItem( filepath, rec);

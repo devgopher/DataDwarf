@@ -67,8 +67,7 @@
         <Command type="BeforeExecute" command="cp ${ProjectDir}/testdata/* ${TargetPath} | rm -r -f obj" workingdir="${ProjectFile}" externalConsole="True" />
       </CustomCommands>
     </CustomCommands>
-    <Optimize>False</Optimize>
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>anycpu</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <WarningLevel>4</WarningLevel>
@@ -111,6 +110,9 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Security">
+      <HintPath>3dParty\System.Security.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="nunit.framework">

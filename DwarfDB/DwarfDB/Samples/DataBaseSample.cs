@@ -14,7 +14,6 @@ namespace DwarfDB
 	partial class Program
 	{
 		public static void DataBaseChunkCreation() {
-			var indexes = new List<Index>();
 			var time = Checks.ExecutionTimeCheck.DoCheck ( () => {
 			                                              	Console.WriteLine("Creating DB...");
 			                                              	var db = DataBase.Create( "testbase3" );

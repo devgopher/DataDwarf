@@ -108,7 +108,6 @@ namespace DwarfDB.AccessFunctions
 			string contents = String.Empty;
 			
 			using ( var fs = new FileStream( acc_filepath, FileMode.Open, FileAccess.Read ) ) {
-				string strg = String.Empty;
 				var sr = new StreamReader( fs );
 				
 				contents = sr.ReadToEnd();

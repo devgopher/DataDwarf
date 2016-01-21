@@ -43,8 +43,8 @@ namespace DwarfDB
 				Console.WriteLine ("Enter cols count: ");
 				int cols_count = Int32.Parse (Console.ReadLine ());
 				Console.WriteLine ("Enter chunk size: ");
-				int chunk_size = Int32.Parse (Console.ReadLine ());
-				
+
+
 				Console.WriteLine ("Creating DB...");
 				var db = DataBase.Create (db_name,
 				                          chunk_manager);
