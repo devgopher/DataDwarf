@@ -145,7 +145,7 @@
     <Compile Include="Links\DataContainerLink.cs" />
     <Compile Include="Links\DataContainerLinkParser.cs" />
     <Compile Include="Links\ILink.cs" />
-    <Compile Include="Links\ILinkParser.cs" />
+    <Compile Include="Links\LinkParser.cs" />
     <Compile Include="Links\RecordLink.cs" />
     <Compile Include="Links\RecordLinkParser.cs" />
     <Compile Include="Program.cs" />
@@ -203,8 +203,4 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>
-  <PropertyGroup>
-    <PreBuildEvent>echo Hello World
-@exit 0</PreBuildEvent>
-  </PropertyGroup>
 </Project>
