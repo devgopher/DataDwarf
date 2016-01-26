@@ -249,7 +249,6 @@ namespace DwarfDB.ChunkManager
 		/// </summary>
 		/// <param name="records">A list of records</param>
 		/// <param name="max_elem_count">Maximum amount of elements in a chunk</param>
-
 		public void CreateChunk( List<Record> records, int max_elem_count = 100 ) {
 			try {
 				

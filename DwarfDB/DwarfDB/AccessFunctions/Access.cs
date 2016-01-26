@@ -27,7 +27,8 @@ namespace DwarfDB.AccessFunctions
 		private Access( User.User _user, AccessLevel _level, Object _object )
 		{
 			if ( _user == null || _object == null )
-				throw new AccessException( "User object and/or it's access parameters are NULL" );
+				throw new AccessException(
+                    Global.StaticResourceManager.GetStringResource("ACCESS_INVALID_USER_PARAMS"));
 			
 			User = _user;
 			Level = _level;
@@ -68,7 +69,8 @@ namespace DwarfDB.AccessFunctions
 				var af = new AccessFile( AccessObject as DataContainer );
 				af.Save( this );
 			} else
-				throw new AccessException("Object type is unknown");
+				throw new AccessException(
+                    Global.StaticResourceManager.GetStringResource("ACCESS_FILE_SAVE_ERROR"));
 		}
 		
 		/// <summary>
