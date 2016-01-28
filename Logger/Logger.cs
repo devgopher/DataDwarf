@@ -29,8 +29,8 @@ namespace Logger
 		
 		public readonly List<LogElement> log_elements = new List<LogElement>();
 		public String Path { get; private set; }
-				
-		static Logger() 
+		
+		static Logger()
 		{
 			if ( assembly != null ) {
 				assembly_name = assembly.GetName().Name;
@@ -57,7 +57,7 @@ namespace Logger
 		/// <summary>
 		/// User's HOME path
 		/// </summary>
-		private static string HomePath 
+		private static string HomePath
 		{
 			get {
 				return (Environment.OSVersion.Platform == PlatformID.Unix)
@@ -76,7 +76,7 @@ namespace Logger
 		}
 		
 		#region GetInstance
-		private static ConcurrentDictionary< String, Logger > instances = 
+		private static ConcurrentDictionary< String, Logger > instances =
 			new ConcurrentDictionary< String, Logger >();
 		
 		/// <summary>
@@ -85,7 +85,7 @@ namespace Logger
 		/// <param name="log_dir">A directory for logs</param>
 		/// <param name="filename">Log file name</param>
 		/// <returns></returns>
-		public static Logger GetInstance( string log_dir = null, string filename = null ) 
+		public static Logger GetInstance( string log_dir = null, string filename = null )
 		{
 			Logger ret = null;
 			String filepath = "";
@@ -93,15 +93,17 @@ namespace Logger
 			try {
 				if ( log_dir == null  ) {
 					if ( assembly != null )
-						log_dir = HomePath+@"\"+ assembly_name+@"\";
+						log_dir = HomePath+
+							System.IO.Path.DirectorySeparatorChar+ assembly_name+ 
+							System.IO.Path.DirectorySeparatorChar;
 					else
-						log_dir =  TempPath+@"\";					
+						log_dir =  TempPath+System.IO.Path.DirectorySeparatorChar;
 				}
 				
 				Directory.CreateDirectory( log_dir );
 				
 				if ( filename != null )
-					filepath = log_dir + @"\"+filename;
+					filepath = log_dir + System.IO.Path.DirectorySeparatorChar +filename;
 				else {
 					if ( assembly != null )
 						filepath = log_dir +
@@ -158,6 +160,18 @@ namespace Logger
 			log_text+="\r\n "+content;
 			foreach ( var log_elem in log_elements ) {
 				log_elem.Output( content, "MESSAGE", ConsoleColor.DarkGreen );
+			}
+		}
+		
+		/// <summary>
+		/// Writes a debug message
+		/// </summary>
+		/// <param name="content"></param>
+		public void WriteDebug(string content)
+		{
+			log_text+="\r\n "+content;
+			foreach ( var log_elem in log_elements ) {
+				log_elem.Output( content, "DEBUG", ConsoleColor.Magenta );
 			}
 		}
 		
