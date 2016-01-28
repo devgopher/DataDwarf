@@ -3,3 +3,6 @@ ACCESS_DATABASE_ERROR = Error accessing to database
 ACCESS_REASON_DENIED_FOR_SOME_REASONS = Access denied due to unknown problem
 ACCESS_REASON_DENIED_FOR_THIS_USER = Access denied for this user
 USER_ALREADY_EXISTS = This user is already exists in the system
+ACCESS_FILE_SAVE_ERROR = Error saving an access file!
+ACCESS_INVALID_USER_PARAMS = User parameters are invalid!
+DB_DROP_ERROR=Error dropping a database!

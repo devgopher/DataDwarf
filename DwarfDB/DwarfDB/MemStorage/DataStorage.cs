@@ -99,7 +99,6 @@ namespace DwarfDB.Stack
 			{
 				return items_dict.Count;
 			}
-			private set { }
 		}
 
 		public bool ContainsHash(string hash)
@@ -162,6 +161,7 @@ namespace DwarfDB.Stack
 
 		ParallelOptions parallel_opts = new ParallelOptions();
 		DataBase db;
-		ConcurrentDictionary<String, IStructure> items_dict = new ConcurrentDictionary<String, IStructure>();
+		ConcurrentDictionary<String, IStructure> items_dict = 
+            new ConcurrentDictionary<String, IStructure>();
 	}
 }
