@@ -9,6 +9,7 @@ using System.Text;
 using System.Reflection;
 using System.Collections.Generic;
 using System.Collections.Concurrent;
+using Global;
 
 
 namespace Logger
@@ -27,7 +28,7 @@ namespace Logger
 		static String assembly_fullname = "tmp";
 		static String assembly_ver = "0.0.0";
 		
-		public readonly List<LogElement> log_elements = new List<LogElement>();
+		private readonly List<ILogElement> log_elements = new List<ILogElement>();
 		public String Path { get; private set; }
 		
 		static Logger()
@@ -46,12 +47,16 @@ namespace Logger
 			Path = _path;
 			application_name = _application_name;
 			encoding = _encoding;
-			
 			log_elements.Add( FileLogElement.GetInstance( encoding, Path ) );
 			log_elements.Add( ConsoleLogElement.GetInstance() );
 			
 			StartLog();
 			WriteEntry("Start logging...");
+		}
+		
+		public void AddLogElement( ILogElement elem ) {
+			if ( elem != null )
+				log_elements.Add( elem );
 		}
 		
 		/// <summary>
@@ -94,7 +99,7 @@ namespace Logger
 				if ( log_dir == null  ) {
 					if ( assembly != null )
 						log_dir = HomePath+
-							System.IO.Path.DirectorySeparatorChar+ assembly_name+ 
+							System.IO.Path.DirectorySeparatorChar+ assembly_name+
 							System.IO.Path.DirectorySeparatorChar;
 					else
 						log_dir =  TempPath+System.IO.Path.DirectorySeparatorChar;
@@ -143,7 +148,7 @@ namespace Logger
 				assembly_ver;
 			log_text+="\r\n "+content;
 			foreach ( var log_elem in log_elements ) {
-				log_elem.Output( content, "INFO");
+				log_elem.Output( content, StaticResourceManager.GetStringResource("LOGGER_OUTPUT_INFO"));
 			}
 		}
 		
@@ -159,7 +164,9 @@ namespace Logger
 		{
 			log_text+="\r\n "+content;
 			foreach ( var log_elem in log_elements ) {
-				log_elem.Output( content, "MESSAGE", ConsoleColor.DarkGreen );
+				log_elem.Output( content,
+				                StaticResourceManager.GetStringResource("LOGGER_OUTPUT_ENTRY"),
+				                ConsoleColor.DarkGreen );
 			}
 		}
 		
@@ -171,7 +178,9 @@ namespace Logger
 		{
 			log_text+="\r\n "+content;
 			foreach ( var log_elem in log_elements ) {
-				log_elem.Output( content, "DEBUG", ConsoleColor.Magenta );
+				log_elem.Output( content, 
+				               StaticResourceManager.GetStringResource("LOGGER_OUTPUT_DEBUG"), 
+				                ConsoleColor.Magenta );
 			}
 		}
 		
@@ -183,7 +192,9 @@ namespace Logger
 		{
 			log_text+="\r\n "+content;
 			foreach ( var log_elem in log_elements ) {
-				log_elem.Output( content, "ERROR", ConsoleColor.Red );
+				log_elem.Output( content, 
+				                StaticResourceManager.GetStringResource("LOGGER_OUTPUT_ERROR"), 
+				                ConsoleColor.Red );
 			}
 		}
 		
@@ -195,7 +206,9 @@ namespace Logger
 		{
 			log_text+="\r\n "+content;
 			foreach ( var log_elem in log_elements ) {
-				log_elem.Output( content, "WARNING", ConsoleColor.Yellow );
+				log_elem.Output( content, 
+				                StaticResourceManager.GetStringResource("LOGGER_OUTPUT_WARNING"), 
+				                ConsoleColor.Yellow );
 			}
 		}
 		

@@ -1,0 +1,8 @@
+# common strings resource creation
+LOGGER_OUTPUT_ERROR=ОШИБКА
+LOGGER_OUTPUT_DEBUG=ОТЛАДОЧНОЕ СООБЩЕНИЕ
+LOGGER_OUTPUT_ENTRY=СООБЩЕНИЕ
+LOGGER_OUTPUT_WARNING=ПРЕДУПРЕЖДЕНИЕ
+LOGGER_OUTPUT_INFO=ИНФО
+
+
