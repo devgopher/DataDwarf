@@ -20,13 +20,11 @@ namespace Global
 		{
 			var current_dir =  Directory.GetCurrentDirectory();
 			StringManager = ResourceManager.CreateFileBasedResourceManager( "CommonStrings",
-			                                                              current_dir+@"\Resources",
+			                                                               current_dir+
+			                                                               Path.DirectorySeparatorChar+
+			                                                               "Resources",
 			                                                               null
 			                                                              );
-		}
-
-		public static String Language { 
-			get ; private set; 
 		}
 
 		public static ResourceManager StringManager {
