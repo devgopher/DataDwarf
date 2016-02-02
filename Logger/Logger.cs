@@ -31,6 +31,13 @@ namespace Logger
 		private readonly List<ILogElement> log_elements = new List<ILogElement>();
 		public String Path { get; private set; }
 		
+		/// <summary>
+		/// This property means a common amount of Logger objects, we can produce
+		/// true = single-object mode
+		/// false- multi object moe
+		/// </summary>
+		public static bool IsSingle { get; set; }
+		
 		static Logger()
 		{
 			if ( assembly != null ) {
@@ -38,18 +45,20 @@ namespace Logger
 				assembly_fullname = Assembly.GetEntryAssembly().FullName;
 				assembly_ver = Assembly.GetEntryAssembly().GetName().Version.ToString();
 			}
+			IsSingle = true;
 		}
 		
 		protected Logger( string _path,
 		                 string _application_name,
-		                 Encoding _encoding )
+		                 Encoding _encoding,
+		                 bool is_single = true )
 		{
 			Path = _path;
 			application_name = _application_name;
 			encoding = _encoding;
 			log_elements.Add( FileLogElement.GetInstance( encoding, Path ) );
 			log_elements.Add( ConsoleLogElement.GetInstance() );
-			
+			IsSingle = is_single;
 			StartLog();
 			WriteEntry("Start logging...");
 		}
@@ -84,6 +93,8 @@ namespace Logger
 		private static ConcurrentDictionary< String, Logger > instances =
 			new ConcurrentDictionary< String, Logger >();
 		
+		private static Logger singleton_instance = null;
+		
 		/// <summary>
 		/// Getting/defining a Logger instance
 		/// </summary>
@@ -92,42 +103,73 @@ namespace Logger
 		/// <returns></returns>
 		public static Logger GetInstance( string log_dir = null, string filename = null )
 		{
-			Logger ret = null;
-			String filepath = "";
+			if ( IsSingle )
+				return GetInstanceSingle( log_dir, filename );
+			return GetInstanceMulti( log_dir, filename );
+		}
+		
+		
+		private static Logger GetInstanceSingle( string log_dir = null, string filename = null ) {
+			if ( singleton_instance == null ) {
+				try {
+					var new_log_dir = CreateLogDir( log_dir );
+					var filepath = CreateLogFilepath( new_log_dir, filename );
+					singleton_instance = new Logger( filepath,
+					                                assembly_fullname,
+					                                Encoding.Default );
+				}  catch ( Exception ex ) {
+					throw new IOException( " Error while defining a new logger instance: "+ex.Message, ex );
+				}
+			}
+			return singleton_instance;
+		}
+		
+		private static string CreateLogDir( string log_dir = null ) {
+			var new_log_dir = String.Empty;
+			if ( log_dir == null  ) {
+				if ( assembly != null )
+					new_log_dir = HomePath+
+						System.IO.Path.DirectorySeparatorChar+ assembly_name+
+						System.IO.Path.DirectorySeparatorChar;
+				else
+					new_log_dir =  TempPath+System.IO.Path.DirectorySeparatorChar;
+			}
 			
+			Directory.CreateDirectory( new_log_dir );
+			
+			return new_log_dir;
+		}
+		
+		private static string CreateLogFilepath( string log_dir, string filename = null ) {
+			var filepath = String.Empty;
+			if ( filename != null )
+				filepath = log_dir + System.IO.Path.DirectorySeparatorChar +filename;
+			else {
+				if ( assembly != null )
+					filepath = log_dir +
+						assembly_name+
+						DateTime.Now.ToString( "__HH_mm_ss__dd.MM.yyyy" )+
+						".log";
+				else
+					filepath = log_dir +
+						"tmp_log"+
+						DateTime.Now.ToString( "__HH_mm_ss__dd.MM.yyyy" )+
+						".log";
+			}
+			return filepath;
+		}
+		
+		private static Logger GetInstanceMulti( string log_dir = null, string filename = null ) {
+			Logger ret = null;
+
 			try {
-				if ( log_dir == null  ) {
-					if ( assembly != null )
-						log_dir = HomePath+
-							System.IO.Path.DirectorySeparatorChar+ assembly_name+
-							System.IO.Path.DirectorySeparatorChar;
-					else
-						log_dir =  TempPath+System.IO.Path.DirectorySeparatorChar;
-				}
-				
-				Directory.CreateDirectory( log_dir );
-				
-				if ( filename != null )
-					filepath = log_dir + System.IO.Path.DirectorySeparatorChar +filename;
-				else {
-					if ( assembly != null )
-						filepath = log_dir +
-							assembly_name+
-							DateTime.Now.ToString( "__HH_mm_ss__dd.MM.yyyy" )+
-							".log";
-					else
-						filepath = log_dir +
-							"tmp_log"+
-							DateTime.Now.ToString( "__HH_mm_ss__dd.MM.yyyy" )+
-							".log";
-				}
-				
-				var encoding = Encoding.Default;
-				
+				var new_log_dir = CreateLogDir( log_dir );
+				var filepath = CreateLogFilepath( new_log_dir, filename );
+	
 				if ( !instances.ContainsKey(filepath) ) {
 					ret = new Logger( filepath,
 					                 assembly_fullname,
-					                 encoding );
+					                 Encoding.Default );
 					instances[filepath] = ret;
 				} else {
 					ret = instances[filepath];
@@ -137,6 +179,7 @@ namespace Logger
 			}
 			return ret;
 		}
+		
 		#endregion
 		
 		/// <summary>
@@ -178,8 +221,8 @@ namespace Logger
 		{
 			log_text+="\r\n "+content;
 			foreach ( var log_elem in log_elements ) {
-				log_elem.Output( content, 
-				               StaticResourceManager.GetStringResource("LOGGER_OUTPUT_DEBUG"), 
+				log_elem.Output( content,
+				                StaticResourceManager.GetStringResource("LOGGER_OUTPUT_DEBUG"),
 				                ConsoleColor.Magenta );
 			}
 		}
@@ -192,8 +235,8 @@ namespace Logger
 		{
 			log_text+="\r\n "+content;
 			foreach ( var log_elem in log_elements ) {
-				log_elem.Output( content, 
-				                StaticResourceManager.GetStringResource("LOGGER_OUTPUT_ERROR"), 
+				log_elem.Output( content,
+				                StaticResourceManager.GetStringResource("LOGGER_OUTPUT_ERROR"),
 				                ConsoleColor.Red );
 			}
 		}
@@ -206,8 +249,8 @@ namespace Logger
 		{
 			log_text+="\r\n "+content;
 			foreach ( var log_elem in log_elements ) {
-				log_elem.Output( content, 
-				                StaticResourceManager.GetStringResource("LOGGER_OUTPUT_WARNING"), 
+				log_elem.Output( content,
+				                StaticResourceManager.GetStringResource("LOGGER_OUTPUT_WARNING"),
 				                ConsoleColor.Yellow );
 			}
 		}
