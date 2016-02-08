@@ -8,7 +8,7 @@ using System;
 namespace Logger
 {
 	/// <summary>
-	/// Description of ILogElement.
+	/// An interface for log elements
 	/// </summary>
 	public interface ILogElement
 	{

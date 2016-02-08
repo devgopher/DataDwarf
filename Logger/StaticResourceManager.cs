@@ -5,14 +5,12 @@
  */
 using System;
 using System.Resources;
-using System.Reflection;
-using System.Globalization;
 using System.IO;
 
 namespace Global
 {
 	/// <summary>
-	/// A Static (global) resource manager for a simple access to .resx and .resource filesss
+	/// A Static (global) resource manager for a simple access to .resx and .resource files
 	/// </summary>
 	public static class StaticResourceManager
 	{
