@@ -133,7 +133,8 @@ namespace Logger
 						System.IO.Path.DirectorySeparatorChar;
 				else
 					new_log_dir =  TempPath+System.IO.Path.DirectorySeparatorChar;
-			}
+			} else
+				new_log_dir = log_dir;
 			
 			Directory.CreateDirectory( new_log_dir );
 			
