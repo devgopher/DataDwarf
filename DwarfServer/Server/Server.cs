@@ -112,7 +112,7 @@ namespace DwarfServer.Server
 
                     Socket conn_socket = server_socket.Accept();
 
-                    logger.WriteEntry("We've a new connection:.. ");
+                    logger.WriteEntry("We've a new connection... ");
 
                     ConnectionInfo conn_info = new ConnectionInfo();
 
@@ -149,8 +149,7 @@ namespace DwarfServer.Server
                         {
                             if (ci == conn_info)
                             {
-                                // TODO: process a request
-
+                                Responder.Respond(ci);
                             }
                         }
                     }

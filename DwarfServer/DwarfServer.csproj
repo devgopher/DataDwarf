@@ -48,6 +48,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Respondent\Responder.cs" />
     <Compile Include="Server\Server.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -59,10 +60,7 @@
   <ItemGroup>
     <Folder Include="Listener\" />
     <Folder Include="QueryProcessor\" />
-    <Folder Include="Respondent\" />
     <Folder Include="UnitTests\" />
-    <Folder Include="Server" />
-    <Folder Include="Client" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Logger\Logger.csproj">
