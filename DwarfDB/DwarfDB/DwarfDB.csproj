@@ -83,6 +83,7 @@
       </CustomCommands>
     </CustomCommands>
     <PlatformTarget>anycpu</PlatformTarget>
+    <Optimize>false</Optimize>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <WarningLevel>4</WarningLevel>

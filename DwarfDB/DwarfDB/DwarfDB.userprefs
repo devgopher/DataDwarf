@@ -1,26 +1,20 @@
 ﻿<Properties StartupItem="DwarfDB.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Config\Config.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="..\..\..\Newtonsoft.Json\Src\Newtonsoft.Json\Newtonsoft.Json.csproj">
     <Files>
-      <File FileName="Config\Config.cs" Line="17" Column="4" />
+      <File FileName="Config\Config.cs" Line="21" Column="3" />
+      <File FileName="..\..\..\Newtonsoft.Json\Src\Newtonsoft.Json\Newtonsoft.Json.csproj" Line="29" Column="30" />
+      <File FileName="..\..\AppSample\App.xaml.cs" Line="12" Column="28" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="DwarfDB" expanded="True">
-            <Node name="DwarfDB" expanded="True">
-              <Node name="AccessFunctions" expanded="True" />
-              <Node name="ChunkManager" expanded="True" />
-              <Node name="Config" expanded="True">
-                <Node name="Config.cs" selected="True" />
-              </Node>
-              <Node name="DataStructures" expanded="True" />
-              <Node name="Links" expanded="True" />
-              <Node name="MemStorage" expanded="True" />
-              <Node name="Samples" expanded="True" />
+            <Node name="AppSample" expanded="True">
+              <Node name="App.xaml" expanded="True" />
             </Node>
-            <Node name="DwarfServer" expanded="True">
-              <Node name="Server" expanded="True" />
+            <Node name="DwarfDB" expanded="True" selected="True">
+              <Node name="References" expanded="True" />
             </Node>
           </Node>
         </State>

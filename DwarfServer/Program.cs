@@ -12,7 +12,10 @@ namespace DwarfServer
 		public static void Main(string[] args)
 		{
 			Console.WriteLine("DwarfDB server starting...");
-			
+
+            Server.Server server = new Server.Server();
+            server.Start();
+
 			// TODO: Implement Functionality Here
 			
 			Console.Write("Press any key to continue . . . ");
