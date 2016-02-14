@@ -59,11 +59,8 @@ namespace DwarfDB.DataStructures
 	[JsonObject][Serializable]
 	public class Record : IStructure, IEnumerator<Record>
 	{
-		public Record ()
-		{
-			
-		}
-
+		public Record() {}
+		
 		[JsonConstructor]
 		public Record (DataContainer _owner_dc)
 		{

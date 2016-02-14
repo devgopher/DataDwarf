@@ -69,6 +69,11 @@ namespace DwarfDB.ChunkManager
 	/// </summary>
 	public static class ChunkFormat
 	{
+		private static Random randg = new Random(DateTime.Now.Millisecond);
+		private static object randg_sync_object = new object();
+		private static JsonSerializer json_serializer;
+		private static readonly Config.Config config;
+		
 		static ChunkFormat(  )
 		{
 			config = Config.Config.Instance;
@@ -206,7 +211,7 @@ namespace DwarfDB.ChunkManager
 				json_reader.SupportMultipleContent = true;
 				ret_item = GetItemInfile( json_reader, hash );
 			}
-			DeleteTemporaryFile( tmp_path );	
+			DeleteTemporaryFile( tmp_path );
 			return ret_item;
 		}
 		
@@ -229,24 +234,21 @@ namespace DwarfDB.ChunkManager
 					}
 				} else
 					return null;
-			} else
-				return null;
+			}
+			return null;
 		}
-		
-		private static Random randg = new Random(DateTime.Now.Millisecond);
-        private static object randg_sync_object = new object();
 
-        /// <summary>
-        /// A random generation method for
-        /// usage in multithread environment
-        /// </summary>
-        /// <returns></returns>
-        private static int GetNextRandom() {
-            lock ( randg_sync_object )
-            {
-                return randg.Next();
-            }
-        }
+		/// <summary>
+		/// A random generation method for
+		/// usage in multithread environment
+		/// </summary>
+		/// <returns></returns>
+		private static int GetNextRandom() {
+			lock ( randg_sync_object )
+			{
+				return randg.Next();
+			}
+		}
 		
 		private static string CreateTemporaryFile( string orig_filepath ) {
 			string tmp_filepath = orig_filepath + ".tmp" + randg.Next().ToString();
@@ -403,12 +405,9 @@ namespace DwarfDB.ChunkManager
 			// let's delete a hash index for object, that we should remove
 			if ( needed_idx_pos > -1 ) {
 				using ( var fs = File.Open( filepath, FileMode.Open )) {
-					//var hash_bytes = System.Text.Encoding.UTF8.GetBytes(idx.HashCode);
-					byte[] replacement = new byte[34];
-					//fs.Seek( needed_idx_pos
+					var replacement = new byte[34];
 					fs.Position = needed_elem_type_pos;
 					fs.Write( System.Text.Encoding.UTF8.GetBytes( 3.ToString() /* REMOVED */ ), 0, 1);
-					
 					fs.Position = needed_idx_pos;
 					fs.Write( replacement, 0, 34);
 					fs.Position -= 34;
@@ -451,9 +450,5 @@ namespace DwarfDB.ChunkManager
 		public static void RemoveUnusedFiles() {
 			// TODO!
 		}
-		
-		static JsonSerializer json_serializer;
-		//	static JsonWriter writer;
-		static readonly Config.Config config;
 	}
 }

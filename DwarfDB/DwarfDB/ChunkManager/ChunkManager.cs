@@ -16,6 +16,7 @@ namespace DwarfDB.ChunkManager
 	struct IndexPair {
 		public String hash_min;
 		public String hash_max;
+		
 		static public int Sort( string idx_pattern, string foo ) {
 			return String.Compare( foo, idx_pattern );
 		}
@@ -32,9 +33,9 @@ namespace DwarfDB.ChunkManager
 		/// string - DataContainer name
 		/// </summary>
 		private Dictionary<IndexPair, string> chunks_lst = new Dictionary<IndexPair, string>();
-		
-		// < Our index, < parent structure, parent index hash > >
-		
+		private HashSet<string> all_hashes = new HashSet<string>();		
+		public static ChunkManager inner_object = null;		
+		private DataBase conn_db = null;
 		private readonly ConcurrentDictionary<Index, KeyValuePair<IStructure, String>> all_indexes =
 			new ConcurrentDictionary<Index, KeyValuePair<IStructure, String>>();
 		
@@ -81,7 +82,7 @@ namespace DwarfDB.ChunkManager
 		public static ChunkManager Create( string db_to_connect ) {
 			if ( inner_object == null ) {
 				inner_object = new ChunkManager();
-				inner_object.conn_db = inner_object.FindDB( db_to_connect );
+				inner_object.conn_db = null;
 				if ( inner_object.conn_db == null ) {
 					Errors.Messages.DisplayError(
 						"Can't find DB with name \""+db_to_connect+"\"",
@@ -93,16 +94,6 @@ namespace DwarfDB.ChunkManager
 				}
 			}
 			return inner_object;
-		}
-		
-		/// <summary>
-		/// Searching for DB in chunks
-		/// </summary>
-		/// <param name="db_name">DB name</param>
-		/// <returns></returns>
-		private DataStructures.DataBase FindDB( string db_name ) {
-			
-			return null;
 		}
 		
 		/// <summary>
@@ -616,13 +607,6 @@ namespace DwarfDB.ChunkManager
 					}
 				}
 			}
-		}
-		
-		
-		private HashSet<string> all_hashes = new HashSet<string>();
-		
-		public static ChunkManager inner_object = null;
-		
-		private DataBase conn_db = null;
+		}		
 	}
 }

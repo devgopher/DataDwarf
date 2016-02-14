@@ -13,7 +13,7 @@ namespace DwarfServer
 		{
 			Console.WriteLine("DwarfDB server starting...");
 
-            Server.Server server = new Server.Server();
+            var server = new Server.Server();
             server.Start();
 
 			// TODO: Implement Functionality Here

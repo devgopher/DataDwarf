@@ -81,6 +81,20 @@ namespace DwarfDB.DataStructures
 	[Serializable][JsonObject]
 	public class DataContainer :IStructure, IEnumerable<Record>, IStructureAccess
 	{
+		#region LinkProcessing
+		private bool is_link = false;
+		private string link_where = null;
+		private string link_constant_id = null;
+		#endregion
+
+		public Int64 Id { get; set; }
+		int all_rec_count = -1;
+		private List<Record> inner_records = new List<Record>();
+		protected Record enum_rec = null;
+		protected int position = 0;
+		protected DataBase owner_db;
+		protected Index current_index;
+		
 		[JsonConstructor]
 		public DataContainer( DataBase _owner_db, string _dc_name )
 		{
@@ -293,9 +307,9 @@ namespace DwarfDB.DataStructures
 					Columns.Add(clmn);
 				} else {
 					Errors.Messages.DisplayError( " The column type cannot be UNDEF ",
-					                               "DataContainer: "+Name,
-					                               "Select any available data type",
-					                               DateTime.Now);
+					                             "DataContainer: "+Name,
+					                             "Select any available data type",
+					                             DateTime.Now);
 					return false;
 				}
 			}
@@ -580,8 +594,6 @@ namespace DwarfDB.DataStructures
 			}
 		}
 		
-		int all_rec_count = -1;
-		
 		internal bool  GetRecordsFromChunk( int chunk_number = 0 ) {
 			var couple = owner_db.chunk_manager.LoadChunk( chunk_number,  this.GetIndex().DwarfHashCode );
 			foreach ( var rec in couple )
@@ -670,11 +682,6 @@ namespace DwarfDB.DataStructures
 			return current_index;
 		}
 		
-		/// <summary>
-		/// Element id
-		/// </summary>
-		public Int64 Id { get; set; }
-		
 		public List<Column> Columns {
 			get; private set;
 		}
@@ -713,17 +720,5 @@ namespace DwarfDB.DataStructures
 			
 			return next_id;
 		}
-		
-		#region LinkProcessing
-		private bool is_link = false;
-		private string link_where = null;
-		private string link_constant_id = null;
-		#endregion
-		
-		private List<Record> inner_records = new List<Record>();
-		protected Record enum_rec = null;
-		protected int position = 0;
-		protected DataBase owner_db;
-		protected Index current_index;
 	}
 }
