@@ -63,6 +63,10 @@ namespace Logger
 			WriteEntry("Start logging...");
 		}
 		
+		/// <summary>
+		/// Adds a new log output element
+		/// </summary>
+		/// <param name="elem"></param>
 		public void AddLogElement( ILogElement elem ) {
 			if ( elem != null )
 				log_elements.Add( elem );
@@ -166,7 +170,7 @@ namespace Logger
 			try {
 				var new_log_dir = CreateLogDir( log_dir );
 				var filepath = CreateLogFilepath( new_log_dir, filename );
-	
+				
 				if ( !instances.ContainsKey(filepath) ) {
 					ret = new Logger( filepath,
 					                 assembly_fullname,
@@ -218,7 +222,7 @@ namespace Logger
 		/// Writes a debug message
 		/// </summary>
 		/// <param name="content"></param>
-		public void WriteDebug(string content)
+		public void WriteDebug( string content )
 		{
 			log_text+="\r\n "+content;
 			foreach ( var log_elem in log_elements ) {
@@ -232,9 +236,30 @@ namespace Logger
 		/// Writes an error message
 		/// </summary>
 		/// <param name="content"></param>
-		public void WriteError(string content)
+		public void WriteError( string content )
 		{
 			log_text+="\r\n "+content;
+			foreach ( var log_elem in log_elements ) {
+				log_elem.Output( content,
+				                StaticResourceManager.GetStringResource("LOGGER_OUTPUT_ERROR"),
+				                ConsoleColor.Red );
+			}
+		}
+		
+		/// <summary>
+		/// Writes an error message
+		/// </summary>
+		/// <param name="exception"></param>
+		public void WriteError( Exception exception )
+		{
+			string content = String.Empty;
+			#if DEBUG
+			content = exception.Message + ":"+exception.StackTrace;
+			#else
+			content = exception.Message;
+			#endif
+			log_text+="\r\n "+content;
+			
 			foreach ( var log_elem in log_elements ) {
 				log_elem.Output( content,
 				                StaticResourceManager.GetStringResource("LOGGER_OUTPUT_ERROR"),
