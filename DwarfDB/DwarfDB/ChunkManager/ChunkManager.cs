@@ -33,11 +33,12 @@ namespace DwarfDB.ChunkManager
 		/// string - DataContainer name
 		/// </summary>
 		private Dictionary<IndexPair, string> chunks_lst = new Dictionary<IndexPair, string>();
-		private HashSet<string> all_hashes = new HashSet<string>();		
-		public static ChunkManager inner_object = null;		
+		private HashSet<string> all_hashes = new HashSet<string>();
+		public static ChunkManager inner_object = null;
 		private DataBase conn_db = null;
-		private readonly ConcurrentDictionary<Index, KeyValuePair<IStructure, String>> all_indexes =
+		private ConcurrentDictionary<Index, KeyValuePair<IStructure, String>> all_indexes =
 			new ConcurrentDictionary<Index, KeyValuePair<IStructure, String>>();
+		Dictionary<string, DataContainer> inner_dc_dict = null;
 		
 		public string CurrentDbPath {
 			get; private set;
@@ -134,7 +135,7 @@ namespace DwarfDB.ChunkManager
 		/// </summary>
 		/// <param name="idx">Index</param>
 		/// <returns>filepath to chunk</returns>
-		private List<string> FindChunkFilesForRecord(Index idx ) {
+		private List<string> FindChunkFilesForRecord( Index idx ) {
 			return FindChunkFilesForRecord( idx.DwarfHashCode );
 		}
 		
@@ -184,7 +185,7 @@ namespace DwarfDB.ChunkManager
 		/// <param name="db">Database</param>
 		public void CreateChunk( DataBase db ) {
 			try {
-					var db_filename = CurrentDbPath+
+				var db_filename = CurrentDbPath+
 					@"\db_"+ db.Name + ".dwarf";
 				
 				Directory.CreateDirectory(CurrentDbPath);
@@ -196,7 +197,7 @@ namespace DwarfDB.ChunkManager
 					chunks_lst[ new IndexPair() { hash_min = null, hash_max = null } ] = db.Name;
 				} else {
 					Errors.Messages.DisplayError("Database \""+db.Name+"\" already exists!",
-					                               "creating DB", "Choose another name", DateTime.Now);
+					                             "creating DB", "Choose another name", DateTime.Now);
 					return;
 				}
 			} catch ( IOException ex ) {
@@ -240,7 +241,7 @@ namespace DwarfDB.ChunkManager
 		/// </summary>
 		/// <param name="records">A list of records</param>
 		/// <param name="max_elem_count">Maximum amount of elements in a chunk</param>
-		public void CreateChunk( List<Record> records, int max_elem_count = 100 ) {
+		public void CreateChunk( List<Record> records, int max_elem_count = 15 ) {
 			try {
 				
 				var no_null_records = records.Where((rec) =>{ return rec.GetIndex() != null;}).ToList();
@@ -490,7 +491,6 @@ namespace DwarfDB.ChunkManager
 			if ( rem_idx != null ) {
 				var tmp_val = new KeyValuePair<IStructure, string>();
 				AllIndexes.TryRemove( rem_idx, out tmp_val );
-				RebuildIndexes();
 			}
 		}
 		
@@ -547,36 +547,79 @@ namespace DwarfDB.ChunkManager
 			return contents;
 		}
 		
+		internal void ReceiveDCDict( Dictionary<string, DataContainer> dc_dict ) {
+			inner_dc_dict = dc_dict;
+		}
+		
+		private HashSet<string> tmp_hashes_copy = new HashSet<string>();
+		private ConcurrentDictionary<Index, KeyValuePair<IStructure, String>> tmp_indexes_copy =
+			new ConcurrentDictionary<Index, KeyValuePair<IStructure, string>>();
+		
+		/// <summary>
+		/// Collects indexes into temporary arrays
+		/// </summary>
+		/// <param name="db"></param>
+		private void CollectIndexes( DataBase db ) {
+			tmp_hashes_copy.Clear();
+			tmp_indexes_copy.Clear();
+			
+			db.FillChunkManagerDCDict();
+			
+			foreach ( var elem in inner_dc_dict )
+			{
+				var dc_index_obj = elem.Value.GetIndex();
+				tmp_hashes_copy.Add( dc_index_obj.DwarfHashCode );
+				tmp_indexes_copy[dc_index_obj] =
+					new KeyValuePair<IStructure, String>( elem.Value,  null );
+				var tmp_records = elem.Value.GetRecordsInternal();
+				foreach( var rec in tmp_records ) {
+					var rec_index_obj = rec.GetIndex();
+					tmp_hashes_copy.Add( rec_index_obj.DwarfHashCode );
+					tmp_indexes_copy[rec_index_obj] =
+						new KeyValuePair<IStructure, String>( rec, dc_index_obj.DwarfHashCode );
+				}
+			}
+		}
+		
 		/// <summary>
 		/// Saves all indexes in format Name:Type:IndexHash
 		/// </summary>
-		public void RebuildIndexes() {
-			/*	ClearIndexesDw();
+		public void RebuildIndexes( DataBase db ) {
+			// collecting indexes
+			CollectIndexes( db );
+			
+			// cleaning indexes and hashes
+			all_indexes.Clear();
+			all_hashes.Clear();
+			
+			all_hashes = tmp_hashes_copy;
+			all_indexes = tmp_indexes_copy;
+			
+			
+			ClearIndexesDw();
 			var filepath = CurrentDbPath+@"/indexes.dw";
 			string contents = ReadIndexesDw();
 			
 			var fs = File.Open( filepath, FileMode.Append );
-			// let's add new records
+			
+			// let's add new records to index.dw
 			using ( var sw = new StreamWriter( fs ) ) {
 				foreach ( var idx in AllIndexes ) {
 					if ( idx.Value.Key is Record ) {
 						var rec =  idx.Value.Key as Record;
 						var owner_dc = rec.OwnerDC;
-						string hash_code = idx.Key.HashCode;
-						sw.WriteLine( "Record:Record:"+hash_code+":"+owner_dc.GetIndex().HashCode);
+						string hash_code = idx.Key.DwarfHashCode;
+						sw.WriteLine( "Record:Record:"+hash_code+":"+owner_dc.GetIndex().DwarfHashCode);
 					} else if ( idx.Value.Key is DataContainer ) {
 						var dc = (DataContainer)idx.Value.Key;
 						sw.WriteLine( dc.Name+
 						             ":DataContainer:"+
 						             dc.GetOwnerDB().Name+":"+
-						             idx.Key.HashCode );
+						             idx.Key.DwarfHashCode );
 					}
 				}
-			}*/
-			
-			throw new NotImplementedException( "RebuildIndexes and record deletion process in whole should be rethinked!" );
-		}
-		
+			}
+		}		
 		
 		/// <summary>
 		/// Saves all indexes in format Name:Type:IndexHash
@@ -607,6 +650,6 @@ namespace DwarfDB.ChunkManager
 					}
 				}
 			}
-		}		
+		}
 	}
 }

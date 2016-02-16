@@ -241,6 +241,10 @@ namespace DwarfDB.DataStructures
             return false;
         }
 
+        internal  void FillChunkManagerDCDict() {
+        	chunk_manager.ReceiveDCDict( inner_dc_dict );
+        }
+        
         /// <summary>
         /// Transmitting a cloned DataContainer object to Recipient
         /// </summary>

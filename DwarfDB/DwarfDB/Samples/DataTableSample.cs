@@ -105,21 +105,26 @@ namespace DwarfDB
 				
 				dc2.AssignOwnerDB(db2);
 				dc.AssignOwnerDB(db2);
+				
+
+				
 				Console.WriteLine("DC2 reccount:  "+dc2.AllRecordsCount);
 				Console.WriteLine("DC reccount:  "+dc.AllRecordsCount);
 
 				// Getting a record
-				Console.WriteLine("DCs preloading... ");				
+				Console.WriteLine("DCs preloading... ");
 				Thread tp1 = new Thread(()=>{dc.PreLoad(user);});
 				Thread tp2 = new Thread(()=>{dc2.PreLoad(user);});
 				
 				tp1.Start();
 				tp2.Start();
-				
+					
 				while (tp1.ThreadState == ThreadState.Running && tp2.ThreadState == ThreadState.Running) {
 					Thread.Sleep(100);
 				}
 
+				chunk_manager.RebuildIndexes( dc.GetOwnerDB() );
+				
 				Console.WriteLine("Trying LINQ #1...");
 				var aa1 = dc.Select((x,y)=>x);
 				var bb = aa1.ToArray();
