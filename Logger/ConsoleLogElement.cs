@@ -36,17 +36,19 @@ namespace Logger
 			                            DateTime.Now.ToString("\r\ndd.MM.yyyy HH:mm:ss"),
 			                            msg_type,
 			                            input );
-			if ( pars != null ) {
-				if ( pars.Length == 1 ) {
-					if (pars[0] is ConsoleColor ) {
-						var ex_color = ConsoleUtils.GetConsoleFontColor();
-						ConsoleUtils.SetConsoleFontColor( (ConsoleColor)(pars[0]));
-						Console.WriteLine( content );
-						ConsoleUtils.SetConsoleFontColor( ex_color );
+			lock ( sync_object ) {
+				if ( pars != null ) {
+					if ( pars.Length == 1 ) {
+						if (pars[0] is ConsoleColor ) {
+							var ex_color = ConsoleUtils.GetConsoleFontColor();
+							ConsoleUtils.SetConsoleFontColor( (ConsoleColor)(pars[0]));
+							Console.WriteLine( content );
+							ConsoleUtils.SetConsoleFontColor( ex_color );
+						}
 					}
-				}
-			} else
-				Console.WriteLine( content );
+				} else
+					Console.WriteLine( content );
+			}
 		}
 		
 		/// <summary>

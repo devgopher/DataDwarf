@@ -48,16 +48,18 @@ namespace Logger
 				                            msg_type,
 				                            input);
 				
-				if (!File.Exists(Path)) {
-					using (log_fs = File.Open(Path, FileMode.CreateNew)) {
-						using (log_sw = new StreamWriter(log_fs, UseEncoding)) {
-							log_sw.WriteLine(content);
+				lock ( sync_object ) {
+					if (!File.Exists(Path)) {
+						using (log_fs = File.Open(Path, FileMode.CreateNew)) {
+							using (log_sw = new StreamWriter(log_fs, UseEncoding)) {
+								log_sw.WriteLine(content);
+							}
 						}
-					}
-				} else {
-					using (log_fs = File.Open(Path, FileMode.Append)) {
-						using (log_sw = new StreamWriter(log_fs, UseEncoding)) {
-							log_sw.WriteLine(content);
+					} else {
+						using (log_fs = File.Open(Path, FileMode.Append)) {
+							using (log_sw = new StreamWriter(log_fs, UseEncoding)) {
+								log_sw.WriteLine(content);
+							}
 						}
 					}
 				}

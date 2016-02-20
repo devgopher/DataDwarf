@@ -15,5 +15,7 @@ namespace Logger
 		protected LogElement() {}
 		public abstract void Output( string input, string msg_type );
 		public abstract void Output( string input, string msg_type, params object[] pars );
+		
+		protected object sync_object = new object();
 	}
 }
