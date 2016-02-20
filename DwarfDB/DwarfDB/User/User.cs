@@ -24,6 +24,18 @@ namespace DwarfDB.User
 		}
 		
 		/// <summary>
+		/// User access credentials
+		/// </summary>
+		public UserCredentials Credentials {
+			get {
+				return user_credentials;
+			}
+			private set {
+				user_credentials = value;
+			}
+		}
+		
+		/// <summary>
 		/// A user without any credentials and permissions
 		/// </summary>
 		/// <returns></returns>
@@ -69,18 +81,6 @@ namespace DwarfDB.User
 			user.Credentials.Password = passwd;
 			SaveToUsersList( user );
 			return user;
-		}
-		
-		/// <summary>
-		/// User access credentials
-		/// </summary>
-		public UserCredentials Credentials {
-			get {
-				return user_credentials;
-			}
-			private set {
-				user_credentials = value;
-			}
 		}
 		
 		/// <summary>
@@ -135,11 +135,16 @@ namespace DwarfDB.User
 		/// Adds a new user to a userlist file
 		/// </summary>
 		/// <param name="_user"></param>
+		/// <param name="new_password"></param>
 		private static void ChangePassword( User _user, string new_password ) {
 			_user.Credentials.Password = new_password;
 		}
 
- 		private static void RemoveFromUsersList( User _user ) {
+		/// <summary>
+		/// Removes user from a userlist file
+		/// </summary>
+		/// <param name="_user"></param>
+		private static void RemoveFromUsersList( User _user ) {
 			throw new NotImplementedException("Method isn't implemented");
 		}
 		
@@ -165,8 +170,7 @@ namespace DwarfDB.User
 			return null;
 		}
 		
-		
-		private static string users_file_path = "";
+		private readonly static string users_file_path = "";
 		private UserCredentials user_credentials = null;
 		private UserPermissions user_permissions = null;
 	}

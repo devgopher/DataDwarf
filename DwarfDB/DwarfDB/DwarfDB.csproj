@@ -175,14 +175,11 @@
     <Compile Include="TransactionJournals\TransactionJournals.cs" />
     <Compile Include="Transactions\DwarfTransaction.cs" />
     <Compile Include="UnitTests\DataContainerTest.cs" />
-    <Compile Include="UnitTests\GenKeyTest.cs" />
     <Compile Include="UnitTests\DataBaseTest.cs" />
     <Compile Include="UnitTests\RecordTest.cs" />
     <Compile Include="User\Credentials.cs" />
     <Compile Include="User\Permissions.cs" />
     <Compile Include="User\User.cs" />
-    <Compile Include="Crypto\GenKey.cs" />
-    <Compile Include="Crypto\GenKeyException.cs" />
     <Compile Include="User\UserException.cs" />
     <Compile Include="Samples\DataTableSampleBinary.cs" />
   </ItemGroup>
