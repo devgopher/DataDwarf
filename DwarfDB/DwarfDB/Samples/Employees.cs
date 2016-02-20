@@ -26,7 +26,7 @@ namespace DwarfDB
 			var cm = new ChunkManager.ChunkManager();
 			
 			// Creating DB structure
-			if (DataBase.Exists(db_name)) {
+			if ( DataBase.Exists(db_name) ) {
 				db = DataBase.LoadFrom( db_name, cm );
 			} else {
 				db = DataBase.Create( db_name, cm );
@@ -50,8 +50,7 @@ namespace DwarfDB
 				dc_positions.AddColumn( new Column( DataType.STRING, "Name" ), user );
 
 				dc_divisions.AddColumn( new Column( DataType.INT, "DivId"), user );
-				dc_divisions.AddColumn( new Column( DataType.STRING, "Name"), user );
-				
+				dc_divisions.AddColumn( new Column( DataType.STRING, "Name"), user );				
 				
 				dc_employee.Save();
 				dc_divisions.Save();
