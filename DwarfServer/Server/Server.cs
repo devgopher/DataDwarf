@@ -45,7 +45,7 @@ namespace DwarfServer.Server
 	{
 		Socket server_socket;
 		const int server_port = 45000;
-		const int max_connections = 64;
+		const int max_connections = 256;
 		const int buffer_capacity = 10485760;
 		Logger.Logger logger = Logger.Logger.GetInstance("./");
 
@@ -100,6 +100,18 @@ namespace DwarfServer.Server
 			}
 		}
 
+        private void CleanConnectionsBuffer()
+        {
+            int conn_cnt = connections.Count;
+            var connections_cp = connections.ToArray();
+            foreach ( var usr_conn in connections_cp )
+            {
+                var usr_conn_cp = usr_conn;
+                if (!usr_conn.socket.Connected)
+                    connections.TryTake( out usr_conn_cp );
+            }
+        }
+
 		public void AcceptConnections()
 		{
 			try
@@ -110,6 +122,7 @@ namespace DwarfServer.Server
 					if (connections.Count >= max_connections)
 					{
 						logger.WriteEntry("Connections buffer is full!");
+                        CleanConnectionsBuffer();
 						continue;
 					}
 
