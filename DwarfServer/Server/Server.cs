@@ -75,7 +75,7 @@ namespace DwarfServer.Server
 		{
 			Status = ServerStatus.OFF;
 			ThreadPool.SetMaxThreads( 32 * Environment.ProcessorCount, Environment.ProcessorCount * 2 );
-			ThreadPool.SetMinThreads( 2 * Environment.ProcessorCount,  Environment.ProcessorCount * 2 );
+			ThreadPool.SetMinThreads( 4 * Environment.ProcessorCount,  Environment.ProcessorCount * 2 );
 		}
 
 		public void SetupSocket()
