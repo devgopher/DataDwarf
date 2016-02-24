@@ -59,14 +59,20 @@
     <Compile Include="LogElements\FileLogElement.cs" />
     <Compile Include="LogElements\ILogElement.cs" />
     <Compile Include="LogElements\LogElement.cs" />
+    <Compile Include="LogElements\MailLogElement.cs" />
+    <Compile Include="LogElements\MailLogElementException.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StaticResourceManager.cs" />
+    <Compile Include="Utils\CommonFacilities.cs" />
+    <Compile Include="Utils\Sendmail.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\build_resources.bat" />
     <None Include="Resources\CommonStrings.en.txt" />
     <None Include="Resources\CommonStrings.ru.txt" />
+    <None Include="Resources\MailLogElement.en.txt" />
+    <None Include="Resources\MailLogElement.ru.txt" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\CommonStrings.en-US.resources">
@@ -78,9 +84,16 @@
     <EmbeddedResource Include="Resources\CommonStrings.ru-RU.resources">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\MailLogElement.en-EN.resources">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\MailLogElement.ru-RU.resources">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="LogElements" />
+    <Folder Include="Utils" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -75,7 +75,7 @@ namespace Logger
 		}
 		
 		/// <summary>
-		/// Getting a LogElement instance
+		/// Getting a FileLogElement instance
 		/// </summary>
 		/// <param name="pars">Params array ( Encoding, Path )</param>
 		/// <returns>Log element</returns>

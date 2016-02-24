@@ -13,23 +13,14 @@ using Global;
 namespace Logger
 {
 	/// <summary>
-	/// A log element for sending emails with logs with some period of time
+	/// A log element for sending emails with logs regularly.
 	/// </summary>
-	public class MailLogElement : ILogElement, IDisposable
+	public class MailLogElement : LogElement, IDisposable
 	{
-		/// <summary>
-		/// A sending time interval, sec
-		/// </summary>
-		public int Interval {
-			get;
-			private set;
-		}
-		
 		private List<string> contents = new List<string>();
+		private List<string> recipients = new List<string>();
 		private Timer log_send_timer = null;
 		private bool is_loaded = false;
-		private List<string> recipients = new List<string>();
-		private object sync_object = new object();
 		
 		public string UserName{ get; private set; }
 		public string UserPwd{ get; private set; }
@@ -37,25 +28,43 @@ namespace Logger
 		public string SenderAddress{ get; private set; }
 		public Encoding MailEncoding{ get; private set; }
 		
+		/// <summary>
+		/// A sending time interval, sec
+		/// </summary>
+		public int Interval {
+			get {
+				if ( log_send_timer != null )
+					return (int)(log_send_timer.Interval/1000);
+				return -1;
+			}
+		}
+		
 		public MailLogElement()
 		{
 		}
 		
 		private void SendLog( object sender, ElapsedEventArgs e ) {
-			if ( contents.Count > 0 ) {
-				var text = CommonFacilities.Common.ListToString( contents, @"\r\n" );
-				
-				Sendmail.SendText(
-					StaticResourceManager.GetStringResource("MLE_SUBJECT_TITLE") + DateTime.Now.ToString(),
-					text,
-					recipients,
-					UserName,
-					UserPwd,
-					Server,
-					SenderAddress,
-					MailEncoding );
-				
-				contents.Clear();
+			try {
+				lock ( sync_object ) {
+					if ( contents.Count > 0 ) {
+						var text = CommonFacilities.Common.ListToString( contents, @"" );
+						
+						Sendmail.SendText(
+							StaticResourceManager.GetStringResource("MLE_SUBJECT_TITLE") + DateTime.Now.ToString(),
+							text,
+							recipients,
+							UserName,
+							UserPwd,
+							Server,
+							SenderAddress,
+							MailEncoding );
+						
+						contents.Clear();
+					}
+				}
+			} catch ( Exception ex ) {
+				is_loaded = false;
+				throw new MailLogElementException( "Error while sending a email: "+ex.Message, ex );
 			}
 		}
 		
@@ -76,24 +85,27 @@ namespace Logger
 				MailEncoding = encoding;
 				SenderAddress = sender_address;
 				
-				log_send_timer = new Timer((double)(Interval*1000));
+				log_send_timer = new Timer((double)(interval*1000));
 				log_send_timer.Elapsed += SendLog;
 				log_send_timer.Start();
 			} catch ( Exception ex ) {
-				// TODO:
+				throw new MailLogElementException( "Mail Log Element - initialization failed: "+ex.Message, ex );
 			}
 			is_loaded = true;
 		}
 		
-		public void Output( string input, string msg_type ) {
+		public override void Output( string input, string msg_type ) {
 			if ( !is_loaded )
-				throw new MailLogElementException( " Mail log Element wasn't initialised! " );
+				throw new MailLogElementException( "Mail Log Element wasn't initialized! " );
 			lock ( sync_object ) {
-				contents.Add( input );
+				contents.Add( String.Format( "{0}: {1}: {2}",
+				                            DateTime.Now.ToString("\r\ndd.MM.yyyy HH:mm:ss"),
+				                            msg_type,
+				                            input) );
 			}
 		}
 		
-		public void Output( string input, string msg_type, params object[] pars ) {
+		public override void Output( string input, string msg_type, params object[] pars ) {
 			Output( input, msg_type );
 		}
 		
