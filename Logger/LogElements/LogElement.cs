@@ -6,7 +6,7 @@
 using System;
 
 namespace Logger
-{
+{ 
 	/// <summary>
 	/// A common class for loggers
 	/// </summary>
