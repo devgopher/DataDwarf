@@ -1,0 +1,3 @@
+# common strings resource creation
+MLE_SUBJECT_TITLE=Logger report# 
+
