@@ -50,6 +50,7 @@ namespace Utils
 				message.Subject = subject;
 				message.BodyEncoding = encoding;
 				message.HeadersEncoding = encoding;
+				message.SubjectEncoding = encoding;
 				message.Body = text;
 				message.From = new MailAddress(sender_address);
 				recipients.ForEach(( s ) => { message.To.Add(s); });
