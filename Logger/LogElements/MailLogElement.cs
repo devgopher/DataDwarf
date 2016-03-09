@@ -17,7 +17,7 @@ namespace Logger
 	/// </summary>
 	public class MailLogElement : LogElement, IDisposable
 	{
-		private List<string> contents = new List<string>();
+		private List<string> contents_buffer = new List<string>();
 		private List<string> recipients = new List<string>();
 		private Timer log_send_timer = null;
 		private bool is_loaded = false;
@@ -39,18 +39,14 @@ namespace Logger
 			}
 		}
 		
-		public MailLogElement()
-		{
-		}
-		
 		private void SendLog( object sender, ElapsedEventArgs e ) {
 			try {
 				lock ( sync_object ) {
-					if ( contents.Count > 0 ) {
-						var text = CommonFacilities.Common.ListToString( contents, @"" );
+					if ( contents_buffer.Count > 0 ) {
+						var text = CommonFacilities.Common.ListToString( contents_buffer, @"" );
 						
 						Sendmail.SendText(
-							StaticResourceManager.GetStringResource("MLE_SUBJECT_TITLE") + DateTime.Now.ToString(),
+							StaticResourceManager.GetStringResource("MLE_SUBJECT_TITLE") + " " + DateTime.Now.ToString(),
 							text,
 							recipients,
 							UserName,
@@ -59,7 +55,7 @@ namespace Logger
 							SenderAddress,
 							MailEncoding );
 						
-						contents.Clear();
+						contents_buffer.Clear();
 					}
 				}
 			} catch ( Exception ex ) {
@@ -98,7 +94,7 @@ namespace Logger
 			if ( !is_loaded )
 				throw new MailLogElementException( "Mail Log Element wasn't initialized! " );
 			lock ( sync_object ) {
-				contents.Add( String.Format( "{0}: {1}: {2}",
+				contents_buffer.Add( String.Format( "{0}: {1}: {2}",
 				                            DateTime.Now.ToString("\r\ndd.MM.yyyy HH:mm:ss"),
 				                            msg_type,
 				                            input) );
