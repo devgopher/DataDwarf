@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Collections.Concurrent;
 using Global;
 
-
 namespace Logger
 {
 	/// <summary>
@@ -56,8 +55,12 @@ namespace Logger
 			Path = _path;
 			application_name = _application_name;
 			encoding = _encoding;
+			
+			#if DEBUG
 			log_elements.Add( FileLogElement.GetInstance( encoding, Path ) );
 			log_elements.Add( ConsoleLogElement.GetInstance() );
+			#endif
+			
 			IsSingle = is_single;
 			StartLog();
 			WriteEntry("Start logging...");
@@ -111,7 +114,6 @@ namespace Logger
 				return GetInstanceSingle( log_dir, filename );
 			return GetInstanceMulti( log_dir, filename );
 		}
-		
 		
 		private static Logger GetInstanceSingle( string log_dir = null, string filename = null ) {
 			if ( singleton_instance == null ) {
