@@ -8,6 +8,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Collections.Concurrent;
 using System.Threading;
+using System.Text;
 using System;
 
 namespace DwarfServer.Server
@@ -46,8 +47,8 @@ namespace DwarfServer.Server
 		Socket server_socket;
 		const int server_port = 45000;
 		const int max_connections = 256;
-		const int buffer_capacity = 10485760;
-		Logger.Logger logger = Logger.Logger.GetInstance("./");
+		const int buffer_capacity = 32768;
+		Logger.Logger logger = Logger.Logger.GetInstance();
 
 		readonly ConcurrentBag<ConnectionInfo> connections =
 			new ConcurrentBag<ConnectionInfo>();
@@ -75,7 +76,7 @@ namespace DwarfServer.Server
 		{
 			Status = ServerStatus.OFF;
 			ThreadPool.SetMaxThreads( 32 * Environment.ProcessorCount, Environment.ProcessorCount * 2 );
-			ThreadPool.SetMinThreads( 4 * Environment.ProcessorCount,  Environment.ProcessorCount * 2 );
+			ThreadPool.SetMinThreads( 2 * Environment.ProcessorCount,  Environment.ProcessorCount * 2 );
 		}
 
 		public void SetupSocket()
@@ -100,17 +101,17 @@ namespace DwarfServer.Server
 			}
 		}
 
-        private void CleanConnectionsBuffer()
-        {
-            int conn_cnt = connections.Count;
-            var connections_cp = connections.ToArray();
-            foreach ( var usr_conn in connections_cp )
-            {
-                var usr_conn_cp = usr_conn;
-                if (!usr_conn.socket.Connected)
-                    connections.TryTake( out usr_conn_cp );
-            }
-        }
+		private void CleanConnectionsBuffer()
+		{
+			int conn_cnt = connections.Count;
+			var connections_cp = connections.ToArray();
+			foreach ( var usr_conn in connections_cp )
+			{
+				var usr_conn_cp = usr_conn;
+				if (!usr_conn.socket.Connected)
+					connections.TryTake( out usr_conn_cp );
+			}
+		}
 
 		public void AcceptConnections()
 		{
@@ -122,7 +123,7 @@ namespace DwarfServer.Server
 					if (connections.Count >= max_connections)
 					{
 						logger.WriteEntry("Connections buffer is full!");
-                        CleanConnectionsBuffer();
+						CleanConnectionsBuffer();
 						continue;
 					}
 
@@ -146,6 +147,25 @@ namespace DwarfServer.Server
 				logger.WriteError("Error starting a new thread: " + ex.Message);
 			}
 		}
+		
+		private ServerMessage ProcessRequest( string request_contents ) {
+			logger.WriteDebug("Processing a request: " + request_contents);
+			
+			if ( request_contents.Contains("<root>") && request_contents.Contains("</root>"))
+			{
+				var start_xml = request_contents.IndexOf("<root>");
+				var length = request_contents.IndexOf("</root>")+7-
+					request_contents.IndexOf("<root>");
+				var xml = request_contents.Substring( start_xml, length );
+				
+				ClientMessage msg = new ClientMessage();
+				msg.FromXML( xml );
+
+				return MessageProcessing.ProcessMessage( msg );
+				
+			}
+			return null;
+		}
 
 		private void ProcessConnection(object state)
 		{
@@ -157,15 +177,22 @@ namespace DwarfServer.Server
 				logger.WriteEntry("Trying to process a connection...");
 				for (;;)
 				{
-					int bytes_read = conn_info.socket.Receive(buffer);
-
+					int bytes_read = 0;
+					bytes_read = conn_info.socket.Receive(buffer);
+					
 					if ( bytes_read > 0 )
 					{
+						string received = Encoding.UTF8.GetString(buffer);
+						var server_msg = this.ProcessRequest( received );
+						
 						foreach ( var ci in connections )
 						{
 							if ( ci == conn_info )
 							{
-								Responder.Respond(ci);
+								if ( server_msg != null )
+									Responder.Respond( ci, server_msg.ToXml() );
+								else
+									Responder.Respond( ci, String.Empty );
 							}
 						}
 					}
@@ -233,28 +260,6 @@ namespace DwarfServer.Server
 			}
 
 			Status = ServerStatus.OFF;
-		}
-
-		/// <summary>
-		/// Checks availability of a host
-		/// </summary>
-		/// <param name="host">Host</param>
-		/// <param name="delay">Delay, ms</param>
-		/// <returns></returns>
-		private bool IsAvailable(string host, int delay)
-		{
-			// TODO: send request
-			Thread.Sleep(delay);
-			// TODO: do we have any response?
-
-			return false;
-		}
-
-		/// <summary>
-		/// Checks availability of all hosts by sending special requests
-		/// </summary>
-		private void CheckAvailability()
-		{
 		}
 	}
 }

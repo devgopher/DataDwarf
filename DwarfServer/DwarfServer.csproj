@@ -48,7 +48,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Respondent\Responder.cs" />
+    <Compile Include="MessageProcessing\ClientMessage.cs" />
+    <Compile Include="MessageProcessing\Message.cs" />
+    <Compile Include="MessageProcessing\MessageProcessing.cs" />
+    <Compile Include="MessageProcessing\Protocol.cs" />
+    <Compile Include="MessageProcessing\ServerMessage.cs" />
+    <Compile Include="Responder\Responder.cs" />
     <Compile Include="Server\Server.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -58,8 +63,7 @@
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Listener\" />
-    <Folder Include="QueryProcessor\" />
+    <Folder Include="MessageProcessing" />
     <Folder Include="UnitTests\" />
   </ItemGroup>
   <ItemGroup>
