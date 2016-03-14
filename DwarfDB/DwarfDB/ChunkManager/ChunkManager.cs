@@ -307,7 +307,7 @@ namespace DwarfDB.ChunkManager
 			var chunk = FindChunkFileForDataContainer( dc_name );
 			
 			if ( chunk != null ) {
-				var new_dc =  ChunkFormat.GetDCInFile( chunk, dc_name ); //new DataContainer( null, dc_name );
+				var new_dc = ChunkFormat.GetDCInFile( chunk, dc_name ); //new DataContainer( null, dc_name );
 				new_dc.BuildIndex();
 				return new_dc;
 			}

@@ -106,31 +106,24 @@ namespace DwarfDB
 				dc2.AssignOwnerDB(db2);
 				dc.AssignOwnerDB(db2);
 				
-
 				
 				Console.WriteLine("DC2 reccount:  "+dc2.AllRecordsCount);
 				Console.WriteLine("DC reccount:  "+dc.AllRecordsCount);
 
 				// Getting a record
 				Console.WriteLine("DCs preloading... ");
-				Thread tp1 = new Thread(()=>{dc.PreLoad(user);});
-				Thread tp2 = new Thread(()=>{dc2.PreLoad(user);});
-				
-				tp1.Start();
-				tp2.Start();
-					
-				while (tp1.ThreadState == ThreadState.Running && tp2.ThreadState == ThreadState.Running) {
-					Thread.Sleep(100);
-				}
+
+				dc.PreLoad( user );
+				dc2.PreLoad( user );
 
 				chunk_manager.RebuildIndexes( dc.GetOwnerDB() );
 				
 				Console.WriteLine("Trying LINQ #1...");
 				var aa1 = dc.Select((x,y)=>x);
-				var bb = aa1.ToArray();
-				foreach ( var rec in bb) {
-					Console.WriteLine("Rec:"+rec.Fields[0].Type+"  :  "+rec.Fields[0].Value+" $$"+bb.Count()+
-					                  ":"+rec.Fields[1].Type+"  :  "+rec.Fields[1].Value+" $$"+bb.Count());
+		
+				foreach ( var rec in aa1) {
+					Console.WriteLine("Rec:"+rec.Fields[0].Type+"  :  "+rec.Fields[0].Value+" $$"+aa1.Count()+
+					                  ":"+rec.Fields[1].Type+"  :  "+rec.Fields[1].Value+" $$"+aa1.Count());
 				}
 
 				Console.WriteLine("Trying LINQ #2...");

@@ -587,7 +587,7 @@ namespace DwarfDB.DataStructures
 					var indexes = db.Indexes;
 
 					all_rec_count = (indexes.Where( ( idxs ) => {
-					                               	return idxs.Value.Value == this.GetIndex().DwarfHashCode;
+					                               	return idxs.Value.Value == GetIndex().DwarfHashCode;
 					                               })).Count();
 				}
 				return all_rec_count;
@@ -595,7 +595,7 @@ namespace DwarfDB.DataStructures
 		}
 		
 		internal bool  GetRecordsFromChunk( int chunk_number = 0 ) {
-			var couple = owner_db.chunk_manager.LoadChunk( chunk_number,  this.GetIndex().DwarfHashCode );
+			var couple = owner_db.chunk_manager.LoadChunk( chunk_number, GetIndex().DwarfHashCode );
 			foreach ( var rec in couple )
 				AddRecordToDataStorage( rec );
 			

@@ -20,7 +20,7 @@ namespace DwarfServer
 		public const string add_record = "ADDREC";		
 		public const string del_record = "DELREC";		
 		public const string get_dc_link = "GETDCLNK";	
-		public const string get_rec_link = "GETRECLNK";			
+		public const string get_rec_link = "GETRECLNK";		
 		#endregion
 		
 		#region ServerResponseTypes
