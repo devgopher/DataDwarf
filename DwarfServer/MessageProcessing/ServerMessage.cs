@@ -32,13 +32,15 @@ namespace DwarfServer
 			try {
 				var doc = new XmlDocument();
 				doc.LoadXml( in_contents );
-				var root_element = doc.DocumentElement;
+				var root_elem = doc.DocumentElement;
+				TimeFromXml( root_elem );
+				
 				Contents.Clear();
 				
 				XmlNode item_node = null;
 				Dictionary<string, string> item_dict = null;
 				
-				foreach( XmlNode node in root_element.ChildNodes ) {
+				foreach( XmlNode node in root_elem.ChildNodes ) {
 					if ( node.Name == "type" )
 						Type = node.InnerText;
 					

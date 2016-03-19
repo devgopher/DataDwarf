@@ -19,12 +19,14 @@ namespace DwarfServer
 		/// <param name="in_contents"></param>
 		public override void FromXML( string in_contents ) {
 			try {
-				XmlDocument doc = new XmlDocument();
+				var doc = new XmlDocument();
 				doc.LoadXml( in_contents );				
-				var root_element = doc.DocumentElement;				
+				var root_elem = doc.DocumentElement;	
+				TimeFromXml( root_elem );
+				
 				Contents.Clear();				
 				
-				foreach( XmlNode node in root_element.ChildNodes ) {
+				foreach( XmlNode node in root_elem.ChildNodes ) {
 					if ( node.Name == "type") {
 						Type = node.InnerText;
 					}
@@ -51,8 +53,9 @@ namespace DwarfServer
 		/// </summary>
 		/// <returns></returns>
 		public override string ToXml() {
-			XmlDocument new_xml = new XmlDocument();
+			var new_xml = new XmlDocument();
 			var root_elem = new_xml.CreateElement("root");
+			TimeStampToXml( root_elem );
 			string ret = String.Empty;
 			
 			XmlElement type = new_xml.CreateElement("type");
