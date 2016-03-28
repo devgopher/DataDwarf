@@ -71,8 +71,7 @@ namespace DwarfServer
 				chld.Attributes.Append( fld_name_attr );
 				chld.InnerText = Contents[key];
 				root_elem.AppendChild( chld );
-			}
-			
+			}			
 			ret = root_elem.OuterXml;
 			
 			return ret;

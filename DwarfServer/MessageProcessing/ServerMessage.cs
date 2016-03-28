@@ -74,7 +74,7 @@ namespace DwarfServer
 		/// </summary>
 		/// <returns></returns>
 		public override string ToXml() {
-			XmlDocument new_xml = new XmlDocument();
+			var new_xml = new XmlDocument();
 			var root_elem = new_xml.CreateElement("root");
 			string ret = String.Empty;
 			
@@ -85,9 +85,8 @@ namespace DwarfServer
 			foreach ( var item_dict in Contents ) {
 				XmlElement item = new_xml.CreateElement("item");
 				foreach ( var key in item_dict.Keys ) {
-					XmlElement chld = new_xml.CreateElement("field");
-					
-					var fld_name_attr = new_xml.CreateAttribute( "field_name" );
+					XmlElement chld = new_xml.CreateElement("field");					
+					XmlAttribute fld_name_attr = new_xml.CreateAttribute( "field_name" );
 					fld_name_attr.Value = key;
 					
 					chld.Attributes.Append( fld_name_attr );
