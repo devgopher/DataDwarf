@@ -4,5 +4,8 @@ LOGGER_OUTPUT_DEBUG=ОТЛАДОЧНОЕ СООБЩЕНИЕ
 LOGGER_OUTPUT_ENTRY=СООБЩЕНИЕ
 LOGGER_OUTPUT_WARNING=ПРЕДУПРЕЖДЕНИЕ
 LOGGER_OUTPUT_INFO=ИНФО
+LOGGER_OUTPUT_EXCEPTION_MSG=СООЩЕНИЕ ИСКЛЮЧЕНИЯ
+LOGGER_OUTPUT_EXCEPTION_SRC=ИСТОЧНИК ИСКЛЮЧЕНИЯ
+LOGGER_OUTPUT_EXCEPTION_TRACE=ПОДРОБНОСТИ ИСКЛЮЧЕНИЯ
 
 

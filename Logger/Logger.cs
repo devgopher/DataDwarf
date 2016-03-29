@@ -256,9 +256,11 @@ namespace Logger
 		{
 			string content = String.Empty;
 			#if DEBUG
-			content = exception.Message + ":"+exception.StackTrace;
+			content = StaticResourceManager.GetStringResource("LOGGER_OUTPUT_EXCEPTION_MSG") + ":" + exception.Message + "\r\n" +
+				StaticResourceManager.GetStringResource("LOGGER_OUTPUT_EXCEPTION_TRACE") + ":"+exception.StackTrace + "\r\n" +
+				StaticResourceManager.GetStringResource("LOGGER_OUTPUT_EXCEPTION_SRC") + ":"+exception.Source;
 			#else
-			content = exception.Message;
+			content = StaticResourceManager.GetStringResource("LOGGER_OUTPUT_EXCEPTION_MSG") + ":" + exception.Message;
 			#endif
 			log_text+="\r\n "+content;
 			
