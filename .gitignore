@@ -74,5 +74,5 @@ DwarfDB/DwarfDB/obj/Debug/DwarfDB.csproj.FileListAbsolute.txt
 >>>>>>> origin/master
 DwarfDB/DwarfDB/obj/Debug/DwarfDB.csproj.FileListAbsolute.txt
 *.suo
-*.suo
-*.suo
+*.resources
+
