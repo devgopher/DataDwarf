@@ -115,6 +115,12 @@ namespace Logger
 			return GetInstanceMulti( log_dir, filename );
 		}
 		
+		/// <summary>
+		/// Creates/returns a new instance for one-thread usage
+		/// </summary>
+		/// <param name="log_dir">A directory for logs</param>
+		/// <param name="filename">a log file name</param>
+		/// <returns></returns>
 		private static Logger GetInstanceSingle( string log_dir = null, string filename = null ) {
 			if ( singleton_instance == null ) {
 				try {
@@ -166,6 +172,12 @@ namespace Logger
 			return filepath;
 		}
 		
+		/// <summary>
+		/// Creates/returns instances for multithread usage
+		/// </summary>
+		/// <param name="log_dir">A directory for logs</param>
+		/// <param name="filename">a log file name</param>
+		/// <returns></returns>
 		private static Logger GetInstanceMulti( string log_dir = null, string filename = null ) {
 			Logger ret = null;
 
