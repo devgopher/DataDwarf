@@ -276,11 +276,11 @@ namespace DwarfDB.ChunkManager
 					var filepath = CurrentDbPath + "/rec_"+no_null_records.First().GetIndex().DwarfHashCode +
 						"_" + no_null_records.Last().GetIndex().DwarfHashCode + ".dwarf";
 					no_null_records.ForEach( (rec) => {
-					                        	if ( !all_hashes.Contains(rec.GetIndex().DwarfHashCode) ) {
+					                     //   	if ( !all_hashes.Contains(rec.GetIndex().DwarfHashCode) ) {
 					                        		ChunkFormat.AddItem( filepath, rec);
 					                        		AllIndexes.TryAdd(rec.GetIndex(),
 					                        		                  new KeyValuePair<IStructure, string>(rec, rec.OwnerDC.GetIndex().DwarfHashCode));
-					                        	}
+					                   //     	}
 					                        } );
 					
 					// adding to chunk list

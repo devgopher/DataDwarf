@@ -88,6 +88,7 @@ namespace DwarfDB
 						rec1.BuildIndex();
 						rec2.BuildIndex();
 					}
+					
 					dc.AddRecordToDataStorage( rec1 );
 					indexes.Add(rec1.GetIndex());
 					dc2.AddRecordToDataStorage( rec2 );
@@ -114,13 +115,29 @@ namespace DwarfDB
 				Console.WriteLine("DCs preloading... ");
 
 				dc.PreLoad( user );
-				dc2.PreLoad( user );
+				//dc2.PreLoad( user );
 
-				chunk_manager.RebuildIndexes( dc.GetOwnerDB() );
+				// Additional records
+				Console.WriteLine("Adding some new records... ");
+				for ( int i =0; i < 400;  ++i ) {
+					var rec = new Record( dc );
+					rec.Id = dc.NextId();
+					foreach ( var col in dc.Columns) {
+						rec[col.Name].Value = "Цитрус "+col.Name+" "+i.ToString()+"AAAAAAAAA";
+						rec[col.Name].Type = DataType.STRING;
+					}
+					
+					rec.BuildIndex();
+					indexes.Add(rec.GetIndex());
+					dc.AddRecordToDataStorage(rec);
+				}
 				
+				chunk_manager.RebuildIndexes( dc.GetOwnerDB() );
+				dc.Save();
+				dc.PreLoad( user );
 				Console.WriteLine("Trying LINQ #1...");
 				var aa1 = dc.Select((x,y)=>x);
-		
+				
 				foreach ( var rec in aa1) {
 					Console.WriteLine("Rec:"+rec.Fields[0].Type+"  :  "+rec.Fields[0].Value+" $$"+aa1.Count()+
 					                  ":"+rec.Fields[1].Type+"  :  "+rec.Fields[1].Value+" $$"+aa1.Count());
