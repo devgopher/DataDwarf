@@ -1,3 +1,0 @@
-# common strings resource creation
-MLE_SUBJECT_TITLE=Отчет
-

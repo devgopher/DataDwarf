@@ -12,7 +12,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Newtonsoft.Json", "..\..\..
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DwarfServer", "..\..\DwarfServer\DwarfServer.csproj", "{01776743-16BC-418E-B7C3-60C24D93E6D8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logger", "..\..\Logger\Logger.csproj", "{A7DEADB2-FB2C-4AFE-9608-0BFCD0E3DD2D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logger", "..\..\..\Logger\Logger\Logger.csproj", "{A7DEADB2-FB2C-4AFE-9608-0BFCD0E3DD2D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -192,6 +192,10 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Logger\Logger\Logger.csproj">
+      <Project>{a7deadb2-fb2c-4afe-9608-0bfcd0e3dd2d}</Project>
+      <Name>Logger</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\Newtonsoft.Json\Src\Newtonsoft.Json\Newtonsoft.Json.csproj">
       <Project>{EEEA67F9-9089-481D-A4DC-0966DEC9FD7D}</Project>
       <Name>Newtonsoft.Json</Name>
@@ -199,10 +203,6 @@
     <ProjectReference Include="..\..\DwarfServer\DwarfServer.csproj">
       <Project>{01776743-16BC-418E-B7C3-60C24D93E6D8}</Project>
       <Name>DwarfServer</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Logger\Logger.csproj">
-      <Project>{A7DEADB2-FB2C-4AFE-9608-0BFCD0E3DD2D}</Project>
-      <Name>Logger</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
