@@ -8,6 +8,7 @@ using System.Resources;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace Global
 {
@@ -16,16 +17,18 @@ namespace Global
 	/// </summary>
 	public static class StaticResourceManager
 	{
-		private static List<ResourceManager> RMs = new List<ResourceManager>();
+		private static readonly List<ResourceManager> resource_mgrs = 
+			new List<ResourceManager>();
+		private static readonly string appdir = 
+			Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 		
 		private static List<string> FindResourceTitles() {
-			RMs.Clear();
-			List<string> ret = new List<string>();
-			var resources_dir = Directory.GetCurrentDirectory() +
-				Path.DirectorySeparatorChar +"Resources";
+			resource_mgrs.Clear();
+			var ret = new List<string>();
+			var resources_dir = Path.Combine(appdir,"Resources");
 			
 			var files = Directory.GetFiles( resources_dir, "*.resources" );
-			var regex_pattern = @"(.*)\.(.*)\.(.*)";
+			const string regex_pattern = @"(.*)\.(.*)\.(.*)";
 			
 			foreach ( var file in files ) {
 				var match = Regex.Match( Path.GetFileName(file), regex_pattern );
@@ -41,20 +44,20 @@ namespace Global
 		static StaticResourceManager()
 		{
 			var resource_titles = FindResourceTitles();
-			var current_dir =  Directory.GetCurrentDirectory();
+
 			foreach ( var rt in resource_titles ) {
 				var string_manager = ResourceManager.CreateFileBasedResourceManager( rt,
-				                                                                    current_dir+
+				                                                                    appdir +
 				                                                                    Path.DirectorySeparatorChar+
 				                                                                    "Resources",
 				                                                                    null
 				                                                                   );
-				RMs.Add( string_manager );
+				resource_mgrs.Add( string_manager );
 			}
 		}
 		
 		public static string GetStringResource( string res_name ) {
-			foreach ( var rm in RMs ) {
+			foreach ( var rm in resource_mgrs ) {
 				var tmp = rm.GetString( res_name );
 				if ( tmp != null )
 					return tmp;
@@ -63,7 +66,7 @@ namespace Global
 		}
 
 		public static Object GetObjectResource( string res_name ) {
-			foreach ( var rm in RMs ) {
+			foreach ( var rm in resource_mgrs ) {
 				var tmp = rm.GetObject( res_name );
 				if ( tmp != null )
 					return tmp;

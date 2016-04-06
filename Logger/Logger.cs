@@ -32,7 +32,7 @@ namespace Logger
 		
 		/// <summary>
 		/// This property means a common amount of Logger objects, we can produce
-		/// true = single-object mode
+		/// true - single-object mode
 		/// false- multi object moe
 		/// </summary>
 		public static bool IsSingle { get; set; }
