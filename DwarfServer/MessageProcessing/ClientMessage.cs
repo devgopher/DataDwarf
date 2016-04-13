@@ -13,8 +13,10 @@ namespace DwarfServer
 		public Dictionary<string, string> Contents =
 			new Dictionary<string, string>();
 		
-		public static ClientMessage EmptyMessage = new ClientMessage();
-		
+		public static ClientMessage EmptyMessage = new ClientMessage() {
+			Type = "EmptyClientMsg"
+		};
+
 		/// <summary>
 		/// Parses an XML document into a "Message" object
 		/// </summary>
@@ -67,7 +69,7 @@ namespace DwarfServer
 			foreach ( var key in Contents.Keys ) {
 				XmlElement chld = new_xml.CreateElement("field");
 				
-				var fld_name_attr = new_xml.CreateAttribute( "field_name" );
+				var fld_name_attr = new_xml.CreateAttribute("field_name");
 				fld_name_attr.Value = key;
 				
 				chld.Attributes.Append( fld_name_attr );

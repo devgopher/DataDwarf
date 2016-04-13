@@ -14,7 +14,9 @@ namespace DwarfServer
 		public List<Dictionary<string, string>> Contents =
 			new List<Dictionary<string, string>>();
 		
-		public static ServerMessage EmptyMessage = new ServerMessage();
+		public static ServerMessage EmptyMessage = new ServerMessage() {
+			Type = "EmptyServerMsg"
+		};
 		
 		/// <summary>
 		/// Adds an item to a Contents list
