@@ -153,9 +153,9 @@ namespace DwarfServer.Server
 			
 			if ( request_contents.Contains("<root>") && request_contents.Contains("</root>"))
 			{
-				var start_xml = request_contents.IndexOf("<root>");
-				var length = request_contents.IndexOf("</root>")+7-
-					request_contents.IndexOf("<root>");
+				var start_xml = request_contents.IndexOf("<root>", StringComparison.InvariantCulture);
+				var length = request_contents.IndexOf("</root>", StringComparison.InvariantCulture)+7-
+					request_contents.IndexOf("<root>", StringComparison.InvariantCulture);
 				var xml = request_contents.Substring( start_xml, length );
 				
 				ClientMessage msg = new ClientMessage();

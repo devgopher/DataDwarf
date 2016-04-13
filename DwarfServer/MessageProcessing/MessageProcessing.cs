@@ -22,17 +22,7 @@ namespace DwarfServer
 			try {
 				DataTable process_dt = null;
 				var resp_msg = new ServerMessage();
-				
-				// TODO: Build a server message according to a client message type lie this:
-				/*switch( msg.Type ) {
-					case Protocol.add_shop:
-						Int64 new_shop_id = AddShopRequest( msg );
-						resp_msg.Type = Protocol.common_response;
-						resp_msg.AddItem()["shop_id"] = new_shop_id.ToString();
-						return resp_msg;
-				}
-				*/
-				
+
 				if ( process_dt != null ) {
 					resp_msg = ResponseMessage( process_dt );
 				}
