@@ -14,6 +14,8 @@ namespace DwarfServer
 		public List<Dictionary<string, string>> Contents =
 			new List<Dictionary<string, string>>();
 		
+		public static ServerMessage EmptyMessage = new ServerMessage();
+		
 		/// <summary>
 		/// Adds an item to a Contents list
 		/// </summary>
@@ -85,7 +87,7 @@ namespace DwarfServer
 			foreach ( var item_dict in Contents ) {
 				XmlElement item = new_xml.CreateElement("item");
 				foreach ( var key in item_dict.Keys ) {
-					XmlElement chld = new_xml.CreateElement("field");					
+					XmlElement chld = new_xml.CreateElement("field");
 					XmlAttribute fld_name_attr = new_xml.CreateAttribute( "field_name" );
 					fld_name_attr.Value = key;
 					

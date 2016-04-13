@@ -13,6 +13,8 @@ namespace DwarfServer
 		public Dictionary<string, string> Contents =
 			new Dictionary<string, string>();
 		
+		public static ClientMessage EmptyMessage = new ClientMessage();
+		
 		/// <summary>
 		/// Parses an XML document into a "Message" object
 		/// </summary>

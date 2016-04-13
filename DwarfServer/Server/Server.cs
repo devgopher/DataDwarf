@@ -150,21 +150,20 @@ namespace DwarfServer.Server
 		
 		private ServerMessage ProcessRequest( string request_contents ) {
 			logger.WriteDebug("Processing a request: " + request_contents);
-			
-			if ( request_contents.Contains("<root>") && request_contents.Contains("</root>"))
+
+			if ( request_contents.Contains("<root>")
+			    && request_contents.Contains("</root>"))
 			{
+				ClientMessage msg = new ClientMessage();
 				var start_xml = request_contents.IndexOf("<root>", StringComparison.InvariantCulture);
 				var length = request_contents.IndexOf("</root>", StringComparison.InvariantCulture)+7-
 					request_contents.IndexOf("<root>", StringComparison.InvariantCulture);
 				var xml = request_contents.Substring( start_xml, length );
 				
-				ClientMessage msg = new ClientMessage();
 				msg.FromXML( xml );
-
 				return MessageProcessing.ProcessMessage( msg );
-				
 			}
-			return null;
+			return ServerMessage.EmptyMessage;
 		}
 
 		private void ProcessConnection(object state)
