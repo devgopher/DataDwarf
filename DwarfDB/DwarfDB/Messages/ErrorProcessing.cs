@@ -4,8 +4,6 @@
  * Время: 12:04
  */
 using System;
-using System.IO;
-using System.Text;
 
 namespace DwarfDB.Errors
 {
@@ -14,15 +12,11 @@ namespace DwarfDB.Errors
 	/// </summary>
 	public class Messages
 	{
-		public Messages()
-		{
-		}
-		
 		private static Logger.Logger logger = 
 			Logger.Logger.GetInstance();
 		
 		public static void DisplayError( String _error_text ) {
-			System.Console.WriteLine( String.Format( "Error: {0} When: {1}", 
+			Console.WriteLine( String.Format( "Error: {0} When: {1}", 
 			                                        _error_text, 
 			                                        DateTime.Now.ToLocalTime()));
 		}

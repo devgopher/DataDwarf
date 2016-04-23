@@ -382,26 +382,14 @@ namespace DwarfDB.DataStructures
 		/// </summary>
 		/// <param name="new_rec"></param>
 		/// <returns></returns>
-		public bool AddRecordToDataStorage( Record new_rec ) {
+		public void AddRecordToDataStorage( Record new_rec ) {
 			if ( new_rec == null )
-				return false;
-			
+				return;		
 			var tmp_recs = GetRecordsInternal();
-			
-			foreach ( var rec in tmp_recs ) {
-				try {
-					if ( rec.Id == new_rec.Id ) {
-						return false;
-					}
-				} catch ( Exception ex ) {
-					Errors.Messages.DisplayError("Error in adding a record to stack: "+ex.Message);
-				}
-			}
-			
+					
 			new_rec.BuildIndex();
 			new_rec.AssignOwnerDC(this);
 			owner_db.MemStorage.Add( new_rec );
-			return true;
 		}
 		
 		/// <summary>

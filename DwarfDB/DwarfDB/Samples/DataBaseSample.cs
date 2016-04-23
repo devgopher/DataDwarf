@@ -16,8 +16,7 @@ namespace DwarfDB
 		public static void DataBaseChunkCreation() {
 			var time = Checks.ExecutionTimeCheck.DoCheck ( () => {
 			                                              	Console.WriteLine("Creating DB...");
-			                                              	var db = DataBase.Create( "testbase3" );
-			                                              	
+			                                              	var db = DataBase.Create( "testbase3" );			                                              	
 			                                              	User.User new_usr = User.User.New( "root", "12345678" );
 			                                              	db.AddAccess( new_usr, Access.AccessLevel.ADMIN);		                                              	
 			                                              	var dc = new DataContainer( db, "DataC2" );

@@ -84,9 +84,6 @@ namespace DwarfDB
 							rec2[col.Name].Value = k*555;
 							rec2[col.Name].Type = DataType.INT;
 						}
-						
-						rec1.BuildIndex();
-						rec2.BuildIndex();
 					}
 					
 					dc.AddRecordToDataStorage( rec1 );
