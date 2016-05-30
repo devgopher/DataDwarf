@@ -59,10 +59,7 @@ namespace DwarfDB.Links
 			 	1. Reference parsing
 				2. Receiving content (receiver.Get())
 			 */
-			parser.Parse( orig_string, this );
-
-
-			
+			parser.Parse( orig_string, this );			
 			return inner_record;
 		}
 
@@ -77,6 +74,5 @@ namespace DwarfDB.Links
 		private string db_name = String.Empty;
 		private string dc_name = String.Empty;
 		private string rec_hash = String.Empty;
-		//private DwarfServer.Receiver.Receiver receiver;
 	}
 }

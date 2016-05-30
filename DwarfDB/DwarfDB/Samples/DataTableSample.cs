@@ -111,12 +111,12 @@ namespace DwarfDB
 				// Getting a record
 				Console.WriteLine("DCs preloading... ");
 
-				dc.PreLoad( user );
+				//dc.PreLoad( user );
 				//dc2.PreLoad( user );
 
 				// Additional records
 				Console.WriteLine("Adding some new records... ");
-				for ( int i =0; i < 400;  ++i ) {
+				for ( int i =0; i < 10;  ++i ) {
 					var rec = new Record( dc );
 					rec.Id = dc.NextId();
 					foreach ( var col in dc.Columns) {

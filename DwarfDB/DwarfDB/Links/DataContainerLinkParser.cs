@@ -14,8 +14,9 @@ namespace DwarfDB.Links
 	/// </summary>
 	public class DataContainerLinkParser : LinkParser
 	{
-		public DataContainerLinkParser() : base( @"(.*):(.*):(.*)" ) {
-			
+		private static string link_regexp = @"(.*):(.*):(.*)";
+		
+		public DataContainerLinkParser() : base( link_regexp ) {	
 		}
 		
 		protected override void InitLink( String input, ILink link ) {
